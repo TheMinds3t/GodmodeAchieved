@@ -1,0 +1,113 @@
+<shaders>
+    <shader name="GODMODE_RewindFx">
+        <parameters>
+            <param name="Time" type="float"/>
+        </parameters>
+        <vertex><![CDATA[
+            attribute vec3 Position;
+            attribute vec4 Color;
+            attribute vec2 TexCoord;
+            attribute vec4 RenderData;
+            attribute float Scale;
+
+            attribute float Time;
+
+            varying vec4 Color0;
+            varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
+            varying float TimeOut;
+            uniform mat4 Transform;
+            void main(void)
+            {
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;           // Passing data to fragment shader
+                TimeOut = Time;             // Passing data to fragment shader
+                Color0 = Color;
+                TexCoord0 = TexCoord;
+                gl_Position = Transform * vec4(Position.xyz, 1.0);
+            }
+        ]]></vertex>
+        <fragment><![CDATA[
+            varying lowp vec4 Color0;
+            varying mediump vec2 TexCoord0;
+            varying lowp vec4 RenderDataOut;
+            varying lowp float ScaleOut;
+            varying lowp float TimeOut;
+            uniform sampler2D Texture0;
+            void main(void)
+            {
+                vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
+                float scale = 1.0-(TimeOut/30.0);
+                if(scale > 1.0) {
+                    scale = 1.0;
+                }
+                if(TimeOut > 32){
+                    scale = (TimeOut-32)/3.0;
+                }
+
+                Color.r *= scale;
+                Color.g *= scale;
+                Color.b *= scale;
+                gl_FragColor = Color;
+            }
+        ]]></fragment>
+    </shader>
+    <shader name="GODMODE_BlackMushroom">
+        <parameters>
+            <param name="Intensity" type="float"/>
+            <param name="Time" type="float"/>
+        </parameters>
+        <vertex><![CDATA[
+            attribute vec3 Position;
+            attribute vec4 Color;
+            attribute vec2 TexCoord;
+            attribute vec4 RenderData;
+            attribute float Scale;
+
+            attribute float Time;
+            attribute float Intensity;
+
+            varying vec4 Color0;
+            varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+            varying float ScaleOut;
+
+            varying float TimeOut;
+            varying float IntensityOut;
+
+            uniform mat4 Transform;
+            void main(void)
+            {
+                RenderDataOut = RenderData;
+                ScaleOut = Scale;           // Passing data to fragment shader
+                TimeOut = Time;             // Passing data to fragment shader
+                IntensityOut = Intensity;             // Passing data to fragment shader
+                Color0 = Color;
+                TexCoord0 = TexCoord;
+                gl_Position = Transform * vec4(Position.xyz, 1.0);
+            }
+        ]]></vertex>
+        <fragment><![CDATA[
+            varying lowp vec4 Color0;
+            varying mediump vec2 TexCoord0;
+            varying lowp vec4 RenderDataOut;
+            varying lowp float ScaleOut;
+
+            varying lowp float TimeOut;
+            varying lowp float IntensityOut;
+
+            uniform sampler2D Texture0;
+            void main(void)
+            {
+                vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
+                float PosOff = TexCoord0.x*(100+cos(TimeOut*0.075)*50)+TexCoord0.y*(100+sin(TimeOut*0.05)*50);
+
+                Color.r *= 1.0 - abs(sin((TimeOut+60+PosOff)/(180/3.14)*5))*0.3*IntensityOut*(Color.r*0.6+0.4);
+                Color.g *= 1.0 - abs(sin((TimeOut+120+PosOff)/(180/3.14)*5))*0.3*IntensityOut*(Color.g*0.6+0.4);
+                Color.b *= 1.0 - abs(sin((TimeOut+180+PosOff)/(180/3.14)*5))*0.3*IntensityOut*(Color.b*0.6+0.4);
+                gl_FragColor = Color;
+            }
+        ]]></fragment>
+    </shader>
+</shaders>

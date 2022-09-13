@@ -1,0 +1,38 @@
+<costumes anm2root="gfx/costumes/">
+    <!-- Items -->
+    <costume anm2path="luc_wings.anm2" isFlying="true" priority="99" type="none" />
+    <costume anm2path="morphine.anm2" id="0" type="passive" />
+    <costume anm2path="maxs_head_1.anm2" type="none" />
+    <costume anm2path="maxs_head_2.anm2" type="none" />
+    <costume anm2path="maxs_head_3.anm2" type="none" />
+    <costume anm2path="maxs_head_4.anm2" type="none" />
+    <costume anm2path="maxs_head_5.anm2" type="none" />
+    <costume anm2path="gehazi_crown.anm2" id="27" type="passive" />
+    <costume anm2path="heart_arrest.anm2" id="8" type="passive" />
+    <costume anm2path="sugar.anm2" id="11" type="passive" />
+    <costume anm2path="tramp_of_babylon.anm2" id="2" type="passive" />
+    <costume anm2path="whoop_cough.anm2" id="22" type="passive" />
+    <costume anm2path="chiggers_head.anm2" id="13" type="passive" />
+    <costume anm2path="blood_pudding.anm2" id="10" type="passive" />
+    <costume anm2path="vessel.anm2" priority="99" id="71" type="passive" />
+    <costume anm2path="vessel_cracked.anm2" priority="99" id="72" type="passive" />
+    <costume anm2path="vessel_bloody.anm2" priority="99" id="73" type="passive" />
+    <costume anm2path="gangrene.anm2" id="41" type="passive" />
+    <costume anm2path="celeste_tail.anm2" id="56" type="passive" />
+    <costume anm2path="celeste_collar.anm2" id="58" type="passive" />
+    <costume anm2path="soft_serve.anm2" id="59" type="passive" />
+    <costume anm2path="edible_soul.anm2" id="75" isFlying="true" type="passive" />
+    <costume anm2path="edible_soul_bodiless.anm2" isFlying="true" priority="100" type="none" />
+
+    <!-- Players -->
+    <costume anm2path="sign_wings.anm2" isFlying="true" priority="99" type="none" />
+    <costume anm2path="xaphan_head.anm2" priority="99" type="none" />
+    <costume anm2path="arac_head.anm2" priority="99" type="none" />
+    <costume anm2path="tainted_arac_head.anm2" priority="99" type="none" />
+    <costume anm2path="elohim_beard.anm2" priority="99" type="none" />
+    <costume anm2path="tainted_elohim_beard.anm2" priority="99" type="none" />
+
+    <!-- Transformations -->
+    <costume anm2path="celeste.anm2" type="none" priority="99" skinColor="1" isFlying="true" overwriteColor="true" />
+    <costume anm2path="cyborg.anm2" type="none" priority="99" skinColor="4" overwriteColor="true" />
+</costumes>

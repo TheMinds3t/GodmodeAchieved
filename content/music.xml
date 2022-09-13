@@ -1,0 +1,12 @@
+<music root="music/">
+	<track name="A Blackened Light" intro="luciferpalace_intro.ogg" path="luciferpalace.ogg" layer="luciferpalace_layer.ogg" loop="true" />
+	<track name="Experiencing Revelation" path="palace_fight.ogg" loop="true" />
+	<track name="Peripheral Visions" intro="fruit cellar/intro.ogg" path="fruit cellar/main.ogg" layerintro="fruit cellar/intro_layer.ogg" layer="fruit cellar/main_layer.ogg" loop="true" />
+	<track name="Shellstepping" intro="nest/main_intro.ogg" path="nest/main.ogg" layerintro="nest/layer_intro.ogg" layer="nest/layer.ogg" loop="true" />
+	<track name="Pulsations" intro="intestines/intro_main.ogg" path="intestines/main.ogg" layerintro="intestines/intro_layer.ogg" layer="intestines/layer.ogg" loop="true" />
+
+	<!-- Palace (Day) -->
+	<track name="A Song From A Broken Soul" intro="palace (day)/main_intro.ogg" path="palace (day)/main.ogg" layerintro="palace (day)/layer_intro.ogg" layer="palace (day)/layer.ogg" loop="true" />
+	<track name="The Path To Enlightenment" intro="palace (day)/boss_intro.ogg" path="palace (day)/boss.ogg" loop="true" />
+</music>
+ 

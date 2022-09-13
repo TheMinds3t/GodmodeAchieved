@@ -1,0 +1,241 @@
+<ItemPools>
+	<Pool Name="treasure">
+		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Pair of Cans" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Heart Arrest" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blood Pudding" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sugar!" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Larval Therapy" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Taenia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Uncommon Cough" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crown of Gold" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gangrene" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Soft Serve" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Portable Confessional" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Cloth of Gold" Weight="0.2" RemoveOn="0.1" DecreaseBy="0.2"/>
+		<Item Name="Bubble Wand" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="shop">
+		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Balloon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Pair of Cans" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Angry Apple Juice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crown of Gold" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Cloth on a String" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Child's Trophy" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Portable Confessional" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Feather Duster" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="boss">
+		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Carrot" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Nosebleed" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Soul Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Devil's Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Angel Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fruit Salad" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="devil">
+		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Adramolech's Blessing" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blood Pudding" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crown of Gold" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Papal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Edible Soul" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fallen Guardian" Weight="2" RemoveOn="0.1" DecreaseBy="2"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="angel">
+		<Item Name="Divine Approval" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Marshall Scarf" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Anguish Jar" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Holy Chalice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Abraham's Map" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Orb of Radiance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Baptismal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name=" Papal Cross " Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crossbones" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Brass Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Seraphim Warhorn" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="secret">
+		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crossbones" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Opia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Tecpatl" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Impending Doom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Jack-of-all-Trades" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Nirvana" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Brass Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="A Second Thought" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Brass Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Ghanta" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Vajra" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Prayer Mat" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Diya" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="library">
+		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Qur'an" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="craneGame">
+		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Child's Trophy" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Soft Serve" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="goldenChest">
+		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="A Second Thought" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="redChest">
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="curse">
+		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Papal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="greedTreasure">
+		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Balloon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Pair of Cans" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Larval Therapy" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Taenia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Heart Arrest" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Uncommon Cough" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gangrene" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Soft Serve" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="greedShop">
+		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Balloon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Pair of Cans" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Angry Apple Juice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Carrot" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Cloth on a String" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+	<Pool Name="greedCurse">
+		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="greedDevil">
+		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Adramolech's Blessing" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Edible Soul" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fallen Guardian" Weight="2" RemoveOn="0.1" DecreaseBy="2"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="greedAngel">
+		<Item Name="Marshall Scarf" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Anguish Jar" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Holy Chalice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Orb of Radiance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Baptismal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crossbones" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Seraphim Warhorn" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+	<Pool Name="greedSecret">
+		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Crossbones" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Opia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Book of Saints" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Tecpatl" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Impending Doom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Jack-of-all-Trades" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Nirvana" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
+		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+	<Pool Name="rottenBeggar">
+		<Item Name="Gangrene" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+	<Pool Name="beggar">
+		<Item Name="Feather Duster" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fruit Salad" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+	<Pool Name="planetarium">
+		<Item Name="Celestial Tail" Weight="4" RemoveOn="0.1" DecreaseBy="4"/>
+		<Item Name="Celestial Paw" Weight="4" RemoveOn="0.1" DecreaseBy="4"/>
+		<Item Name="Celestial Collar" Weight="4" RemoveOn="0.1" DecreaseBy="4"/>
+	</Pool>
+
+	<Pool Name="ultraSecret">
+		<Item Name="Blood Pudding" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Heart Arrest" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Lucifer's Wings" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Papal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blood Pudding" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tecpatl" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Cloth on a String" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Edible Soul" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+	<Pool Name="babyShop">
+		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+	</Pool>
+
+</ItemPools>

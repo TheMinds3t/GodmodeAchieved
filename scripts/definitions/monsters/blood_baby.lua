@@ -1,0 +1,55 @@
+local monster = {}
+monster.name = "Blood Baby"
+monster.type = Isaac.GetEntityTypeByName(monster.name)
+monster.variant = Isaac.GetEntityVariantByName(monster.name)
+
+monster.npc_update = function(self, ent)
+    if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end	local data = GODMODE.get_ent_data(ent)
+	local player = ent:GetPlayerTarget()
+    
+	if not data.init then
+        data.init = true
+        data.spawn_tear = function(self, ang, speed, curve)
+            if curve == nil then curve = 0 end
+            local vel = Vector(math.cos(ang) * speed,math.sin(ang) * speed)
+            local offset = ent:GetDropRNG():RandomFloat() * 6.28
+            local off = Vector(math.cos(offset) * 48*(ent:GetDropRNG():RandomFloat() * 0.6 + 0.7),math.sin(offset) * 48*(ent:GetDropRNG():RandomFloat() * 0.6 + 0.7))
+            local params = ProjectileParams()
+            params.HeightModifier = -1.5
+            params.FallingSpeedModifier = 0.1
+            params.FallingAccelModifier = 0.25
+            params.Scale = 1.0
+            params.CurvingStrength = curve
+
+            local tear = ent:FireBossProjectiles(1, ent.Position + off*(0.9+ent:GetDropRNG():RandomFloat()*0.5), speed, params)
+            --tear.Position = tear.Position + off
+        end
+    end
+
+	if ent:GetSprite():IsEventTriggered("Bleed") then
+		for i=0,1 do
+            local spd = 1.0 + ent:GetDropRNG():RandomFloat()
+            local f = math.rad(360 / 8 * i + ent:GetDropRNG():RandomFloat() * 360)
+            data:spawn_tear(f,spd,2.5)
+        end
+        ent:TakeDamage(0.25,DamageFlag.DAMAGE_DEVIL,EntityRef(ent),0)
+        if ent:GetDropRNG():RandomInt(2) == 0 then 
+            SFXManager():Play(SoundEffect.SOUND_BLOODSHOOT)
+        else
+            SFXManager():Play(SoundEffect.SOUND_BLOBBY_WIGGLE)
+        end
+	end
+end
+
+monster.npc_kill = function(self, ent)
+    if ent.Type == monster.type and ent.Variant == monster.variant and not ent:HasEntityFlags(EntityFlag.FLAG_ICE) then
+        local data = GODMODE.get_ent_data(ent)
+        for i=0,5 do
+            local spd = 1.0 + ent:GetDropRNG():RandomFloat()
+            local f = math.rad(360 / 8 * i + ent:GetDropRNG():RandomFloat() * 360)
+            data:spawn_tear(f,spd,2.5)
+        end
+    end
+end
+
+return monster

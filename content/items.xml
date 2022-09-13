@@ -1,0 +1,111 @@
+<items gfxroot="gfx/items/" version="1" deathanm2="gfx/itemportraits.anm2">
+	<passive id="0" cache="damage speed" devilprice="2" broken="2" description="I can't feel anything!" gfx="collectibles_morphine.png" name="Morphine" tags="nokeeper syringe offensive summonable" quality = "3" />
+	<!-- ↓ For animating the above ↑  -->
+	<passive id="0" description="You shouldn't have this..." gfx="collectibles_morphine_used.png" name="Morphine Used" quality = "0" hidden="true" />
+	<passive id="1" cache="damage flying" devilprice="2" description="Gain with pain!" gfx="collectibles_luciferswings.png" name="Lucifer's Wings" tags="angel devil summonable" quality = "1" />
+	<passive id="2" cache="damage" devilprice="2" description="Strength with a cost.." gfx="collectibles_trampofbabylon.png" blackhearts="2" name="Tramp of Babylon" tags="devil offensive dead" quality = "2" />
+	<active id="3" cooldown="30" maxcharges="40" description="It doesn't hold water very well" gfx="collectibles_protection.png" name="Dad's Balloon" tags="" quality = "1" />
+	<passive id="4" cache="firedelay" description="The heart of gold hurts the most" gfx="collectibles_divineapproval.png" name="Divine Approval" tags="angel tearsup" quality = "4" />
+	<active id="5" cache="firedelay damage shotspeed speed luck" passivecache="true" chargetype="special" initcharge="0" maxcharges="6" description="Hold to my word and your time shall come" gfx="collectibles_adramolechsblessing.png" name="Adramolech's Blessing" tags="devil offensive" quality = "4" />
+	<active id="6" maxcharges="2" description="A collectible!" gfx="collectibles_fuzzydice.png" name="Fuzzy Dice" tags="" quality = "2" />
+	<familiar id="7" description="I hear mommy!" gfx="collectibles_pairofcans.png" name="Pair of Cans" tags="monstermanual" quality = "1" />
+	<passive id="8" cache="firedelay" description="It hurts.." gfx="collectibles_heartarrest.png" name="Heart Arrest" tags="dead" quality = "1" />
+	<active id="9" maxcharges="2" description="As we burn another page" gfx="collectibles_burntdiary.png" name="Burnt Diary" tags="offensive book" quality = "1" />
+	<passive id="10" cache="luck" description="This tastes funny.." gfx="collectibles_bloodpudding.png" name="Blood Pudding" tags="" quality = "2" />
+	<passive id="11" cache="speed firedelay damage" maxhearts="-2" description="I.. Need.. MORE!" gfx="collectibles_sugar.png" name="Sugar!" tags="offensive tearsup" quality = "1" />
+	<active id="12" maxcharges="2" description="What'd I do?" gfx="collectibles_cooler.png" name="Angry Apple Juice" tags="offensive" quality = "2" />
+	<passive id="13" cache="damage" description="My eyes itch" gfx="collectibles_chiggers.png" name="Larval Therapy" tags="offensive fly spider summonable" quality = "1" />
+	<passive id="14" cache="firedelay" description="Be strong in the face of evil" gfx="collectibles_marshallscarf.png" name="Marshall Scarf" tags="angel summonable tearsup" quality = "3" />
+	<passive id="15" cache="range firedelay shotspeed" description="Brain power up" gfx="collectibles_taenia.png" name="Taenia" tags="offensive summonable tearsup" quality = "3" />
+	<active id="16" maxcharges="6" description="Let it all out!" gfx="collectibles_anguishjar.png" name="Anguish Jar" tags="offensive" quality = "3" />
+	<familiar id="17" cache="damage" description="Give me the strength to fight" gfx="collectibles_holychalice.png" name="Holy Chalice" tags="angel offensive" quality = "3" />
+	<active id="18" maxcharges="12" description="The odds are in your favor!" gfx="collectibles_abrahams_blessing.png" name="Abraham's Map" tags="" quality = "4" />
+	<active id="19" maxcharges="24" description="Show them the light" gfx="collectibles_radiance_orb.png" name="Orb of Radiance" tags="offensive angel" quality = "3" />
+	<active id="20" cache="damage firedelay speed" maxcharges="0" description="I wish.." gfx="collectibles_maxs_head.png" name="Max's Head" tags="offensive tearsup" quality = "1" />
+	<active id="21" maxcharges="2" description="Become reborn in the water!" gfx="collectibles_baptismal_cross.png" name="Baptismal Cross" tags="offensive angel" quality = "1" />
+	<passive id="22" cache="shotspeed" description="I-I-I'm fINE!!" gfx="collectibles_whoopcough.png" name="The Uncommon Cough" tags="offensive" quality = "3" />
+	<passive id="23" cache="speed" description="Slurp with love!" maxhearts="2" hearts="4" gfx="collectibles_ladle.png" name="The Ladle" tags="nolostbr" quality = "2" />
+	<passive id="24" cache="damage" description="I think it's stopping!" gfx="collectibles_nosebleed.png" name="Nosebleed" tags="" quality = "2" />
+	<active id="25" maxcharges="2" chargetype="special" cache="damage firedelay" description="Prove your strength to them" gfx="collectibles_trophy_of_power.png" name="Child's Trophy" tags="offensive tearsup" quality = "1" />
+	<passive id="26" description="Sight Up?" maxhearts="2" hearts="4" gfx="collectibles_carrot.png" name="The Carrot" tags="food" quality = "2" />
+	<passive id="27" cache="damage" description="Money, money, money!" gfx="collectibles_crown_of_gold.png" name="Crown of Gold" coins="5" tags="nokeeper" quality = "3" />
+
+	<passive id="28" description="Money = Charge" gfx="collectibles_gold_battery.png" name="Gold Plated Battery" coins="10" tags="battery" quality = "2" />
+	<passive id="29" cache="damage luck firedelay" description="Luck = power" gfx="collectibles_clover.png" name="Four Leaf Clover" tags="offensive summonable tearsup" quality = "3" />
+	<passive id="30" cache="firedelay" description="A little later than expected" gfx="collectibles_late_delivery.png" name="Late Delivery" tags="tearsup dead" quality = "4" />
+	<active id="31" description="It smells sleepy" gfx="collectibles_black_mushroom.png" name="Black Mushroom" tags="mushroom" quality = "2" />
+	<passive id="32" description="We feel invincible!" devilprice="2" gfx="collectibles_sharing_is_caring.png" name="Sharing is Caring" tags="offensive summonable" quality = "3" />
+	<passive id="33" description="Seeping bleeding" gfx="tampon.png" name="Cloth on a String" tags="offensive summonable" quality = "2" />
+	<passive id="34" description="Seeping power" gfx="golden_tampon.png" name="Cloth of Gold" tags="offensive" quality = "2" />
+	<active id="35" maxcharges="12" description="True command" devilprice="2" gfx="collectibles_papal_cross.png" name="Papal Cross" tags="devil" quality = "4" />
+	<active id="36" maxcharges="12" description="True command" gfx="collectibles_papal_cross_holy.png" name=" Papal Cross " tags="angel" quality = "4" />
+	<passive id="37" description="Paid fulfillment" devilprice="2" gfx="filthy_thoughts.png" name="Forbidden Knowledge" tags="book nokeeper summonable nolostbr" quality = "3" />
+	<active id="38" maxcharges="4" description="Game time?" gfx="arcade_stub.png" name="Arcade Ticket" tags="" quality = "1" />
+	<passive id="39" description="Break for protection" devilprice="2" gfx="bone_cross.png" name="Crossbones" tags="offensive summonable" quality = "3" />
+	<active id="40" maxcharges="4" description="Feel their soul" gfx="opia.png" name="Opia" tags="offensive" quality = "4" />
+	<passive id="41" description="Rotten flecks" gfx="gangrene.png" name="Gangrene" tags="offensive bob summonable dead" quality = "2" />
+	<passive id="42" cache="luck speed" description="Good for you" gfx="soul_food.png" name="Soul Food" soulhearts="4" tags="food" quality = "2" />
+	<passive id="43" cache="damage shotspeed" description="The lie" gfx="devils_food.png" name="Devil's Food" blackhearts="4" tags="food offensive" quality = "2" />
+	<passive id="44" cache="firedelay range" description="Forbidden" gfx="angel_food.png" name="Angel Food" soulhearts="2" tags="tearsup food" quality = "2" />
+	<active id="45" maxcharges="12" description="Look up to the hearts of gold" gfx="saint_book.png" name="Book of Saints" tags="book angel" quality = "3" />
+	<passive id="46" description="Become anything" gfx="jack_of_trades.png" name="Jack-of-all-Trades" tags="baby fly syringe mom book poop mushroom angel devil guppy spider bob summonable" quality = "4" shopprice="49" />
+	<active id="47" description="Loss = Life" gfx="tecpatl.png" name="Tecpatl" tags="" quality = "2" />
+	<active id="48" maxcharges="2" id="31" description="Time is running out for all" gfx="calendar.png" name="Impending Doom" quality = "3" />
+	<active id="49" description="Ring for protection" gfx="ghanta.png" name="Ghanta" quality = "1" tags="nolostbr" shopprice="20" />
+	<passive id="50" description="Strike down those who break your spirit" gfx="vajra.png" name="Vajra" tags="nolostbr" quality = "4" shopprice="30" />
+	<active id="51" maxcharges="6" description="Cleanse your soul" gfx="quran.png" name="Qur'an" tags="book nolostbr" quality = "3" />
+	<passive id="52" description="Clear your mind" gfx="prayer_mat.png" name="Prayer Mat" quality = "4" tags="nolostbr" shopprice="30" />
+	<active id="53" maxcharges="8" description="Evil spirits, wane!" gfx="diya_lamp.png" name="Diya" tags="offensive" quality = "3" />
+	<passive id="54" description="The darkness is weakened" gfx="nirvana.png" name="Nirvana" quality = "4" />
+	<passive id="55" description="You feel blessed" gfx="brass_cross.png" name="Brass Cross" tags="summonable" soulhearts="4" quality = "3" />
+	<passive id="56" description="The power of sustainment +3 Keys" gfx="celeste_tail.png" name="Celestial Tail" keys="3" quality = "4" />
+	<active id="57" maxcharges="12" description="Slash them in your soul" gfx="celeste_paw.png" name="Celestial Paw" quality = "4" tags="offensive" />
+	<passive id="58" cache="damage" description="The power of life" gfx="celeste_collar.png" name="Celestial Collar" quality = "4" tags="offensive" />
+	<passive id="59" description="Spilled Milk + HP Up" gfx="soft_serve.png" name="Soft Serve" tags="summonable offensive" soulhearts="2" quality = "4" />
+	<active id="60" maxcharges="6" description="Atone at home!" gfx="portable_confessional.png" name="Portable Confessional" tags="nolostbr" soulhearts="0" quality = "3" />
+	<passive id="61" cache="speed" description="Time means nothing now" gfx="second_thought.png" name="A Second Thought" tags="summonable" soulhearts="0" quality = "2" />
+	<passive id="62" description="Wrath = power +5 Bombs" gfx="war_banner.png" name="War Banner" tags="summonable offensive" bombs="5" quality = "2" />
+	<active id="74" maxcharges="12" description="They hear your call" gfx="seraphim_horn.png" tags="offensive angel" name="Seraphim Warhorn" quality = "2" />
+	<passive id="75" cache="flying" devilprice="2" description="He'll come for you when you're gone" gfx="eaten_soul.png" name="Edible Soul" tags="summonable devil" blackhearts="2" quality = "4" />
+	<familiar id="76" devilprice="2" description="The heat has marked you" gfx="fallen_guard.png" name="Fallen Guardian" tags="summonable familiar offensive baby monstermanual" quality = "3" />
+	<passive id="78" description="Bubbly vengeance" gfx="bubble_wand.png" tags="offensive" name="Bubble Wand" quality = "2" />
+	<passive id="79" cache="speed" description="Cleaning services" gfx="feather_duster.png" tags="summonable" name="Feather Duster" quality = "1" />
+	<passive id="80" description="Healthy healing" gfx="fruit_salad.png" tags="food offensive" name="Fruit Salad" quality = "2" maxhearts="2" hearts="4" soulhearts="2" />
+	<active id="81" maxcharges="6" description="You feel stronger" gfx="dragon_fruit.png" name="Dragon Fruit" tags="food offensive" soulhearts="0" quality = "3" />
+
+	<!-- TAINTED UNLOCKS -->
+	<familiar id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar" quality = "2" />
+	<passive id="83" description="Go out in style" gfx="fatal_attraction.png" name="Fatal Attraction" tags="offensive" devilprice="1" blackhearts="2" hearts="-6" quality = "3" />
+
+	<!-- TAINTED ITEMS -->
+	<active id="63" maxcharges="1" description="They are your friends" gfx="reclusive_tendencies.png" name="Reclusive Tendencies" tags="spider fly" hidden="true" quality = "1" />
+	<active id="64" maxcharges="4" description="Time is money" gfx="gold_stopwatch.png" name="Golden Stopwatch" tags="nokeeper" hidden="true" quality = "3" />
+	<active id="65" cache="firedelay damage shotspeed speed luck" chargetype="special" initcharge="1" maxcharges="1" description="Fulfill her dreams" gfx="moms_wish.png" name="Mom's Wish" tags="mom" hidden="true" quality = "0" />
+	<active id="77" cache="firedelay damage shotspeed speed luck" passivecache="true" chargetype="special" initcharge="10" maxcharges="100" description="Hold to my word and your time shall come" gfx="adramolechs_fury.png" name="Adramolech's Fury" tags="devil offensive" quality = "4" />
+
+	<!-- QUEST ITEMS -->
+	<passive id="66" description="A pile of rocks" gfx="com_shard_1.png" name="Rock Fragment" tags="quest" quality = "0" />
+	<passive id="67" description="Seems to fit with others..." gfx="com_shard_2.png" name="Holy Stone" tags="quest" quality = "0" />
+	<passive id="68" description="Is this significant?" gfx="com_shard_3.png" name="Tablet Fragment" tags="quest" quality = "0" />
+	<passive id="69" description="The final piece" gfx="com_shard_4.png" name="Final Slate" tags="quest" quality = "0" />
+
+	<passive id="70" description="Your fate is sealed" gfx="lucifer_key.png" name="Blood Key" tags="quest" quality = "0" />
+	<passive id="71" cache="damage firedelay" description="Reveal the truth from within" gfx="purity_vessel_0.png" name="Vessel of Purity" tags="quest" quality = "0" />
+	<passive id="72" cache="damage firedelay" description="Reveal the truth from within" gfx="purity_vessel_1.png" name="Cracked Vessel of Purity" tags="quest" hidden="true" quality = "0" />
+	<passive id="73" cache="damage firedelay" description="Reveal the truth from within" gfx="purity_vessel_2.png" name="Bloodied Vessel of Purity" tags="quest" hidden="true" quality = "0" />
+
+
+
+	<!-- TRINKETS -->
+	<trinket cache="" description="Drowning in uses" gfx="gesture_of_deep.png" name="Gesture of the Deep" />
+	<trinket cache="" description="Break for protection?" gfx="snapped_cross.png" name="Snapped Cross" />
+	<trinket cache="firedelay" description="Swallow it!" gfx="bobs_tongue.png" name="Bob's Tongue" />
+	<trinket cache="" description="Choking hazard" gfx="marble_pop.png" name="Marble Cake Pop" />
+	<trinket cache="" description="Highly Reactive" gfx="bombshell.png" name="Bombshell" />
+	<trinket cache="" description="A gift from above" gfx="godmode.png" name="Godmode" />
+	<trinket cache="damage firedelay shotspeed speed luck" description="You are calm" gfx="mood_ring_blue.png" name="Mood Ring (Blue)" />
+	<trinket hidden="true" cache="" description="You are worried" gfx="mood_ring_yellow.png" name="Mood Ring (Yellow)" />
+	<trinket hidden="true" cache="" description="You are stressed" gfx="mood_ring_red.png" name="Mood Ring (Green)" />
+	<trinket hidden="true" cache="" description="You are panicking" gfx="mood_ring_black.png" name="Mood Ring (Black)" />
+	<trinket description="Save it for later" gfx="snack_lock.png" name="Snack Lock" />
+</items>

@@ -1,0 +1,48 @@
+<AnimatedActor>
+	<Info CreatedBy="Unknown" CreatedOn="7/11/2022 6:22:02 PM" Version="35" Fps="42"/>
+	<Content>
+		<Spritesheets>
+			<Spritesheet Path="effects\rewind_fx.png" Id="0"/>
+		</Spritesheets>
+		<Layers>
+			<Layer Name="Black" Id="0" SpritesheetId="0"/>
+			<Layer Name="Circle" Id="1" SpritesheetId="0"/>
+		</Layers>
+		<Nulls/>
+		<Events>
+			<Event Name="LuciferTransition" Id="0"/>
+		</Events>
+	</Content>
+	<Animations DefaultAnimation="Scene">
+		<Animation Name="Scene" FrameNum="30" Loop="false">
+			<RootAnimation>
+				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+			</RootAnimation>
+			<LayerAnimations>
+				<LayerAnimation LayerId="0" Visible="true">
+					<Frame XPosition="-5000" YPosition="-5000" XPivot="0" YPivot="0" XCrop="0" YCrop="0" Width="1" Height="1" XScale="1000000" YScale="1000000" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="-5000" YPosition="-5000" XPivot="0" YPivot="0" XCrop="0" YCrop="0" Width="1" Height="1" XScale="1000000" YScale="1000000" Delay="26" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="-5000" YPosition="-5000" XPivot="0" YPivot="0" XCrop="0" YCrop="0" Width="1" Height="1" XScale="1000000" YScale="1000000" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+				</LayerAnimation>
+				<LayerAnimation LayerId="1" Visible="true">
+					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="0" YScale="0" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="100" YScale="100" Delay="26" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="1000" YScale="1000" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+				</LayerAnimation>
+			</LayerAnimations>
+			<NullAnimations/>
+			<Triggers/>
+		</Animation>
+		<Animation Name="nil" FrameNum="1" Loop="true">
+			<RootAnimation>
+				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
+			</RootAnimation>
+			<LayerAnimations>
+				<LayerAnimation LayerId="0" Visible="true"/>
+				<LayerAnimation LayerId="1" Visible="true"/>
+			</LayerAnimations>
+			<NullAnimations/>
+			<Triggers/>
+		</Animation>
+	</Animations>
+</AnimatedActor>

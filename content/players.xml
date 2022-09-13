@@ -1,0 +1,56 @@
+<players root="gfx/characters/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/" bigportraitroot="gfx/ui/stage/">
+    <player name="Recluse" skin="arac/arac.png" hp="4" black="2" bombs="1"
+          nameimage="names/arac.png" 
+          portrait="arac.png" 
+          skinColor="-1" 
+          birthright="Healthy friends" />
+    <player name="Xaphan" skin="xaphan/xaphan.png" hp="2" black="4" bombs="0"
+          nameimage="names/xaphan.png" 
+          portrait="xaphan.png" 
+          skinColor="1" 
+          birthright="Everlasting love" />
+    <player name="Deli" skin="deli/deli.png" hp="8" black="0" bombs="1"
+          nameimage="names/deli.png" 
+          portrait="deli.png" 
+          skinColor="0" 
+          birthright="More despair!" />
+    <player name="Elohim" skin="elohim/elohim.png" hp="2" black="0" armor="4" bombs="0"
+          nameimage="names/elohim.png" 
+          portrait="elohim.png" 
+          skinColor="-1" 
+          birthright="Reclaim the throne" />
+    <player name="Gehazi" skin="gehazi/gideon.png" hp="0" black="2" armor="0" bombs="0" coins="15" items="501"
+          nameimage="names/elohim.png" 
+          portrait="elohim.png" 
+          skinColor="-1" 
+          birthright="Money management!" /> 
+    <player name="The Sign" skin="thesign/thesign.png" hp="0" black="0" armor="0" broken="0" bombs="0" coins="0" keys="1"
+          nameimage="names/thesign.png" 
+          portrait="thesign.png" 
+          skinColor="2" 
+          birthright="Freedom!" />
+    <player name="Tainted Recluse" skin="arac_tainted/arac.png" hp="0" black="6" bombs="0"
+          nameimage="names/arac.png" 
+          portrait="arac.png" 
+          bSkinParent="Recluse"
+          pocketActive="555" skinColor="-1" 
+          birthright="Healthy friends" />
+    <player name="Tainted Deli" skin="deli_tainted/deli.png" hp="6" black="0" bombs="1"
+          nameimage="names/deli.png" 
+          portrait="deli.png" 
+          bSkinParent="Deli"
+          skinColor="0" 
+          birthright="Sanity up!" />
+      <player name="Tainted Xaphan" skin="xaphan_tainted/xaphan.png" black="2" bombs="1"
+          nameimage="names/xaphan.png" 
+          portrait="xaphan.png" 
+          bSkinParent="Xaphan"
+          skinColor="1" pocketActive="555" card="12" 
+          birthright="Boundless fury" />
+      <player name="Tainted Elohim" skin="elohim_tainted/elohim.png" armor="2"
+          nameimage="names/elohim.png" 
+          portrait="elohim.png" 
+          bSkinParent="Elohim"
+          skinColor="-1"
+          birthright="Wrath = deeper strength" />
+</players>

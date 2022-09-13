@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <name>Godmode Achieved [[[BETA]]]</name>
+    <directory>godmodeachievedbeta</directory>
+    <id>2548296941</id>
+    <description>
+
+THIS IS A BETA BUILD. BUGS WILL HAPPEN. 
+
+So far:
+- A new final boss and stage!! Test your luck against this beast of a battle.. (also, unlock Godmode items!) Note the balancing of this stage is still in progress, so if anything feels particularly unfair or easy, do let me know.
+- 500 brand new, unique treasure room layouts. This is clustered into types of treasure rooms, each having at least 10 variations!
+- 3 new floor alts! One for Chapter 1, 3 and 4.
+- 400+ new boss room layouts
+- 120 new shop layouts
+- 65 new secret room layouts
+- 58 new curse room layouts
+- 76 new items (and increasing, goal is 80)
+- 3 new transformations!! (and increasing, goal is 4) (Planetariums are now much, much better to try for.)
+- 7 new floor blessings! They have a 5% chance to show and are the opposite of curses.
+- 8 new trinkets (and increasing, goal is 10)
+- 46 new enemies (and increasing, goal is 50!)
+- 16 new bosses (and increasing, goal is 23) and 2 new champions!
+- 7 new pickups
+- Currently 1367+ regular rooms to integrate the new foes you'll face with ones you're familiar with! (increasing as the rest of the goals are met!) Including the new stages brings this total up to over 3000 new rooms to cry about!
+- 9 new characters! (Tainted Forms WIP, for a total of 12 once they're all done!)
+- 3 new challenges (and increasing, goal is 5)
+- A new hazardous mechanic to make you consider doors more!
+- Hardmode HP scaling, which balances out the increased quantity and quality of items you receive by gradually scaling enemy HP per floor.
+- Blue Womb overhaul! Slightly more interesting than before...
+- A new being to make you consider how much time you spend on each stage a little more...
+- ModConfigMenu Support! This shows some of the more technical changes present in Godmode, as well as providing you complete customization of the experience!
+- EID Support! Know what the new items do without referring to the item manual file included in the mod :)
+- Encyclopedia Support! Mostly implemented, gives very specific stat info about items and any quirks they may have as well.
+- Enhanced Boss Bar support! All Godmode bosses should have an icon with the mod enabled. 
+
+Planned:
+- CustomStageAPI utilization for:
+    - New room type
+    - Layout control for floors
+- Improved floor sprites for existing floors (Sanctuary and Furnace specifically)
+
+Credits:
+Programming - MINDS3T
+Room Design - MINDS3T
+Sprites - MINDS3T, shyPixels/Fira (Most items, some enemies, bosses, stages, UI, title logo), Derahex (Hexstar), Gummy (Souleater)
+Music &amp; Sound - MINDS3T
+Concepts - MINDS3T, shyPixels, kharjaro, Derahex (Hexstar), Reactive (Bombshell), SDAR (Bubbly Plum, Blightfly, enemy, pickup)
+
+Beta Testers - anon., DaddyNature, Emmster, gamer24320, Harvester, IzzyIsakoi_ᗢ, L'éclair à la vanille, Lamb, SDAR, Snopingnas, Voidro, Zek, Coyote, FinalRun36, kharjaro, Hikikomori, Sallyspartan, Carlosmann100, actualjohndear, Gokudera ElPsyCongroo, ArthurKyl, Toad Enjoyer !! :D, GigaChadDarko</description>
+    <version>1.191</version>
+    <visibility>Private</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
+    <tag id="Active Items"/>
+    <tag id="Trinkets"/>
+    <tag id="Cards"/>
+    <tag id="Pickups"/>
+    <tag id="Player Characters"/>
+    <tag id="Familiars"/>
+    <tag id="Rooms"/>
+    <tag id="Floors"/>
+    <tag id="Enemies"/>
+    <tag id="Bosses"/>
+    <tag id="Hazards"/>
+    <tag id="Challenges"/>
+    <tag id="Tweaks"/>
+    <tag id="Graphics"/>
+    <tag id="Shaders"/>
+    <tag id="Sound Effects"/>
+    <tag id="Music"/>
+</metadata>

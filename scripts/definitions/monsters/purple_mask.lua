@@ -1,0 +1,95 @@
+local monster = {}
+monster.name = "Purple Heart"
+monster.type = Isaac.GetEntityTypeByName(monster.name)
+monster.variant = Isaac.GetEntityVariantByName(monster.name)
+
+monster.postUpdate = function(self)
+end
+monster.npc_update = function(self, ent)
+if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end	local data = GODMODE.get_ent_data(ent)
+    local player = ent:GetPlayerTarget()
+
+    if data.spawn ~= true and ent.SubType == 0 then
+        ent:GetSprite():Play("Heart",true)
+        data.proj = nil
+        data.proj2 = nil
+        data.mask = Game():Spawn(monster.type,monster.variant,ent.Position,Vector(0,0),ent,1,ent.InitSeed)
+        local dat = GODMODE.get_ent_data(data.mask)
+        dat.heart = ent
+        dat.ang = 0
+        data.spawn = true
+        data.proj_cooldown = 0
+    end
+
+    if ent.SubType == 1 then
+        if data.heart == nil then ent:Kill() elseif data.heart:IsDead() then ent:Kill() else
+            
+            if data.targ_pos == nil or data.time % 45 == 0 then
+                data.targ_pos = player.Position - data.heart.Position
+                data.targ_pos:Normalize()
+                data.targ_pos = data.targ_pos * math.min(ent.FrameCount,80.0)
+            end
+
+            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
+            ent.Velocity = ((data.heart.Position + data.targ_pos) - ent.Position) / 6.0
+
+            local dir = ""
+            local x = (ent.Position.X - data.heart.Position.X)
+            local y = ent.Position.Y - data.heart.Position.Y 
+            if math.abs(x) > math.abs(y) then if x < 0 then dir = "Left" else dir = "Right" end else if y < 0 then dir = "Up" else dir = "Down" end end
+            ent:GetSprite():Play("Mask"..dir,false)
+        end
+    else
+        ent.Velocity = Vector(ent:GetDropRNG():RandomFloat() - 0.5, ent:GetDropRNG():RandomFloat() - 0.5) / 1.1 + ent.Velocity / 1.0625 + (player.Position - ent.Position) * (1 / 240) / 4.0
+        local scale = 1.0 - data.proj_cooldown / 25 if scale > 1 then scale = 1 end
+        data.proj_cooldown = data.proj_cooldown - 1
+        local targ_pos = data.mask.Position
+
+        if data.mask == nil or data.mask:IsDead() then 
+            targ_pos = ent.Position
+        end
+
+        if data.proj ~= nil then
+            local dir = targ_pos - data.proj.Position
+            local vect = Vector(math.cos(math.rad((dir:GetAngleDegrees()))), math.sin(math.rad((dir:GetAngleDegrees()))))
+            data.proj.Velocity = data.proj.Velocity / (1+0.12*scale) + vect * (1.85*scale)
+        end
+
+        if data.proj2 ~= nil then
+            local dir = targ_pos - data.proj2.Position
+            local vect = Vector(math.cos(math.rad((dir:GetAngleDegrees()))), math.sin(math.rad((dir:GetAngleDegrees()))))
+            data.proj2.Velocity = data.proj2.Velocity / (1+0.12*scale) + vect * (1.85*scale)
+        end
+    end
+
+    if ent:GetSprite():IsEventTriggered("Fire") then
+        ent:ToNPC():PlaySound(SoundEffect.SOUND_HEARTBEAT_FASTER , 1.0, 1, false, 0.7 + ent:GetDropRNG():RandomFloat() * 0.3)
+        local spd = 3.0
+        local ang = player.Position - ent.Position
+        local f = math.rad(ang:GetAngleDegrees())
+        ang = Vector(math.cos(f)*spd,math.sin(f)*spd)
+        local p = Game():Spawn(EntityType.ENTITY_PROJECTILE,0,ent.Position + ang,ang*spd,ent,0,ent.InitSeed)
+        p.Color = Color(58/255.0,0,101/255.0,255/255.0,0,0,0)
+        data.proj = p
+        p.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
+        f = math.rad(-ang:GetAngleDegrees())
+        ang = Vector(math.cos(f)*spd,math.sin(f)*spd)
+        local p1 = Game():Spawn(EntityType.ENTITY_PROJECTILE,0,ent.Position - ang,ang*spd,ent,0,ent.InitSeed)
+        p1.Color = Color(58/255.0,0,101/255.0,255/255.0,0,0,0)
+        data.proj2 = p1
+        p1.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_WALLS
+        data.proj_cooldown = 25
+    end
+
+end
+monster.postRender = function(self)
+end
+monster.entityDamaged = function(self,enthit,amount,flags,entsrc,countdown)
+end
+monster.postRoomCleared = function(self)
+end
+monster.newRoom = function(self)
+end
+monster.newLevel = function(self)
+end
+return monster

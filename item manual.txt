@@ -1,0 +1,395 @@
+Hey!
+So I see you've been digging a bit. Here is a manual to explain what all of Godmode's items do. 
+This file will give the specific stats of all items, trinkets and pickups added by Godmode, as well as in detail describing what they do.
+
+---------- Format: 
+Title (Type, Quality: X) - "description!" (png spreadsheet x, png spreadsheet y)
+	effect 
+---------- Items:
+
+Morphine (Passive, Quality: 2) - "Less pain!" (3,3)
+	When taken, gives Isaac 2 broken hearts and +1.0 damage. Isaac is slowed down 20%, and there is a 30% chance for full heart damage to be reduced to half heart damage. 
+	Counts towards the Spun! transformation.
+
+Lucifer's Wings (Passive, Quality: 1) - "Gain with pain!" (2,10)
+	When damage is taken, gain +2.5 damage, flight and +0.25 movement speed for the room.
+	Counts towards the Seraphim and Leviathan transformations.
+
+Tramp of Babylon (Passive, Quality: 2) - "Strength with a cost.." (3,4)
+	Gives Isaac a damage modifier that counteracts the hardmode HP scaling present in Godmode, or otherwise just a increasing damage multiplier if in normal mode. If Isaac takes damage in a room, once per room it refills all boss health and split all non-boss enemies in the room into two, half health versions.
+	Counts towards the Leviathan transformation.
+
+Dad's Balloon (Active, 4 Charges (1 charge per second), Quality: 1) - "It doesn't hold water very well" (8,3)
+	When used, can do the following:
+	- 20% chance to fire a fast ring of 8 tears.
+	- 20% chance to spawn a pool of creep beneath the player.
+	- 35% chance to fire a medium speed ring of 16 tears.
+	- 25% chance to fire a medium speed ring of 4 tears.
+
+Divine Approval (Passive, Quality: 4) - "The heart of gold hurts the most" (3,2)
+	Replaces black hearts with soul hearts, and fills the rest of your hearts with soul hearts, granting 12 Golden hearts. You gain +0.5 tears for every gold heart you have. Allows you to go beyond the tear cap.
+	Counts towards the Seraphim transformation.
+
+Adramolech's Blessing (Active, 4 charges per floor, Quality: 4) - "Hold to my word and your time shall come" (2,1)
+	Negates damage once per charge. If you are Xaphan, when this item is dropped you lose 5 luck. Recharges one charge every floor. If used at full charge, teleports to a special devil room with 4 free items.
+	Counts towards the Leviathan transformation.
+
+Fuzzy Dice (Active, 2 Charges, Quality: 1) - "A collectible!" (4,2)
+	When used, adds 10% of your keys, bombs and coins to a pool and removes them from the player. This pool is then randomly distributed between keys, bombs and coins until its depleted.
+
+Pair of Cans (Familiar, Quality: 1) - "I can hear my mom!" (5,3)
+	Once per room, gain 2 cans and 2 strings that circle isaac, each piece negating one projectile before bursting.
+
+Heart Arrest (Passive, Quality: 1) - "It hurts.." (6,2)
+	Causes Isaac's tears to be fired in a heartbeat pattern. (Double tears, then half tears). Shortens the tear delay based on the amount of empty red hearts isaac has.
+
+Burnt Diary (Active, 2 Charges, Quality: 1) - "As we burn another page.." (7,1)
+	When used, spawns 4 burning pages that deal contact damage and burn enemies. On contact with enemies, will burn up.
+	Counts towards the Bookworm transformation.
+
+Blood Pudding (Passive, Quality: 2) - "This tastes funny" (6,1)
+	Immediately gives a curse. +5 luck, and ensures a curse on every following floor.
+
+Sugar! (Passive, Quality: 1) - "I.. Need.. MORE!!" (1,4)
+	On pickup, gives +0.125 speed, +0.5 damage the first 10 times, and -1 max health. The next 3 item pedestals have a 50% chance to turn into Sugar.
+
+Angry Apple Juice (Active, 2 Charges, Quality: 1) - "What'd I do?" (1,2)
+	On use, heals half a heart, gives +2 damage and periodically pixelizes the screen for the room.
+
+Larval Therapy (Passive, Special, Quality: 1) - "My eyes itch" (9,1)
+	Whenever a tear hits an enemy, a winged larvae spawns with 1/10 of the tear's damage, targeting the enemy with the highest health. These chiggers can deal damage 3 times total before disappearing.
+	Counts towards the Beelzebub and Spider Baby transformations.
+
+Marshall Scarf (Passive, Quality: 3) - "Be strong in the face of evil" (1,3)
+	+3 Tears. When past the womb, an additional +3 tears.
+	Counts towards the Seraphim transformation.
+
+Taenia (Passive, Quality: 3) - "Brain power up" (2,4)
+	Lets you control the path of your tears as they fly. When the fire button is released or Isaac takes damage, the path resets. +10 range, -0.25 shot speed and +3 tears
+
+Anguish Jar (Active, 6 Charges, Quality: 3) - "Let it all out!" (3,1)
+	When used, fires a Hush style laser for 12 seconds, dealing ~250 damage in total. Beam persists between rooms.
+
+Holy Chalice (Familiar, Quality: 3) - "Give me the strength to fight" (7,2)
+	Whenever a room is cleared, +1 damage. Caps at +4 damage. If damage is taken, this effect resets. It's visually indicated by how full the chalice is. If BFFs! is taken, +1.5 damage, capped at +6 damage.
+	Counts towards the Seraphim transformation.
+
+Abraham's Map (Active, 12 Charges, Quality: 4) - "The odds are in your favor" (1,1)
+	When used, will convert one random item in the room into a quality 4 item. If no items are in the room, will create an item. Has 2 uses.
+
+Orb of Radiance (Active, 12 Charges, Quality: 2) - "I see the light!" (9,3)
+	When used, a Godhead tear will grow from a scale of 0x to a scale of 6x, then back down to a scale of 0x, staying attached to the player and dealing 1.0 + player.Damage / 3.0 contact damage. Charges at 12 seconds / number of The Battery's owned.
+	Counts towards the Seraphim transformation.
+
+Max's Head (Active, 0 Charges, Quality: 1) - "I wish.." (2,3)
+	Each time used in a room, increases damage by 0.2x, decreases speed by 0.1x, and decreases tears by 1. This effect resets after entering a new room. Can be used up to 5 times in a room.
+
+Baptismal Cross (Active, 2 Charges, Quality: 1) - "Become reborn in the water!" (4,1)
+	When used, a spray of tears falls from on top of Isaac dispersing through the room, with each tear doing 0.25-1.25x Isaac's damage.
+	Counts towards the Seraphim transformation.
+
+The Uncommon Cough (Passive, Quality: 3) - "I-I-I'm fINE!!" (5,4)
+	Shot speed and range is set to 0.2x what it is, and damage gets a permanent 0.8x multiplier. Every consecutive shot fired adds 0.1x shot speed and range to it, capping at 1.5x. You now fire a small Monstro's Lung style attack of about 3-4 tears, the spread of the shots only slightly widening.
+
+The Ladle (Passive, Quality: 2) - "Ouch!" (8,2)
+	+0.1 speed, +1 Max Health. Whenever Isaac takes damage in a room he gains +0.1 speed, capped at +0.6 speed. Can break the 2.0 limit. Resets after each floor.
+	
+Nosebleed (Passive, Quality: 1) - "I think it's stopping!" (4,3)
+	Isaac's tears are now bloody. At the start of each room, Isaac has a damage multiplier of 1.5x, but the multiplier decreases back to 1.0x after 8 seconds.	
+
+Child's Trophy (Active, 1 Charge Per 2 Floors, Quality: 1) - "Prove your strength to them" (4,4)
+	When used, gives Isaac 6x damage and +3 tears for the room. Recharges once every two floors.
+
+The Carrot (Passive, Quality: 2) - "Sight Up?" (8,1)
+	+1 Max Health. On the start of each floor reveals either the map, special rooms or secret rooms.
+
+Crown of Gold (Passive, Quality: 4) - "Money, money, money!" (2,2)
+	Whenever an enemy is killed it drops a penny, double penny, nickel or dime based on the following criteria:
+	- If the enemy has at least 10 health, drops penny.
+	- If the enemy has greater than 25 health, drops double penny.
+	- If the enemy has greater than 50 health, drops nickel.
+	- If the enemy is a boss and has equal to or more than 100 health, drops dime.
+	Whenever Isaac takes damage he loses 8-10 coins.
+	Whenever Isaac enters a new stage he loses 3/8ths of his total coins.
+	For every 25 coins Isaac has he gains a +1.0 Damage boost.
+
+Gold Plated Battery (Passive, Quality: 2) - "Money = Charge" (5,2)
+	If your item is not fully charged, takes 5 pennies to add one charge to your active item (Hold space).
+
+Four Leaf Clover (Passive, Quality: 3) - "Luck = power" (10,1)
+	+2.0 Luck. +0.25 x Luck Damage, +0.5 x Luck Tears.
+
+Late Delivery (Passive, Quality: 4) - "Blood Required" (9,2)
+	+2 Tears. Once Isaac deals 2500 damage an angel will come and spawn an item from the current room's itempool for free. After this, more items are granted but an additional 2500 per-item is required (2500, 5000, 7500, etc)
+
+Black Mushroom (Active, Single Use, Quality: 2) - "It smells sleepy" (5,1)
+	On use fills all red hearts, removes 1 red heart container, gives 3 soul hearts, and restarts the current floor. 
+	Counts towards the Fun Guy transformation.
+
+Sharing is Caring (Passive, Special, Quality: 4) - "Everyone gets some!" (10,3)
+	Makes all familiars operate 33% faster. (Faster fire rate, animation, movement speed)
+
+Cloth on a String (Passive, Quality: 2) - "Seeping damage" (8,4)
+	Increase damage dealt to monsters there are more of in the room.
+
+	Formula for damage boost is as follows;
+		- 1.0 + ((count - 1) * 0.05) 
+
+	If the player does not have Cloth of Gold, all pickups have a 1% chance to be replaced by Cloth of Gold.
+
+Cloth of Gold (Passive, Special, Quality: 2) - "Seeping power" (7,4)
+	Whenever damage is dealt to one monster in the room, the damage is spread to all other instances of the same type.
+	Example: Hit a gaper in a room with 5 gapers, all gapers in the room take 0.2x player's base damage.
+
+	If the player does not have Cloth on a String, all pickups have a 10% chance to be replaced by Cloth on a String.
+
+Papal Cross (Unholy) (Active, 12 Charges, Quality: 4) - "True command" (6,3)
+	When activated, teleports you to a devil room with a fight inside (harder the further you are) and one free item.
+
+	50% chance to remove item.
+
+	If item isn't removed, converts to Papal Cross (Holy). 
+	Counts towards the Seraphim transformation.
+
+Papal Cross (Holy) (Active, 12 Charges, Quality: 4) - "True command" (6,3)
+	When activated, teleports you to an angel room with a fight inside (harder the further you are) and one free item.
+
+	(100 - Angel room)% chance to convert into Papal Cross (Unholy). 
+	Counts towards the Leviathan transformation.
+
+Forbidden Knowledge (Passive, Quality: 3) - "Premium indulgement" (6,4)
+	When a red heart is collected, gain a pickup weighted at:
+		25% chance for a coin
+		30% chance for a bomb
+		20% chance for a key.
+	Counts towards the Bookworm transformation.
+
+Opia (Active, 4 Charges, Quality: 2) - "Do you feel their soul?" (6,5)
+	When used, raises the player's soul above their head. They can launch this at an enemy, and if it hits an enemy then the following happens: 
+		You visually look like the enemy hit. All instances of that enemy are charmed for the current room. The enemy you possess will attack other enemies while you attack.
+	Does not work on bosses, rather just does 4 x the player's damage.
+
+Arcade Ticket (Active, 6 Charges, Quality: 2) - "Game time?" (1,5)
+	When used, if an Arcade is present and not visited, teleports the player to the arcade.
+
+	Otherwise:
+		If the player is in an Arcade:
+			10% chance to spawn a red coin
+			90% chance to spawn a random pickup
+		else:
+			Spawn a random coin
+
+Crossbones (Passive, Quality: 3) - "Break for protection" (2,5)
+	When the player kills 3 enemies, the player gains a shield for 3 seconds.
+
+Gangrene (Passive, Quality: 2) - "Rotten flecks" (5,5)
+	Isaac passively spawns slow, small tears at 10% damage with a 10% chance (up to 75% at 12 luck) to poison enemies. Speed of these tears depends on shot speed. 
+	Counts towards the Bob transformation.
+
+Soul Food (Passive, Quality: 2) - "Good for you" (7,5)
+	+3 Soul Hearts, +1 Luck.
+
+Devil's Food (Passive, Quality: 2) - "The lie" (8,5)
+	+3 Black Hearts, +1 Damage.
+
+Book of Saints (Active, 12 Charges, Quality: 3) - "Look up to the hearts of gold" (9,5)
+	When used, grants a Golden Soul Heart.
+
+Jack-of-all-Trades (Passive, Quality: 4) - "Become anything" (1,6)
+	Counts as a transformation component to all basegame and Godmode transformations.
+
+Tecpatl (Active, 0 Charges, Quality: 2) - "Loss = Life" (2,6)
+	When used, grants a shield for 15 seconds, removes a heart container and gives a broken heart.
+
+Impending Doom (Active, 2 Charges, Quality: 3) - "Time is running out for all" (3,6)
+	When used, deals 10 damage to all enemies or 25% of their max health, whichever is greater.
+	When entering a new floor with this item, gain a broken heart.
+
+Ghanta (Active, 0 Charges, Quality: 1) - "Ring for protection" (4,6)
+	When used, removes one heart container and all but one heart of red health. For each point of red health that was removed, spawns a soul heart.
+
+Vajra (Passive, Quality: 4) - "Strike down those who break your spirit" (5,6)
+	When taking damage, erupt in a burst of electricity, aiming at each entity in the room as well as a few random angles. Each beam does your damage to enemies once.
+
+Qur'an (Active, 6 Charges, Quality: 3) - "Cleanse your soul" (6,6)
+	When used, removes all black hearts. For each black heart removed, gives 1.5 soul hearts.
+
+Prayer Mat (Passive, Quality: 4) - "Clear your mind" (7,6)
+	If the player stands still for 10 seconds in an uncleared room, grants half a soul heart. Useable once per room.
+
+Diya (Active/Familiar, 4 charges, Quality: 3) - "Evil spirits, wane!" (8,6)
+	When used, lights the candle and applies weakness (Reverse Strength) to enemies near the candle's light.
+
+Nirvana (Passive, Quality: 4) - "The darkness is weakened" (9,6)
+	Enemies spawn with 80% health.
+
+Brass Cross (Passive, 4 charges, Quality: 3) - "You feel blessed" (10,6)
+	+25% chance for a floor blessing to be chosen.
+
+Celestial Tail (Passive, Quality: 4) - "The power of sustainment" (3,7)
+	All keys are doubled. 50% chance for chests to turn into eternal chests.
+	Collecting two Celestial items grants the Celeste transformation.
+
+Celestial Paw (Active, 12 Charges, Quality: 4) - "Slash them in your soul" (2,7)
+	Kill all enemies and spawn half a soul heart on each enemy. Deals damage equal to 25% max HP to bosses, spawning soul heart if they die from the use. 
+	Collecting two Celestial items grants the Celeste transformation.
+
+Celestial Collar (Passive, Quality: 4) - "The power of life" (1,7)
+	15% chance for items from treasure, boss and shop pools to turn into 1up!
+	Collecting two Celestial items grants the Celeste transformation.
+
+Soft Serve (Passive, Quality: 4) - "Spilled Milk + HP Up" (4,7)
+	+1 full soul heart, +2 more if red health is full or empty.
+	When firing tears, 10% + 3% per luck chance (up to 50%) to spawn a randomly colored creep spew that deals (0.5x + 1) player damage 3 times each second. 
+	Each color does the following:
+		Red - Bounces and moves faster
+		White - Slows and freezes
+		Pink - Shorter range and homing
+		Light Brown - When enemy is killed, if last damage was the creep spawns a linger bean cloud
+		Dark Brown - Higher damage, short range and larger size
+
+Edible Soul (Passive, Quality: 4) - "He'll come for you when you're gone"
+	On death, grants flight, 3 broken hearts, and 3 Furnace Knights (Souleater Phase 2 enemies) and revives you. Sets your health to 1 black heart when triggered.
+
+Fallen Guard (Familiar, Quality: 3) - "The heat has marked you"
+	Gives a mini Furnace Knight familiar, dealing 1.0 + 0.1 x player damage contact damage and following enemies. 
+
+
+---------- Quest Items:
+
+Blood Key (Passive, Quality: 0) - "Your fate is sealed" (9,4)
+	Enables the current player to enter Lucifer's Palace. Only attainable in Hard Mode.
+	Giving the Gatekeeper in Sheol an angel item from the run spawns the key, then defeating Satan grants access to the Ivory Palace.
+
+Vessel of Purity (Passive, Quality: 0) - "Reveal the truth from within" (10,4)
+	Enables the current player to face the final form of the final boss of Godmode. Only attainable in Hard Mode.
+
+	Upon taking damage once,
+		- Visual changes to be cracked.
+		- Small explosion happens around the player.
+		- +2 damage up
+		- +1 tears up
+
+	Upon taking damage twice,
+		- Visual changes to be cracked and bloody.
+		- Medium explosion happens around the player.
+		- +2 damage up (For a total of +4 damage up)
+		- +1 tears up (For a total of +2 tears up)
+
+	Upon taking damage three times,
+		- Mama mega effect is applied to the room.
+		- Large explosion happens around the player.
+		- The item is removed, and the player is unable to face the final form of the final boss of Godmode.
+
+
+---------- Tainted Items:
+
+Reclusive Tendencies (Active, 1 Charges, Quality: 1) - "They are your friends" (4,5)
+	When used, charms all spiders in the room for 10 seconds and (3+NumberOfSpiders) chiggers (winged spiders from Recluse) spawn
+
+Golden Stopwatch (Active, 4 Charges, Quality: 2) - "Time is money" (3,5)
+	When used, drops 1 penny and turns the room golden. Every 10 seconds in a non-cleared room, spawn a random coin near the player. Works up to 6 times.
+
+Mom's Wish (Active, 1 Charge Per Floor, Quality: 0) - "Fulfill her dreams" (10,5)
+	When used, spawns a Holy Card and applies a permanent 5% reduction to tears, damage, speed, shot speed and luck.
+
+
+---------- Trinkets:
+
+Gesture of the Deep (Trinket) - "Drowning in uses" (2,8)
+	As long as this trinket is held, active items get used as soon as they are fully charged. +5% chance for Lil Batteries to spawn with pickups
+
+Snapped Cross (Trinket) - "Break for protection?" (4,8)
+	When the player kills an enemy, 10% chance for the player to gain a shield for three seconds
+
+Bob's Tongue (Trinket) - "Bite it!" (1,8)
+	When 2 Bob items are held, gives a random Bob item that is not currently held and removes the trinket.
+
+Marble Pop (Trinket) - "Don't choke!" (3,8)
+	At the beginning of each floor, swallow all currently held trinkets.
+
+Bombshell (Trinket) - "Highly Reactive" (5,8)
+	When a bomb is placed, a poison cloud, Bob's Curse style, spawns on the player and the player emits a trail of green creep for 5 seconds. 
+		- Made for Reactive
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+X (Trinket) - ""
+	
+
+---------- Pickups:
+
+
+Red Coins (Collectible)
+	Has a 2.5% chance to replace any penny that spawns, has a 5% chance to replace any nickel and a 10% chance to replace any dime. If you get 5 of these in one run, you get a free 1up item.
+
+Secret Light (Collectible)
+	A rare type of collectible, it spawns in hard to reach places, but also spawns frequently in secret rooms and treasure rooms. When you walk into it, it exposes itself and spawns a random collectible of any kind. This can include items.
+
+
+---------- Birthright Effects:
+
+Recluse: "Healthy Friends"
+	Chiggers spawned have 6 health instead of 3
+	Chiggers spawned last twice as long before despawning
+
+Recluse (Tainted): "Stronger Connections"
+	Reclusive Tendencies is twice as effective (charm twice as long, twice as many chiggers)
+
+Xaphan: "Everlasting Love"
+	+5 Luck
+	Adramolech's Blessing will charge twice for every 4 champions killed.
+
+Elohim: "Reclaim the throne"
+	Teleports to a special angel room with 7 random options and a bible (3 are able to be picked), as well as 2 Eternal hearts and 1 Gold heart
+
+Deli: "More despair!"
+	Changes base damage multiplier from 65% to 85%, and base tear delay multiplier from 120% to 110%
+
+Gehazi: "Money management!"
+	Save 2 more coins on getting hit, making you save between 2-4 instead of 0-2.
+
+Gehazi (Tainted): "Savor the moment"
+	Lose a penny every 10 seconds instead of 5
+
+The Sign: "Freedom!"
+	Removes all broken hearts, gives 1 Soul heart, and changes base speed multiplier from 75% to 100%.
+
+---------- Transformations:
+
+Techboy
+	Items: 
+		Tech .5, Technology, Technology 2, Robo-baby, Robo-baby 2.0, Technology Zero, Tech X, The Battery, 9 Volt, Car Battery, 4.5 Volt, Gold Plated Battery, Battery Pack
+	Effects:
+		Whenever the player takes damage or uses an active item, release 8 Tech X rings that deal 0.5x the player's damage.
+
+Cultist
+	Items:
+		Spoon Bender, Deck of Cards, Card Reading, Magic 8 Ball, Lil' Portal, Charm of the Vampire, Crossbones, Sacrificial Altar, Tarot Cloth
+	Effects:
+		Whenever the player enters an uncleared room, spawns 12 bone traps that will hold enemies in place for 5 seconds. Traps last for 10 seconds

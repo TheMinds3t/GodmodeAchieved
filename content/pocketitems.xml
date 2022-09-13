@@ -1,0 +1,11 @@
+<pocketitems>
+    <card description="Which book??" name="Torn Page" hud="Torn Page" greedmode="true" type="special" mimiccharge="3" pickup="5700" />
+    <card description="8 uses remaining" name="Pile of Keys (8)" hud="Key Cluster (8)" greedmode="false" type="object" pickup="5701" />
+    <card description="7 uses remaining" name="Pile of Keys (7)" hud="Key Cluster (7)" greedmode="false" type="object" pickup="5702" />
+    <card description="6 uses remaining" name="Pile of Keys (6)" hud="Key Cluster (6)" greedmode="false" type="object" pickup="5703" />
+    <card description="5 uses remaining" name="Pile of Keys (5)" hud="Key Cluster (5)" greedmode="false" type="object" pickup="5704" />
+    <card description="4 uses remaining" name="Pile of Keys (4)" hud="Key Cluster (4)" greedmode="false" type="object" pickup="5705" />
+    <card description="3 uses remaining" name="Pile of Keys (3)" hud="Key Cluster (3)" greedmode="false" type="object" pickup="5706" />
+    <card description="2 uses remaining" name="Pile of Keys (2)" hud="Key Cluster (2)" greedmode="false" type="object" pickup="5707" />
+    <card description="Save yourself" name="Stream of Consciousness" hud="Stream of Consciousness" greedmode="false" type="object" pickup="5708" />
+</pocketitems>
