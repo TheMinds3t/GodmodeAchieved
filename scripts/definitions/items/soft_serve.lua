@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Soft Serve" )
+item.instance = GODMODE.registry.items.soft_serve
 item.eid_description = "↑ +1 Soul Heart#↑ +2 Soul Hearts if full or empty red health#↑ Chance to spawn colored creep with unique effects when firing"
 item.encyc_entry = {
 	{ -- Effects
@@ -15,10 +15,9 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
     data.num_soft_serves = tonumber(GODMODE.save_manager.get_player_data(player, "NumSoftServes", "0"))
 
     if data.num_soft_serves < player:GetCollectibleNum(item.instance) then
@@ -32,9 +31,8 @@ item.eval_cache = function(self, player,cache)
 	end
 end
 
-item.player_update = function(self,player)
+item.player_update = function(self,player,data)
 	if player:HasCollectible(item.instance) then 
-		local data = GODMODE.get_ent_data(player)
 
 		data.soft_serve_cooldown = math.max(0,(data.soft_serve_cooldown or 0) - 1)
 	end
@@ -47,7 +45,7 @@ item.tear_init = function(self, tear)
 
 		if (player_data.soft_serve_cooldown or 0) == 0 then 
 			if player:GetCollectibleRNG(item.instance):RandomFloat() < math.min(0.5,0.1+player.Luck*0.03) then
-				local puddle = Isaac.Spawn(Isaac.GetEntityTypeByName("Soft Serve Spawner"),Isaac.GetEntityVariantByName("Soft Serve Spawner"),0,player.Position,player.Velocity*0.8,player)
+				local puddle = Isaac.Spawn(GODMODE.registry.entities.soft_serve.type,GODMODE.registry.entities.soft_serve.variant,0,player.Position,player.Velocity*0.8,player)
 				puddle.CollisionDamage = player.Damage * 0.5 + 1
 				local data = GODMODE.get_ent_data(puddle)
 				data.color = player:GetCollectibleRNG(item.instance):RandomInt(5)+1

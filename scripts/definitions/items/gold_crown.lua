@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Crown of Gold" )
+item.instance = GODMODE.registry.items.crown_of_gold
 item.eid_description = "↑ Midas freeze an enemy for 7.5 seconds when entering a room #↑ +1 luck for every 25 coins, up to +3.0 luck at 99 coins#↓ Drop (5*damage-(1 to 3)) coins on taking damage"
 item.encyc_entry = {
 	{ -- Effects
@@ -10,7 +10,7 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 	local am = math.floor(player:GetNumCoins()/25)
 	if player:HasCollectible(CollectibleType.COLLECTIBLE_DEEP_POCKETS) and player:GetNumCoins() > 99 then 
@@ -24,7 +24,7 @@ end
 
 item.player_update = function(self,player)
 	if player:HasCollectible(item.instance) then
-		if Isaac.GetFrameCount() % 60 == 10 then 
+		if player:IsFrame(60,10) then 
 			player:AddCacheFlags(CacheFlag.CACHE_LUCK)
 			player:EvaluateItems()
 		end
@@ -42,16 +42,16 @@ end
 item.new_room = function(self)
 	local count = GODMODE.util.total_item_count(item.instance)
 
-	if not Game():GetRoom():IsClear() and Isaac.GetPlayer():GetNumCoins() < 99 then
+	if not GODMODE.room:IsClear() and Isaac.GetPlayer():GetNumCoins() < 99 then
 		local depth = count*25
 		while count > 0 and depth > 0 do 
 			local added = 0
 			for _,ent in ipairs(Isaac.GetRoomEntities()) do 
 				if not ent:HasEntityFlags(EntityFlag.FLAG_MIDAS_FREEZE) and ent:GetDropRNG():RandomFloat() < 0.1 and ent.MaxHitPoints > 0 and ent:IsVulnerableEnemy() then 
 					if ent:IsBoss() then 
-						ent:AddMidasFreeze(EntityRef(Isaac.GetPlayer()),30*5)
+						ent:AddMidasFreeze(EntityRef(Isaac.GetPlayer()),30*3)
 					else
-						ent:AddMidasFreeze(EntityRef(Isaac.GetPlayer()),30*7.5)
+						ent:AddMidasFreeze(EntityRef(Isaac.GetPlayer()),30*5)
 					end
 					added = added + 1
 
@@ -68,14 +68,13 @@ item.new_room = function(self)
 end
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
-
 	if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES then
 		local player = enthit:ToPlayer()
 		local coins = player:GetNumCoins()
 		local co = math.min(player:GetCollectibleRNG(item.instance):RandomInt(2),coins)
 		local coins_lost = math.min(10, amount*5)
 
-		if player:GetName() == "Gehazi" and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
+		if player:GetPlayerType() == GODMODE.registry.players.gehazi and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
 			co = co + 2*math.min(2,amount)
 		end
 
@@ -83,14 +82,20 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 		player:AddCoins(-coins_lost)
 
 		for i=1,co do
-			Game():Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COIN,enthit.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,player:GetCollectibleRNG(item.instance):RandomInt(10)-5),enthit,1,enthit.InitSeed)
+			Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COIN,1,
+				enthit.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,
+				player:GetCollectibleRNG(item.instance):RandomInt(10)-5),enthit)
 		end
 
 		for i=1,sh do
-			local coin = Game():Spawn(Isaac.GetEntityTypeByName("Shatter Coin"),Isaac.GetEntityVariantByName("Shatter Coin"),enthit.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,player:GetCollectibleRNG(item.instance):RandomInt(10)-5),enthit,0,enthit.InitSeed)
+			local coin = Isaac.Spawn(GODMODE.registry.entities.shatter_coin.type,GODMODE.registry.entities.shatter_coin.variant,0,
+				enthit.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,
+				player:GetCollectibleRNG(item.instance):RandomInt(10)-5),enthit)
+
 			coin:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 			coin.Velocity = Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,player:GetCollectibleRNG(item.instance):RandomInt(10)-5)
 		end
+
 		player:AddCacheFlags(CacheFlag.CACHE_LUCK)
 		player:EvaluateItems()
 	end

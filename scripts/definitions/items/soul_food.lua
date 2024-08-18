@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Soul Food" )
+item.instance = GODMODE.registry.items.soul_food
 item.eid_description = "+2 Soul Hearts#↑ +1 Luck"
 item.binge_eid_description = "+2 Soul Hearts#↑ +1 Luck#↑ +0.2 Speed"
 item.encyc_entry = {
@@ -14,7 +14,7 @@ item.encyc_entry = {
     },
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 
@@ -27,19 +27,6 @@ item.eval_cache = function(self, player,cache)
 	end
 end
 
-if EID then
-	item.player_update = function(self,player)
-		if player:HasCollectible(item.instance) then
-			local count = GODMODE.util.count_enemies(nil, EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,item.instance)
-
-			if count > 0 and #GODMODE.util.does_player_have(CollectibleType.COLLECTIBLE_BINGE_EATER) > 0 then
-				EID:addCollectible(item.instance,self.binge_eid_description)	
-			else
-				EID:addCollectible(item.instance,self.eid_description)	
-			end
-		end
-	end
-end
 
 
 

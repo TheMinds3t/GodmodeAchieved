@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Bubble Wand" )
+item.instance = GODMODE.registry.items.bubble_wand
 item.eid_description = "↑ Spawns a wave of bubbles dealing 100% damage on entering a room# The amount of bubbles correlates with how much red health is missing and how many soul hearts the player has# Bubbles have a 25% chance at 10 luck to be larger and explode into projectiles on popping"
 item.encyc_entry = {
 	{ -- Effects
@@ -10,19 +10,19 @@ item.encyc_entry = {
 }
 
 item.new_room = function(self)
-	if not Game():GetRoom():IsClear() then 
+	if not GODMODE.room:IsClear() then 
 		GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
 			local count = 3 + player:GetCollectibleRNG(item.instance):RandomInt(3) + (player:GetMaxHearts() - player:GetHearts())/4 + player:GetSoulHearts()/4
-			count = count * player:GetCollectibleNum(item.instance)
-			local vel = Game():GetLevel().EnterDoor
+			count = math.ceil(count + count * (player:GetCollectibleNum(item.instance) - 1) * 0.3)
+			local vel = GODMODE.level.EnterDoor
 	
 			for i=0,count do 
 				local bubble = nil 
 	
 				if player:GetCollectibleRNG(item.instance):RandomFloat() < (math.min(10,math.max(0,player.Luck))*0.2+0.05) then 
-					bubble = Isaac.Spawn(Isaac.GetEntityTypeByName("Bubbly Plum Bubble (Large)"),Isaac.GetEntityVariantByName("Bubbly Plum Bubble (Large)"),1,player.Position,player.Velocity,player)
+					bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_l.type,GODMODE.registry.entities.bubbly_plum_bubble_l.variant,GODMODE.registry.entities.bubbly_plum_bubble_l.subtype,player.Position,player.Velocity,player)
 				else
-					bubble = Isaac.Spawn(Isaac.GetEntityTypeByName("Bubbly Plum Bubble (Small)"),Isaac.GetEntityVariantByName("Bubbly Plum Bubble (Small)"),2,player.Position,player.Velocity,player)
+					bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_s.type,GODMODE.registry.entities.bubbly_plum_bubble_s.variant,GODMODE.registry.entities.bubbly_plum_bubble_s.subtype,player.Position,player.Velocity,player)
 				end
 	
 				bubble:ClearEntityFlags(EntityFlag.FLAG_APPEAR)

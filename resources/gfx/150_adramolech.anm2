@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="2/17/2017 9:01:37 PM" Version="5" Fps="20"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="6/28/2024 10:11:04 AM" Version="6" Fps="20"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\soulless.png" Id="0"/>
@@ -192,7 +192,7 @@
 			</LayerAnimations>
 			<NullAnimations/>
 			<Triggers>
-				<Trigger EventId="0" AtFrame="12"/>
+				<Trigger EventId="0" AtFrame="7"/>
 			</Triggers>
 		</Animation>
 	</Animations>

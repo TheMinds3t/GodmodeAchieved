@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="1/29/2022 11:10:21 AM" Version="7" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="1/29/2022 11:10:21 AM" Version="7" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="soul_fire.png" Id="0"/>

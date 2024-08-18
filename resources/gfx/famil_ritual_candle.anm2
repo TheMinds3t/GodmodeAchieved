@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="11/10/2021 4:21:32 PM" Version="33" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="7/23/2024 3:25:14 PM" Version="34" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\ritual.png" Id="0"/>
@@ -77,6 +77,8 @@
 			<NullAnimations/>
 			<Triggers>
 				<Trigger EventId="0" AtFrame="28"/>
+				<Trigger EventId="0" AtFrame="30"/>
+				<Trigger EventId="0" AtFrame="32"/>
 			</Triggers>
 		</Animation>
 		<Animation Name="Appear" FrameNum="42" Loop="false">

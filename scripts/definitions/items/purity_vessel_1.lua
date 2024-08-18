@@ -1,6 +1,6 @@
 local item = include("scripts.definitions.items.purity_vessel_base")
-item.instance = Isaac.GetItemIdByName( "Cracked Vessel of Purity" )
-item.next_instance = Isaac.GetItemIdByName("Bloodied Vessel of Purity")
+item.instance = GODMODE.registry.items.vessel_of_purity_2
+item.next_instance = GODMODE.registry.items.vessel_of_purity_3
 
 item.encyc_entry = {
 	{ -- Effects

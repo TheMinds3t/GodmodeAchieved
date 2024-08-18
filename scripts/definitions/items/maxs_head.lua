@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Max's Head" )
+item.instance = GODMODE.registry.items.maxs_head
 item.eid_description = "On use:#↑ +25% Damage#↓ -10% Firerate#↓ -5% Speed#Can be used up to 5 times in a room for increased effects"
 item.encyc_entry = {
 	{ -- Effects
@@ -10,10 +10,9 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
 	if not data.max_head_charge then data.max_head_charge = 0 end
 	if cache == CacheFlag.CACHE_DAMAGE then
 		player.Damage = player.Damage * (1.0 + data.max_head_charge / 4)
@@ -27,9 +26,9 @@ item.eval_cache = function(self, player,cache)
 
     if data.max_head_charge > 0 then
     	if data.max_head_charge > 1 then
-    		player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath(tostring("gfx/costumes/maxs_head_"..(data.max_head_charge-1)..".anm2")))
+    		player:TryRemoveNullCostume(GODMODE.registry.costumes.maxs_head[(data.max_head_charge-1)])
     	end
-    	player:AddNullCostume(Isaac.GetCostumeIdByPath(tostring("gfx/costumes/maxs_head_"..data.max_head_charge..".anm2")))
+    	player:AddNullCostume(GODMODE.registry.costumes.maxs_head[data.max_head_charge])
 	end
 end
 
@@ -52,7 +51,7 @@ item.new_room = function(self)
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
 		local data = GODMODE.get_ent_data(player)
 		if data.max_head_charge and data.max_head_charge > 0 then
-			player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath(tostring("gfx/costumes/maxs_head_"..(data.max_head_charge)..".anm2")))
+			player:TryRemoveNullCostume(GODMODE.registry.costumes.maxs_head[data.max_head_charge])
 		end
 		data.max_head_charge = 0
 		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_SPEED | CacheFlag.CACHE_FIREDELAY)

@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="10/6/2021 5:34:30 PM" Version="55" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="10/6/2021 5:34:30 PM" Version="55" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\reaper.png" Id="0"/>

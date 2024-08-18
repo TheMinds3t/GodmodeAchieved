@@ -1,5 +1,5 @@
 local item = include("scripts.definitions.items.purity_vessel_base")
-item.instance = Isaac.GetItemIdByName( "Bloodied Vessel of Purity" )
+item.instance = GODMODE.registry.items.vessel_of_purity_3
 item.next_instance = nil
 
 item.encyc_entry = {

@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Gold Plated Battery" )
+item.instance = GODMODE.registry.items.gold_plated_battery
 item.eid_description = "Hold space to spend 5 coins on one charge of your active item"
 item.encyc_entry = {
 	{ -- Effects
@@ -12,9 +12,8 @@ item.encyc_entry = {
 local cost = 5
 local charge_time = 40
 
-item.player_update = function(self,player)
+item.player_update = function(self,player, data)
 	if player:HasCollectible(item.instance) then
-		local data = GODMODE.get_ent_data(player)
 		local percent = math.max(0,(charge_time-(data.gold_battery_cooldown or charge_time))/charge_time)
 
 		if player:IsFrame(15,1) or data.should_colorize == nil then 
@@ -39,7 +38,7 @@ item.player_update = function(self,player)
 							player:AddCoins(-cost)
 	
 							for i=1,cost do
-								local c = Game():Spawn(Isaac.GetEntityTypeByName("Shatter Coin"),Isaac.GetEntityVariantByName("Shatter Coin"),player.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,player:GetCollectibleRNG(item.instance):RandomInt(10)-5),player,0,player.InitSeed)
+								local c = Isaac.Spawn(GODMODE.registry.entities.shatter_coin.type,GODMODE.registry.entities.shatter_coin.variant,0,player.Position,Vector(player:GetCollectibleRNG(item.instance):RandomInt(10)-5,player:GetCollectibleRNG(item.instance):RandomInt(10)-5),player)
 								c:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 								c.Velocity = Vector(player:GetCollectibleRNG(item.instance):RandomInt(8)-4,player:GetCollectibleRNG(item.instance):RandomInt(8)-4)
 							end
@@ -49,11 +48,11 @@ item.player_update = function(self,player)
 							
 							if player:GetActiveCharge(slot) == GODMODE.util.get_max_charge(active_item) then 
 								player:AnimateCollectible(active_item)
-								SFXManager():Play(SoundEffect.SOUND_BATTERYCHARGE)
-								Game():GetHUD():FlashChargeBar(player, slot)
+								GODMODE.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
+								GODMODE.game:GetHUD():FlashChargeBar(player, slot)
 							else
 								player:AnimateCollectible(item.instance)
-								SFXManager():Play(SoundEffect.SOUND_BEEP)
+								GODMODE.sfx:Play(SoundEffect.SOUND_BEEP)
 							end
 						end
 					end

@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Seraphim Warhorn" )
+item.instance = GODMODE.registry.items.seraphim_warhorn
 item.eid_description = "Summons a Bloody Uriel to assist you for the duration of the room"
 item.eid_transforms = GODMODE.util.eid_transforms.ANGEL
 item.encyc_entry = {
@@ -12,7 +12,7 @@ item.encyc_entry = {
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-        local angel = Game():Spawn(Isaac.GetEntityTypeByName("Bloody Uriel"), Isaac.GetEntityVariantByName("Bloody Uriel"), Game():GetRoom():GetCenterPos()-Vector(0,64), Vector.Zero, player, 0, player.InitSeed)
+        local angel = Isaac.Spawn(GODMODE.registry.entities.bloody_uriel.type, GODMODE.registry.entities.bloody_uriel.variant, 0, GODMODE.room:GetCenterPos()-Vector(0,64), Vector.Zero, player)
         angel:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
         angel:Update()
         angel.MaxHitPoints = angel.MaxHitPoints * 0.666

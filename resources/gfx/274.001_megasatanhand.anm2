@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="2/13/2015 11:15:32 AM" Version="15" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="2/13/2015 11:15:32 AM" Version="15" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\rebirth\MegaSatan.png" Id="0"/>

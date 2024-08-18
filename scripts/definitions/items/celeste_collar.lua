@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Celestial Collar" )
+item.instance = GODMODE.registry.items.celestial_collar
 item.eid_description = "15% chance for treasure, boss and shop items to be replaced with 1up!#↑ x1.1 Damage per extra life"
 item.encyc_entry = {
 	{ -- Effects
@@ -8,7 +8,7 @@ item.encyc_entry = {
       {str = " - For each life the player possesses, gain an additional 1.1x damage multiplier."},
     },
 }
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
     if cache == CacheFlag.CACHE_DAMAGE then

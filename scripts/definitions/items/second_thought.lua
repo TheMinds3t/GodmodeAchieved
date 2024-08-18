@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "A Second Thought" )
+item.instance = GODMODE.registry.items.a_second_thought
 item.eid_description = "↑ +0.2 Speed#Hush and Boss Rush doors are always open#Call of the Void no longer spawns"
 item.encyc_entry = {
 	{ -- Effects
@@ -9,7 +9,7 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	if cache == CacheFlag.CACHE_SPEED then
@@ -19,8 +19,8 @@ end
 
 item.player_update = function(self, player)
 	if player:HasCollectible(item.instance) then 
-		Game().BlueWombParTime = Game():GetFrameCount() + 300
-		Game().BossRushParTime = Game():GetFrameCount() + 300
+		GODMODE.game.BlueWombParTime = GODMODE.game:GetFrameCount() + 300
+		GODMODE.game.BossRushParTime = GODMODE.game:GetFrameCount() + 300
 	end
 end
 

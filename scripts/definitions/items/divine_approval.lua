@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Divine Approval" )
+item.instance = GODMODE.registry.items.divine_approval
 item.eid_description = "↑ +0.25 Tears per gold heart #↑ Gives 3 soul hearts and full gold hearts#↑ +1 gold heart per floor#↓ Removes all black hearts on pickup"
 item.eid_transforms = GODMODE.util.eid_transforms.ANGEL
 item.encyc_entry = {
@@ -11,10 +11,9 @@ item.encyc_entry = {
     },
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
     data.num_divines = tonumber(GODMODE.save_manager.get_player_data(player, "NumDivine", "0"))
 
     if data.num_divines < player:GetCollectibleNum(item.instance) then

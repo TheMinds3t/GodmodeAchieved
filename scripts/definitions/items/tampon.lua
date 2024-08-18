@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Cloth on a String" )
+item.instance = GODMODE.registry.items.cloth_on_a_string
 item.eid_description = "↑ +5% damage dealt per other instance of same enemy in the room#1% chance for item pedestal to turn into Cloth of Gold if not owned already"
 item.encyc_entry = {
 	{ -- Effects
@@ -27,7 +27,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 			end
 		end
 
-		local dmg = ((count - 1) * 0.05) * GODMODE.util.total_item_count(item.instance) + GODMODE.util.total_item_count(Isaac.GetItemIdByName("Cloth of Gold")) * 0.25
+		local gold_c = GODMODE.util.total_item_count(GODMODE.registry.items.cloth_of_gold)
+		local dmg = ((count - 1) * 0.05) * GODMODE.util.total_item_count(item.instance) * (1 + gold_c * 0.25)
 
 		if dmg > 0.0 then
 			if enthit:ToNPC() then
@@ -42,12 +43,16 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 end
 
 item.pickup_init = function(self, pickup)
-    if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM and GODMODE.achievements.is_item_unlocked(Isaac.GetItemIdByName("Cloth of Gold")) then
+    if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and GODMODE.achievements.is_item_unlocked(GODMODE.registry.items.cloth_of_gold) and GODMODE.room:IsFirstVisit() then
 		GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
 			local data = GODMODE.get_ent_data(player)
-			if not player:HasCollectible(Isaac.GetItemIdByName("Cloth of Gold")) then
-				if player:GetCollectibleRNG(item.instance):RandomFloat() < 0.01*player:GetCollectibleNum(item.instance) then
-					pickup:Morph(5,pickup.Variant,Isaac.GetItemIdByName("Cloth of Gold"), true)
+			local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
+
+            if config:IsCollectible() and config.Tags & ItemConfig.TAG_QUEST ~= ItemConfig.TAG_QUEST then             
+				if not player:HasCollectible(GODMODE.registry.items.cloth_of_gold) then
+					if player:GetCollectibleRNG(item.instance):RandomFloat() < 0.01*player:GetCollectibleNum(item.instance) then
+						pickup:Morph(5,pickup.Variant,GODMODE.registry.items.cloth_of_gold, true)
+					end
 				end
 			end
 		end)

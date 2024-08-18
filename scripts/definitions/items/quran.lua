@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Qur'an" )
+item.instance = GODMODE.registry.items.quran
 item.eid_description = "↓ Removes all black hearts ↑ +1.5 Soul heart per black heart removed # Instantly kills Mom and Mom's Heart# Kills you when used against Satan"
 item.eid_transforms = GODMODE.util.eid_transforms.BOOKWORM
 
@@ -27,11 +27,11 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         GODMODE.save_manager.set_persistant_data("QuranHearts", saved_hearts + math.ceil(black*0.5+1))
 
         if saved_hearts + math.ceil(black*0.5+1) > 12 then
-            GODMODE.achievements.unlock_item(Isaac.GetItemIdByName("Prayer Mat"))
+            GODMODE.achievements.unlock_item(GODMODE.registry.items.prayer_mat)
         end
 
-        SFXManager():Play(SoundEffect.SOUND_HOLY,1,2,false,0.75)
-        SFXManager():Play(SoundEffect.SOUND_SUPERHOLY,1,2,false,0.5)
+        GODMODE.sfx:Play(SoundEffect.SOUND_HOLY,1,2,false,0.75)
+        GODMODE.sfx:Play(SoundEffect.SOUND_SUPERHOLY,1,2,false,0.5)
 
         GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_MOM,-1,-1, function(ent) ent:Die() end)
         GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_MOMS_HEART,-1,-1, function(ent) ent:Die() end)

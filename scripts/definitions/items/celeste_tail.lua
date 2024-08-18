@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Celestial Tail" )
+item.instance = GODMODE.registry.items.celestial_tail
 item.eid_description = "↑ All regular keys are now doubled#↑ 50% chance for chests to become eternal"
 item.encyc_entry = {
 	{ -- Effects

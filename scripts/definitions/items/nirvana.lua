@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Nirvana" )
+item.instance = GODMODE.registry.items.nirvana
 item.eid_description = "All enemies spawn with 80% health"
 item.encyc_entry = {
 	{ -- Effects
@@ -17,12 +17,11 @@ item.new_room = function(self)
 	GODMODE.nirvana_cache = GODMODE.util.total_item_count(item.instance)
 end
 
-item.npc_update = function(self,ent)
+item.npc_update = function(self, ent, data, sprite)
 	if not GODMODE.util.is_valid_enemy(ent,true) then return end
 	if not GODMODE.nirvana_cache then GODMODE.nirvana_cache = GODMODE.util.total_item_count(item.instance) end 
 
 	if (GODMODE.nirvana_cache or 0) > 0 then 
-		local data = GODMODE.get_ent_data(ent)
 		data.nirvana_scale = data.nirvana_scale or {}
 
 		if data.nirvana_scale[ent.Type..","..ent.Variant] == nil then 

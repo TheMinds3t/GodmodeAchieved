@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="1/26/2022 1:26:28 PM" Version="13" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="1/26/2022 1:26:28 PM" Version="13" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="familiars\holychalice.png" Id="0"/>

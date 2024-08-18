@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/1/2022 10:24:12 AM" Version="24" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="3/14/2023 12:56:39 PM" Version="26" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="effects\feather_duster.png" Id="0"/>
@@ -37,7 +37,9 @@
 				</LayerAnimation>
 			</LayerAnimations>
 			<NullAnimations/>
-			<Triggers/>
+			<Triggers>
+				<Trigger EventId="0" AtFrame="8"/>
+			</Triggers>
 		</Animation>
 	</Animations>
 </AnimatedActor>

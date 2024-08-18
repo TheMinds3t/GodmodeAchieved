@@ -1,9 +1,16 @@
 local item = {}
-item.instance = Isaac.GetTrinketIdByName( "Bob's Tongue" )
+item.instance = GODMODE.registry.trinkets.bobs_tongue
 item.eid_description = "#↑ +0.25 Tears#↑ If two Bob items are held by the player, gives a random Bob item and swallows this trinket"
 item.trinket = true
+item.encyc_entry = {
+    { -- Effects
+        {str = "Effects", fsize = 2, clr = 3, halign = 0},
+        {str = "- +0.25 Tears."},
+        {str = "- If two items fulfilling the Bob transformation are held, then all trinkets the player is holding currently get swallowed and you gain another random Bob item not currently held."},
+    },
+}
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasTrinket(item.instance) then return end
 
 	local data = GODMODE.get_ent_data(player)

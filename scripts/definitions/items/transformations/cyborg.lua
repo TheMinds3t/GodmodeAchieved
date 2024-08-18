@@ -3,8 +3,9 @@ transform.instance = "Cyborg"
 transform.transformation = true
 transform.eid_transform = GODMODE.util.eid_transforms.CYBORG
 transform.cache_flags = CacheFlag.CACHE_SPEED | CacheFlag.CACHE_DAMAGE
+transform.custom_itemtag = "cyborg"
 transform.items = {
-	[Isaac.GetItemIdByName("Gold Plated Battery")] = true,
+	[GODMODE.registry.items.gold_plated_battery] = true,
 	[CollectibleType.COLLECTIBLE_9_VOLT] = true,
 	[CollectibleType.COLLECTIBLE_BATTERY] = true,
 	[CollectibleType.COLLECTIBLE_CAR_BATTERY] = true,
@@ -19,19 +20,19 @@ transform.items = {
 	[CollectibleType.COLLECTIBLE_METAL_PLATE] = true,
 	[CollectibleType.COLLECTIBLE_ANALOG_STICK] = true,
 	[CollectibleType.COLLECTIBLE_BROKEN_MODEM] = true,
-	[Isaac.GetItemIdByName("Jack-of-all-Trades")] = true,
+	[GODMODE.registry.items.jack_of_all_trades] = true,
 }
 
 local has_cyborg = function(player)
 	return GODMODE.save_manager.get_player_data(player,"Cyborg","false") == "true"
 end
 
-transform.eval_cache = function(self, player,cache)
+transform.eval_cache = function(self, player,cache,data)
 	if has_cyborg(player) then
 		if cache == CacheFlag.CACHE_SPEED then
 			player.MoveSpeed = player.MoveSpeed - 0.1
-			player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/cyborg.anm2"))
-			player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/cyborg.anm2"))
+			player:TryRemoveNullCostume(GODMODE.registry.costumes.cyborg)
+			player:AddNullCostume(GODMODE.registry.costumes.cyborg)
 		end
 
 		if cache == CacheFlag.CACHE_DAMAGE then

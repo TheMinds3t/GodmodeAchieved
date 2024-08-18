@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( " Papal Cross " )
+item.instance = GODMODE.registry.items.papal_cross_holy
 item.eid_description = "Teleports to an angel room with a free item and enemies inside#(100-AngelRoomChance)% chance to turn into unholy Papal Cross"
 item.eid_transforms = GODMODE.util.eid_transforms.ANGEL
 item.encyc_entry = {
@@ -11,26 +11,27 @@ item.encyc_entry = {
 	},
 }
 
-item.pickup_update = function(self, pickup)
+item.pickup_update = function(self, pickup, data, sprite)
 	if pickup.Variant == PickupVariant.PICKUP_SHOPITEM or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then 
 		if pickup.SubType == item.instance then 
-			pickup:GetSprite():ReplaceSpritesheet(1,"gfx/items/collectibles/collectibles_papal_cross_both.png")
-			pickup:GetSprite():LoadGraphics()
+			sprite:ReplaceSpritesheet(1,"gfx/items/collectibles/collectibles_papal_cross_both.png")
+			sprite:LoadGraphics()
 		end
 	end
 end
 
 item.pickup_collide = function(self, pickup, ent, entfirst)
-	item.pickup_update(self, pickup)
+	item.pickup_update(self, pickup, GODMODE.get_ent_data(pickup), ent:GetSprite())
 end
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-		local angel_chance = Game():GetLevel():GetAngelRoomChance()
+		local angel_chance = GODMODE.level:GetAngelRoomChance()
+		GODMODE.log("angel = "..angel_chance..", devil = "..GODMODE.room:GetDevilRoomChance(), true)
 		
-		local room = Game():GetLevel():GetStage() - 1
+		local room = GODMODE.level:GetStage() - 1
 		if room > LevelStage.STAGE4_3 then room = room - 1 end
-		if Game():GetLevel():GetStage() == LevelStage.STAGE1_1 or Game():GetLevel():GetStage() == LevelStage.STAGE_NULL then
+		if GODMODE.level:GetStage() == LevelStage.STAGE1_1 or GODMODE.level:GetStage() == LevelStage.STAGE_NULL then
 			Isaac.ExecuteCommand("goto s.angel.600")
 		else
 			if room < 10 then room = "0"..room end
@@ -41,7 +42,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 
 		if rng:RandomFloat() < 1.0-angel_chance and void_slot ~= slot then
 			player:RemoveCollectible(item.instance)
-			player:AddCollectible(Isaac.GetItemIdByName("Papal Cross"),12,false)
+			player:AddCollectible(GODMODE.registry.items.papal_cross_unholy,12,false,slot,var_data)
 		end
 
 		return true

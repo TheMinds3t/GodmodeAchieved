@@ -1,19 +1,38 @@
 local item = {}
-item.instance = Isaac.GetTrinketIdByName( "Godmode" )
-item.eid_description = "↑ When you take damage, rewind time to before you entered the room#↓ +1 Broken Heart when this triggers#↓ You cannot drop this trinket after picking it up"
+item.instance = GODMODE.registry.trinkets.godmode
+item.eid_description = "↑ When you take damage, rewind time to before you entered the room#↓ +1 Broken Heart when this triggers#↓ You cannot drop this trinket after picking it up# Gets prioritized for removal by the Stifled Gatekeeper in Sheol over Angel room items"
 item.trinket = true
+item.encyc_entry = {
+	{ -- Effects
+      {str = "Effects", fsize = 2, clr = 3, halign = 0},
+      {str = "When damage is taken, time gets rewound to the last room and you gain a broken heart."},
+      {str = "This trinket CANNOT be dropped."},
+      {str = "The Stifled Gatekeeper in Sheol/Cathedral will prioritize this trinket over any angel/devil items collected throughout the run, removing the trinket!"},
+    },
+}
+
+item.get_trinket = function(self,trinket,rng)
+    if trinket == item.instance then 
+        return rng:RandomInt(TrinketType.NUM_TRINKETS-1)+1
+    end
+end
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     local flag = true
-    if enthit:ToPlayer() and amount > 0 and enthit:ToPlayer():HasTrinket(item.instance) and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES then
-        local player = enthit:ToPlayer()
+    local player = enthit:ToPlayer()
+    if player and amount > 0 and player:HasTrinket(item.instance) and (flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES 
+                    and flags & DamageFlag.DAMAGE_INVINCIBLE ~= DamageFlag.DAMAGE_INVINCIBLE
+                    and flags & DamageFlag.DAMAGE_IV_BAG ~= DamageFlag.DAMAGE_IV_BAG
+                    and entsrc.Type ~= EntityType.ENTITY_SLOT
+                    or player:GetHearts()+player:GetSoulHearts()+player:GetBoneHearts()-amount <= 0) then
         local data = GODMODE.get_ent_data(player)
+        -- GODMODE.log("entsrc="..entsrc.Type..","..entsrc.Variant,true)
 
         -- if data.recursive_godmode ~= true then 
             -- if player:GetHearts() + player:GetSoulHearts() + player:GetBlackHearts() + player:GetRottenHearts() <= amount * 3 then 
 
             flag = false
-            GODMODE.get_ent_data(player).godmode_rewind = Game():GetRoom():GetDecorationSeed()
+            GODMODE.get_ent_data(player).godmode_rewind = GODMODE.room:GetDecorationSeed()
 
             if GODMODE.shader_params.godmode_trinket_time == 0 then 
                 GODMODE.shader_params.godmode_trinket_time = 35
@@ -32,25 +51,29 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     end
 end
 
-item.player_update = function(self,player)
+-- local used = false
+
+item.player_update = function(self,player,data)
     
     if player:HasTrinket(item.instance) then 
-        local data = GODMODE.get_ent_data(player)
         if data.received_godmode ~= true then 
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
             data.received_godmode = true
         end
         local rewind_flag = data.godmode_rewind
-        if rewind_flag ~= nil and Game():GetRoom():GetDecorationSeed() ~= rewind_flag then 
+        if rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() ~= rewind_flag then 
             player:GetSprite():Play("Appear",true)
             data.godmode_rewind = nil
             data.disable_time = 40
             player:AddBrokenHearts(1)
         end
 
-        if GODMODE.shader_params.godmode_trinket_time == 33 and rewind_flag ~= nil and Game():GetRoom():GetDecorationSeed() == rewind_flag then 
+        if GODMODE.shader_params.godmode_trinket_time == 33 and rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() == rewind_flag then 
             GODMODE.shader_params.godmode_trinket_time = 32
+            GODMODE.godhooks.call_hook("pre_godmode_restart")
             Isaac.ExecuteCommand("rewind")
+            -- used = true
+            -- player:UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS, UseFlag.USE_NOANIM)
         end
 
         if GODMODE.shader_params.godmode_trinket_time == 0 and player:GetBrokenHearts() == 12 then 
@@ -64,10 +87,21 @@ item.player_update = function(self,player)
 
             if data.disable_time == 0 then 
                 player.ControlsEnabled = true
+                GODMODE.godhooks.call_hook("post_godmode_restart")
             end
         end
     end
 end
+
+-- item.new_room = function()
+--     if used then 
+--         GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+--             GODMODE.log("hi!",true)
+--             player:AnimateSad()
+--         end, true)
+--         used = false
+--     end
+-- end
 
 item.pickup_collide = function(self,pickup,ent,entfirst)
     if pickup.Variant == PickupVariant.PICKUP_TRINKET and pickup.SubType == item.instance and not entfirst and ent:ToPlayer() and ent:ToPlayer():HasTrinket(item.instance) then 

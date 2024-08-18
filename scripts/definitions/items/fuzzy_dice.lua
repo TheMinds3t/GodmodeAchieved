@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Fuzzy Dice" )
+item.instance = GODMODE.registry.items.fuzzy_dice
 item.eid_description = "Redistributes 33% of current coins, keys and bombs randomly"
 item.encyc_entry = {
 	{ -- Effects

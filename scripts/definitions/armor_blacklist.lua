@@ -1,6 +1,5 @@
 local ret = {}
---I figure if entities already have armor scaling, additional health is unnecessary.
--- Also, this is necessary for Cloth of Gold otherwise the split damage isn't enough to counteract the damage scaling.
+-- this is necessary for Cloth of Gold otherwise the split damage isn't enough to counteract the damage scaling.
 ret.entities = 
 {
 	{type=EntityType.ENTITY_HUSH},
@@ -44,23 +43,28 @@ ret.no_champ = {
 	{type=EntityType.ENTITY_GRUDGE},
 	{type=EntityType.ENTITY_POKY},
 	{type=EntityType.ENTITY_WALL_HUGGER},
-	{type=EntityType.ENTITY_DEATHS_HEAD,variant=0},
-	{type=EntityType.ENTITY_DEATHS_HEAD,variant=2},
-	{type=EntityType.ENTITY_DEATHS_HEAD,variant=3},
-	{type=EntityType.ENTITY_DEATHS_HEAD,variant=4},
+	{type=EntityType.ENTITY_DEATHS_HEAD},
 	{type=EntityType.ENTITY_DUSTY_DEATHS_HEAD},
 	{type=EntityType.ENTITY_MOCKULUS},
 	{type=EntityType.ENTITY_MASK},
 	{type=EntityType.ENTITY_BALL_AND_CHAIN},
-	{type=Isaac.GetEntityTypeByName("Devil's Lock"),variant=Isaac.GetEntityVariantByName("Devil's Lock")},
-	{type=Isaac.GetEntityTypeByName("Bomb Barrel"),variant=Isaac.GetEntityVariantByName("Bomb Barrel")},
-	{type=Isaac.GetEntityTypeByName("Masked Angel Statue"),variant=Isaac.GetEntityVariantByName("Masked Angel Statue")},
-	{type=Isaac.GetEntityTypeByName("Papal Flame"),variant=Isaac.GetEntityVariantByName("Papal Flame")},
-	{type=Isaac.GetEntityTypeByName("Elohim's Throne"),variant=Isaac.GetEntityVariantByName("Elohim's Throne")},
-	{type=Isaac.GetEntityTypeByName("Trap Turret (Timer)"),variant=Isaac.GetEntityVariantByName("Trap Turret (Timer)")},
-	{type=Isaac.GetEntityTypeByName("Golden Scale"),variant=Isaac.GetEntityVariantByName("Golden Scale")},
-	{type=Isaac.GetEntityTypeByName("Ooze Turret"),variant=Isaac.GetEntityVariantByName("Ooze Turret")},
-	{type=Isaac.GetEntityTypeByName("Door Hazard"),variant=Isaac.GetEntityVariantByName("Door Hazard")},
+	{type=EntityType.ENTITY_PEEP,variant=10},
+	{type=EntityType.ENTITY_PEEP,variant=11},
+	{type=EntityType.ENTITY_SPIDER},
+	{type=EntityType.ENTITY_BIGSPIDER},
+	{type=EntityType.ENTITY_SWARM_SPIDER},
+	{type=EntityType.ENTITY_ETERNALFLY},
+	{type=GODMODE.registry.entities.devil_lock.type,variant=GODMODE.registry.entities.devil_lock.variant},
+	{type=GODMODE.registry.entities.bomb_barrel.type,variant=GODMODE.registry.entities.bomb_barrel.variant},
+	{type=GODMODE.registry.entities.masked_angel_statue.variant,variant=GODMODE.registry.entities.masked_angel_statue.variant},
+	{type=GODMODE.registry.entities.papal_flame.type,variant=GODMODE.registry.entities.papal_flame.variant},
+	{type=GODMODE.registry.entities.elohims_throne.type,variant=GODMODE.registry.entities.elohims_throne.variant},
+	{type=GODMODE.registry.entities.stone_beggar.type,variant=GODMODE.registry.entities.stone_beggar.variant},
+	{type=GODMODE.registry.entities.golden_scale.type,variant=GODMODE.registry.entities.golden_scale.variant},
+	{type=GODMODE.registry.entities.ooze_turret.type,variant=GODMODE.registry.entities.ooze_turret.variant},
+	{type=GODMODE.registry.entities.door_hazard.type,variant=GODMODE.registry.entities.door_hazard.variant},
+	{type=GODMODE.registry.entities.dynamite_rock.type,variant=GODMODE.registry.entities.dynamite_rock.variant},
+	{type=GODMODE.registry.entities.delirious_pile.type,variant=GODMODE.registry.entities.delirious_pile.variant},
 }
 
 ret.has_armor = function(self, ent)

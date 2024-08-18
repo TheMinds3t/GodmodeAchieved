@@ -148,14 +148,13 @@ stage.get_cur_gfx = function(self)
     return self.deterioration_levels[self.deterioration].graphics
 end
 
-
 stage.rooms = {
-    {path="resources.rooms.luc.luc_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
-    {path="resources.rooms.luc.mask_room",type=RoomType.ROOM_TREASURE,id="Treasure"},
+    {path="resources.rooms.luc.ivory_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
+    {path="resources.rooms.luc.mask_room",type=RoomType.ROOM_SECRET,id="Secret"},
 }
 
-stage.room_path = "resources/rooms/luc/rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.fruit_cellar.challenge_waves","resources.rooms.fruit_cellar.boss_challenge_waves"}
+-- stage.room_path = "resources/rooms/luc/rooms.lua"
+stage.challenge_wave_path = {"resources.rooms.luc.challenge_waves","resources.rooms.luc.boss_challenge_waves"}
 
 stage.bosses = {
     {
@@ -176,18 +175,14 @@ stage.bosses = {
     },
 }
 
-stage.music = "A Blackened Light"
-stage.music_rooms = {RoomType.ROOM_DEFAULT,RoomType.ROOM_TREASURE,RoomType.ROOM_CURSE}
-stage.boss_music = "Experiencing Revelation"
+stage.music = GODMODE.registry.music.a_blackened_light
+stage.boss_music = GODMODE.registry.music.experiencing_revelation
 
 stage.override_stage = StageAPI.StageOverride.NecropolisOne
-stage.override = function(self,stg)
-	return {
-	    OverrideStage = LevelStage.STAGE4_2,
-	    OverrideStageType = StageType.STAGETYPE_ORIGINAL,
-	    ReplaceWith = stg
-	}
-end
 
+stage.override = {
+    Stage = LevelStage.STAGE4_2,
+    StageType = StageType.STAGETYPE_ORIGINAL
+}
 
 return stage

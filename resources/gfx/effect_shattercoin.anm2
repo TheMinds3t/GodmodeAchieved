@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="7/3/2021 2:01:13 AM" Version="21" Fps="42"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="7/3/2021 2:01:13 AM" Version="21" Fps="42"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="effects\shattercoin.png" Id="0"/>

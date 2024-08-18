@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Marshall Scarf" )
+item.instance = GODMODE.registry.items.marshall_scarf
 item.eid_description = "↑ +Small tears up before womb#↑ + Medium tears in womb #↑ + High tears up after womb"
 item.eid_transforms = GODMODE.util.eid_transforms.ANGEL
 item.encyc_entry = {
@@ -12,14 +12,14 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	if cache == CacheFlag.CACHE_FIREDELAY then
 		local t = 0.5
-		local s = Game():GetLevel():GetStage()
+		local s = GODMODE.level:GetStage()
 
-		if StageAPI and GODMODE.stages ~= nil and StageAPI.GetCurrentStage() ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name] ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage ~= nil then
+		if StageAPI and StageAPI.Loaded and GODMODE.stages ~= nil and StageAPI.GetCurrentStage() ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name] ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage ~= nil then
 			s = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage
 		end
 

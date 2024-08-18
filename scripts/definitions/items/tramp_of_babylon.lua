@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Tramp of Babylon" )
+item.instance = GODMODE.registry.items.tramp_of_babylon
 item.eid_description = "↑ More damage the deeper you go #↓ When damaged for the first time in a room, all monsters are split in two and bosses regain 50% missing health"
 item.eid_transforms = GODMODE.util.eid_transforms.LEVIATHAN
 item.encyc_entry = {
@@ -10,18 +10,18 @@ item.encyc_entry = {
     },
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
     if cache == CacheFlag.CACHE_DAMAGE then
         -- local max_stage = 12
         -- local scale = tonumber(GODMODE.save_manager.get_config("HMEScale","2.0")) * 0.5
-        -- local percent = (Game():GetLevel():GetAbsoluteStage()-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
+        -- local percent = (GODMODE.level:GetAbsoluteStage()-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
 
-        -- if Game().Difficulty > 1 then 
+        -- if GODMODE.game.Difficulty > 1 then 
         --     max_stage = 7 
         --     scale = tonumber(GODMODE.save_manager.get_config("GMEScale","1.5")) * 0.5
-        --     percent = (Game():GetLevel():GetStage()-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
+        --     percent = (GODMODE.level:GetStage()-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
         -- end
         
         player.Damage = player.Damage * GODMODE.util.get_health_scale()
@@ -37,7 +37,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
                 if ent:IsBoss() then
                     ent.HitPoints = ent.HitPoints + (ent.MaxHitPoints - ent.HitPoints) / 2
                 elseif not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) then
-                    local ent2 = Game():Spawn(ent.Type,ent.Variant,ent.Position,ent.Velocity,ent, ent.SubType, ent.InitSeed)
+                    local ent2 = GODMODE.game:Spawn(ent.Type,ent.Variant,ent.Position,ent.Velocity,ent, ent.SubType, ent.InitSeed)
                     ent2.HitPoints = ent.HitPoints / 2
                     ent.HitPoints = ent.HitPoints / 2
                 end

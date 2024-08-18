@@ -29,8 +29,9 @@
 * secretpath = force Repentance alt path
 -->
 <challenges version = "1">
-    <challenge name = "[GODMODE] Secrets" endstage = "6" />
-    <challenge name = "Sugar Rush!" roomfilter = "4" startingitems="" endstage = "6" soulhp="6" difficulty="0" />
-    <challenge name = "The Galactic Approach" roomfilter = "4" canshoot="false" adddamage="10" endstage = "8" difficulty="0" />
-    <challenge name = "Out Of Time" roomfilter = "4" getcurse="2" startingitems="237,82,216" achievements="103" maxhp="-6" cursefilter="29" endstage = "6" difficulty="0" />
+    <challenge name = "[GOD] Secrets" endstage = "1" />
+    <challenge name = "[GOD] Sugar Rush!" roomfilter = "4" startingitems="" endstage = "6" soulhp="6" difficulty="0" unlockachievement="GODMODE_SugarRush" />
+    <challenge name = "[GOD] The Galactic Approach" roomfilter = "4" canshoot="false" adddamage="10" endstage = "8" difficulty="0" unlockachievement="GODMODE_CelestialApproach" />
+    <challenge name = "[GOD] Out Of Time" roomfilter = "4" getcurse="2" startingitems="237,82,216" maxhp="-6" cursefilter="29" endstage = "6" difficulty="0" unlockachievement="GODMODE_OutOfTime" />
+    <challenge name = "[GOD] Dystopia" roomfilter = "2,4" achievements="GODMODE_TheSignComplete" lockeddesc="THE SIGN IS WEAK :(" playertype="The Sign" cursefilter="31" endstage = "1" difficulty="1" unlockachievement="GODMODE_TSign" />
 </challenges>

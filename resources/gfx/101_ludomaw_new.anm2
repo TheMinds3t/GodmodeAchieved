@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="4/29/2022 4:52:39 PM" Version="13" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="4/29/2022 4:52:39 PM" Version="13" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\ludomaw_new.png" Id="0"/>

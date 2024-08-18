@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="3/20/2019 8:28:01 PM" Version="15" Fps="43"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="3/20/2019 8:28:01 PM" Version="15" Fps="43"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\bloodangel.png" Id="0"/>

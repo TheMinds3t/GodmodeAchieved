@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Orb of Radiance" )
+item.instance = GODMODE.registry.items.orb_of_radiance
 item.eid_description = "On use, summons a ring of spectral piercing godhead tears that rotates around you for a small period of time #12 seconds to full charge"
 item.eid_transforms = GODMODE.util.eid_transforms.ANGEL
 
@@ -8,31 +8,13 @@ item.encyc_entry = {
 		{str = "Effects", fsize = 2, clr = 3, halign = 0},
 		{str = "When used, summons six spectral, piercing godhead tears that rapidly rotate around you."},
         {str = "Each tear deals 30% of your damage + 1, in addition to the halo damage."},
-        {str = "The item takes 12 seconds to recharge."},
 	},
 }
 
 
-item.player_update = function(self, player)
+item.player_update = function(self, player, data)
 	if player:HasCollectible(item.instance) then
-		local data = GODMODE.get_ent_data(player)
-		data.radiance_charge = data.radiance_charge or 0
 		data.radiance_tears = data.radiance_tears or {}
-		local slot = GODMODE.util.get_active_slot(player, item.instance)
-
-		if player:GetActiveCharge(slot) < 24 and data.radiance_charge >= 30 / (1 + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BATTERY)) then
-			player:SetActiveCharge(player:GetActiveCharge() + 1, slot)
-
-			if player:GetActiveCharge(slot) == 24 then 
-				Game():GetHUD():FlashChargeBar(player, slot)
-                SFXManager():Play(SoundEffect.SOUND_BATTERYCHARGE)
-			end
-			data.radiance_charge = 0
-		end
-
-		if #data.radiance_tears == 0 then
-			data.radiance_charge = data.radiance_charge + 1
-		end
 
 		local flag = false
 		local flag1 = false
@@ -72,8 +54,8 @@ item.room_rewards = function(self,rng,pos)
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player)
 		local slot = GODMODE.util.get_active_slot(player, item.instance)
 		player:SetActiveCharge(24, slot)
-		Game():GetHUD():FlashChargeBar(player, slot)
-		SFXManager():Play(SoundEffect.SOUND_BATTERYCHARGE)
+		GODMODE.game:GetHUD():FlashChargeBar(player, slot)
+		GODMODE.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
 	end)
 end
 

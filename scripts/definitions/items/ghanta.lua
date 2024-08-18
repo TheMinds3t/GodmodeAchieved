@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Ghanta" )
+item.instance = GODMODE.registry.items.ghanta
 item.eid_description = "#When used, brings you down to one red heart and then spawns soul hearts equal to the red health you lost#↓ -1 Heart container # Doesn't work on characters with no red hearts"
 item.encyc_entry = {
 	{ -- Effects
@@ -32,7 +32,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 			GODMODE.save_manager.set_persistant_data("GhantaHearts", saved_hearts + hearts/2)
 
 			if saved_hearts + hearts/2 > 12 then
-				GODMODE.achievements.unlock_item(Isaac.GetItemIdByName("Vajra"))
+				GODMODE.achievements.unlock_item(GODMODE.registry.items.vajra)
 			end
 
 			return true

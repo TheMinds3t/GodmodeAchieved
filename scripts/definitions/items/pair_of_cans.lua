@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Pair of Cans" )
+item.instance = GODMODE.registry.items.pair_of_cans
 item.eid_description = "Spawns four orbital familiars each room that prevent one bullet from hitting you"
 item.encyc_entry = {
 	{ -- Effects
@@ -13,7 +13,7 @@ item.new_room = function(self)
 	local ents = Isaac.GetRoomEntities()
 
 	for i,ent in ipairs(ents) do
-		if ent.Type == EntityType.ENTITY_FAMILIAR and ent.Variant == Isaac.GetEntityVariantByName("Pair of Cans") then
+		if ent.Type == GODMODE.registry.entities.pair_of_cans.type and ent.Variant == GODMODE.registry.entities.pair_of_cans.variant then
 			ent:Remove()
 		end
 	end
@@ -22,7 +22,7 @@ item.new_room = function(self)
 
 	for i,player in ipairs(players) do
 		for i=0,3 do 
-			local can = Isaac.Spawn(3, Isaac.GetEntityVariantByName("Pair of Cans"), i, player.Position, Vector(0, 0), player)
+			local can = Isaac.Spawn(GODMODE.registry.entities.pair_of_cans.type, GODMODE.registry.entities.pair_of_cans.variant, i, player.Position, Vector(0, 0), player)
 			can:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 			can:Update()
 		end

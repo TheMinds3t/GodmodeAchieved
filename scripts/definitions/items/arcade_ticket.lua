@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Arcade Ticket" )
+item.instance = GODMODE.registry.items.arcade_ticket
 item.eid_description = "#If arcade is present, teleports to arcade#↑ If used in arcade:#90% chance to spawn a random collectible#10% chance to spawn a red coin# If used outside arcade:#↑ Spawns 1 penny"
 item.encyc_entry = {
 	{ -- Effects
@@ -12,18 +12,18 @@ item.encyc_entry = {
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-		if Game():GetRoom():GetType() == RoomType.ROOM_ARCADE then
+		if GODMODE.room:GetType() == RoomType.ROOM_ARCADE then
 			local other = rng:RandomFloat()
 
 			if other <= 0.9 then
-				Isaac.Spawn(5,0,0,Game():GetRoom():FindFreePickupSpawnPosition(player.Position, Game():GetRoom():GetClampedGridIndex(player.Position), true),Vector(0,0),player)
+				Isaac.Spawn(5,0,0,GODMODE.room:FindFreePickupSpawnPosition(player.Position, GODMODE.room:GetClampedGridIndex(player.Position), true),Vector(0,0),player)
 				return true
 			else
-				Isaac.Spawn(Isaac.GetEntityTypeByName("Red Coin"),Isaac.GetEntityVariantByName("Red Coin"),0,Game():GetRoom():FindFreePickupSpawnPosition(player.Position, Game():GetRoom():GetClampedGridIndex(player.Position), true),Vector(0,0),player)
+				Isaac.Spawn(GODMODE.registry.entities.red_coin.type,GODMODE.registry.entities.red_coin.variant,0,GODMODE.room:FindFreePickupSpawnPosition(player.Position, GODMODE.room:GetClampedGridIndex(player.Position), true),Vector(0,0),player)
 				return true
 			end
 		else
-			local level = Game():GetLevel()
+			local level = GODMODE.level
 			local rooms = level:GetRooms()
 		
 			for i=0, rooms.Size-1 do
@@ -33,12 +33,12 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	--				player:AnimateTeleport(true)
 					level.LeaveDoor = -1
 					--level:ChangeRoom(room.GridIndex)
-					Game():StartRoomTransition(room.GridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT)
+					GODMODE.game:StartRoomTransition(room.GridIndex, Direction.NO_DIRECTION, RoomTransitionAnim.TELEPORT)
 					return true
 				end 
 			end
 		
-			Isaac.Spawn(5,PickupVariant.PICKUP_COIN,0,Game():GetRoom():FindFreePickupSpawnPosition(player.Position, Game():GetRoom():GetClampedGridIndex(player.Position), true),Vector(0,0),player)
+			Isaac.Spawn(5,PickupVariant.PICKUP_COIN,0,GODMODE.room:FindFreePickupSpawnPosition(player.Position, GODMODE.room:GetClampedGridIndex(player.Position), true),Vector(0,0),player)
 			return true
 		end
 	end

@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "The Uncommon Cough" )
+item.instance = GODMODE.registry.items.uncommon_cough
 item.eid_description = "Replaces tears with a spurt of tears#Spurts increase in quantity, speed and distance the longer you hold fire"
 item.encyc_entry = {
 	{ -- Effects
@@ -15,7 +15,7 @@ local function reformat_tears(player)
 	local ret = {}
 	for i,tear in ipairs(tears) do
 		if tear ~= nil then
-			if not tear:IsDead() then table.insert(ret, tear) end
+			if not tear:IsDead() and tear.StickTarget == nil then table.insert(ret, tear) end
 		end
 	end
 	GODMODE.get_ent_data(player).cough_tears = ret
@@ -124,10 +124,9 @@ item.knife_update = function(self, knife)
 	end
 end
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
 	data.cough_mod_level = math.max(0,data.cough_mod_level or 0)
 	
 	if data.cough_firing == false then data.cough_mod_level = 0 end
@@ -145,7 +144,7 @@ item.eval_cache = function(self, player,cache)
 	end
 end
 
-item.player_update = function(self,player)
+item.player_update = function(self,player,data)
 	if player:HasCollectible(item.instance) then
 		local data = GODMODE.get_ent_data(player)
 		if player:GetFireDirection() ~= Direction.NO_DIRECTION and data.laser_firing ~= true then
@@ -199,7 +198,7 @@ item.player_update = function(self,player)
 				-- 	t.Height = t.Height + player:GetCollectibleRNG(item.instance):RandomFloat() * 2.5
 				-- end
 
-				if t:IsDead() then reformat_tears(player) end
+				if t:IsDead() or t.StickTarget ~= nil then reformat_tears(player) end
 			end
 		end
 	end
@@ -227,6 +226,7 @@ item.tear_fire = function(self, tear)
 				data.cough_disablerecursion = false
 				data.cough_mod_level = data.cough_mod_level + 0.25
 				data.cough_mod_level = math.min(data.cough_mod_level, 1.3)
+				GODMODE.sfx:Play(GODMODE.registry.sounds.regular_cough,Options.SFXVolume * 1.8,1,false,1.0+player:GetCollectibleRNG(item.instance):RandomFloat()*0.125)
 				player:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_DAMAGE) 
 				player:EvaluateItems()
 			end

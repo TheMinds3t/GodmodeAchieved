@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Impending Doom" )
+item.instance = GODMODE.registry.items.impending_doom
 item.eid_description = "#↑ Deals 10 damage or 25% of max health to all enemies in the room, whichever is greater #↓ +1 Broken heart at the start of each floor"
 item.encyc_entry = {
 	{ -- Effects
@@ -23,7 +23,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 			end
 		end
 
-		Game():ShakeScreen(20)
+		GODMODE.game:ShakeScreen(20)
 
 		return true
 	end

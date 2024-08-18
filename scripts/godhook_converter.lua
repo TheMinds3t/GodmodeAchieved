@@ -13,12 +13,12 @@ godhook.effect_data_list = {}
 
     godhook.hook = {
         monsters = {
-            ["npc_update] = {
+            ["npc_update"] = {
                 ["700.0"] = update_function from monster file,
                 ["700.1"] = update_function from monster file,
                 ...
             },
-            ["player_collide] = {
+            ["player_collide"] = {
                 ["700.0"] = collide_function from monster file,
                 ["700.1"] = collide_function from monster file,
                 ...
@@ -34,14 +34,14 @@ godhook.effect_data_list = {}
         },
         items = {
             ["npc_update"] = {
-                [Isaac.GetItemIdByName("Adramolech's Blessing")] = update_function from item file,
-                [Isaac.GetItemIdByName("Morphine")] = update_function from item file,
+                [GODMODE.registry.items.adramolechs_blessing] = update_function from item file,
+                [GODMODE.registry.items.morphine] = update_function from item file,
                 ...
             },
             ...
         },
         item_keys = {
-            ["npc_update"] = {Isaac.GetItemIdByName("Adramolech's Blessing"),Isaac.GetItemIdByName("Morphine")}, <-- used so that each hook has a cache of what item files actually use the hook 
+            ["npc_update"] = {GODMODE.registry.items.adramolechs_blessing,GODMODE.registry.items.morphine}, <-- used so that each hook has a cache of what item files actually use the hook 
             ...                                                                                                       so iterating through all items for each hook isn't necessary
         },
         hooks_added = {"npc_update","player_collide",...} <-- used to register api callbacks once per hook
@@ -52,11 +52,24 @@ godhook.effect_data_list = {}
 --Registry of functions to hook classes into
 godhook.functions = {}
 godhook.functions.player_collide = function(self, player,ent,entfirst)
-    if godhook.hook.monsters["player_collide"] and godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant](self,player,ent,entfirst)
+    local p_data = GODMODE.get_ent_data(player)
+    if godhook.hook.monsters["player_collide"] then 
+        if godhook.hook.bypass_monster_keys["player_collide"] then
+            for ind=1, #godhook.hook.bypass_monster_keys["player_collide"] do
+                local ret = godhook.hook.bypass_monster_keys["player_collide"][ind](self,player,ent,entfirst,p_data)
 
-        if ret ~= nil then
-            return ret
+                if ret ~= nil then
+                    return ret
+                end
+            end
+        end
+
+        if godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant] ~= nil then
+            local ret = godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant](self,player,ent,entfirst,p_data)
+
+            if ret ~= nil then
+                return ret
+            end
         end
     end
 
@@ -64,11 +77,9 @@ godhook.functions.player_collide = function(self, player,ent,entfirst)
         for ind=1, #godhook.hook.item_keys["player_collide"] do
             local func = godhook.hook.items["player_collide"][godhook.hook.item_keys["player_collide"][ind]]
             if func then
-                local ret = func(self,player,ent,entfirst)
+                local ret = func(self,player,ent,entfirst,p_data)
 
                 if ret ~= nil then
-                    GODMODE.log("item ret for '"..godhook.hook.item_keys["pickup_collide"][ind].."' returned "..ret,true)
-
                     return ret 
                 end
             end
@@ -76,14 +87,24 @@ godhook.functions.player_collide = function(self, player,ent,entfirst)
     end
 end
 godhook.functions.pickup_collide = function(self, pickup,ent,entfirst)
-    if godhook.hook.monsters["pickup_collide"] and godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant](self,pickup,ent,entfirst)
+    if godhook.hook.monsters["pickup_collide"] then
+        if godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant] ~= nil then 
+            local ret = godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant](self,pickup,ent,entfirst)
 
-        if ret ~= nil then
-            GODMODE.log("monster ret returned "..ret,true)
-            return ret
+            if ret ~= nil then
+                return ret
+            end
         end
     end
+
+    if godhook.hook.bypass_monster_keys["pickup_collide"] then
+        for ind=1, #godhook.hook.bypass_monster_keys["pickup_collide"] do
+            local ret2 = godhook.hook.bypass_monster_keys["pickup_collide"][ind](self,pickup,ent,entfirst)
+            if ret2 ~= nil then
+                return ret2
+            end
+        end
+    end    
 
     if godhook.hook.items["pickup_collide"] then
         for ind=1, #godhook.hook.item_keys["pickup_collide"] do
@@ -112,6 +133,28 @@ godhook.functions.tear_collide = function(self, tear,ent,entfirst)
             local func = godhook.hook.items["tear_collide"][godhook.hook.item_keys["tear_collide"][ind]]
             if func then
                 local ret = func(self,tear,ent,entfirst)
+
+                if ret ~= nil then
+                    return ret 
+                end
+            end
+        end
+    end
+end
+godhook.functions.laser_collide = function(self, laser,ent,entfirst)
+    if godhook.hook.monsters["laser_collide"] and godhook.hook.monsters["laser_collide"][ent.Type..","..ent.Variant] ~= nil then
+        local ret = godhook.hook.monsters["laser_collide"][ent.Type..","..ent.Variant](self,laser,ent,entfirst)
+
+        if ret ~= nil then
+            return ret
+        end
+    end
+
+    if godhook.hook.items["laser_collide"] then
+        for ind=1, #godhook.hook.item_keys["laser_collide"] do
+            local func = godhook.hook.items["laser_collide"][godhook.hook.item_keys["laser_collide"][ind]]
+            if func then
+                local ret = func(self,laser,ent,entfirst)
 
                 if ret ~= nil then
                     return ret 
@@ -229,15 +272,18 @@ godhook.functions.projectile_init = function(self,ent,ent2,entfirst)
     end
 end
 godhook.functions.familiar_update = function(self, fam)
+    local data = GODMODE.get_ent_data(fam)
+    local sprite = fam:GetSprite()
+
     if godhook.hook.monsters["familiar_update"] and godhook.hook.monsters["familiar_update"][fam.Type..","..fam.Variant] ~= nil then
-        godhook.hook.monsters["familiar_update"][fam.Type..","..fam.Variant](self,fam)
+        godhook.hook.monsters["familiar_update"][fam.Type..","..fam.Variant](self,fam,data,sprite)
     end
 
     if godhook.hook.items["familiar_update"] then
         for ind=1, #godhook.hook.item_keys["familiar_update"] do
             local func = godhook.hook.items["familiar_update"][godhook.hook.item_keys["familiar_update"][ind]]
             if func then
-                func(self,fam)
+                func(self,fam,data,sprite)
             end
         end
     end
@@ -280,6 +326,8 @@ godhook.functions.post_update = function(self)
 end
 
 godhook.functions.new_room = function(self)
+    GODMODE.room = Game():GetRoom()
+
     if godhook.hook.monsters["new_room"] then
         for ind=1, #godhook.hook.monster_keys["new_room"] do
             local func = godhook.hook.monsters["new_room"][godhook.hook.monster_keys["new_room"][ind]]
@@ -299,6 +347,8 @@ godhook.functions.new_room = function(self)
 end
 
 godhook.functions.new_level = function(self)
+    GODMODE.level = Game():GetLevel()
+
     if godhook.hook.monsters["new_level"] then
         for ind=1, #godhook.hook.monster_keys["new_level"] do
             local func = godhook.hook.monsters["new_level"][godhook.hook.monster_keys["new_level"][ind]]
@@ -337,11 +387,12 @@ godhook.functions.room_rewards = function(self,rng,pos)
 end
 
 godhook.functions.eval_cache = function(self,player,cache)
+    local data = GODMODE.get_ent_data(player)
     if godhook.hook.monsters["eval_cache"] then
         for ind=1, #godhook.hook.monster_keys["eval_cache"] do
             local func = godhook.hook.monsters["eval_cache"][godhook.hook.monster_keys["eval_cache"][ind]]
             if func then
-                func(self,player,cache)
+                func(self,player,cache,data)
             end
         end
     end
@@ -349,7 +400,7 @@ godhook.functions.eval_cache = function(self,player,cache)
         for ind=1, #godhook.hook.item_keys["eval_cache"] do
             local func = godhook.hook.items["eval_cache"][godhook.hook.item_keys["eval_cache"][ind]]
             if func then
-                func(self,player,cache)
+                func(self,player,cache,data)
             end
         end
     end
@@ -374,19 +425,22 @@ godhook.functions.player_init = function(self,player)
     end
 end
 godhook.functions.player_update = function(self,player)
+    local data = GODMODE.get_ent_data(player)
+
     if godhook.hook.monsters["player_update"] then
         for ind=1, #godhook.hook.monster_keys["player_update"] do
             local func = godhook.hook.monsters["player_update"][godhook.hook.monster_keys["player_update"][ind]]
             if func then
-                func(self,player)
+                func(self,player,data)
             end
         end
     end
+    
     if godhook.hook.items["player_update"] then
         for ind=1, #godhook.hook.item_keys["player_update"] do
             local func = godhook.hook.items["player_update"][godhook.hook.item_keys["player_update"][ind]]
             if func then
-                func(self,player)
+                func(self,player,data)
             end
         end
     end
@@ -411,16 +465,17 @@ godhook.functions.player_render = function(self,player,offset)
 end
 
 godhook.functions.npc_init = function(self, ent)
+    local data = GODMODE.get_ent_data(ent)
     if godhook.hook.monsters["npc_init"] then 
         if godhook.hook.monsters["npc_init"][ent.Type..","..ent.Variant] ~= nil then
-            godhook.hook.monsters["npc_init"][ent.Type..","..ent.Variant](self,ent)
+            godhook.hook.monsters["npc_init"][ent.Type..","..ent.Variant](self,ent,data)
         end
     
         if godhook.hook.bypass_monster_keys["npc_init"] then
             for ind=1, #godhook.hook.bypass_monster_keys["npc_init"] do
                 local func = godhook.hook.bypass_monster_keys["npc_init"][ind]
                 if func then
-                    func(self,ent)
+                    func(self,ent,data)
                 end
             end
         end    
@@ -430,21 +485,22 @@ godhook.functions.npc_init = function(self, ent)
         for ind=1, #godhook.hook.item_keys["npc_init"] do
             local func = godhook.hook.items["npc_init"][godhook.hook.item_keys["npc_init"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data)
             end
         end
     end
 end
 godhook.functions.npc_update = function(self, ent)
+    ent = ent:ToNPC()
+    local data = GODMODE.get_ent_data(ent)
+    local sprite = ent:GetSprite() --adding common vars to ease up callbacks
     if godhook.hook.monsters["npc_update"] and godhook.hook.monsters["npc_update"][ent.Type..","..ent.Variant] ~= nil then 
-        godhook.hook.monsters["npc_update"][ent.Type..","..ent.Variant](self,ent)
+        godhook.hook.monsters["npc_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
 
-        if GODMODE.util.is_delirium() then 
-            local data = GODMODE.get_ent_data(ent)
-    
+        if GODMODE.util.is_delirium() then     
             if godhook.hook.monsters["set_delirium_visuals"][ent.Type..","..ent.Variant] ~= nil and ent:IsBoss() and (data.delirium_visuals_changed or false) == false then
                 if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) then ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR) end
-                godhook.hook.monsters["set_delirium_visuals"][ent.Type..","..ent.Variant](self,ent)
+                godhook.hook.monsters["set_delirium_visuals"][ent.Type..","..ent.Variant](self,ent,data,sprite)
                 data.delirium_visuals_changed = true
             end
         end
@@ -454,7 +510,7 @@ godhook.functions.npc_update = function(self, ent)
         for ind=1, #godhook.hook.item_keys["npc_update"] do
             local func = godhook.hook.items["npc_update"][godhook.hook.item_keys["npc_update"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data,sprite)
             end
         end
     end
@@ -505,13 +561,14 @@ godhook.functions.npc_remove = function(self, ent)
     end
 end
 godhook.functions.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+    local returned = nil
     if godhook.hook.monsters["npc_hit"] then
         for ind=1, #godhook.hook.monster_keys["npc_hit"] do
             local func = godhook.hook.monsters["npc_hit"][godhook.hook.monster_keys["npc_hit"][ind]]
             if func then
                 local ret = func(self,enthit,amount,flags,entsrc,countdown)
                 -- if ret ~= nil then GODMODE.log("ret is "..tostring(ret).." from "..godhook.hook.monster_keys["npc_hit"][ind],true) return ret end
-                if ret ~= nil then return ret end
+                if ret ~= nil and returned ~= false then returned = ret end
             end
         end
     end
@@ -520,9 +577,13 @@ godhook.functions.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
             local func = godhook.hook.items["npc_hit"][godhook.hook.item_keys["npc_hit"][ind]]
             if func then
                 local ret = func(self,enthit,amount,flags,entsrc,countdown)
-                if ret ~= nil then return ret end
+                if ret ~= nil and returned ~= false then returned = ret end
             end
         end
+    end
+
+    if returned ~= nil then 
+        return returned        
     end
 end
 godhook.functions.pre_entity_spawn = function(self,type,variant,subtype,pos,vel,spawner,seed)
@@ -542,14 +603,16 @@ godhook.functions.pre_entity_spawn = function(self,type,variant,subtype,pos,vel,
     end
 end
 godhook.functions.pickup_update = function(self, ent)
+    local data = GODMODE.get_ent_data(ent)
+    local sprite = ent:GetSprite()
     if godhook.hook.monsters["pickup_update"] and godhook.hook.monsters["pickup_update"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["pickup_update"][ent.Type..","..ent.Variant](self,ent)
+        godhook.hook.monsters["pickup_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
     else 
         if godhook.hook.monsters["pickup_update"] then
             for ind=1, #godhook.hook.monster_keys["pickup_update"] do
                 local func = godhook.hook.monsters["pickup_update"][godhook.hook.monster_keys["pickup_update"][ind]]
                 if func then
-                    func(self,ent)
+                    func(self,ent,data,sprite)
                 end
             end
         end    
@@ -559,7 +622,7 @@ godhook.functions.pickup_update = function(self, ent)
         for ind=1, #godhook.hook.item_keys["pickup_update"] do
             local func = godhook.hook.items["pickup_update"][godhook.hook.item_keys["pickup_update"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data,sprite)
             end
         end
     end
@@ -585,36 +648,52 @@ godhook.functions.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 godhook.functions.tear_fire = function(self, ent)
+    local tear_data = GODMODE.get_ent_data(ent)
     if godhook.hook.monsters["tear_fire"] and godhook.hook.monsters["tear_fire"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["tear_fire"][ent.Type..","..ent.Variant](self,ent)
+        godhook.hook.monsters["tear_fire"][ent.Type..","..ent.Variant](self,ent,tear_data)
     end
 
     if godhook.hook.items["tear_fire"] then
         for ind=1, #godhook.hook.item_keys["tear_fire"] do
             local func = godhook.hook.items["tear_fire"][godhook.hook.item_keys["tear_fire"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,tear_data)
             end
         end
     end
 end
 godhook.functions.tear_init = function(self, ent)
+    local tear_data = GODMODE.get_ent_data(ent)
+
     if godhook.hook.monsters["tear_init"] and godhook.hook.monsters["tear_init"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["tear_init"][ent.Type..","..ent.Variant](self,ent)
+        godhook.hook.monsters["tear_init"][ent.Type..","..ent.Variant](self,ent,tear_data)
     end
 
     if godhook.hook.items["tear_init"] then
         for ind=1, #godhook.hook.item_keys["tear_init"] do
             local func = godhook.hook.items["tear_init"][godhook.hook.item_keys["tear_init"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,tear_data)
             end
         end
     end
 end
 godhook.functions.pickup_init = function(self, ent)
-    if godhook.hook.monsters["pickup_init"] and godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant](self,ent)
+    local data = GODMODE.get_ent_data(ent)
+    local sprite = ent:GetSprite()
+    if godhook.hook.monsters["pickup_init"] then
+        if godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant] ~= nil then 
+            godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+        end
+
+        if godhook.hook.bypass_monster_keys["pickup_init"] then
+            for ind=1, #godhook.hook.bypass_monster_keys["pickup_init"] do
+                local func = godhook.hook.bypass_monster_keys["pickup_init"][ind]
+                if func then
+                    func(self,ent,data,sprite)
+                end
+            end
+        end    
     end
 
     if godhook.hook.items["pickup_init"] then
@@ -734,6 +813,26 @@ godhook.functions.post_get_collectible = function(self,coll,pool,decrease,seed)
         end
     end
 end
+godhook.functions.get_trinket = function(self,trinket,rng)
+    if godhook.hook.monsters["get_trinket"] then
+        for ind=1, #godhook.hook.monster_keys["get_trinket"] do
+            local func = godhook.hook.monsters["get_trinket"][godhook.hook.monster_keys["get_trinket"][ind]]
+            if func then
+                local ret = func(self,trinket,rng)
+                if ret ~= nil then return ret end
+            end
+        end
+    end
+    if godhook.hook.items["get_trinket"] then
+        for ind=1, #godhook.hook.item_keys["get_trinket"] do
+            local func = godhook.hook.items["get_trinket"][godhook.hook.item_keys["get_trinket"][ind]]
+            if func then
+                local ret = func(self,trinket,rng)
+                if ret ~= nil then return ret end
+            end
+        end
+    end
+end
 godhook.functions.choose_curse = function(self,curses)
     if godhook.hook.monsters["choose_curse"] then
         for ind=1, #godhook.hook.monster_keys["choose_curse"] do
@@ -774,9 +873,49 @@ godhook.functions.pickup_post_render = function(self,ent,offset)
         godhook.hook.monsters["pickup_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
     end
 
+    if godhook.hook.bypass_monster_keys["pickup_post_render"] then
+        for ind=1, #godhook.hook.bypass_monster_keys["pickup_post_render"] do
+            local ret = godhook.hook.bypass_monster_keys["pickup_post_render"][ind](self,ent,offset)
+
+            if ret ~= nil then
+                return ret
+            end
+        end
+    end
+
     if godhook.hook.items["pickup_post_render"] then
         for ind=1, #godhook.hook.item_keys["pickup_post_render"] do
             local func = godhook.hook.items["pickup_post_render"][godhook.hook.item_keys["pickup_post_render"][ind]]
+            if func then
+                local ret = func(self,ent,offset)
+                if ret ~= nil then return ret end
+            end
+        end
+    end
+end
+godhook.functions.famil_post_render = function(self,ent,offset)
+    if godhook.hook.monsters["famil_post_render"] and godhook.hook.monsters["famil_post_render"][ent.Type..","..ent.Variant] ~= nil then
+        godhook.hook.monsters["famil_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+    end
+
+    if godhook.hook.items["famil_post_render"] then
+        for ind=1, #godhook.hook.item_keys["famil_post_render"] do
+            local func = godhook.hook.items["famil_post_render"][godhook.hook.item_keys["famil_post_render"][ind]]
+            if func then
+                local ret = func(self,ent,offset)
+                if ret ~= nil then return ret end
+            end
+        end
+    end
+end
+godhook.functions.effect_post_render = function(self,ent,offset)
+    if godhook.hook.monsters["effect_post_render"] and godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant] ~= nil then
+        godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+    end
+
+    if godhook.hook.items["effect_post_render"] then
+        for ind=1, #godhook.hook.item_keys["effect_post_render"] do
+            local func = godhook.hook.items["effect_post_render"][godhook.hook.item_keys["effect_post_render"][ind]]
             if func then
                 local ret = func(self,ent,offset)
                 if ret ~= nil then return ret end
@@ -804,11 +943,13 @@ godhook.functions.bomb_init = function(self, ent)
     end
 end
 godhook.functions.effect_init = function(self, ent)
+    local data = GODMODE.get_ent_data(ent)
+
     if godhook.hook.monsters["effect_init"] then
         for ind=1, #godhook.hook.monster_keys["effect_init"] do
             local func = godhook.hook.monsters["effect_init"][godhook.hook.monster_keys["effect_init"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data)
             end
         end
     end
@@ -816,26 +957,56 @@ godhook.functions.effect_init = function(self, ent)
         for ind=1, #godhook.hook.item_keys["effect_init"] do
             local func = godhook.hook.items["effect_init"][godhook.hook.item_keys["effect_init"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data)
             end
         end
     end
 end
 godhook.functions.effect_update = function(self, ent)
-    if godhook.hook.monsters["effect_update"] then
-        for ind=1, #godhook.hook.monster_keys["effect_update"] do
-            local func = godhook.hook.monsters["effect_update"][godhook.hook.monster_keys["effect_update"][ind]]
-            if func then
-                func(self,ent)
-            end
-        end
+
+    if godhook.hook.monsters["effect_update"] and godhook.hook.monsters["effect_update"][ent.Type..","..ent.Variant] ~= nil then
+        local data = GODMODE.get_ent_data(ent)
+        local sprite = ent:GetSprite()
+        godhook.hook.monsters["effect_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+    -- else 
+        -- if godhook.hook.monsters["effect_update"] then
+        --     local data = GODMODE.get_ent_data(ent)
+        --     local sprite = ent:GetSprite()
+        --     for ind=1, #godhook.hook.monster_keys["effect_update"] do
+        --         local func = godhook.hook.monsters["effect_update"][godhook.hook.monster_keys["effect_update"][ind]]
+        --         if func then
+        --             GODMODE.log(godhook.hook.monster_keys["effect_update"][ind],true)
+        --             func(self,ent,data,sprite)
+        --         end
+        --     end
+        -- end    
     end
 
     if godhook.hook.items["effect_update"] then
         for ind=1, #godhook.hook.item_keys["effect_update"] do
             local func = godhook.hook.items["effect_update"][godhook.hook.item_keys["effect_update"][ind]]
             if func then
-                func(self,ent)
+                func(self,ent,data,sprite)
+            end
+        end
+    end
+end
+godhook.functions.tear_update = function(self, tear)
+    local data = GODMODE.get_ent_data(tear)
+    if godhook.hook.items["tear_update"] then
+        for ind=1, #godhook.hook.item_keys["tear_update"] do
+            local func = godhook.hook.items["tear_update"][godhook.hook.item_keys["tear_update"][ind]]
+            if func then
+                func(self,tear,data)
+            end
+        end
+    end
+
+    if godhook.hook.monsters["tear_update"] then
+        for ind=1, #godhook.hook.monster_keys["tear_update"] do
+            local func = godhook.hook.monsters["tear_update"][godhook.hook.monster_keys["tear_update"][ind]]
+            if func then
+                func(self,tear,data)
             end
         end
     end
@@ -888,6 +1059,24 @@ godhook.functions.projectile_update = function(self,projectile)
         end
     end
 end
+godhook.functions.input_event = function(self,ent,hook,action)
+    if godhook.hook.monsters["input_event"] and godhook.hook.monsters["input_event"][ent.Type..","..ent.Variant] ~= nil then
+        godhook.hook.monsters["input_event"][ent.Type..","..ent.Variant](self,ent,hook,action)
+    end
+
+    if godhook.hook.items["input_event"] then
+        for ind=1, #godhook.hook.item_keys["input_event"] do
+            local func = godhook.hook.items["input_event"][godhook.hook.item_keys["input_event"][ind]]
+            if func then
+                local ret = func(self,ent,hook,action)
+                if ret ~= nil then return ret end
+            end
+        end
+    end
+end
+
+
+
 local is_monster = function(object) return object.type and object.variant end
 
 godhook.add_hook = function(funcname,object,hook)
@@ -915,13 +1104,13 @@ godhook.add_hook = function(funcname,object,hook)
 
         godhook.hook.hooks_added[funcname] = true
         GODMODE.log("Registered hook \'"..funcname.."\'!")
-    end
+    end    
 end
 
 local function add_fx_data(object)
     if is_monster(object) then 
-        godhook.effect_data_list.monsters = godhook.effect_data_list.monsters or {}
-        godhook.effect_data_list[object.type..","..object.variant] = true
+        godhook.effect_data_list[object.variant] = true
+        GODMODE.log("adding fx data for \'"..object.variant.."\'!",true)
     end
 end
 
@@ -981,8 +1170,18 @@ godhook.hook_list = {
     ["pickup_update"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_POST_PICKUP_UPDATE)
     end,
+    ["tear_update"] = function(funcname, object)
+        godhook.add_hook(funcname,object,ModCallbacks.MC_POST_TEAR_UPDATE)
+    end,
     ["pickup_post_render"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_POST_PICKUP_RENDER)
+    end,
+    ["famil_post_render"] = function(funcname, object)
+        godhook.add_hook(funcname,object,ModCallbacks.MC_POST_FAMILIAR_RENDER)
+    end,
+    ["effect_post_render"] = function(funcname, object)
+        godhook.add_hook(funcname,object,ModCallbacks.MC_POST_EFFECT_RENDER)
+        add_fx_data(object)
     end,
     ["use_item"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_USE_ITEM)
@@ -1047,6 +1246,9 @@ godhook.hook_list = {
     ["post_get_collectible"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_POST_GET_COLLECTIBLE)
     end,
+    ["get_trinket"] = function(funcname, object)
+        godhook.add_hook(funcname,object,ModCallbacks.MC_GET_TRINKET)
+    end,
     ["choose_curse"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_POST_CURSE_EVAL)
     end,
@@ -1067,11 +1269,61 @@ godhook.hook_list = {
     ["knife_update"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_POST_KNIFE_UPDATE)
     end,
+    ["input_event"] = function(funcname, object)
+        godhook.add_hook(funcname,object,ModCallbacks.MC_INPUT_ACTION)
+    end,
     ["set_delirium_visuals"] = function(funcname, object)
         godhook.add_hook(funcname,object,nil)
-    end
+    end,
 
+    --custom hooks
+    ["first_level"] = true, --called for the first level of the run, use to init variables. Takes no return values. | first_level()
+    ["on_item_pickup"] = true, --just for when items are grabbed, doesn't tell what item. Takes no return values. | on_item_pickup(player)
+    ["data_init"] = true, --when godmode data is inited this is called, set default data values here. Takes no return values. | data_init(ent,data)
+    ["render_player_ui"] = true, --render godmode ui. Takes no return values. | render_player_ui(player)
+    ["pre_godmode_restart"] = true, --godmode trinket, pre rewind. Takes no return values. | pre_godmode_restart()
+    ["post_godmode_restart"] = true, --godmode trinket, post rewind. Takes no return values. | post_godmode_restart()
+    ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance)
+
+    -- I'll take time to add a bunch of callbacks to make my mod easily manageable and expandable
+    -- ["pre_scale_enemy_hp"] = true, 
+    -- -- for hardmode/greedier hp scaling, before it is applied. Return float for new scale factor (1.0 = 100%)
+    -- -- | pre_scale_enemy_hp(Entity ent, float scale_factor)
+    -- ["post_scale_enemy_hp"] = true, -- for hardmode/greedier hp scaling, after it is applied. Takes no return values.
+    -- -- | post_scale_enemy_hp(Entity ent,float scale_factor)
+
+    -- ["alt_enemy_select"] = true, -- called when Godmode alt entries are attempting to replace an enemy. return new table for new entity, or return false to prevent replacement.
+    -- -- | alt_enemy_select()
+    -- ["alt_pickup_select"] = true, -- called when Godmode alt entries are attempting to replace a pickup. return new table for new entity, or return false to prevent replacement.
+
+    -- ["get_cotv_time_rate"] = true, --how fast the timer counts down. Return the new value to decrement each tick (defaults to 1, or 0.5 on curse of the Labrynth) | get_cotv_time_rate()
+    -- ["can_cotv_spawn"] = true, --can cotv spawn this frame? Return true/false to overwrite the spawning rules for COTV. | can_cotv_spawn()
+    -- ["on_cotv_spawn"] = true, --called when cotv spawns. Takes no return values. (on_cotv_spawn)
+
+    -- ["door_hazard_spawn_chance"] = true, --get the door hazard spawn chance. Return a float to override the spawn chance (1 = 100%) | door_hazard_spawn_chance(door,chance,feather_duster)
+    -- ["select_door_hazard_profile"] = true, --get the hazard profile to use for this door hazard. Return a string to override to another vanilla profile, or return a table with the values. | select_door_hazard_profile(door,chance,feather_duster)
+    -- ["post_door_hazard_spawn"] = true, --when the door hazard spawns. Takes no return values | post_door_hazard_spawn(door,hazard,hazard_profile)
+    -- ["pre_apply_door_hazard_fx"] = true, --when a player collides with a door hazard. Return false to prevent vanilla interactions. | pre_apply_door_hazard_fx(door,hazard,hazard_profile,player)
+
+    -- ["get_correct_room_scale"] = true, --get the scaled base stat % to use for determining correction room. Defaults to the config value specified. | get_correct_room_scale(cur_player_scale)
+    -- ["on_enter_correct_room"] = true, --when a correction room is physically entered. Takes no return values. | on_enter_correct_room()
 }
+
+local function registerObject(object)
+    for func,register in pairs(godhook.hook_list) do
+        if object[func] ~= nil then 
+            if register == true then -- custom hooks
+                if is_monster(object) then 
+                    GODMODE.mod_object:AddCallback(GODMODE.mod_id.."_"..func,object[func],object.type)
+                else 
+                    GODMODE.mod_object:AddCallback(GODMODE.mod_id.."_"..func,object[func])
+                end
+            else 
+                register(func,object)
+            end    
+        end
+    end
+end
 
 function godhook.register_items_and_ents()
     godhook.hook.monsters = {}
@@ -1079,30 +1331,72 @@ function godhook.register_items_and_ents()
     godhook.hook.bypass_monster_keys = {}
 
     for _,item in pairs(GODMODE.items) do
-        for func,register in pairs(godhook.hook_list) do
-            if item[func] ~= nil then
-                register(func,item)
-                GODMODE.log("Registered item id \'"..item.instance.."\' for function \'"..func.."\'")
-            end
-        end
+        registerObject(item)
+        GODMODE.log("Registered "..(item.transformation == true and "playerform" or item.trinket == true and "trinket" or "item").." id \'"..tostring(item.instance).."\'!")
     end
 
     for _,monster in pairs(GODMODE.monsters) do
-        for func,register in pairs(godhook.hook_list) do
-            if monster[func] ~= nil then
-                register(func,monster)
-                GODMODE.log("Registered monster \'"..monster.type.."."..monster.variant.."\' for function \'"..func.."\'")
-            end
-        end
-
+        registerObject(monster)
+        GODMODE.log("Registered monster \'"..tostring(monster.type).."."..tostring(monster.variant).."\'!")
     end
+end
+
+-- nice alt version of calling the hook so that each entry can get a hand in modifying what it has, rather than getting overwritten by a later entry.
+function godhook.additive_call_hook(hook,base,...)
+    call_id = GODMODE.mod_id.."_"..hook
+    -- Isaac.RunCallback(call_id,...)
+    local hookRet = base
+    local callbacks = Isaac.GetCallbacks(call_id)
+
+    for _, callback in ipairs(callbacks) do
+        local ret = callback.Function(callback.Mod,hookRet,...)
+        if ret ~= nil then
+            hookRet = hookRet + ret
+        end
+    end
+
+    return hookRet
+end
+
+function godhook.call_hook(hook,...)
+    call_id = GODMODE.mod_id.."_"..hook
+    -- Isaac.RunCallback(call_id,...)
+    local hookRet = nil
+    local callbacks = Isaac.GetCallbacks(call_id)
+
+    for _, callback in ipairs(callbacks) do
+        local ret = callback.Function(callback.Mod,...)
+        if ret ~= nil then
+            hookRet = ret
+        end
+    end
+
+    return hookRet
+end
+
+function godhook.call_hook_param(hook,param,...)
+    -- Isaac.RunCallbackWithParam(GODMODE.mod_id.."_"..hook,param,...)
+
+    call_id = GODMODE.mod_id.."_"..hook
+    -- Isaac.RunCallback(call_id,...)
+    local hookRet = nil
+    local callbacks = Isaac.GetCallbacks(call_id)
+
+    for _, callback in ipairs(callbacks) do
+        local ret = callback.Function(callback.Mod,...)
+        if ret ~= nil then
+            hookRet = ret
+        end
+    end
+
+    return hookRet
 end
 
 --in case someone somewhere decides they like my structure, you can add to it!
 function godhook.register_object(object)
     for func,register in pairs(godhook.hook_list) do
         if object[func] ~= nil then
-            register(func,monster)
+            register(func,object)
             GODMODE.log("Registered external object for function \'"..func.."\'")
         end
     end

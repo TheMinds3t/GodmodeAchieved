@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Abraham's Map" )
+item.instance = GODMODE.registry.items.abrahams_map
 item.eid_description = "#↑ If no item pedestal is in the room, creates one#↑ If item pedestal is in room, rerolls pedestal to a random quality 4 item"
 item.encyc_entry = {
 	{ -- Effects
@@ -61,9 +61,9 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 			GODMODE.save_manager.set_player_data(player, "AbrahamUses", data.abraham_uses,true)
 
 			if data.abraham_uses == 1 then
-				Game():GetHUD():ShowItemText("Abraham's Map", data.abraham_uses.." use remaining", false)
+				GODMODE.game:GetHUD():ShowItemText("Abraham's Map", data.abraham_uses.." use remaining", false)
 			else
-				Game():GetHUD():ShowItemText("Abraham's Map", data.abraham_uses.." uses remaining", false)
+				GODMODE.game:GetHUD():ShowItemText("Abraham's Map", data.abraham_uses.." uses remaining", false)
 			end
 
 			if data.abraham_uses <= 0 then
@@ -80,7 +80,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 
 		if ped == nil then
 			if use() then
-				Isaac.Spawn(5,100,0,Game():GetRoom():FindFreePickupSpawnPosition(player.Position, Game():GetRoom():GetClampedGridIndex(player.Position), true),Vector(0,0),player)  
+				Isaac.Spawn(5,100,0,GODMODE.room:FindFreePickupSpawnPosition(player.Position, GODMODE.room:GetClampedGridIndex(player.Position), true),Vector(0,0),player)  
 				return true
 			end
 		elseif ped and ped:ToPickup() then

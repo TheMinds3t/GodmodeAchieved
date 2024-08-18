@@ -38,7 +38,7 @@ ro.load_override_room = function(file,room_index,override_room)
             if #GODMODE.loaded_rooms[file] == 1 then 
                 index = 1 
             elseif override_room ~= nil then
-                local room = Game():GetLevel():GetRoomByIdx(override_room)
+                local room = GODMODE.level:GetRoomByIdx(override_room)
                 local tries = 50
                 --fit the room, if possible
                 while index == -1 or GODMODE.loaded_rooms[file][index]["SHAPE"] ~= room.Data.Shape and tries > 0 do
@@ -59,13 +59,13 @@ end
 
 --called on entering each room
 ro.try_override_room = function(gridindex)
-    if StageAPI then return end 
+    if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then return end 
 
     local override = ro.overrides[gridindex]
     GODMODE.log("Trying to override room..", true)
 
-    if override ~= nil and GODMODE.util.random() < override.chance and not Game():GetRoom():IsClear() then
-        local room = Game():GetRoom()
+    if override ~= nil and GODMODE.util.random() < override.chance and not GODMODE.room:IsClear() then
+        local room = GODMODE.room
         GODMODE.log("Overriding current room! Override room file is \'"..override.file.."\', variant is "..override.override["VARIANT"], true)
         override.chance = 1 --guarantees the override for re-entering a room and such
         override = override.override
@@ -99,6 +99,8 @@ ro.try_override_room = function(gridindex)
                 end
             end
         end
+
+        room:Update()
 
         -- for x = 1, room:GetGridWidth() - 1 do
         --     for y = 1, room:GetGridHeight() - 1 do

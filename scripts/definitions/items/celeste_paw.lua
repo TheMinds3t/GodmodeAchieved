@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Celestial Paw" )
+item.instance = GODMODE.registry.items.celestial_paw
 item.eid_description = "↑ All enemies get converted into half soul hearts on use# ↓ -1 Heart Container # Bosses take damage equal to 25% of their max health"
 item.encyc_entry = {
 	{ -- Effects
@@ -26,12 +26,12 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
                     ent:Kill()
                     Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF_SOUL, ent.Position, Vector.Zero, nil)
                     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.ROCK_EXPLOSION, 0, ent.Position, Vector.Zero, player)
-                    Isaac.Spawn(Isaac.GetEntityTypeByName("Celestial Swipe"), Isaac.GetEntityVariantByName("Celestial Swipe"), 0, ent.Position, Vector.Zero, nil)
+                    Isaac.Spawn(GODMODE.registry.entities.celestial_swipe.type, GODMODE.registry.entities.celestial_swipe.variant, 0, ent.Position, Vector.Zero, nil)
                 end
             end
         end
 
-        Game():ShakeScreen(20)
+        GODMODE.game:ShakeScreen(20)
         player:AddMaxHearts(-2)
 
         return true

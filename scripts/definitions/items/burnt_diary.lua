@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Burnt Diary" )
+item.instance = GODMODE.registry.items.burnt_diary
 item.eid_description = "Spawn 5 burning pages, dealing 30 burn damage and 5 contact damage to enemies#Pages burn up after dealing damage, but otherwise persist"
 item.eid_transforms = GODMODE.util.eid_transforms.BOOKWORM
 item.encyc_entry = {
@@ -15,7 +15,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         for i=1,5 do
             local spd = 1.0 + rng:RandomFloat()
             local ang = math.rad(rng:RandomFloat() * 360)
-            Isaac.Spawn(3, Isaac.GetEntityVariantByName("Burnt Page"), 0, player.Position, Vector(math.cos(ang)*spd,math.sin(ang)*spd), player)
+            Isaac.Spawn(GODMODE.registry.entities.burnt_page.type, GODMODE.registry.entities.burnt_page.variant, 0, player.Position, Vector(math.cos(ang)*spd,math.sin(ang)*spd), player)
         end
         return true
     end

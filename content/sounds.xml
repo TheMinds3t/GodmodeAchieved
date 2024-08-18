@@ -15,7 +15,10 @@
 		<sample weight="1" path="pickups/red_coin.wav" />
 	</sound>
 	<sound name="godmode_ending">
-		<sample weight="1" path="ending_vo.wav" />
+		<sample weight="1" path="ending voiceover.wav" />
+	</sound>
+	<sound name="godmode_ending_joke">
+		<sample weight="1" path="ending voiceover2.wav" />
 	</sound>
 	<sound name="keepah_chirp">
 		<sample weight="1" path="keepah/keepah0.wav" />
@@ -27,4 +30,17 @@
 		<sample weight="1" path="keepah/keepahpanic1.wav" />
 		<sample weight="1" path="keepah/keepahpanic2.wav" />
 	</sound>
+	<sound name="regular_cough">
+		<sample weight="1" path="cough/cough1.wav" />
+		<sample weight="1" path="cough/cough2.wav" />
+		<sample weight="1" path="cough/cough3.wav" />
+	</sound>
+
+	<!-- DSS integration! -->
+    <sound name="deadseascrolls_pop">
+        <sample weight="1" path="deadseascrolls/pop.wav"/>
+    </sound>
+    <sound name="deadseascrolls_whoosh">
+        <sample weight="1" path="deadseascrolls/whoosh.wav"/>
+    </sound>
 </sounds>

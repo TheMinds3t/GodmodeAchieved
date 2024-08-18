@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="8/27/2022 12:15:35 PM" Version="12" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="8/27/2022 12:15:35 PM" Version="12" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\devil_lock.png" Id="0"/>

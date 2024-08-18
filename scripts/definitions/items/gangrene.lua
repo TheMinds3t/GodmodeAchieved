@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Gangrene" )
+item.instance = GODMODE.registry.items.gangrene
 item.eid_description = "Leave a trail of poison tears that are 0.1x your damage behind you"
 item.eid_transforms = GODMODE.util.eid_transforms.BOB
 item.encyc_entry = {
@@ -11,16 +11,17 @@ item.encyc_entry = {
     },
 }
 
-item.player_update = function(self, player)
+item.player_update = function(self, player, data)
 	if player:HasCollectible(item.instance) then
 		if not player:IsDead() then
-			local data = GODMODE.get_ent_data(player)
 			data.gangrene_counter = (data.gangrene_counter or 0) + player:GetCollectibleRNG(item.instance):RandomFloat()
 
 			if math.floor(data.gangrene_counter) % 3 == 0 then
 				data.gangrene_counter = data.gangrene_counter + 1
 				data.sign_not = true
+				data.gehazi_keep_coin = true
 				local tear = player:FireTear(player.Position+Vector(player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size,player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size),-player.Velocity:Resized(math.min(player.Velocity:Length(),1)) * math.max(0.1,player.ShotSpeed*0.5-0.4),false,true,false,player,1.0)
+				data.gehazi_keep_coin = false
 				data.sign_not = false
 				
 				if player:GetCollectibleRNG(item.instance):RandomFloat() < 0.1 + (math.min(12,player.Luck)/12*0.65) then 

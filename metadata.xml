@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-    <name>Godmode Achieved [[[BETA]]]</name>
+    <name>Godmode Achieved [[[BETA]]] [REP] [RGON optional]</name>
     <directory>godmodeachievedbeta</directory>
     <id>2548296941</id>
-    <description>
+    <description>[img]https://i.imgur.com/aummhgQ.png[/img]
+[img]https://i.imgur.com/1Rulvgf.png[/img]
+[h2][b]Join the [url=https://discord.gg/Bktc3dEBbR]official community/development discord![/url][/b][/h2]
+[h2][b]Check out the [url=https://tboigodmode.wiki.gg/wiki/Main_Page]official wiki![/url][/b][/h2]
 
-THIS IS A BETA BUILD. BUGS WILL HAPPEN. 
+[h2][b]So far:[/b][/h2]
 
-So far:
-- A new final boss and stage!! Test your luck against this beast of a battle.. (also, unlock Godmode items!) Note the balancing of this stage is still in progress, so if anything feels particularly unfair or easy, do let me know.
-- 500 brand new, unique treasure room layouts. This is clustered into types of treasure rooms, each having at least 10 variations!
-- 3 new floor alts! One for Chapter 1, 3 and 4.
-- 400+ new boss room layouts
-- 120 new shop layouts
-- 65 new secret room layouts
-- 58 new curse room layouts
-- 76 new items (and increasing, goal is 80)
-- 3 new transformations!! (and increasing, goal is 4) (Planetariums are now much, much better to try for.)
-- 7 new floor blessings! They have a 5% chance to show and are the opposite of curses.
-- 8 new trinkets (and increasing, goal is 10)
-- 46 new enemies (and increasing, goal is 50!)
-- 16 new bosses (and increasing, goal is 23) and 2 new champions!
-- 7 new pickups
-- Currently 1367+ regular rooms to integrate the new foes you'll face with ones you're familiar with! (increasing as the rest of the goals are met!) Including the new stages brings this total up to over 3000 new rooms to cry about!
-- 9 new characters! (Tainted Forms WIP, for a total of 12 once they're all done!)
-- 3 new challenges (and increasing, goal is 5)
-- A new hazardous mechanic to make you consider doors more!
-- Hardmode HP scaling, which balances out the increased quantity and quality of items you receive by gradually scaling enemy HP per floor.
-- Blue Womb overhaul! Slightly more interesting than before...
-- A new being to make you consider how much time you spend on each stage a little more...
-- ModConfigMenu Support! This shows some of the more technical changes present in Godmode, as well as providing you complete customization of the experience!
-- EID Support! Know what the new items do without referring to the item manual file included in the mod :)
-- Encyclopedia Support! Mostly implemented, gives very specific stat info about items and any quirks they may have as well.
-- Enhanced Boss Bar support! All Godmode bosses should have an icon with the mod enabled. 
+[img]https://i.imgur.com/3C6sSTY.png[/img]
+[list][*] [b]A new final boss and stage!![/b] Test your luck against this beast of a battle.. (also, unlock Godmode items!)
+[*] [b]500+[/b] brand new, unique treasure room layouts. This is clustered into types of treasure rooms, each having at least 10 variations! Enjoy the meat and bones of the rebalance!
+[*] [b]3[/b] new floor alts! One for Chapter 1, 3 and 4, one stage each! Get ready to explore new environments with foes old and new!
+[*] [b]400+[/b] new boss room layouts to exemplify your lust for masochism :meaty:
+[*] [b]120+[/b] new shop layouts to activate your lust for possession!
+[*] [b]65+[/b] new secret room layouts to enable your lust for utility
+[*] [b]58+[/b] new curse room layouts to validate your lust for power
+[*] [b]90+[/b] new items, good and bad, to indulge in!
+[*] [b]3[/b] new transformations!! [i](Planetariums are now much, much better to try for on account of my cat Celeste.)[/i]
+[*] [b]7[/b] new floor blessings! They have a 5% chance to show with no item modifiers and are the opposite of curses, providing certain unique benefits to a floor.
+[*] [b]2[/b] new room types!
+[*] [b]12+[/b] new trinkets!
+[*] [b]47+[/b] new enemies
+[*] [b]16+[/b] new bosses and [b]3[/b] new champions!
+[*] [b]7 new pickups
+[*] [b]1367+[/b] regular rooms to integrate the new foes you'll face with ones you're familiar with! (increasing as the rest of the goals are met!) Including the new stages brings this total up to [b]over 3000 new rooms[/b] to cry about!
+[*] [b]11[/b] new characters! [spoiler](Tainted Sign WIP, for a total of 12 once that character is done!)[/spoiler]
+[*] [b]3[/b] new challenges (and increasing, goal is 5)
+[*] A new hazardous mechanic to make you [b]consider doors more[/b]!
+[*] [b]Hardmode HP scaling[/b], which balances out the increased quantity and quality of items you receive by gradually scaling enemy HP per floor.
+[*] [b]Blue Womb overhaul![/b] Slightly more interesting than before...
+[*] A new being to make you consider how much time you spend on each stage a little more... [spoiler][url=https://tboigodmode.wiki.gg/wiki/Vanilla_Changes_and_New_Mechanics#Call_of_The_Void]Call of the Void[/url][/spoiler]
+[*] [b]Dead Sea Scrolls support![/b] There is built in config options for just about every major change Godmode adds or modifies, you can make the mod less itself or more itself!
+[*] [b]EID support![/b] Know what the new items do :)
+[*] [b]Encyclopedia support![/b] Gives very specific stat info about items and any quirks they may have as well.
+[*] [b]Enhanced Boss Bar support![/b] All Godmode bosses should have an icon with the mod enabled. 
+[/list]
 
-Planned:
-- CustomStageAPI utilization for:
-    - New room type
-    - Layout control for floors
-- Improved floor sprites for existing floors (Sanctuary and Furnace specifically)
+[h1][b]
+Also, compatible with most large-scale mods for Repentance!
+[/b][/h1]
 
-Credits:
-Programming - MINDS3T
-Room Design - MINDS3T
-Sprites - MINDS3T, shyPixels/Fira (Most items, some enemies, bosses, stages, UI, title logo), Derahex (Hexstar), Gummy (Souleater)
-Music &amp; Sound - MINDS3T
-Concepts - MINDS3T, shyPixels, kharjaro, Derahex (Hexstar), Reactive (Bombshell), SDAR (Bubbly Plum, Blightfly, enemy, pickup)
+[img]https://i.imgur.com/w9SvitU.png[/img]
+[h1][b]
+For a full list of credits, refer to the [url=https://tboigodmode.wiki.gg/wiki/Developers]wiki page[/url] or the ingame version!
+[/b][/h1]
 
-Beta Testers - anon., DaddyNature, Emmster, gamer24320, Harvester, IzzyIsakoi_ᗢ, L'éclair à la vanille, Lamb, SDAR, Snopingnas, Voidro, Zek, Coyote, FinalRun36, kharjaro, Hikikomori, Sallyspartan, Carlosmann100, actualjohndear, Gokudera ElPsyCongroo, ArthurKyl, Toad Enjoyer !! :D, GigaChadDarko</description>
-    <version>1.191</version>
+[h1][b]Thank you for stopping by, and best of luck in your efforts to achieve Godmode![/b][/h1]
+[img]https://i.imgur.com/eLl9vc2.png[/img]
+
+The custom ending voiceover was trained with the RVC Project, a model located [url=https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI]here![/url]</description>
+    <version>1.274</version>
     <visibility>Private</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

@@ -1,56 +1,64 @@
 <players root="gfx/characters/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/" bigportraitroot="gfx/ui/stage/">
-    <player name="Recluse" skin="arac/arac.png" hp="4" black="2" bombs="1"
-          nameimage="names/arac.png" 
-          portrait="arac.png" 
-          skinColor="-1" 
-          birthright="Healthy friends" />
     <player name="Xaphan" skin="xaphan/xaphan.png" hp="2" black="4" bombs="0"
           nameimage="names/xaphan.png" 
           portrait="xaphan.png" 
           skinColor="1" 
           birthright="Everlasting love" />
-    <player name="Deli" skin="deli/deli.png" hp="8" black="0" bombs="1"
-          nameimage="names/deli.png" 
-          portrait="deli.png" 
-          skinColor="0" 
-          birthright="More despair!" />
-    <player name="Elohim" skin="elohim/elohim.png" hp="2" black="0" armor="4" bombs="0"
-          nameimage="names/elohim.png" 
-          portrait="elohim.png" 
-          skinColor="-1" 
-          birthright="Reclaim the throne" />
-    <player name="Gehazi" skin="gehazi/gideon.png" hp="0" black="2" armor="0" bombs="0" coins="15" items="501"
+    <player name="Gehazi" skin="gehazi/gideon.png" hp="0" black="0" armor="4" bombs="0" coins="15" items="501"
           nameimage="names/elohim.png" 
           portrait="elohim.png" 
           skinColor="-1" 
           birthright="Money management!" /> 
-    <player name="The Sign" skin="thesign/thesign.png" hp="0" black="0" armor="0" broken="0" bombs="0" coins="0" keys="1"
+    <player name="Recluse" skin="arac/arac.png" hp="4" black="2" bombs="1"
+          nameimage="names/arac.png" 
+          portrait="arac.png" 
+          skinColor="-1" 
+          birthright="Healthy friends" achievement="GODMODE_Recluse" />
+    <player name="Deli" skin="deli/deli.png" hp="8" black="0" bombs="1"
+          nameimage="names/deli.png" 
+          portrait="deli.png" 
+          skinColor="0" 
+          birthright="More despair!" achievement="GODMODE_Deli"/>
+    <player name="Elohim" skin="elohim/elohim.png" hp="2" black="0" armor="4" bombs="0"
+          nameimage="names/elohim.png" 
+          portrait="elohim.png" 
+          skinColor="-1" 
+          birthright="Reclaim the throne" achievement="GODMODE_Elohim" />
+    <player name="The Sign" skin="thesign/thesign.png" hp="0" black="0" armor="2" broken="0" bombs="0" coins="0" keys="1"
           nameimage="names/thesign.png" 
           portrait="thesign.png" 
           skinColor="2" 
-          birthright="Freedom!" />
-    <player name="Tainted Recluse" skin="arac_tainted/arac.png" hp="0" black="6" bombs="0"
+          birthright="Freedom!" healthtype="1" achievement="GODMODE_TheSign" />
+    <player name="Tainted Recluse" skin="arac_tainted/arac.png" hp="0" black="4" bombs="0"
           nameimage="names/arac.png" 
           portrait="arac.png" 
           bSkinParent="Recluse"
-          pocketActive="555" skinColor="-1" 
-          birthright="Healthy friends" />
+          pocketActive="38" skinColor="1" 
+          birthright="Healthy friends" achievement="GODMODE_TRecluse"/>
     <player name="Tainted Deli" skin="deli_tainted/deli.png" hp="6" black="0" bombs="1"
           nameimage="names/deli.png" 
           portrait="deli.png" 
           bSkinParent="Deli"
-          skinColor="0" 
-          birthright="Sanity up!" />
+          skinColor="0" pocketActive="38"
+          birthright="Fragmentation" healthlimit="2" achievement="GODMODE_TDeli" />
       <player name="Tainted Xaphan" skin="xaphan_tainted/xaphan.png" black="2" bombs="1"
           nameimage="names/xaphan.png" 
           portrait="xaphan.png" 
           bSkinParent="Xaphan"
-          skinColor="1" pocketActive="555" card="12" 
-          birthright="Boundless fury" />
+          skinColor="5" pocketActive="38" card="12" 
+          birthright="Boundless fury" healthtype="1" achievement="GODMODE_TXaphan" />
       <player name="Tainted Elohim" skin="elohim_tainted/elohim.png" armor="2"
           nameimage="names/elohim.png" 
           portrait="elohim.png" 
           bSkinParent="Elohim"
-          skinColor="-1"
-          birthright="Wrath = deeper strength" />
+          skinColor="-1" pocketActive="38" 
+          birthright="Wrath = deeper strength" achievement="GODMODE_TElohim" />
+
+          <!--leprosy? items="525"-->
+      <player name="Tainted Gehazi" skin="gehazi_tainted/gideon.png" hp="0" black="6" bombs="0" coins="10"
+          nameimage="names/elohim.png" 
+          portrait="elohim.png" 
+          bSkinParent="Gehazi"
+          pocketActive="38" trinket="6" skinColor="-1" 
+          birthright="Stronger taxes" achievement="GODMODE_TGehazi" />
 </players>

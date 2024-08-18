@@ -1,0 +1,69 @@
+<achievements gfxroot="gfx/achievements/">
+	<!-- regular char unlocks -->
+	<achievement name="GODMODE_Recluse" text='You unlocked "Recluse"' gfx="achievement_recluse.png" />
+	<achievement name="GODMODE_Elohim" text='You unlocked "Elohim"' gfx="achievement_elohim.png" />
+	<achievement name="GODMODE_Deli" text='You unlocked "Deli"' gfx="achievement_deli.png" />
+	<achievement name="GODMODE_TheSign" text='You unlocked "The Sign"' gfx="achievement_thesign.png" />
+
+	<!-- tainted char unlocks -->
+	<achievement name="GODMODE_TRecluse" text='You unlocked "Recluse"' gfx="achievement_trecluse.png" />
+	<achievement name="GODMODE_TXaphan" text='You unlocked "Xaphan"' gfx="achievement_txaphan.png" />
+	<achievement name="GODMODE_TDeli" text='You unlocked "Deli"' gfx="achievement_tdeli.png" />
+	<achievement name="GODMODE_TElohim" text='You unlocked "Elohim"' gfx="achievement_telohim.png" />
+	<achievement name="GODMODE_TGehazi" text='You unlocked "Gehazi"' gfx="achievement_tgehazi.png" />
+
+	<!-- Fallen Light achievements -->
+	<achievement name="GODMODE_FL_Isaac" text='You unlocked "Fuzzy Dice"' gfx="achievement_fuzzy_dice.png" />
+	<achievement name="GODMODE_FL_TIsaac" text='You unlocked "Chest Infestors"' gfx="achievement_chest_infest.png" />
+	<achievement name="GODMODE_FL_Magdalene" text='You unlocked "Cloth of Gold"' gfx="achievement_cloth_of_gold.png" />
+	<achievement name="GODMODE_FL_TMagdalene" text='"Sugar Pills" have appeared in the basement' gfx="achievement_sugarpills.png" />
+	<achievement name="GODMODE_FL_Cain" text='You unlocked "Arcade Ticket"' gfx="achievement_arcade_ticket.png" />
+	<achievement name="GODMODE_FL_TCain" text='You unlocked "Fractal Key"' gfx="achievement_fractal_key.png" />
+	<achievement name="GODMODE_FL_Judas" text='You unlocked "Burnt Diary"' gfx="achievement_burnt_diary.png" />
+	<achievement name="GODMODE_FL_TJudas" text='You unlocked "Devils Tongue"' gfx="achievement_devils_tongue.png" />
+	<achievement name="GODMODE_FL_XXX" text='You unlocked "Morphine"' gfx="achievement_morphine.png" />
+	<achievement name="GODMODE_FL_TXXX" text='You unlocked "Hush Hearts"' gfx="achievement_hush_hearts.png" />
+	<achievement name="GODMODE_FL_Eve" text='You unlocked "Tramp of Babylon"' gfx="achievement_tramp.png" />
+	<achievement name="GODMODE_FL_Samson" text='You unlocked "Heart Arrest"' gfx="achievement_heart_arrest.png" />
+	<achievement name="GODMODE_FL_Azazel" text='You unlocked "Blood Pudding"' gfx="achievement_blood_pudding.png" />
+	<achievement name="GODMODE_FL_Lazarus" text='You unlocked "Wings of Betrayal"' gfx="achievement_luc_wings.png" />
+	<achievement name="GODMODE_FL_Eden" text='You unlocked "Jack-of-all-Trades"' gfx="achievement_costume_bin.png" />
+	<achievement name="GODMODE_FL_TheLost" text='You unlocked "Late Delivery"' gfx="achievement_late_delivery.png" />
+	<achievement name="GODMODE_FL_Lilith" text='You unlocked "Sharing is Caring"' gfx="achievement_sharing_caring.png" />
+	<achievement name="GODMODE_FL_Keeper" text='You unlocked "Book of Saints"' gfx="achievement_book_of_saints.png" />
+	<achievement name="GODMODE_FL_Apollyon" text='You unlocked "Anguish Jar"' gfx="achievement_anguish_jar.png" />
+	<achievement name="GODMODE_FL_TheForgotten" text='You unlocked "Crossbones"' gfx="achievement_crossbones.png" />
+	<achievement name="GODMODE_FL_Bethany" text='You unlocked "Orb of Radiance"' gfx="achievement_orb_of_radience.png" />
+	<achievement name="GODMODE_FL_JacobEsau" text='You unlocked "Marshall Scarf"' gfx="achievement_marsh_scarf.png" />
+
+	<!-- Godmode FL achievements -->
+	<achievement name="GODMODE_FL_Recluse" text='You unlocked "Larval Therapy"' gfx="achievement_chiggers.png" />
+	<achievement name="GODMODE_FL_TRecluse" text='You unlocked "Fruit Flies"' gfx="achievement_fruit_fly.png" />
+	<achievement name="GODMODE_FL_Xaphan" text='You unlocked "Adramolechs Blessing"' gfx="achievement_adra_blessing.png" />
+	<achievement name="GODMODE_FL_TXaphan" text='You unlocked "Fatal Attraction"' gfx="achievement_fatal_attraction.png" />
+	<achievement name="GODMODE_FL_Elohim" text='You unlocked "Holy Chalice"' gfx="achievement_holy_chalice.png" />
+	<achievement name="GODMODE_FL_TElohim" text='You unlocked "Divine Wrath"' gfx="achievement_divine_wrath.png" />
+	<achievement name="GODMODE_FL_Deli" text='You unlocked "Papal Cross"' gfx="achievement_papal_cross.png" />
+	<achievement name="GODMODE_FL_TDeli" text='You unlocked "Hysteria"' gfx="achievement_hysteria.png" />
+	<achievement name="GODMODE_FL_Gehazi" text='You unlocked "Crown of Gold"' gfx="achievement_crown_of_gold.png" />
+	<achievement name="GODMODE_FL_TGehazi" text='You unlocked "Greedy Glance"' gfx="achievement_greedy_glance.png" />
+	<achievement name="GODMODE_FL_TheSign" text='You unlocked "Opia"' gfx="achievement_opia.png" />
+	<achievement name="GODMODE_TheSign1" text='The Sign grows stronger' gfx="achievement_sign1.png" />
+	<achievement name="GODMODE_TheSign2" text='The Sign grows stronger' gfx="achievement_sign2.png" />
+	<achievement name="GODMODE_TheSign3" text='The Sign grows stronger' gfx="achievement_sign3.png" />
+	<achievement name="GODMODE_TheSign4" text='The Sign grows stronger' gfx="achievement_sign4.png" />
+	<achievement name="GODMODE_TheSignComplete" text='The Sign is complete' gfx="achievement_signcomplete.png" />
+
+	<!-- item misc unlocks -->
+	<achievement name="GODMODE_ImpendingDoom" text='You unlocked "Impending Doom"' gfx="achievement_calendar.png" />
+	<achievement name="GODMODE_Vajra" text='You unlocked "Vajra"' gfx="achievement_vajra.png" />
+	<achievement name="GODMODE_PrayerMat" text='You unlocked "Prayer Mat"' gfx="achievement_prayer_mat.png" />
+
+	<!-- challenge unlocks -->
+	<achievement name="GODMODE_SugarRush" text='You unlocked "Sugar!"' gfx="achievement_sugar.png" />
+	<achievement name="GODMODE_CelestialApproach" text='Something Celestial has appeared in the basement' gfx="achievement_celestial.png" />
+	<achievement name="GODMODE_OutOfTime" text='You unlocked "A Second Thought"' gfx="achievement_secondthought.png" />
+
+
+
+</achievements>

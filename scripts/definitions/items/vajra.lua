@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Vajra" )
+item.instance = GODMODE.registry.items.vajra
 item.eid_description = "↑ Strike all enemies with electricity when you take damage, dealing 2x your damage + 10"
 item.encyc_entry = {
 	{ -- Effects
@@ -11,6 +11,10 @@ item.encyc_entry = {
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) then
+        if GODMODE.validate_rgon() then 
+            GODMODE.room:DoLightningStrike()
+        end
+
         for _,ent in ipairs(Isaac.GetRoomEntities()) do
             if ent:IsVulnerableEnemy() then
                 local laser = EntityLaser.ShootAngle(10, enthit.Position, (ent.Position-enthit.Position):GetAngleDegrees()+enthit:GetDropRNG():RandomFloat() * 5 - 2.5, 10, Vector(0,10), enthit)
@@ -30,8 +34,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.RIPPLE_POOF, 0, enthit.Position, Vector.Zero, enthit)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, enthit.Position, Vector.Zero, enthit)
-        Game():ShakeScreen(10)
-        SFXManager():Play(SoundEffect.SOUND_EXPLOSION_WEAK)
+        GODMODE.game:ShakeScreen(10)
+        GODMODE.sfx:Play(SoundEffect.SOUND_EXPLOSION_WEAK)
     end
 end
 

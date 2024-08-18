@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "The Carrot" )
+item.instance = GODMODE.registry.items.the_carrot
 item.eid_description = "↑ +1 Heart #↑ Randomly reveal either secret rooms, map icons, or map layout on entering a new floor"
 item.encyc_entry = {
 	{ -- Effects
@@ -20,15 +20,15 @@ item.new_level = function(self)
 			local flag = false
 
 			if i == 1 and bools[i] ~= true then
-				Game():GetLevel():ApplyMapEffect()
+				GODMODE.level:ApplyMapEffect()
 				bools[i] = true
 				flag = true
 			elseif i == 2 and bools[i] ~= true then
-				Game():GetLevel():ApplyBlueMapEffect()
+				GODMODE.level:ApplyBlueMapEffect()
 				bools[i] = true
 				flag = true
 			elseif i == 3 and bools[i] ~= true then
-				Game():GetLevel():ApplyCompassEffect(true)
+				GODMODE.level:ApplyCompassEffect(true)
 				bools[i] = true
 				flag = true
 			end

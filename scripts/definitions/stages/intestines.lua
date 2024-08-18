@@ -3,7 +3,7 @@ local stage_prefix = "intestines/intestines_"
 
 stage.api_id = "Colon"
 stage.display_name = "Colon"
-stage.simulating_stage = LevelStage.STAGE4_2
+stage.simulating_stage = LevelStage.STAGE4_1
 
 stage.graphics = {
 	rocks = "gfx/grid/"..stage_prefix.."rocks.png",
@@ -33,7 +33,7 @@ stage.graphics = {
 }
 
 stage.room_path = "resources/rooms/"..stage_prefix.."rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.fruit_cellar.challenge_waves","resources.rooms.fruit_cellar.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.rooms.intestines.challenge_waves","resources.rooms.intestines.boss_challenge_waves"}
 
 stage.bosses = {
     {
@@ -94,7 +94,7 @@ stage.bosses = {
     }
 }
 
-stage.music = "Pulsations"
+stage.music = GODMODE.registry.music.pulsations
 stage.boss_music = nil
 
 stage.override_stage = StageAPI.StageOverride.UteroOne
@@ -114,20 +114,11 @@ stage.next = function(self,stg)
     end
 end
 
-stage.override = function(self,stg)
-    return {
-        OverrideStage = LevelStage.STAGE3_1,
-        OverrideStageType = StageType.STAGETYPE_WOTL,
-        ReplaceWith = stg
-    }
-end
+stage.override = {
+    Stage = LevelStage.STAGE4_2,
+    StageType = StageType.STAGETYPE_WOTL
+}
 
-local room = Game():GetRoom()
-local tl = room:GetTopLeftPos() + Vector(26,26)
-local tr = Vector(room:GetBottomRightPos().X - 26, room:GetTopLeftPos().Y+26)
-local bl = Vector(room:GetTopLeftPos().X + 26, room:GetBottomRightPos().Y-26)
-local br = room:GetBottomRightPos() + Vector(-26,-26)
-local cs = {tl,tr,bl,br}
 stage.fly_anim = Sprite()
 stage.fly_anim:Load("gfx/grid/intestines_flies.anm2", true)
 
@@ -141,16 +132,23 @@ stage.check_beelzebub = function(self)
     end end)
 end
 stage.stage_update = function(self)
-    if Game():GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
+    if GODMODE.game:GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
         stage:check_beelzebub()
     end
 
     stage.fly_anim:Update()
-    local room = Game():GetRoom()
+    local room = GODMODE.room
     if not room:IsClear() and room:GetType() == RoomType.ROOM_DEFAULT and stage.beelzebub_toggle ~= true then 
         if Isaac.CountEnemies() ~= GODMODE.util.count_enemies(nil, EntityType.ENTITY_ATTACKFLY) then
             stage.fly_timer = stage.fly_timer + 1
-            if stage.fly_timer % 120 == 0 and Isaac.CountEnemies() < 10 then
+            if stage.fly_timer % 120 == 0 and Isaac.CountEnemies() < 5 then
+                local room = GODMODE.room
+                local tl = room:GetTopLeftPos() + Vector(26,26)
+                local tr = Vector(room:GetBottomRightPos().X - 26, room:GetTopLeftPos().Y+26)
+                local bl = Vector(room:GetTopLeftPos().X + 26, room:GetBottomRightPos().Y-26)
+                local br = room:GetBottomRightPos() + Vector(-26,-26)
+                local cs = {tl,tr,bl,br}
+                
                 local fly = Isaac.Spawn(EntityType.ENTITY_ATTACKFLY,0,0,Vector.Zero,Vector(0,0),nil)
                 local corner = fly:GetDropRNG():RandomInt(4)+1
                 -- GODMODE.log("corner = "..corner.."! pos = {"..fly.Position.X..","..fly.Position.Y.."}, corner pos = {"..cs[corner].X..","..cs[corner].Y.."}",true)
@@ -162,10 +160,10 @@ end
 
 local fly_off = Vector(20,-28)
 stage.stage_render = function(self)
-    if Game():GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
+    if GODMODE.game:GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
         stage:check_beelzebub()
     end
-    local room = Game():GetRoom()
+    local room = GODMODE.room
     local corns = {
         room:GetTopLeftPos()+fly_off,
         Vector(room:GetTopLeftPos().X,room:GetBottomRightPos().Y)-Vector(-fly_off.X,fly_off.Y),
@@ -193,7 +191,7 @@ stage.stage_render = function(self)
 end
 
 stage.try_switch = function(self)
-    if Game():GetLevel():GetStage() == LevelStage.STAGE4_1 then 
+    if GODMODE.level:GetStage() == LevelStage.STAGE4_1 then 
         return true
     else
         return false

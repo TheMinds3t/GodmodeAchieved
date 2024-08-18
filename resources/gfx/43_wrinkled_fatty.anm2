@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="6/3/2022 3:06:54 PM" Version="7" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="6/3/2022 3:06:54 PM" Version="7" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\wrinkled_fatty.png" Id="0"/>

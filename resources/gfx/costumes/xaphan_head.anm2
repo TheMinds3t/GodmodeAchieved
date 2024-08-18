@@ -1,11 +1,11 @@
 <AnimatedActor>
-	<Info CreatedBy="Psychotic" CreatedOn="7/11/2021 5:10:18 PM" Version="114" Fps="30"/>
+	<Info CreatedBy="Psychotic" CreatedOn="10/21/2022 6:29:21 PM" Version="115" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="xaphan_head.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
-			<Layer Name="head0" Id="0" SpritesheetId="0"/>
+			<Layer Name="head3" Id="0" SpritesheetId="0"/>
 		</Layers>
 		<Nulls/>
 		<Events>

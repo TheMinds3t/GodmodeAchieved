@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "The Ladle" )
+item.instance = GODMODE.registry.items.the_ladle
 item.eid_description = "↑ +1 Heart Container#↑ +0.1 speed#↑ +0.1 speed after taking damage, up to 5 times a floor#↓ Resets to +0.3 speed on a new floor"
 item.encyc_entry = {
 	{ -- Effects
@@ -11,10 +11,9 @@ item.encyc_entry = {
 	},
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
 	data.ladle_level = tonumber(GODMODE.save_manager.get_player_data(player, "LadleLevel",0))
 	if cache == CacheFlag.CACHE_SPEED then
 		player.MoveSpeed = math.min(2.0, player.MoveSpeed + 0.1) + data.ladle_level * 0.1

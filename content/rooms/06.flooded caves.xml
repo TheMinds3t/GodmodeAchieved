@@ -9068,7 +9068,7 @@
 			<entity type="3000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5050" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5050" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9113,7 +9113,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5051" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5051" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9149,7 +9149,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5052" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5052" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9197,7 +9197,7 @@
 			<entity type="700" variant="18" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5053" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5053" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9248,7 +9248,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5054" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5054" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9287,7 +9287,7 @@
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5055" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5055" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9344,7 +9344,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5056" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5056" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9419,7 +9419,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5057" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5057" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9470,7 +9470,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5058" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5058" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9521,7 +9521,7 @@
 			<entity type="700" variant="18" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5059" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5059" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9584,7 +9584,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5060" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5060" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9620,7 +9620,7 @@
 			<entity type="42" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5061" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5061" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9665,7 +9665,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5062" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5062" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9710,7 +9710,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5063" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5063" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9755,7 +9755,7 @@
 			<entity type="242" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
-	<room variant="5064" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5064" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9800,7 +9800,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5065" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5065" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9845,7 +9845,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5066" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5066" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9890,7 +9890,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5067" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5067" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9941,7 +9941,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5068" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5068" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -9983,7 +9983,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5069" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5069" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10034,7 +10034,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5070" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5070" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10079,7 +10079,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5071" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5071" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10121,7 +10121,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5072" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5072" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10163,7 +10163,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5073" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5073" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10214,7 +10214,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5074" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5074" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
@@ -10265,7 +10265,7 @@
 			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
 		</spawn>
 	</room>
-	<room variant="5075" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="999.0">
+	<room variant="5075" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
 		<door exists="True" x="-1" y="3"/>
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>

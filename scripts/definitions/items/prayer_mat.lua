@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Prayer Mat" )
+item.instance = GODMODE.registry.items.prayer_mat
 item.eid_description = "Gain half a soul heart the first time you stand still for 10 seconds in an uncleared room"
 item.encyc_entry = {
 	{ -- Effects
@@ -9,12 +9,11 @@ item.encyc_entry = {
 	},
 }
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data)
 	if player:HasCollectible(item.instance) then
-        local data = GODMODE.get_ent_data(player)
         local diff = player:GetCollectibleNum(item.instance)
 
-        if (player.Velocity:Length() > 0.2 or data.prayer_used == "true" or Game():GetRoom():IsClear()) and data.finish_anim ~= true then
+        if (player.Velocity:Length() > 0.2 or data.prayer_used == "true" or GODMODE.room:IsClear()) and data.finish_anim ~= true then
             diff = -1
             data.prayer_mat = math.min(data.prayer_mat or 0,5)
         end
@@ -36,7 +35,7 @@ item.player_update = function(self, player)
             GODMODE.save_manager.set_player_data(player,"PrayerUsed","true",true)
             data.finish_anim = true
             player:AddSoulHearts(1)
-            SFXManager():Play(SoundEffect.SOUND_HOLY,1,2,false,1)
+            GODMODE.sfx:Play(SoundEffect.SOUND_HOLY,1,2,false,1)
             player:AnimateHappy()
             Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.CRACK_THE_SKY,0,player.Position,Vector.Zero,player)
         end

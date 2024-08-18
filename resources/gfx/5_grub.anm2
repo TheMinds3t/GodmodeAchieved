@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="9/5/2022 10:06:15 PM" Version="10" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="9/5/2022 10:06:15 PM" Version="10" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\grub.png" Id="0"/>

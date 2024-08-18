@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Heart Arrest" )
+item.instance = GODMODE.registry.items.heart_arrest
 item.eid_description = "↑ Tears up#Fire tears in a heartbeat pattern#↑ Tears additionally goes up as red health gets emptier"
 item.encyc_entry = {
 	{ -- Effects
@@ -20,7 +20,7 @@ local tear_shifts = {
 	[TearVariant.EYE] = TearVariant.EYE_BLOOD,
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	if cache == CacheFlag.CACHE_FIREDELAY then
@@ -46,10 +46,11 @@ item.tear_fire = function(self, tear)
 		if player:HasCollectible(CollectibleType.COLLECTIBLE_20_20) then scale = 0.5 dat.toggle = dat.toggle or 0.5 end
 		if not dat.toggle or dat.toggle >= 1 then
 			dat.toggle = 0
-			player.FireDelay = math.floor(player.MaxFireDelay / 3)
+			player.FireDelay = math.max(math.floor(player.MaxFireDelay / 3),0)
 		else
+			local heart_scale = math.min(0,player:GetHearts() / player:GetMaxHearts())
 			dat.toggle = dat.toggle + scale
-			player.FireDelay = player.MaxFireDelay * (1.75 - (0.75 - (0.75 * player:GetHearts() / player:GetMaxHearts())))
+			player.FireDelay = math.max(math.floor(player.MaxFireDelay * (1.75 - (0.75 - (0.75 * heart_scale)))),0)
 		end
 		--GODMODE.log(tostring(dat.toggle).."tear: "..player.FireDelay,true)
 	end

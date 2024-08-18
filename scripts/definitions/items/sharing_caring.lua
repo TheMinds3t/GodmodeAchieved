@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Sharing is Caring" )
+item.instance = GODMODE.registry.items.sharing_is_caring
 item.eid_description = "↑ All familiars operate 33% faster"
 item.encyc_entry = {
 	{ -- Effects
@@ -9,14 +9,13 @@ item.encyc_entry = {
 	},
 }
 
-local blacklist = {
+local blacklist = { -- currently unused
 	[FamiliarVariant.BBF] = true,
 	[FamiliarVariant.INCUBUS] = true
 }
-item.familiar_update = function(self, fam)
-	if fam and fam.Player and fam.Player:HasCollectible(item.instance) then
+item.familiar_update = function(self, fam, data)
+	if fam and fam.Player and fam.Player:HasCollectible(item.instance) and data then
 		fam:GetSprite().PlaybackSpeed = 1.333--0.66
-		local data = GODMODE.get_ent_data(fam)
 		if not data.alt_up then
 			data.alt_up = 0
 			fam:MultiplyFriction(1.2)
@@ -27,15 +26,18 @@ item.familiar_update = function(self, fam)
 			data.alt_up = 0
 
 			if fam.OrbitDistance.X + fam.OrbitDistance.Y == 0 then
+				local old_scale = fam.SpriteScale:Length()
 				if fam.Variant == FamiliarVariant.SUCCUBUS then
 					fam.Velocity = fam.Velocity * 1.25
 				else
 					fam:Update()
 				end
 				
-				if fam.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) then
+				if fam.SpriteScale:Length() ~= old_scale then 
 					fam.SpriteScale = fam.SpriteScale * 0.8
 				end
+				-- if fam.Player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) or fam.Player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then
+				-- end
 			end
 		end
 

@@ -1,15 +1,15 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Four Leaf Clover" )
-item.eid_description = "↑ +2.0 luck#↑ +0.25*luck damage#↑ +0.25*luck tears"
+item.instance = GODMODE.registry.items.four_leaf_clover
+item.eid_description = "↑ +2.0 luck#↑ +5%*luck damage#↑ +0.25*luck tears"
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},
-      {str = "Grants +0.25 damage per luck and +0.25 tears per luck"},
+      {str = "Grants +5% damage per luck and +0.25 tears per luck"},
       {str = "Grants +2 luck"},
     },
 }
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	local luck_bonus = 2
@@ -19,7 +19,7 @@ item.eval_cache = function(self, player,cache)
 	end
 	
 	if cache == CacheFlag.CACHE_DAMAGE then
-		player.Damage = player.Damage + math.max(0,(player.Luck+luck_bonus) * 0.25)
+		player.Damage = player.Damage + player.Damage * math.max(0,(player.Luck+luck_bonus) * 0.5)
 	end
 
 	if cache == CacheFlag.CACHE_FIREDELAY then

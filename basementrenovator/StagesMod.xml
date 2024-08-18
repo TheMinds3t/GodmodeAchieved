@@ -1,0 +1,26 @@
+<data>
+    <stage Name="Fruit Cellar" Stage="1" StageType="1" BaseGamePath="fruitcellar_rooms" Pattern="fruitcellar">
+        <Gfx BGPrefix="resources/Backdrops/fruitcellar">
+            <Entity ID="1000" Image="../resources/gfx/grid/fruit_cellar/cellar_rocks.png" />
+            <Entity ID="3000" Image="../resources/gfx/grid/fruit_cellar/cellar_pits.png" />
+        </Gfx>
+    </stage>
+    <stage Name="The Nest" Stage="5" StageType="1" BaseGamePath="nest_rooms" Pattern="nest">
+        <Gfx BGPrefix="resources/Backdrops/nest">
+            <Entity ID="1000" Image="../resources/gfx/grid/nest/nest_rocks.png" />
+            <Entity ID="3000" Image="../resources/gfx/grid/nest/nest_pits.png" />
+        </Gfx>
+    </stage>
+    <stage Name="Intestines" Stage="7" StageType="1" BaseGamePath="intestines_rooms" Pattern="intestines">
+        <Gfx BGPrefix="resources/Backdrops/intestines">
+            <Entity ID="1000" Image="../resources/gfx/grid/intestines/intestines_rocks.png" />
+            <Entity ID="3000" Image="../resources/gfx/grid/intestines/intestines_pits.png" />
+        </Gfx>
+    </stage>
+    <stage Name="Ivory Palace" Stage="11" StageType="1" BaseGamePath="ivory_rooms" Pattern="ivory_rooms">
+        <Gfx BGPrefix="resources/Backdrops/ivory">
+            <Entity ID="1000" Image="../resources/gfx/grid/luc/rocks.png" />
+            <Entity ID="3000" Image="../resources/gfx/grid/luc/pits.png" />
+        </Gfx>
+    </stage>
+</data>

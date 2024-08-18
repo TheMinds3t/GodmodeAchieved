@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="7/11/2022 6:22:02 PM" Version="35" Fps="42"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="1/24/2023 12:01:16 AM" Version="36" Fps="42"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="effects\rewind_fx.png" Id="0"/>
@@ -25,7 +25,7 @@
 					<Frame XPosition="-5000" YPosition="-5000" XPivot="0" YPivot="0" XCrop="0" YCrop="0" Width="1" Height="1" XScale="1000000" YScale="1000000" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>
 				<LayerAnimation LayerId="1" Visible="true">
-					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="0" YScale="0" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="0" YScale="0" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="100" YScale="100" Delay="26" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 					<Frame XPosition="0" YPosition="0" XPivot="256" YPivot="256" XCrop="0" YCrop="0" Width="512" Height="512" XScale="1000" YScale="1000" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="0" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>

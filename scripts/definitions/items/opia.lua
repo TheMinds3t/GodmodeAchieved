@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Opia" )
+item.instance = GODMODE.registry.items.opia
 item.eid_description = "When used, throw your soul at an enemy to become that enemy and charm all enemies of the same type for the room#Deals 4x player damage against bosses instead"
 item.encyc_entry = {
 	{ -- Effects
@@ -48,15 +48,14 @@ item.new_room = function(self)
     item:reset_opia()
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data)
     if player:HasCollectible(item.instance) then
-        local data = GODMODE.get_ent_data(player)
         local state = tonumber(GODMODE.save_manager.get_player_data(player, "OpiaState", "0"))
 
-        if state == -1 then
+        if state == -1 then -- reset to player state
             player.PositionOffset = Vector(0,0)
             GODMODE.save_manager.set_player_data(player, "OpiaState", 0)
-        elseif state == 1 then
+        elseif state == 1 then -- using opia
             if data.opia_animate == 0 then
                 player:AnimateTrinket(TrinketType.TRINKET_YOUR_SOUL)
                 data.opia_animate = 30
@@ -68,7 +67,7 @@ item.player_update = function(self, player)
                 player:StopExtraAnimation()
                 local vel = player:GetShootingJoystick()*10
                 local tear = player:FireTear(player.Position,vel+player:GetTearMovementInheritance(vel),false,true,false,player,0)
-                tear:ChangeVariant(Isaac.GetEntityVariantByName("Opia Soul"))
+                tear:ChangeVariant(GODMODE.registry.entities.opia_soul.variant)
                 tear.TearFlags = TearFlags.TEAR_NORMAL
                 tear:GetSprite():Play("RegularTear6",true)
                 tear.Scale = 1.0
@@ -76,9 +75,10 @@ item.player_update = function(self, player)
                 data.opia_tear = tear
                 GODMODE.save_manager.set_player_data(player, "OpiaState", 2)
             end
-        elseif state == 2 and data.opia_tear ~= nil then
-            data.opia_tear:GetSprite().Rotation = data.opia_tear.Velocity:GetAngleDegrees()+90
-        elseif state == 3 and data.opia_ent ~= nil then
+        elseif state == 2 and data.opia_tear ~= nil then -- opia tear launching
+            -- data.opia_tear:GetSprite().Rotation = data.opia_tear.Velocity:GetAngleDegrees()+90
+            data.opia_tear.Rotation = data.opia_tear:GetSprite().Rotation
+        elseif state == 3 and data.opia_ent ~= nil then --opia tear has hit an enemy 
             local count = Isaac.CountEnemies()
             --GODMODE.log("count:"..count,true)
             GODMODE.util.macro_on_enemies(nil,data.opia_ent.Type,data.opia_ent.Variant,data.opia_ent.SubType,function(ent2)

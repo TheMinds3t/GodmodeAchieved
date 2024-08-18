@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Edible Soul" )
+item.instance = GODMODE.registry.items.edible_soul
 item.eid_description = "↑ +1 Black Heart#When you die with no lives remaining, revive, lose your body and gain three charmed Furnace Knights, three broken hearts and flight# Health gets set to 1 black heart on trigger"
 item.encyc_entry = {
 	{ -- Effects
@@ -13,18 +13,17 @@ item.encyc_entry = {
     },
 }
 
-item.eval_cache = function(self, player,cache)
-	local data = GODMODE.get_ent_data(player)
+item.eval_cache = function(self, player,cache,data)
 	local flag = GODMODE.save_manager.get_player_data(player, "EdibleSoulApplied", "false") == "true"
 
-	if flag and Game():GetFrameCount() > 1 then
+	if flag and GODMODE.game:GetFrameCount() > 1 then
 		if cache == CacheFlag.CACHE_FLYING then
 			player.CanFly = true
 
 			if data.edible_soul_costume ~= true then 
 				data.edible_soul_costume = true
-				player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/edible_soul_bodiless.anm2"))
-				player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/edible_soul_bodiless.anm2"))
+				player:TryRemoveNullCostume(GODMODE.registry.costumes.edible_soul)
+				player:AddNullCostume(GODMODE.registry.costumes.edible_soul)
 				player:AddCostume(Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_LORD_OF_THE_PIT),false)
 				player:AddCostume(Isaac.GetItemConfig():GetCollectible(CollectibleType.COLLECTIBLE_ARIES),false)
 			end
@@ -38,8 +37,7 @@ item.first_level = function(self)
 	end)
 end
 
-item.player_update = function(self,player)
-	local data = GODMODE.get_ent_data(player)
+item.player_update = function(self,player,data)
 	local flag = GODMODE.save_manager.get_player_data(player, "EdibleSoulApplied", "false") == "true"
 
 
@@ -52,7 +50,7 @@ item.player_update = function(self,player)
 		player:AddRottenHearts(-24)
 
 		if player:GetBrokenHearts() < 9 then 
-			player:AddBlackHearts(2)
+			player:AddBlackHearts(6)
 		end
 
 		player:AddBrokenHearts(3)
@@ -72,11 +70,11 @@ item.player_update = function(self,player)
 end
 
 item.new_room = function(self)	
-	local enter_door = Game():GetLevel().EnterDoor
+	local enter_door = GODMODE.level.EnterDoor
 	if enter_door > -1 then 
-		GODMODE.util.macro_on_enemies(nil,Isaac.GetEntityTypeByName("Furnace Knight"),Isaac.GetEntityVariantByName("Furnace Knight"),1, function(knight)
+		GODMODE.util.macro_on_enemies(nil,GODMODE.registry.entities.furnace_knight.type,GODMODE.registry.entities.furnace_knight.variant,1, function(knight)
 			if knight:HasEntityFlags(EntityFlag.FLAG_CHARM | EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_PERSISTENT) then 
-				knight.Position = Game():GetRoom():GetDoorSlotPosition(enter_door)
+				knight.Position = GODMODE.room:GetDoorSlotPosition(enter_door)
 			end
 		end)	
 	end
@@ -89,13 +87,13 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         local data = GODMODE.get_ent_data(player)
 		local death_flag = player:GetSprite():IsPlaying("Death")
 
-		if player:GetExtraLives() == 0 and player:GetHearts() + player:GetSoulHearts() + player:GetBlackHearts() + player:GetRottenHearts() <= amount and player:GetCollectibleNum(item.instance) > 0 or death_flag then 
+		if player:GetExtraLives() == 0 and GODMODE.util.get_player_hits(player) <= amount and player:GetCollectibleNum(item.instance) > 0 or death_flag then 
 			if not death_flag then 
 				player:PlayExtraAnimation("Death")
 
 				local offsets = {Vector(96,-64),Vector(-96,-64),Vector(0,96)}
 				for i,offset in ipairs(offsets) do
-					local knight = Isaac.Spawn(Isaac.GetEntityTypeByName("Furnace Knight"),Isaac.GetEntityVariantByName("Furnace Knight"),1, player.Position+offset,Vector(0,0),player) 
+					local knight = Isaac.Spawn(GODMODE.registry.entities.furnace_knight.type,GODMODE.registry.entities.furnace_knight.variant,1, player.Position+offset,Vector(0,0),player) 
 					knight:AddEntityFlags(EntityFlag.FLAG_CHARM | EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_PERSISTENT)
 					knight:BloodExplode()
 				end

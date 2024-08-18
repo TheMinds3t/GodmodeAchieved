@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Anguish Jar" )
+item.instance = GODMODE.registry.items.anguish_jar
 item.eid_description = "Creates a controllable beam from the sky, dealing 40 damage per tick#Leaves a trail of creep"
 item.encyc_entry = {
 	{ -- Effects
@@ -11,7 +11,7 @@ item.encyc_entry = {
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-		Game():Spawn(3, Isaac.GetEntityVariantByName("Hush Cannon"), player.Position, Vector(0,0), player, 0, player.InitSeed)
+		Isaac.Spawn(GODMODE.registry.entities.hush_cannon.type, GODMODE.registry.entities.hush_cannon.variant, 0, player.Position, Vector(0,0), player)
 		return true
 	end
 end

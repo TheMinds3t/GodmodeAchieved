@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Late Delivery" )
+item.instance = GODMODE.registry.items.late_delivery
 item.eid_description = "↑ +0.5 Tears#↑ Spawns an item after dealing 2500 damage#Spawns more items, but for an additional 5000 damage each time"
 item.encyc_entry = {
 	{ -- Effects
@@ -11,24 +11,23 @@ item.encyc_entry = {
 }
 
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-	local data = GODMODE.get_ent_data(player)
 	if cache == CacheFlag.CACHE_FIREDELAY then
-		player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.35*player:GetCollectibleNum(item.instance))
+		player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.5*player:GetCollectibleNum(item.instance))
 	end
 end
 
-local corners = {{x=0.15,y=0.035},{x=1.15,y=0.1},{x=0.5,y=1.9},{x=1.15,y=1.9}}
 
-item.player_render = function(self,player,offset)
+item.render_player_ui = function(self,player,index)
 	if player:HasCollectible(item.instance) then
 		if item.delivery_anim == nil then
 			item.delivery_anim = Sprite()
 			item.delivery_anim:Load("/gfx/famil_late_delivery.anm2", true)
 			item.delivery_anim.Color = Color(0.8,0.8,0.8,1) --fixes over-exposure problem
 		end
+
 
 		local data = GODMODE.get_ent_data(player)
 		data.late_delivery_counter = tonumber(GODMODE.save_manager.get_player_data(player, "DeliveryCounter", "2500"))
@@ -40,7 +39,9 @@ item.player_render = function(self,player,offset)
 			local flash_time = data.late_delivery_anim
 			item.delivery_anim:SetFrame("ChargeBottomFlash",11-flash_time)
 
-			local pos = GODMODE.util.get_center_of_screen() * Vector(corners[player.ControllerIndex+1].x,corners[player.ControllerIndex + 1].y)
+			local pos = GODMODE.util.get_hud_corner_pos(GODMODE.util.get_player_index(player)) + Vector(54,-2)
+			-- GODMODE.log("pos.x="..pos.X..",pos.y="..pos.Y,true)
+
 			item.delivery_anim:Render(pos, Vector(0,0), Vector(0,0))
 			local v_x = 80 - 80 * (data.late_delivery_counter / (2500+data.late_deliveries*5000))
 			item.delivery_anim:Play("ChargeTop",false)
@@ -52,7 +53,7 @@ item.player_render = function(self,player,offset)
 end
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
-	if GODMODE.util.is_player_attack(entsrc) and GODMODE.util.get_player_from_attack(entsrc) and GODMODE.util.get_player_from_attack(entsrc):HasCollectible(item.instance) and enthit:IsVulnerableEnemy() then
+	if GODMODE.util.is_player_attack(entsrc) and GODMODE.util.get_player_from_attack(entsrc) and enthit:IsVulnerableEnemy() then
 		GODMODE.util.macro_on_players_that_have(item.instance, function(player)
 			local data = GODMODE.get_ent_data(player)
 
@@ -62,8 +63,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
 			if data.late_delivery_counter <= 0 then
 				data.late_deliveries = tonumber(GODMODE.save_manager.set_player_data(player, "LateDeliveries", tonumber(GODMODE.save_manager.get_player_data(player, "LateDeliveries", "0")) + 1,true))
-				Isaac.Spawn(Isaac.GetEntityTypeByName("Late Delivery"),Isaac.GetEntityVariantByName("Late Delivery"),0,Game():GetRoom():GetRandomPosition(48),Vector(0,0),player)
-				SFXManager():Play(SoundEffect.SOUND_SUPERHOLY, Options.SFXVolume*3.0, 0, false, 1)
+				Isaac.Spawn(GODMODE.registry.entities.late_delivery.type,GODMODE.registry.entities.late_delivery.variant,0,GODMODE.room:GetRandomPosition(48),Vector(0,0),player)
+				GODMODE.sfx:Play(SoundEffect.SOUND_SUPERHOLY, Options.SFXVolume*3.0, 0, false, 1)
 
 				data.late_delivery_counter = 2500 + 5000 * data.late_deliveries	
 				GODMODE.save_manager.set_player_data(player, "DeliveryCounter", data.late_delivery_counter,true)

@@ -1,0 +1,6 @@
+<cutscenes root="gfx/cutscenes/">
+	<cutscene name="GODMODE_Ending" fadeout="true" fadecolor="black">
+		<anm2part anm2="ending.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover" width="427" height="240" />
+		<!-- <anm2part anm2="ending.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover" /> -->
+	</cutscene>
+</cutscenes>

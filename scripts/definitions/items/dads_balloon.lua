@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Dad's Balloon" )
+item.instance = GODMODE.registry.items.dads_balloon
 item.eid_description = "Random chance to do one of the following:#Spawn a pool of freezing creep beneath the player#Fire a ring of 4 tears#Fire a ring of 8 tears#Fire a ring of 16 tears"
 item.encyc_entry = {
 	{ -- Effects
@@ -9,9 +9,10 @@ item.encyc_entry = {
       {str = " - 20% chance to spawn a holy water puddle beneath the player"},
       {str = " - 35% chance to fire a ring of 16 tears at a medium speed"},
       {str = " - 25% chance to fire 4 tears at a medium speed"},
-      {str = "Charges once every 4 seconds."},
+      {str = "Recharges every 4 seconds"},
     },
 }
+
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     if coll == item.instance then
         local act = rng:RandomFloat()
@@ -25,7 +26,8 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
             end
             return true
         elseif act < 0.4 then
-            Game():Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER, player.Position, Vector(0,0),player, 0, player.InitSeed)
+            local fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_HOLYWATER, 0, player.Position, Vector(0,0),player)
+            fx:Update()
             return true
         elseif act < 0.75 then
             local off = rng:RandomFloat() * 360
@@ -49,28 +51,6 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         end
 
         return false
-    end
-end
-
-item.room_rewards = function(self,rng,pos)
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player)
-		local slot = GODMODE.util.get_active_slot(player, item.instance)
-		player:SetActiveCharge(40, slot)
-		Game():GetHUD():FlashChargeBar(player, slot)
-		SFXManager():Play(SoundEffect.SOUND_BATTERYCHARGE)
-	end)
-end
-
-item.player_update = function(self,player)
-    if player:HasCollectible(item.instance) then
-		local data = GODMODE.get_ent_data(player)
-		data.balloon_charge = (data.balloon_charge or -1) + 1
-        local slot = GODMODE.util.get_active_slot(player, item.instance)
-        
-		if slot > -1 and player:GetActiveCharge(slot) < 40 and data.balloon_charge >= math.max(1,6 / (1 + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BATTERY))) then
-			player:SetActiveCharge(player:GetActiveCharge(slot) + 1, slot)
-			data.balloon_charge = 0
-		end
     end
 end
 

@@ -3,7 +3,7 @@ local stage_prefix = "fruit_cellar/cellar_"
 
 stage.api_id = "FruitCellar"
 stage.display_name = "Fruit Cellar"
-stage.simulating_stage = LevelStage.STAGE1_1
+stage.simulating_stage = LevelStage.STAGE1_2
 
 stage.graphics = {
 	rocks = "gfx/grid/"..stage_prefix.."rocks.png",
@@ -32,7 +32,14 @@ stage.graphics = {
     }
 }
 
-stage.room_path = "resources.rooms.fruit_cellar.rooms"
+stage.room_path = "resources.rooms.fruit_cellar.fruitcellar_rooms"
+
+stage.rooms = {
+    {path="resources.rooms.fruit_cellar.fruitcellar_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
+    {path="resources.rooms.fruit_cellar.secret_exit",type=RoomType.ROOM_SECRET_EXIT,id="SecretExit"},
+}
+
+
 stage.challenge_wave_path = {"resources.rooms.fruit_cellar.challenge_waves","resources.rooms.fruit_cellar.boss_challenge_waves"}
 
 stage.bosses = {
@@ -110,37 +117,35 @@ stage.bosses = {
     },
 }
 
-stage.music = "Peripheral Visions"
+stage.music = GODMODE.registry.music.peripheral_visions
 stage.boss_music = nil
 
 stage.next = function(self,stg)
-    -- local spots = {
-    --     {
-    --         NormalStage = true,
-    --         Stage = LevelStage.STAGE1_2
-    --     },
-    --     {
-    --        Stage=GODMODE.stages["FruitCellarII"].stage 
-    --     },
-    -- }
+    return {
+        NormalStage = true,
+        Stage = LevelStage.STAGE2_1,
+        StageType = GODMODE.util.random(0,2)
+    }    
+end
+
+stage.secret_next = function(self, stg)
     if GODMODE.util.has_curse(LevelCurse.CURSE_OF_LABYRINTH) then 
         return {
             NormalStage = true,
-            Stage = LevelStage.STAGE2_1,
-            StageType = GODMODE.util.random(0,2)
+            Stage = LevelStage.STAGE1_2,
+            StageType = StageType.STAGETYPE_REPENTANCE + GODMODE.util.random(0,2)
         }    
     else
         return {
             NormalStage = true,
             Stage = LevelStage.STAGE1_2,
-            StageType = GODMODE.util.random(0,2)
+            StageType = StageType.STAGETYPE_REPENTANCE + GODMODE.util.random(0,2)
         }    
     end
-	-- return spots[math.random(1,#spots)]
 end
 
 stage.try_switch = function(self)
-    if Game():GetLevel():GetStage() == LevelStage.STAGE1_1 then 
+    if GODMODE.level:GetStage() == LevelStage.STAGE1_2 then 
         return true
     else
         return false
@@ -148,27 +153,9 @@ stage.try_switch = function(self)
 end
 
 stage.override_stage = StageAPI.StageOverride.CatacombsOne
-stage.override = function(self,stg)
-	return {
-        OverrideStage = LevelStage.STAGE1_1,
-        OverrideStageType = StageType.STAGETYPE_WOTL,
-        ReplaceWith = stg,
-        GreedMode = false
-    }
-end
-
-stage.stage_update = function(self)
-	for i=1, DoorSlot.NUM_DOOR_SLOTS do
-        local door = Game():GetRoom():GetDoor(i)
-
-        if door ~= nil and (door.TargetRoomType == RoomType.ROOM_SHOP or door.TargetRoomType == RoomType.ROOM_TREASURE) and door:IsLocked() then
-            door:SetLocked(false)
-
-            if Game():GetRoom():IsClear() then
-                door:Open()
-            end
-        end
-    end
-end
+stage.override = {
+    Stage = LevelStage.STAGE1_2,
+    StageType = StageType.STAGETYPE_WOTL
+}
 
 return stage

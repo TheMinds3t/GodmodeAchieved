@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Forbidden Knowledge" )
+item.instance = GODMODE.registry.items.forbidden_knowledge
 item.eid_description = "When picking up a red heart, spawn:#20% chance for bomb#15% chance for key#40% chance for coin#25% chance for nothing"
 item.eid_transforms = GODMODE.util.eid_transforms.BOOKWORM
 item.encyc_entry = {

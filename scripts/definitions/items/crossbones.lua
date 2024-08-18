@@ -1,21 +1,24 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Crossbones" )
+item.instance = GODMODE.registry.items.crossbones
 item.eid_description = "Gain a shield for 3 seconds when you kill 4 enemies"
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},
-      {str = "For every fourth enemy killed, gain a shield for 3 seconds."},
+      {str = "For every fourth enemy killed, gain a shield for 3 seconds. This does not stack."},
     },
 	{ -- Notes
       {str = "Notes", fsize = 2, clr = 3, halign = 0},
-      {str = "Due to modding limitations, the shield granted does not prevent holy mantle from being depleted, but will prevent death."},
+      {str = "Without Repentogon, due to modding limitations, the shield granted does not prevent holy mantle from being depleted, but will prevent death."},
     },
 }
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data)
 	if player:HasCollectible(item.instance) then
-        local data = GODMODE.get_ent_data(player)
         data.crossbones = math.max(0, (data.crossbones or 0) - 1)
+
+        if GODMODE.validate_rgon() and data.crossbones > 0 then 
+            player:SetMinDamageCooldown(data.crossbones)
+        end
     end
 end
 
@@ -28,11 +31,11 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
                 if kills >= 3 then
                     GODMODE.save_manager.set_player_data(player,"CrossboneKills", 0,true)
-                    GODMODE.util.macro_on_enemies(player,Isaac.GetEntityTypeByName("Crossbones Shield"),Isaac.GetEntityVariantByName("Crossbones Shield"),nil, function(shield) 
+                    GODMODE.util.macro_on_enemies(player,GODMODE.registry.entities.crossbones_shield.type,GODMODE.registry.entities.crossbones_shield.variant,nil, function(shield) 
                         shield:GetSprite():Play("Break", true)
                     end)
 
-                    local shield = Isaac.Spawn(Isaac.GetEntityTypeByName("Crossbones Shield"), Isaac.GetEntityVariantByName("Crossbones Shield"), 0, player.Position, Vector.Zero, player)
+                    local shield = Isaac.Spawn(GODMODE.registry.entities.crossbones_shield.type, GODMODE.registry.entities.crossbones_shield.variant, 0, player.Position, Vector.Zero, player)
                     shield:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
                     shield:GetSprite():Play("Form", false)
                     data.crossbones = 230

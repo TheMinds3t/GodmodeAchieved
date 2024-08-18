@@ -11,7 +11,7 @@ Morphine (Passive, Quality: 2) - "Less pain!" (3,3)
 	When taken, gives Isaac 2 broken hearts and +1.0 damage. Isaac is slowed down 20%, and there is a 30% chance for full heart damage to be reduced to half heart damage. 
 	Counts towards the Spun! transformation.
 
-Lucifer's Wings (Passive, Quality: 1) - "Gain with pain!" (2,10)
+Wings of Betrayal (Passive, Quality: 1) - "Gain with pain!" (2,10)
 	When damage is taken, gain +2.5 damage, flight and +0.25 movement speed for the room.
 	Counts towards the Seraphim and Leviathan transformations.
 

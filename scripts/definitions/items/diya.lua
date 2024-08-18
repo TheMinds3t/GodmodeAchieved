@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Diya" )
+item.instance = GODMODE.registry.items.diya
 item.eid_description = "When used, weakens all enemies in the room similar to Reverse Strength"
 item.encyc_entry = {
 	{ -- Effects
@@ -16,12 +16,16 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	end
 end
 
-item.new_room = function(self)
-	GODMODE.util.macro_on_players_that_have(item.instance,function(player) GODMODE.save_manager.set_player_data(player, "DiyaLit", "false",true) end)
+item.eval_cache = function(self, player,cache,data)
+    if not player:HasCollectible(item.instance) then return end
+
+	if cache == CacheFlag.CACHE_FAMILIARS then 
+		player:CheckFamiliar(GODMODE.registry.entities.diya.variant, player:GetCollectibleNum(item.instance), player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
+	end
 end
 
-item.player_update = function(self,player)
-	player:CheckFamiliar(Isaac.GetEntityVariantByName("Diya Candle"), player:GetCollectibleNum(item.instance), player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
+item.new_room = function(self)
+	GODMODE.util.macro_on_players_that_have(item.instance,function(player) GODMODE.save_manager.set_player_data(player, "DiyaLit", "false",true) end)
 end
 
 return item

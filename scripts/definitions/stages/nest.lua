@@ -33,7 +33,7 @@ stage.graphics = {
 }
 
 stage.room_path = "resources/rooms/"..stage_prefix.."rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.fruit_cellar.challenge_waves","resources.rooms.fruit_cellar.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.rooms.nest.challenge_waves","resources.rooms.nest.boss_challenge_waves"}
 
 stage.bosses = {
 	{
@@ -46,8 +46,8 @@ stage.bosses = {
     },
 	{
         Name="Reap Creap",
-        Bossname = "gfx/ui/boss/portrait_900.0_reapcreep.png",
-        Portrait = "gfx/ui/boss/bossname_reapcreep.png",
+        Bossname = "gfx/ui/boss/bossname_reapcreep.png",
+        Portrait = "gfx/ui/boss/portrait_900.0_reapcreep.png",
         Weight = 1.0,
         Horseman = false,
         Rooms = "resources.rooms.nest.bosses.reapcreep",
@@ -86,7 +86,7 @@ stage.bosses = {
     }
 }
 
-stage.music = "Shellstepping"
+stage.music = GODMODE.registry.music.shellstepping
 stage.boss_music = nil
 
 stage.next = function(self,stg)
@@ -106,20 +106,18 @@ stage.next = function(self,stg)
 end
 
 stage.override_stage = StageAPI.StageOverride.NecropolisOne
-stage.override = function(self,stg)
-	return {
-	    OverrideStage = LevelStage.STAGE3_1,
-	    OverrideStageType = StageType.STAGETYPE_ORIGINAL,
-	    ReplaceWith = stg
-	}
-end
+
+stage.override = {
+    Stage = LevelStage.STAGE3_1,
+    StageType = StageType.STAGETYPE_ORIGINAL
+}
 
 stage.stage_update = function(self)
 
 end
 
 stage.try_switch = function(self)
-    if Game():GetLevel():GetStage() == LevelStage.STAGE3_1 then 
+    if GODMODE.level:GetStage() == LevelStage.STAGE3_1 then 
         return true
     else
         return false

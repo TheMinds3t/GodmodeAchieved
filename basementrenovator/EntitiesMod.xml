@@ -1,0 +1,126 @@
+<!-- Godmode Achieved enemies for EntitiesRepentance.xml
+	
+	Basement Renovator entries V1.0
+
+	- Add the following entity tags to your copy of EntitiesRepentance.xml
+
+ -->
+<data>
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Nerve Cluster.png" ID="700" Name="Nerve Cluster" Variant="0" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Guard of the Father.png" ID="700" Name="Guard of the Father" Variant="1" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Blind.png" ID="700" Name="Blind" Variant="2" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Fright.png" ID="700" Name="Fright" Variant="2" Subtype="1" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Dream.png" ID="700" Name="Dream" Variant="3" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Trailer.png" ID="700" Name="Trailer" Variant="4" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Grub.png" ID="700" Name="Grubby" Variant="5" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Cluster.png" ID="700" Name="Cluster" Variant="6" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Harf.png" ID="700" Name="Harf" Variant="7" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Purple Heart.png" ID="700" Name="Purple Heart" Variant="8" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Slammer.png" ID="700" Name="Smasher" Variant="11" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Planter.png" ID="700" Name="Planter" Variant="12" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Tower.png" ID="700" Name="Big Dipper" Variant="13" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Barfer.png" ID="700" Name="Barfer" Variant="14" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Dial.png" ID="700" Name="Dial" Variant="15" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Guarded.png" ID="700" Name="Guarded" Variant="16" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Silent.png" ID="700" Name="Silent" Variant="17" Subtype="0" />
+		<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Teether.png" ID="700" Name="Teether" Variant="18" Subtype="0" />
+		<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Hover.png" ID="700" Name="Hover" Variant="19" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/SuperHost.png" ID="700" Name="Super Host" Variant="20" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/SuperFlesh.png" ID="700" Name="Super Flesh Host" Variant="21" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Shade.png" ID="700" Name="Shade Hand" Variant="24" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Paracolony.png" ID="700" Name="Paracolony" Variant="25" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Parabit.png" ID="58" Name="Para-Bit" Variant="10" Subtype="700" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Drifter.png" ID="700" Name="Drifter" Variant="22" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Chanter.png" ID="700" Name="Chanter" Variant="23" Subtype="0" />
+	<!-- 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Headlicker.png" ID="89" Name="Headlicker" Variant="1" Subtype="0" /> -->
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Queen Fly.png" ID="700" Name="Queen Fly" Variant="29" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Godleg.png" ID="700" Name="Godleg" Variant="30" Subtype="0" /> -->
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Fetal Baby.png" ID="38" Name="Fetal Baby" Variant="700" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Blood Baby.png" ID="38" Name="Blood Baby" Variant="701" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Fallen Baby.png" ID="38" Name="Fallen Angelic Baby" Variant="702" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Marshall Pawn.png" ID="38" Name="Marshall Pawn" Variant="703" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Arch Bishop.png" ID="700" Name="Arch Bishop" Variant="32" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Arch Priest.png" ID="700" Name="Arch Priest" Variant="32" Subtype="2" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Bathemo.png" ID="234" Name="Bathemo" Variant="131" Subtype="1" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Furnace Knight.png" ID="700" Name="Furnace Knight" Variant="126" Subtype="1" Boss="1" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Pooglobin.png" ID="24" Name="Pooglobin" Variant="700" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/WingedSpider.png" ID="700" Name="Winged Spider" Variant="38" Subtype="0" Boss="0" />	
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Ludomini.png" ID="700" Name="Ludomini" Variant="40" Subtype="0" Boss="0" />	
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/ratty.png" ID="700" Name="Ratty" Variant="41" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Infested MemBrain.png" ID="700" Name="Infested MemBrain" Variant="42" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Wrinkly Fatty.png" ID="700" Name="Wrinkly Fatty" Variant="43" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/vengeance.png" ID="700" Name="Vengeance" Variant="44" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/vengeance apple.png" ID="700" Name="Cursed Apple" Variant="44" Subtype="1" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Callen Skull.png" ID="700" Name="Callen Skull" Variant="45" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Electrite.png" ID="700" Name="Electrite" Variant="47" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/HushedHorf.png" ID="700" Name="Hushed Horf" Variant="48" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/HushedFatty.png" ID="700" Name="Hushed Fatty" Variant="49" Subtype="0" Boss="0" />
+
+	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock L.png" Kind="Godmode" Name="Devil's Lock (Left)" Subtype="0" Variant="700" MirrorX="202.0.2" />
+	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock U.png" Kind="Godmode" Name="Devil's Lock (Up)" Subtype="1" Variant="700" MirrorY="202.0.3" />
+	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock R.png" Kind="Godmode" Name="Devil's Lock (Right)" Subtype="2" Variant="700" MirrorX="202.0.0" />
+	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock D.png" Kind="Godmode" Name="Devil's Lock (Down)" Subtype="3" Variant="700" MirrorY="202.0.1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/COTV Correction.png" ID="700" Name="COTV (Correction Room)" Variant="229" Subtype="0" Boss="0" />
+
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Bomb Barrel.png" ID="700" Name="Bomb Barrel" Variant="215" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Masked Statue.png" ID="700" Name="Masked Angel Statue" Variant="219" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/StoneBeggar-Timer.png" ID="700" Name="Stone Beggar" Variant="221" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/StoneBeggar-Key.png" ID="700" Name="Stone Beggar (Key)" Variant="221" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/StoneBeggar-Bomb.png" ID="700" Name="Stone Beggar (Bomb)" Variant="221" Subtype="2" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/StoneBeggar-Coin.png" ID="700" Name="Stone Beggar (Coin)" Variant="221" Subtype="3" />	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/SpiderTurret.png" ID="700" Name="Ooze Turret" Variant="224" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/SpiderTurretAO.png" ID="700" Name="Ooze Turret (Always On)" Variant="224" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Dynamite Rock.png" ID="700" Name="Dynamite Rock" Variant="226" Subtype="0" />
+
+		<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Papal Flame (Devil).png" ID="700" Name="Papal Flame (Devil)" Variant="216" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Papal Flame (Angel).png" ID="700" Name="Papal Flame (Angel)" Variant="216" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Papal Flame (White).png" ID="700" Name="Papal Flame (Fallen Light)" Variant="216" Subtype="3" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Adra Flame.png" ID="700" Name="Adra Flame" Variant="216" Subtype="2" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Golden Scale.png" ID="700" Name="Golden Scale" Variant="217" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Silver Scale.png" ID="700" Name="Silver Scale" Variant="217" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Elohim Throne.png" ID="700" Name="Elohim's Throne" Variant="218" Subtype="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/fake god.png" ID="700" Name="Fake God Statue" Variant="218" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Secret Light.png" ID="5" Name="Secret Light" Variant="700" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Red Coin.png" ID="5" Name="Red Coin" Variant="701" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Heart Container.png" ID="5" Name="Heart Container (Pickup)" Variant="702" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Fruit.png" ID="5" Name="Random Fruit" Variant="704" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Market Man.png" ID="700" Name="Market Man" Variant="106" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Ivory Portal.png" ID="700" Name="Ivory Portal" Variant="223" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Catchup.png" ID="5" Name="Catchup Altar" Variant="708" Subtype="0" Boss="0" />
+
+
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Mum.png" ID="700" Name="Mum" Variant="50" Subtype="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Parabit.png" ID="58" Name="Parabit" Variant="10" Subtype="700" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/The Ritual.png" ID="700" Name="The Ritual" Variant="121" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/The Sacred.png" ID="700" Name="The Sacred" Variant="123" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Souleater.png" ID="700" Name="Souleater" Variant="125" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Grand Marshall.png" ID="700" Name="The Grand Marshall" Variant="127" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Hostess.png" ID="700" Name="Hostess" Variant="102" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bathemo Swarm.png" ID="700" Name="Bathemo Swarm" Variant="131" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bathemo Big.png" ID="234" Name="Bathemo (Big)" Variant="131" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bathemo.png" ID="234" Name="Bathemo Devote" Variant="131" Subtype="1" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bubble Plum.png" ID="700" Name="Bubbly Plum" Variant="109" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/megaworm.png" ID="700" Name="Mega Worm" Variant="110" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/blightfly.png" ID="700" Name="Blightfly" Variant="111" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bowl Play (Corny).png" ID="700" Name="Bowl Play (Corny)" Variant="112" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bowl Play.png" ID="700" Name="Bowl Play" Variant="112" Subtype="1" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Outbreak.png" ID="700" Name="Outbreak" Variant="113" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bulge Bat.png" ID="700" Name="Bulge Bat" Variant="114" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Brazier.png" ID="700" Name="Brazier (Poky)" Variant="115" Boss="1" PlaceVisual="0,2" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Error Boss.png" ID="700" Name="Error Keeper (Boss)" Variant="116" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Ludomaw.png" ID="700" Name="Ludomaw" Variant="101" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Furnace Knight.png" ID="700" Name="Furnace Knight (Boss)" Variant="126" Subtype="2" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Furnace Guard.png" ID="700" Name="Furnace Guard" Variant="126" Subtype="0" Boss="1" />
+
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bloody Uriel.png" ID="271" Name="Bloody Uriel" Variant="700" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bloody Gabriel.png" ID="272" Name="Bloody Gabriel" Variant="700" Subtype="0" Boss="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Demon Priest.png" ID="700" Name="Demon Priest" Variant="32" Subtype="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Angelusossa.png" ID="700" Name="The Fallen Light" Variant="153" Subtype="1" />
+</data>

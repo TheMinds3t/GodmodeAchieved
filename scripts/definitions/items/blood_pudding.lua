@@ -7,7 +7,7 @@ local curses = {
 }
 
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Blood Pudding" )
+item.instance = GODMODE.registry.items.blood_pudding
 item.eid_description = "↑ +5.0 luck#↓ Guaranteed curse on every floor"
 item.encyc_entry = {
 	{ -- Effects
@@ -18,39 +18,33 @@ item.encyc_entry = {
 }
 
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	if cache == CacheFlag.CACHE_LUCK then
 		local num = math.min(3,player:GetCollectibleNum(item.instance))
-		player.Luck = player.Luck + num*num+4
+		player.Luck = player.Luck + num*num+3+player:GetCollectibleNum(item.instance)
 	end
 end
 
-item.player_update = function(self,player)
-	if player:HasCollectible(item.instance) then
-		if Game():GetLevel():GetCurseName() == "" then
-			local depth = 3
+item.player_update = function(self,player,data)
+	if player:HasCollectible(item.instance) and player:IsFrame(20,1) then
+		if #GODMODE.util.get_curse_list() < math.min(3,player:GetCollectibleNum(item.instance)) then
+			local depth = 6
 			--Add up to three curses per floor
-			for i=1,math.min(3,player:GetCollectibleNum(item.instance)) do 
-				local curse = curses[player:GetCollectibleRNG(item.instance):RandomInt(#curses)+1]
-				
-				while GODMODE.util.has_curse(curse) do 
-					depth = depth - 1
-					curse = curses[player:GetCollectibleRNG(item.instance):RandomInt(#curses)+1]
-
-					if depth <= 0 then 
-						break
-					end
-				end
+			local curse_ind = player:GetCollectibleRNG(item.instance):RandomInt(#curses)+1
+			
+			while GODMODE.util.has_curse(curses[curse_ind]) do 
+				depth = depth - 1
+				curse_ind = ((curse_ind + 1) % #curses) + 1
+				GODMODE.log("ind \'"..curse_ind.."\' taken, switching...")
 
 				if depth <= 0 then 
-					break 
+					break
 				end
-				
-				depth = 3
-				Game():GetLevel():AddCurse(curse,true)
 			end
+			
+			GODMODE.util.add_curse(curses[curse_ind],true)
 		end
 	end
 end

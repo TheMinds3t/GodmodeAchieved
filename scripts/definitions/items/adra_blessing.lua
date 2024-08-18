@@ -1,5 +1,5 @@
 local item = {}
-item.instance = Isaac.GetItemIdByName( "Adramolech's Blessing" )
+item.instance = GODMODE.registry.items.adramolechs_blessing
 item.eid_description = "↑ Charges negate damage taken#One charge gained for every 4 champion enemy killed#↓ +10% per charge champion chance#+10% chance per charge for devil item to be rerolled into higher quality#↑ On use, permanent all stats up while holding"
 item.eid_transforms = GODMODE.util.eid_transforms.LEVIATHAN
 item.encyc_entry = {
@@ -18,11 +18,10 @@ item.encyc_entry = {
 }
 
 
-item.eval_cache = function(self, player,cache)
+item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
-	local data = GODMODE.get_ent_data(player)
 
-    if cache == CacheFlag.CACHE_LUCK and player:GetName() == "Xaphan" then
+    if cache == CacheFlag.CACHE_LUCK and player:GetPlayerType() == GODMODE.registry.players.xaphan then
         player.Luck = player.Luck + 5
     end
 
@@ -32,7 +31,7 @@ item.eval_cache = function(self, player,cache)
 
     local add = tonumber(GODMODE.save_manager.get_player_data(player,"AdraUses","0"))
 
-    if player:GetName() ~= "Xaphan" then 
+    if player:GetPlayerType() ~= GODMODE.registry.players.xaphan then 
         add = add * 0.5
     end
 
@@ -47,7 +46,7 @@ item.eval_cache = function(self, player,cache)
         player.Damage = player.Damage + add * 0.75
     end
     if cache == CacheFlag.CACHE_FIREDELAY then
-        if player:GetName() == "Xaphan" then 
+        if player:GetPlayerType() == GODMODE.registry.players.xaphan then 
             player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,add*0.15,true)
             player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,add*0.15)
         else
@@ -69,7 +68,7 @@ item.post_get_collectible = function(self,coll,pool,decrease,seed)
                 local config = Isaac.GetItemConfig():GetCollectible(item)
 
                 while config.Quality < 3 do 
-                    item = Game():GetItemPool():GetCollectible(pool)
+                    item = GODMODE.game:GetItemPool():GetCollectible(pool)
                     config = Isaac.GetItemConfig():GetCollectible(item)
                 end
 
@@ -108,9 +107,8 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
-item.player_update = function(self,player,offset)
+item.player_update = function(self,player,data)
 	if player:HasCollectible(item.instance) then
-        local data = GODMODE.get_ent_data(player)
         data.adra_cooldown = math.max(0,(data.adra_cooldown or 0) - 1)
         -- if data.adra_cooldown > 0 then
         --     GODMODE.log("cooldown is "..data.adra_cooldown,true)
@@ -136,7 +134,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
                     data.adra_cooldown = 30
                     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BOMB_EXPLOSION, 0, player.Position, Vector.Zero, nil)
                     Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, player.Position, Vector.Zero, nil)
-                    Game():ButterBeanFart(player.Position, 256, player, false, false)
+                    GODMODE.game:ButterBeanFart(player.Position, 256, player, false, false)
+                    player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR,false,true)
                 end
 
                 flag = false
@@ -163,7 +162,7 @@ local gen_color = function(ent)
     return sel_color
 end
 
-item.npc_init = function(self, ent)
+item.npc_init = function(self, ent, data)
     local charge = item.calc_total_charge()
     if ent and ent:ToNPC() and GODMODE.util.is_valid_enemy(ent) and not ent:IsBoss() and ent.MaxHitPoints > 5 and ent.SpawnerEntity == nil and ent.CollisionDamage > -1 and GODMODE.armor_blacklist:can_be_champ(ent) then 
         local champ_inc = tonumber(GODMODE.save_manager.get_data("AdraChampInc","0"))
@@ -171,7 +170,7 @@ item.npc_init = function(self, ent)
 
         if count > 0 then
             if ent:GetDropRNG():RandomFloat() < count * 0.1 then 
-                GODMODE.get_ent_data(ent).adra_blessed = true
+                data.adra_blessed = true
                 local color = gen_color(ent)
 
                 while color == ChampionColor.DARK_RED do 
@@ -181,6 +180,11 @@ item.npc_init = function(self, ent)
                 ent:MakeChampion(ent.DropSeed,color,true)
                 Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, ent.Position, Vector.Zero, nil)
                 GODMODE.save_manager.set_data("AdraChampInc",0)
+
+                GODMODE.util.macro_on_players_that_have(item.instance,function(player) 
+                    GODMODE.get_ent_data(player).adra_display = 100
+                end)
+
             else
                 GODMODE.save_manager.set_data("AdraChampInc",champ_inc+1)
             end
@@ -199,10 +203,39 @@ end
 item.npc_kill = function(self, ent)
     if ent:ToNPC() and ent:ToNPC():IsChampion() and GODMODE.get_ent_data(ent).adra_blessed == true then
         GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-            local charge = Isaac.Spawn(Isaac.GetEntityTypeByName("Adramolech's Fuel"), Isaac.GetEntityVariantByName("Adramolech's Fuel"),0,ent.Position,RandomVector()*(player:GetCollectibleRNG(item.instance):RandomFloat()*2+4.0),ent)
+            local charge = Isaac.Spawn(GODMODE.registry.entities.adramolechs_fuel.type, GODMODE.registry.entities.adramolechs_fuel.variant,0,ent.Position,RandomVector()*(player:GetCollectibleRNG(item.instance):RandomFloat()*2+4.0),ent)
             GODMODE.get_ent_data(charge).player_target = player
             GODMODE.get_ent_data(charge).seek_time = 5
         end)            
+    end
+end
+
+item.render_player_ui = function(self,player)
+    if player:HasCollectible(item.instance) then 
+        local data = GODMODE.get_ent_data(player)
+
+        if Input.IsActionPressed (ButtonAction.ACTION_MAP, player.ControllerIndex) then
+            data.adra_display = math.min(50,(data.adra_display or 0) + 5)
+        end
+    
+        if (data.adra_display or 0) > 0 then
+            local opacity = math.min(1.0, data.adra_display / 50.0)
+            local pos = Isaac.WorldToScreen(player.Position + Vector(-24,-44))
+    
+            if GODMODE.sprites.adra_sprite == nil then
+                GODMODE.sprites.adra_sprite = Sprite()
+                GODMODE.sprites.adra_sprite:Load("gfx/effect_adra_champ.anm2", true)
+            end
+    
+            local frame = tonumber(GODMODE.save_manager.get_player_data(player,"AdraChampCounter","0")) % 4
+    
+            GODMODE.sprites.adra_sprite.Color = Color(1,1,1,opacity)
+            GODMODE.sprites.adra_sprite:SetFrame("ChargeBar",frame)
+            GODMODE.sprites.adra_sprite:Render(pos,Vector.Zero,Vector.Zero)
+            -- GODMODE.sprites.adra_sprite:SetFrame("Blessing",player.FrameCount % 6)
+            -- GODMODE.sprites.adra_sprite:Render(pos,Vector.Zero,Vector.Zero)
+            data.adra_display = data.adra_display - 1
+        end    
     end
 end
 

@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="4/29/2022 4:47:17 PM" Version="8" Fps="45"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="4/29/2022 4:47:17 PM" Version="8" Fps="45"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\super_flesh_host.png" Id="0"/>
