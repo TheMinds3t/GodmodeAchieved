@@ -1,5 +1,5 @@
 
-GODMODE = {}
+GODMODE = GODMODE or {}
 GODMODE.rgon_version = "1.0.11b"
 
 -- added version checker for RGON, will notify the user if the installed RGON version is different from the Godmode build
@@ -114,6 +114,12 @@ else
         GODMODE.shader_params = GODMODE.shader_params or {}
         GODMODE.shader_params.godmode_trinket_time = 0
         GODMODE.shader_params.divine_wrath_time = 0
+
+        if GODMODE.preloads then 
+            for _,func in ipairs(preloads) do 
+                func()
+            end
+        end
     end
 
     GODMODE.save_manager = require("scripts.save_manager")
@@ -1708,11 +1714,12 @@ else
 
     -- handle vanilla enemy Godmode alts!
     function GODMODE.mod_object:pre_entity_spawn(type,variant,subtype,pos,vel,spawner,seed)
+        if GODMODE.util.is_start_of_run() then return end 
+
         local rng = RNG()
         rng:SetSeed(seed,35)
         local thin_flag = thin_rooms[Game():GetRoom():GetRoomShape()]
         local space_flag = true
-
 
         for _,off in ipairs(alt_space_offsets) do 
             if GODMODE.room:GetGridEntityFromPos(pos + off) ~= nil then space_flag = false break end 

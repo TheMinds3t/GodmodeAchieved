@@ -15,6 +15,13 @@ item.get_trinket = function(self,trinket,rng)
     end
 end
 
+item.player_update = function(self, player)
+    if player:HasTrinket(item.instance, true) and GODMODE.is_in_observatory() then 
+        player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
+    end
+end
+
+
 item.choose_curse = function(self,curses)
     local players = GODMODE.util.does_player_have(item.instance,true,true)
     

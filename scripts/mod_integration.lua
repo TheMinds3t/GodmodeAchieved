@@ -551,7 +551,7 @@ function load_stageapi_integration()
                 stage_file.stage = stage
                 GODMODE.stages[stage_file.api_id] = stage_file            
             else
-                local stage = StageAPI.CustomStage(stage_file.api_id,stage_file.override_stage)
+                local stage = StageAPI.CustomStage(stage_file.api_id,stage_file.override_stage,false)
                 stage_file.backdrop_copy = {GODMODE.util.deep_copy(stage_file.graphics.backdrop_gfx),GODMODE.util.deep_copy(stage_file.graphics.backdrop_prefix),GODMODE.util.deep_copy(stage_file.graphics.backdrop_suffix)}
                 local floor_room = StageAPI.BackdropHelper(stage_file.backdrop_copy[1], stage_file.backdrop_copy[2], stage_file.backdrop_copy[3])
                 stage:SetName(stage_file.api_id)
@@ -600,7 +600,7 @@ function load_stageapi_integration()
                     end
                 end
                 
-                if stage_file.override then 
+                if stage_file.override and stage.SetLevelgenStage then 
                     stage:SetLevelgenStage(stage_file.override.Stage,stage_file.override.StageType)
                 end
 

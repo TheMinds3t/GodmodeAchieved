@@ -428,7 +428,7 @@ if GODMODE.validate_rgon() then
         else 
             for key,val in pairs(ret.item_map) do 
                 if ret.is_achievement_unlocked(val) then 
-                    if not ret.item_map_repentogon[key] then 
+                    if not ret.item_map_repentogon[key] or ret.item_map_repentogon[key] == -1 then 
                         GODMODE.log("[ERROR]: Invalid achievement key/val pair \'"..key.."\'/\'"..val.."\' mapped to \'"..tostring(ret.item_map_repentogon[key]).."\'",true) 
                     elseif Isaac.GetPersistentGameData():TryUnlock(ret.item_map_repentogon[key]) then 
                         GODMODE.log("Synced achievement \'"..val.."\' from Godmode achievements to Repentogon!")
@@ -436,7 +436,7 @@ if GODMODE.validate_rgon() then
                 end
             end
     
-            if Isaac.GetPersistentGameData():Unlocked(Achievement.LIL_DELIRIUM) then 
+            if Isaac.GetPersistentGameData():Unlocked(Achievement and Achievement.LIL_DELIRIUM or 357) then 
                 Isaac.GetPersistentGameData():TryUnlock(GODMODE.registry.achievements.deli)
             end
     
