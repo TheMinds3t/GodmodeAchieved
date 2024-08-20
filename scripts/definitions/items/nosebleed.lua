@@ -8,6 +8,8 @@ item.encyc_entry = {
 	},
 }
 
+local max_time = 8
+
 item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
@@ -20,9 +22,10 @@ item.eval_cache = function(self, player,cache,data)
 		player.TearColor = Color.Lerp(player.TearColor, Color(0.8,0.1,0.1,1,0.25,0,0), perc)
 	end
 end
+
 item.player_update = function(self,player,data)
 	if player:HasCollectible(item.instance) then
-		data.nosebleed_mult_level = math.max(1.0, (data.nosebleed_mult_level or 1.5) - (1 / 480.0) / 2.0 * (5.0 / 12.0))
+		data.nosebleed_mult_level = math.max(1.0, (data.nosebleed_mult_level or 1.5) - (1 / (max_time * 120)))
 		if data.nosebleed_mult_level > 1 then
 			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
 			player:EvaluateItems()
@@ -38,6 +41,5 @@ item.new_room = function(self)
 		player:EvaluateItems()
 	end)
 end
-
 
 return item

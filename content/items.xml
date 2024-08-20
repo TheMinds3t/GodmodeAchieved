@@ -26,7 +26,7 @@
 	<active id="21" maxcharges="2" description="Become reborn in the water!" gfx="collectibles_baptismal_cross.png" name="Baptismal Cross" tags="offensive angel" quality = "1" />
 	<passive id="22" cache="shotspeed" description="I-I-I'm fINE!!" gfx="collectibles_whoopcough.png" name="The Uncommon Cough" tags="offensive" quality = "3" />
 	<passive id="23" cache="speed" description="Slurp with love!" maxhearts="2" hearts="4" gfx="collectibles_ladle.png" name="The Ladle" tags="nolostbr summonable" quality = "2" />
-	<passive id="24" cache="damage" description="I think it's stopping!" gfx="collectibles_nosebleed.png" name="Nosebleed" tags="summonable" quality = "2" />
+	<passive id="24" cache="damage" description="I think it's stopping!" gfx="collectibles_nosebleed.png" name="Nosebleed" tags="summonable" quality = "3" />
 	<active id="25" maxcharges="2" chargetype="special" cache="damage firedelay" description="Prove your strength to them" gfx="collectibles_trophy_of_power.png" name="Child's Trophy" tags="offensive tearsup" quality = "1" />
 	<passive id="26" description="Sight Up?" maxhearts="2" hearts="4" gfx="collectibles_carrot.png" name="The Carrot" tags="food" quality = "2" />
 	<passive achievement="GODMODE_FL_Gehazi" id="27" cache="damage" description="Money, money, money!" gfx="collectibles_crown_of_gold.png" name="Crown of Gold" coins="5" tags="nokeeper" quality = "3" />

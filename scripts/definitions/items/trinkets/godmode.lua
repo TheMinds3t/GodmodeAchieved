@@ -25,6 +25,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
                     and flags & DamageFlag.DAMAGE_IV_BAG ~= DamageFlag.DAMAGE_IV_BAG
                     and entsrc.Type ~= EntityType.ENTITY_SLOT
                     or player:GetHearts()+player:GetSoulHearts()+player:GetBoneHearts()-amount <= 0) then
+        
         local data = GODMODE.get_ent_data(player)
         -- GODMODE.log("entsrc="..entsrc.Type..","..entsrc.Variant,true)
 
@@ -56,22 +57,26 @@ end
 item.player_update = function(self,player,data)
     
     if player:HasTrinket(item.instance) then 
-        if data.received_godmode ~= true then 
+        if player:HasTrinket(item.instance, true) then 
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
-            data.received_godmode = true
-        end
-        local rewind_flag = data.godmode_rewind
-        if rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() ~= rewind_flag then 
-            player:GetSprite():Play("Appear",true)
-            data.godmode_rewind = nil
-            data.disable_time = 40
-            player:AddBrokenHearts(1)
         end
 
-        if GODMODE.shader_params.godmode_trinket_time == 33 and rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() == rewind_flag then 
+        local rewind_flag = data.godmode_rewind
+        -- add broken + fx
+        if rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() ~= rewind_flag then 
+            player:GetSprite():Play("Appear",true)
+            data.disable_time = 40
+            player:AddBrokenHearts(1)
+            data.godmode_rewind = nil
+        end
+
+        -- trigger rewind
+        if GODMODE.shader_params.godmode_trinket_time > 32 and rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() == rewind_flag then 
             GODMODE.shader_params.godmode_trinket_time = 32
             GODMODE.godhooks.call_hook("pre_godmode_restart")
-            Isaac.ExecuteCommand("rewind")
+            -- Isaac.ExecuteCommand("rewind")
+            GODMODE.game:StartRoomTransition(GODMODE.level:GetPreviousRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.MAZE, player)
+            player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
             -- used = true
             -- player:UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS, UseFlag.USE_NOANIM)
         end
@@ -80,7 +85,6 @@ item.player_update = function(self,player,data)
             player:Kill()
         end 
     
-
         if (data.disable_time or 0) > 0 then 
             player.ControlsEnabled = false 
             data.disable_time = math.max(0,data.disable_time - 1)
@@ -90,22 +94,6 @@ item.player_update = function(self,player,data)
                 GODMODE.godhooks.call_hook("post_godmode_restart")
             end
         end
-    end
-end
-
--- item.new_room = function()
---     if used then 
---         GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
---             GODMODE.log("hi!",true)
---             player:AnimateSad()
---         end, true)
---         used = false
---     end
--- end
-
-item.pickup_collide = function(self,pickup,ent,entfirst)
-    if pickup.Variant == PickupVariant.PICKUP_TRINKET and pickup.SubType == item.instance and not entfirst and ent:ToPlayer() and ent:ToPlayer():HasTrinket(item.instance) then 
-        GODMODE.get_ent_data(ent:ToPlayer()).received_godmode = false
     end
 end
 

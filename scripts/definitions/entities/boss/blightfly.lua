@@ -84,6 +84,16 @@ local sel_atk = function(ent,data)
     end
 end
 
+monster.npc_init = function(self, ent)
+    if GODMODE.level:GetAbsoluteStage() == LevelStage.STAGE4_1 and GODMODE.level:GetStageType() == StageType.STAGETYPE_REPENTANCE then 
+        Isaac.Spawn(EntityType.ENTITY_ENVIRONMENT,1,10,ent.Position,Vector.Zero,nil) --disable water
+
+        if GODMODE.validate_rgon() then 
+            GODMODE.room:SetWaterAmount(0.0)
+        end
+    end
+end
+
 monster.npc_update = function(self, ent, data, sprite)
     if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
     local player = ent:GetPlayerTarget()

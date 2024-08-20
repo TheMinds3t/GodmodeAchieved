@@ -1,6 +1,6 @@
 local item = {}
 item.instance = GODMODE.registry.items.war_banner
-item.eid_description = "Placing a bomb places a banner that gives you either a +0.25 damage, +0.25 tears, or +0.1 shot speed buff while you stand in it's radius#+5 Bombs"
+item.eid_description = "Placing a bomb places a banner that gives you either a +20% damage, +0.3 tears, or +0.1 shot speed buff while you stand in it's radius#+5 Bombs"
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},

@@ -551,7 +551,7 @@ function load_stageapi_integration()
                 stage_file.stage = stage
                 GODMODE.stages[stage_file.api_id] = stage_file            
             else
-                local stage = StageAPI.CustomStage(stage_file.api_id,stage_file.override_stage)
+                local stage = StageAPI.CustomStage(stage_file.api_id,stage_file.override_stage,false)
                 stage_file.backdrop_copy = {GODMODE.util.deep_copy(stage_file.graphics.backdrop_gfx),GODMODE.util.deep_copy(stage_file.graphics.backdrop_prefix),GODMODE.util.deep_copy(stage_file.graphics.backdrop_suffix)}
                 local floor_room = StageAPI.BackdropHelper(stage_file.backdrop_copy[1], stage_file.backdrop_copy[2], stage_file.backdrop_copy[3])
                 stage:SetName(stage_file.api_id)
@@ -600,7 +600,7 @@ function load_stageapi_integration()
                     end
                 end
                 
-                if stage_file.override then 
+                if stage_file.override and stage.SetLevelgenStage then 
                     stage:SetLevelgenStage(stage_file.override.Stage,stage_file.override.StageType)
                 end
 
@@ -996,7 +996,10 @@ function load_stageapi_integration()
             LFloors = {"lfloor"},
             Corners = {"corner"}
         }, 
-    
+        
+        underlay = function() --MC_PRE_BACKDROP_RENDER_WATER
+            
+        end,
         backdrop_prefix = "gfx/backdrop/god_sanctuary/sanctuary_", 
         backdrop_suffix = ".png",
         overlay = StageAPI.Overlay("gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
@@ -1060,7 +1063,7 @@ function load_stageapi_integration()
         function GODMODE.mod_object:pre_render_walls() 
             overlay_func()
         end
-        GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_BACKDROP_RENDER_FLOOR, GODMODE.mod_object.pre_render_walls)
+        GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_BACKDROP_RENDER_WATER, GODMODE.mod_object.pre_render_walls)
     else 
         -- StageAPI.AddCallback(GODMODE.mod_id, "PRE_TRANSITION_RENDER", 2, function()
         --     overlay_func()

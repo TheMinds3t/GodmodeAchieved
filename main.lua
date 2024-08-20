@@ -1,5 +1,5 @@
 
-GODMODE = {}
+GODMODE = GODMODE or {}
 GODMODE.rgon_version = "1.0.11b"
 
 -- added version checker for RGON, will notify the user if the installed RGON version is different from the Godmode build
@@ -114,6 +114,12 @@ else
         GODMODE.shader_params = GODMODE.shader_params or {}
         GODMODE.shader_params.godmode_trinket_time = 0
         GODMODE.shader_params.divine_wrath_time = 0
+
+        if GODMODE.preloads then 
+            for _,func in ipairs(preloads) do 
+                func()
+            end
+        end
     end
 
     GODMODE.save_manager = require("scripts.save_manager")
@@ -949,40 +955,46 @@ else
         local greed_enabled = tostring(GODMODE.save_manager.get_config("GMEnable","true")) == "true"
 
         if GODMODE.util.is_valid_enemy(ent,true) and ((GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and hard_enabled) or (GODMODE.game.Difficulty == Difficulty.DIFFICULTY_GREEDIER and greed_enabled)) then
-            local max_stage = 12
-            local scale = tonumber(GODMODE.save_manager.get_config("HMEScale","2.0"))
+            local percent = GODMODE.util.get_health_scale(ent, 1)
+            local percent2 = GODMODE.util.get_health_scale(ent, 2)
 
-            if GODMODE.game.Difficulty > Difficulty.DIFFICULTY_HARD then 
-                max_stage = 7 
-                scale = tonumber(GODMODE.save_manager.get_config("GMEScale","1.5"))
-            end
-
-            if (GODMODE.room:GetType() == RoomType.ROOM_BOSS or GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS) and ent:IsBoss() then
-                if GODMODE.game.Difficulty > 1 then
-                    scale = tonumber(GODMODE.save_manager.get_config("GMBScale","1.8"))
-                else
-                    scale = tonumber(GODMODE.save_manager.get_config("HMBScale","2.3"))
-                end
-            end
-
-            -- if GODMODE.level:GetStageType() > StageType.STAGETYPE_GREEDMODE then 
-            --     scale = scale * 0.8 
-            -- end --make repentance stages easier since less items generally compared to main path
-
-            local max_health = tonumber(GODMODE.save_manager.get_config("ScaleSelectorMax","3000"))
+            ent.MaxHitPoints = math.floor(ent.MaxHitPoints * percent)
+            ent.HitPoints = ent.MaxHitPoints
             
-            local cur_stage = GODMODE.level:GetAbsoluteStage()
+            -- local max_stage = 12
+            -- local scale = tonumber(GODMODE.save_manager.get_config("HMEScale","2.0"))
 
-            if StageAPI and StageAPI.Loaded and GODMODE.stages ~= nil and StageAPI.GetCurrentStage ~= nil and StageAPI.GetCurrentStage() ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name] ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage ~= nil then
-                cur_stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage
-            end
+            -- if GODMODE.game.Difficulty > Difficulty.DIFFICULTY_HARD then 
+            --     max_stage = 7 
+            --     scale = tonumber(GODMODE.save_manager.get_config("GMEScale","1.5"))
+            -- end
 
-            if ent.MaxHitPoints < max_health and not GODMODE.armor_blacklist:has_armor(ent) then
-                local percent = (cur_stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
-                --GODMODE.log("hp scale: "..((1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)), true)
-                ent.MaxHitPoints = ent.MaxHitPoints * (1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)
-                ent.HitPoints = ent.MaxHitPoints
-            end
+            -- if (GODMODE.room:GetType() == RoomType.ROOM_BOSS or GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS) and ent:IsBoss() then
+            --     if GODMODE.game.Difficulty > 1 then
+            --         scale = tonumber(GODMODE.save_manager.get_config("GMBScale","1.8"))
+            --     else
+            --         scale = tonumber(GODMODE.save_manager.get_config("HMBScale","2.3"))
+            --     end
+            -- end
+
+            -- -- if GODMODE.level:GetStageType() > StageType.STAGETYPE_GREEDMODE then 
+            -- --     scale = scale * 0.8 
+            -- -- end --make repentance stages easier since less items generally compared to main path
+
+            -- local max_health = tonumber(GODMODE.save_manager.get_config("ScaleSelectorMax","3000"))
+            
+            -- local cur_stage = GODMODE.level:GetAbsoluteStage()
+
+            -- if StageAPI and StageAPI.Loaded and GODMODE.stages ~= nil and StageAPI.GetCurrentStage ~= nil and StageAPI.GetCurrentStage() ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name] ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage ~= nil then
+            --     cur_stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage
+            -- end
+
+            -- if ent.MaxHitPoints < max_health and not GODMODE.armor_blacklist:has_armor(ent) then
+            --     local percent = (cur_stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
+            --     --GODMODE.log("hp scale: "..((1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)), true)
+            --     ent.MaxHitPoints = ent.MaxHitPoints * (1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)
+            --     ent.HitPoints = ent.MaxHitPoints
+            -- end
         end
 
         if (GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS or GODMODE.room:GetType() == RoomType.ROOM_BOSS) and ent:IsBoss() then
@@ -1708,11 +1720,12 @@ else
 
     -- handle vanilla enemy Godmode alts!
     function GODMODE.mod_object:pre_entity_spawn(type,variant,subtype,pos,vel,spawner,seed)
+        if GODMODE.util.is_start_of_run() or GODMODE.level.EnterDoor == -1 then return end 
+
         local rng = RNG()
         rng:SetSeed(seed,35)
         local thin_flag = thin_rooms[Game():GetRoom():GetRoomShape()]
         local space_flag = true
-
 
         for _,off in ipairs(alt_space_offsets) do 
             if GODMODE.room:GetGridEntityFromPos(pos + off) ~= nil then space_flag = false break end 

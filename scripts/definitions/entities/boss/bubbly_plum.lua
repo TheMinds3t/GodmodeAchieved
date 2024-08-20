@@ -94,8 +94,12 @@ local creep = function(ent,size,timeout)
 end
 
 monster.npc_init = function(self, ent)
-    if ent.SubType == 0 and GODMODE.validate_rgon() and GODMODE.level:GetAbsoluteStage() <= LevelStage.STAGE2_1 and GODMODE.level:GetStageType() == StageType.STAGETYPE_REPENTANCE then 
-        GODMODE.room:SetWaterAmount(1.0)
+    if ent.SubType == 0 and GODMODE.level:GetAbsoluteStage() <= LevelStage.STAGE2_1 and GODMODE.level:GetStageType() == StageType.STAGETYPE_REPENTANCE then 
+        Isaac.Spawn(EntityType.ENTITY_ENVIRONMENT,1,11,ent.Position,Vector.Zero,nil)
+
+        if GODMODE.validate_rgon() then 
+            GODMODE.room:SetWaterAmount(1.0)
+        end
     end
 end
 
