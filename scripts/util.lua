@@ -747,7 +747,6 @@ util.scaling_presets = {
 			percent = 0
 		end
 	
-		GODMODE.log("stage_score perc = "..percent,true)
 		return 1 + percent
 	end,
 	
@@ -788,7 +787,6 @@ util.scaling_presets = {
 			percent = 0
 		end
 
-		GODMODE.log("stat_score perc = "..percent,true)
 		return 1 + math.max(percent,0)
 	end
 }
