@@ -1042,11 +1042,13 @@ godhook.functions.knife_update = function(self, knife)
     end
 end
 godhook.functions.projectile_update = function(self,projectile)
+    local data = GODMODE.get_ent_data(projectile)
+    local sprite = projectile:GetSprite()
     if godhook.hook.monsters["projectile_update"] then
         for ind=1, #godhook.hook.monster_keys["projectile_update"] do
             local func = godhook.hook.monsters["projectile_update"][godhook.hook.monster_keys["projectile_update"][ind]]
             if func then
-                func(self,projectile)
+                func(self,projectile,data,sprite)
             end
         end
     end
@@ -1054,7 +1056,7 @@ godhook.functions.projectile_update = function(self,projectile)
         for ind=1, #godhook.hook.item_keys["projectile_update"] do
             local func = godhook.hook.items["projectile_update"][godhook.hook.item_keys["projectile_update"][ind]]
             if func then
-                func(self,projectile)
+                func(self,projectile,data,sprite)
             end
         end
     end
@@ -1284,6 +1286,15 @@ godhook.hook_list = {
     ["pre_godmode_restart"] = true, --godmode trinket, pre rewind. Takes no return values. | pre_godmode_restart()
     ["post_godmode_restart"] = true, --godmode trinket, post rewind. Takes no return values. | post_godmode_restart()
     ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance)
+
+
+    -- RGON callbacks
+    ["pre_player_damaged"] = function(funcname, object)
+        if GODMODE.validate_rgon() then 
+            godhook.add_hook(funcname,object,ModCallbacks.MC_PRE_PLAYER_TAKE_DMG)
+        end
+    end,
+
 
     -- I'll take time to add a bunch of callbacks to make my mod easily manageable and expandable
     -- ["pre_scale_enemy_hp"] = true, 

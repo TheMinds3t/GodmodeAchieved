@@ -145,11 +145,14 @@ util.stat_buff = {
 
 util.stat_scale = {
 	["damage"] = function(player) 
-		return math.min(util.stat_dist["damage"],player.Damage/4) end,
+		return math.min(util.stat_dist["damage"],player.Damage/1.25) end,
 	["firerate"] = function(player) 
-		return math.min(util.stat_dist["firerate"],30 / (player.MaxFireDelay + 1)/util.get_max_tears(player,player.MaxFireDelay)*util.stat_dist["firerate"]) end,
+		local cur = 30 / (player.MaxFireDelay + 1)
+		local max = util.get_max_tears(player,player.MaxFireDelay)
+
+		return math.min(util.stat_dist["firerate"],cur/max*util.stat_dist["firerate"]) end,
 	["luck"] = function(player) 
-		return math.min(util.stat_dist["luck"],player.Luck/4.0) end,
+		return math.min(util.stat_dist["luck"],player.Luck/2.0) end,
 	["range"] = function(player) 
 		return math.min(util.stat_dist["range"],player.TearRange/52.0/4) end,
 	["shotspeed"] = function(player) 
@@ -209,7 +212,17 @@ util.get_stat_score = function(player)
 end
 
 util.get_stat_scale = function()
-	return tonumber(GODMODE.save_manager.get_config("StatHelpScale","0.8")) * util.get_health_scale()
+	return tonumber(GODMODE.save_manager.get_config("StatHelpScale","0.8")) * util.get_health_scale(nil,1)
+end
+
+util.get_max_stat_score = function()
+	local ret = 0
+
+	for _,total in pairs(util.stat_dist) do 
+		ret = ret + total
+	end
+
+	return ret 
 end
 
 local color_map = {
@@ -697,35 +710,92 @@ util.is_valid_enemy = function(ent, coll_damage_override, dead_override)
 		and (GODMODE.armor_blacklist and GODMODE.armor_blacklist:can_be_champ(ent) or not GODMODE.armor_blacklist)
 end
 
-util.get_health_scale = function()
-	local max_stage = 12
-	local scale = tonumber(GODMODE.save_manager.get_config("HMEScale","2.0")) * 0.5
-
-	local stage = GODMODE.level:GetAbsoluteStage()
-
-	if GODMODE.level:IsAscent() then 
-		stage = 6+7-stage
-	end
-
-	if StageAPI and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
-		stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage or stage
-	end
-
-	local percent = (stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
-
-	if GODMODE.game.Difficulty > 1 then 
-		max_stage = 7 
-		scale = tonumber(GODMODE.save_manager.get_config("GMEScale","1.5")) * 0.5
-		percent = (stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
-
-		if GODMODE.save_manager.get_config("GMEnable","true") == "false" then 
+util.scaling_presets = {
+	[1] = function(ent) -- how deep you are floor-wise
+		local max_stage = 12
+		local type = "E"
+		if ent and ent.IsBoss and ent:IsBoss() then type = "B" end 
+		local scale = tonumber(GODMODE.save_manager.get_config("HM"..type.."Scale","2.0")) * 0.5
+	
+		local stage = GODMODE.level:GetAbsoluteStage()
+	
+		if GODMODE.level:IsAscent() then 
+			stage = 6+7-stage
+		end
+	
+		if StageAPI and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
+			stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage or stage
+		end
+	
+		local percent = (stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
+	
+		if GODMODE.game.Difficulty > 1 then 
+			max_stage = 7 
+			scale = tonumber(GODMODE.save_manager.get_config("GM"..type.."Scale","1.5")) * 0.5
+			percent = (stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
+	
+			if GODMODE.save_manager.get_config("GMEnable","true") == "false" then 
+				percent = 0
+			end
+		elseif GODMODE.save_manager.get_config("HMEnable","true") == "false" then 
 			percent = 0
 		end
-	elseif GODMODE.save_manager.get_config("HMEnable","true") == "false" then 
-		percent = 0
-	end
 
-	return 1 + percent
+		local max_health = tonumber(GODMODE.save_manager.get_config("ScaleSelectorMax","3000"))
+
+		if ent and (ent.MaxHitPoints >= max_health or GODMODE.armor_blacklist:has_armor(ent)) then
+			percent = 0
+		end
+	
+		GODMODE.log("stage_score perc = "..percent,true)
+		return 1 + percent
+	end,
+	
+	[2] = function(ent) -- sum of player stat scores
+		local percent = 0
+		local type = "E"
+		if ent and ent.IsBoss and ent:IsBoss() then type = "B" end 
+
+		local max = tonumber(GODMODE.save_manager.get_config("HM"..type.."Scale"))
+		local total_score = 0
+		local total_players = 0
+		util.macro_on_players(function(player) 
+			local base_score = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats","-1"))
+
+			total_score = total_score + util.get_stat_score(player).score - math.max(base_score,0)
+			total_players = total_players + 1
+		end)
+		
+		if GODMODE.game.Difficulty > 1 then
+			max = tonumber(GODMODE.save_manager.get_config("GM"..type.."Scale"))
+
+			if GODMODE.save_manager.get_config("GMEnable","true") == "false" then 
+				percent = -1
+			end
+		else
+			if GODMODE.save_manager.get_config("HMEnable","true") == "false" then 
+				percent = -1
+			end
+		end
+
+		if percent >= 0 then 
+			percent = total_score / (util.get_max_stat_score() * total_players)
+		end
+
+		local max_health = tonumber(GODMODE.save_manager.get_config("ScaleSelectorMax","3000"))
+
+		if ent and (ent.MaxHitPoints >= max_health or GODMODE.armor_blacklist:has_armor(ent)) then 
+			percent = 0
+		end
+
+		GODMODE.log("stat_score perc = "..percent,true)
+		return 1 + math.max(percent,0)
+	end
+}
+
+util.get_health_scale = function(ent, preset)
+	preset = preset or tonumber(GODMODE.save_manager.get_config("HPScaleMode","2"))
+	return util.scaling_presets[preset](ent)
 end
 
 util.get_stage = function()

@@ -996,7 +996,10 @@ function load_stageapi_integration()
             LFloors = {"lfloor"},
             Corners = {"corner"}
         }, 
-    
+        
+        underlay = function() --MC_PRE_BACKDROP_RENDER_WATER
+            
+        end,
         backdrop_prefix = "gfx/backdrop/god_sanctuary/sanctuary_", 
         backdrop_suffix = ".png",
         overlay = StageAPI.Overlay("gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
@@ -1060,7 +1063,7 @@ function load_stageapi_integration()
         function GODMODE.mod_object:pre_render_walls() 
             overlay_func()
         end
-        GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_BACKDROP_RENDER_FLOOR, GODMODE.mod_object.pre_render_walls)
+        GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_BACKDROP_RENDER_WATER, GODMODE.mod_object.pre_render_walls)
     else 
         -- StageAPI.AddCallback(GODMODE.mod_id, "PRE_TRANSITION_RENDER", 2, function()
         --     overlay_func()

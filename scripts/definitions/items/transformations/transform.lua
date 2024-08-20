@@ -66,12 +66,9 @@ transform.player_update = function(self, player,data)
 
 	if data.transform_cooldown[transform.instance] then 
 		data.transform_cooldown[transform.instance] = math.max((data.transform_cooldown[transform.instance] or 0) - 1, 0)
-		GODMODE.log("testing ts cd = "..data.transform_cooldown[transform.instance],true)
 
 		if transform:is_transform_active(data, player) then
-			GODMODE.log("ts active, checking if transform is given yet",true)
 			if not transform.has_transform(player) then
-				GODMODE.log("ts active, not given yet",true)
 				if tonumber(GODMODE.save_manager.get_player_data(player, transform.instance.."Items","0")) >= transform.num_items then
 					GODMODE.save_manager.set_player_data(player, transform.instance.."","true", true)
 					player:AddCacheFlags(transform.cache_flags)
@@ -81,7 +78,6 @@ transform.player_update = function(self, player,data)
 					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player)
 				end
 			else 
-				GODMODE.log("ts active, updating transform",true)
 				transform.transform_update(self, player)
 			end
 		end	

@@ -445,11 +445,7 @@ if GODMODE.validate_rgon() then
             end
     
             local clears = tonumber(GODMODE.save_manager.get_persistant_data("PalaceKills","0"))
-            local complete = GODMODE.save_manager.get_persistant_data("PalaceKills","false") == "true"
-    
-            if clears >= 5 then 
-                complete = true
-            end
+            local complete = (clears >= 5) and true or GODMODE.save_manager.get_persistant_data("PalaceComplete","false") == "true"
     
             for i=0,clears do 
                 if GODMODE.registry.achievements["thesign"..i] then 

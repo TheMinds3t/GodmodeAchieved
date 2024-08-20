@@ -99,10 +99,10 @@ monster.npc_update = function(self, ent, data, sprite)
 			local tell_data = GODMODE.get_ent_data(tell)
 			
 			if sprite:IsPlaying("Retaliate") then
-				tell_data.fire_time = 15
+				tell_data.fire_time = 20
 				tell_data.laser_timeout = 20
 			else
-				tell_data.fire_time = 25
+				tell_data.fire_time = 30
 				tell_data.laser_timeout = 20
 			end
 

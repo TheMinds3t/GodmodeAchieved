@@ -454,20 +454,33 @@ options.layout = {
         buttons = {
             --hard mode scaling
             {
+                str = 'scale factor',
+                choices = {"stage","stats"}, setting = 2,
+                variable = 'GodmodeHMEnabled',
+
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("HPScaleMode","1"))
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("HPScaleMode",var,true)
+                end,
+
+                tooltip = {strset = {'does enemy', 'health scale', 'based on', 'stage depth', 'or stat score?','','(disable','below)'}}
+            },
+            gap,
+            {
                 str = 'hard hp scaling',
                 choices = bool_choices, setting = 2,
                 variable = 'GodmodeHMEnabled',
 
                 load = function()
-                    GODMODE.log("loading \'"..GODMODE.save_manager.get_config("HMEnabled","true").."\'",true)
                     return str_bool_map[GODMODE.save_manager.get_config("HMEnabled","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.log("storing \'"..bool_map[var].."\'",true)
                     GODMODE.save_manager.set_config("HMEnabled",bool_map[var],true)
                 end,
 
-                tooltip = {strset = {'does enemy', 'health scale', 'gungeon style', 'on hard', '(higher the', 'deeper you', 'are)'}}
+                tooltip = {strset = {'does enemy', 'health scale', 'on hard?'}}
             },
             {
                 str = 'max enemy hp %',
@@ -542,7 +555,7 @@ options.layout = {
                     GODMODE.save_manager.set_config("GMEnabled",bool_map[var],true)
                 end,
 
-                tooltip = {strset = {'does enemy', 'health scale', 'gungeon style', 'in greedier', '(higher the', 'deeper you', 'are)'}}
+                tooltip = {strset = {'does enemy', 'health scale', 'in greedier?'}}
             },
             {
                 str = 'max enemy hp %',
