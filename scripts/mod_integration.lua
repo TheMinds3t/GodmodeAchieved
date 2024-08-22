@@ -569,6 +569,15 @@ function load_stageapi_integration()
                     {RoomType.ROOM_DEFAULT,RoomType.ROOM_TREASURE,RoomType.ROOM_CHALLENGE,RoomType.ROOM_SACRIFICE,RoomType.ROOM_CURSE,
                         RoomType.ROOM_DUNGEON,RoomType.ROOM_ERROR,RoomType.ROOM_ISAACS,RoomType.ROOM_BARREN,RoomType.ROOM_CHEST,RoomType.ROOM_DICE,RoomType.ROOM_BLACK_MARKET})
 
+                stage:SetMusic(Music.MUSIC_SHOP_ROOM, {RoomType.ROOM_SHOP})
+                stage:SetMusic(Music.MUSIC_ARCADE_ROOM, {RoomType.ROOM_ARCADE})
+                stage:SetMusic(Music.MUSIC_ANGEL_ROOM, {RoomType.ROOM_ANGEL})
+                stage:SetMusic(Music.MUSIC_DEVIL_ROOM, {RoomType.ROOM_DEVIL})
+                stage:SetMusic(Music.MUSIC_SECRET_ROOM, {RoomType.ROOM_SECRET})
+                stage:SetMusic(Music.MUSIC_SECRET_ROOM2, {RoomType.ROOM_SUPERSECRET})
+                stage:SetMusic(Music.MUSIC_SECRET_ROOM_ALT_ALT, {RoomType.ROOM_ULTRASECRET})
+    
+
                 if stage_file.boss_music ~= nil then
                     local boss_music = stage_file.boss_music or Music.MUSIC_BOSS
                     if type(boss_music) == "string" then 

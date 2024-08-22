@@ -952,6 +952,21 @@ options.layout = {
                 tooltip = {strset = {'t. isaac unlock','-----------','what chance','for','chest infestor','to spawn','per chest?'}}
             },
             gap,
+            {
+                str = 'story boss hp buff',
+                choices = bool_choices, setting = 2,
+                variable = 'GodmodeVanillaStoryHPBuff',
+
+                load = function()
+                    return str_bool_map[GODMODE.save_manager.get_config("VanillaStoryHPBuff","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("VanillaStoryHPBuff",bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'do vanilla','story bosses','get similar,','scaling hp','buff to','godmode','story bosses?'}}
+            },
+            gap,
             -- -- new autofire mechanic!
             -- {
             --     str = 'auto attack',

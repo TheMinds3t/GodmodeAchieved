@@ -19,7 +19,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 	
 	if cache == CacheFlag.CACHE_DAMAGE then
-		player.Damage = player.Damage + player.Damage * math.max(0,(player.Luck+luck_bonus) * 0.5)
+		player.Damage = player.Damage + player.Damage * math.max(0,(player.Luck+luck_bonus) * 0.05)
 	end
 
 	if cache == CacheFlag.CACHE_FIREDELAY then

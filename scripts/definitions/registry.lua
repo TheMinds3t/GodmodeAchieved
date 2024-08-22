@@ -828,6 +828,7 @@ reg.costumes = {
     wings_of_betrayal = Isaac.GetCostumeIdByPath("gfx/costumes/luc_wings.anm2"),
 
     celeste = Isaac.GetCostumeIdByPath("gfx/costumes/celeste.anm2"),
+    celeste_guppy = Isaac.GetCostumeIdByPath("gfx/costumes/celeste_guppy.anm2"),
     cyborg = Isaac.GetCostumeIdByPath("gfx/costumes/cyborg.anm2"),
 }
 

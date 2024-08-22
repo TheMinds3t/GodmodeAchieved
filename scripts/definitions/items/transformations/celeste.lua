@@ -1,6 +1,6 @@
 local transform = include("scripts.definitions.items.transformations.transform")
 transform.instance = "Celeste"
-transform.costume = "gfx/costumes/celeste.anm2"
+transform.costume = GODMODE.registry.costumes.celeste
 transform.eid_transform = GODMODE.util.eid_transforms.CELESTE
 transform.cache_flags = CacheFlag.CACHE_SPEED | CacheFlag.CACHE_FLYING | CacheFlag.CACHE_TEARCOLOR
 transform.custom_itemtag = "celeste"
@@ -24,8 +24,6 @@ transform.eval_cache = function(self, player,cache,data)
 	if GODMODE.save_manager.get_player_data(player,"Celeste","false") == "true" or Isaac.GetChallenge() == GODMODE.registry.challenges.the_galactic_approach then
 		if cache == CacheFlag.CACHE_SPEED then
 			player.MoveSpeed = player.MoveSpeed + 0.2
-			player:TryRemoveNullCostume(GODMODE.registry.costumes.celeste)
-			player:AddNullCostume(GODMODE.registry.costumes.celeste)
 		end
 
 		if cache == CacheFlag.CACHE_FLYING then
@@ -34,6 +32,14 @@ transform.eval_cache = function(self, player,cache,data)
 
 		if cache == CacheFlag.CACHE_TEARCOLOR then
 			player.TearColor = Color.Lerp(player.TearColor, Color(0.8,0.75,0.3,1,0.25,0.2,0), 0.7)
+		end
+
+		if player:HasPlayerForm(PlayerForm.PLAYERFORM_GUPPY) and not data.celeste_guppy_interaction then 
+			player:TryRemoveNullCostume(GODMODE.registry.costumes.celeste)
+			player:TryRemoveNullCostume(GODMODE.registry.costumes.celeste_guppy)
+			player:AddNullCostume(GODMODE.registry.costumes.celeste_guppy)
+
+			data.celeste_guppy_interaction = true
 		end
 	end
 end
@@ -67,7 +73,7 @@ transform.transform_update = function(self, player)
 	end
 
 	local frame = math.max(floor,math.floor(player.MaxFireDelay*1.1))
-	if math.floor(data.real_time) % frame == 0 then
+	if math.floor(data.real_time) % frame == 0 and not GODMODE.room:IsClear() then
 		data.celeste_fire = true
 		data.gehazi_keep_coin = true
 		local tear = player:FireTear(player.Position+Vector(player:GetDropRNG():RandomInt(math.floor(player.Size*16))-player.Size*8,player:GetDropRNG():RandomInt(math.floor(player.Size*16))-player.Size*8),-player.Velocity:Resized(math.min(player.Velocity:Length(),1)) * math.max(0.1,player.ShotSpeed*0.5-0.4),false,true,false,player,1.0)

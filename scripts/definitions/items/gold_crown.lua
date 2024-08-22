@@ -68,7 +68,12 @@ item.new_room = function(self)
 end
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
-	if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES then
+	if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) 
+	and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES
+	and flags & DamageFlag.DAMAGE_INVINCIBLE ~= DamageFlag.DAMAGE_INVINCIBLE
+	and flags & DamageFlag.DAMAGE_IV_BAG ~= DamageFlag.DAMAGE_IV_BAG
+	and entsrc.Type ~= EntityType.ENTITY_SLOT 
+	then
 		local player = enthit:ToPlayer()
 		local coins = player:GetNumCoins()
 		local co = math.min(player:GetCollectibleRNG(item.instance):RandomInt(2),coins)

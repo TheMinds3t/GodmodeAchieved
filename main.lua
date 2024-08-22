@@ -1000,6 +1000,11 @@ else
         if (GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS or GODMODE.room:GetType() == RoomType.ROOM_BOSS) and ent:IsBoss() then
             ent:AddEntityFlags(EntityFlag.FLAG_NO_SPIKE_DAMAGE)
         end
+
+        if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" and GODMODE.armor_blacklist.story_bosses[ent.Type] ~= nil then 
+            ent.HitPoints = ent.HitPoints + math.min(1000,(GODMODE.util.get_basic_dps(nil) / 3.5) * 100)
+            ent.MaxHitPoints = ent.HitPoints
+        end
     end
 
     function GODMODE.mod_object:new_level()
@@ -1720,7 +1725,7 @@ else
 
     -- handle vanilla enemy Godmode alts!
     function GODMODE.mod_object:pre_entity_spawn(type,variant,subtype,pos,vel,spawner,seed)
-        if GODMODE.util.is_start_of_run() or GODMODE.level.EnterDoor == -1 then return end 
+        if GODMODE.util.is_start_of_run() or GODMODE.level.EnterDoor == -1 or seed == 0 then return end 
 
         local rng = RNG()
         rng:SetSeed(seed,35)
@@ -2244,14 +2249,16 @@ else
                 end
             end
 
-            if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and not pickup.Touched and not data.added_to_angel then 
-                data.added_to_angel = true
+            if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and not pickup.Touched and not data.counted_collectible then 
+                data.counted_collectible = true
                 local pool = GODMODE.game:GetItemPool():GetPoolForRoom(GODMODE.room:GetType(), GODMODE.room:GetDecorationSeed())
                 if pool == ItemPoolType.POOL_ANGEL then 
                     GODMODE.save_manager.add_player_list_data(player,"AngelCollected",pickup.SubType,true)
                 elseif pool == ItemPoolType.POOL_DEVIL then 
                     GODMODE.save_manager.add_player_list_data(player,"DevilCollected",pickup.SubType,true)
                 end
+
+                GODMODE.save_manager.add_player_list_data(player,"ItemsCollected",pickup.SubType,true)
             end
 
             if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and pickup.Price < 0 and (pd and pd.devil_choice == true) then 

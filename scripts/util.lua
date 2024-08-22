@@ -129,6 +129,7 @@ util.stat_dist = {
 	["health"] = 9,
 	["tearflags"] = 5,
 	["transformation"] = 4,
+	["quality"] = 15,
 }
 
 util.stat_buff = {
@@ -141,11 +142,12 @@ util.stat_buff = {
 	["health"] = true,
 	["tearflags"] = false,
 	["transformation"] = false,
+	["quality"] = false,
 }
 
 util.stat_scale = {
 	["damage"] = function(player) 
-		return math.min(util.stat_dist["damage"],player.Damage/1.25) end,
+		return math.min(util.stat_dist["damage"],player.Damage/1.5) end,
 	["firerate"] = function(player) 
 		local cur = 30 / (player.MaxFireDelay + 1)
 		local max = util.get_max_tears(player,player.MaxFireDelay)
@@ -183,6 +185,24 @@ util.stat_scale = {
 			end
 		end
 		return math.min(util.stat_dist["transformation"],total) end,
+	["quality"] = function(player) 
+		local items = GODMODE.save_manager.get_player_list_data(player, "ItemsCollected", false, function(ent) return tonumber(ent) end)
+		local total_quality = 0
+		local total_items = 0
+
+		for item in ipairs(items) do 
+			local config = Isaac.GetItemConfig():GetCollectible(item)
+
+			if config and config:IsCollectible() then 
+				total_quality = total_quality + config.Quality
+				total_items = total_items + 1
+			end
+		end
+
+		if total_items == 0 then return 0 else 
+			return (total_quality / total_items) / 4.0 * util.stat_dist["quality"]
+		end
+	end
 }
 
 util.get_stat_perc = function(player, cache)

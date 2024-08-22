@@ -263,7 +263,10 @@ monster.npc_remove = function(self,ent)
 			GODMODE.achievements.unlock_fallen_light(player)
 			GODMODE.achievements.kill_sign(player)
 		end)
-		local count = GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_1) * 3 + GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_2) * 2 + GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_3) * 1
+
+		local count = GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_1) * 3 
+		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_2) * 2 
+		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_3) * 1
 
 		for i=1,count+1 do
 			GODMODE.achievements.unlock_sign_buff()
@@ -272,7 +275,6 @@ monster.npc_remove = function(self,ent)
 		GODMODE.save_manager.set_data("FallenLightCleared","true",true) 
 
 		Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_BIGCHEST,0,GODMODE.room:FindFreePickupSpawnPosition(ent.Position-Vector(0,96)),Vector.Zero,nil)
-		GODMODE.room:TrySpawnTheVoidDoor()
 	end
 end
 
