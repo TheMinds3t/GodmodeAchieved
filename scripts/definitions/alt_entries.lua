@@ -504,6 +504,15 @@ return {
             rep_subtype=0,
             rep_chance={0.15},
         },
+        -- FRUIT BEGGAR!
+        {
+            type=EntityType.ENTITY_SLOT, 
+            variant=4, --replace regular beggar
+            rep_type=GODMODE.registry.entities.fruit_beggar.type, 
+            rep_variant=GODMODE.registry.entities.fruit_beggar.variant, 
+            rep_subtype=0,
+            rep_chance={0.15},
+        },
     },
 
     default_chance_function = function(chance, type, variant, subtype, rep_type, rep_variant, rng) 

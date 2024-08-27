@@ -292,11 +292,6 @@ else
         local room = GODMODE.room
         local level = GODMODE.level
 
-        if GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" and (not CustomStageAPI or CustomStageAPI and not CustomStageAPI.InOverriddenStage()) then 
-            GODMODE.log("GOTO CORRECTION",false)
-            Isaac.ExecuteCommand("goto s.barren.550")
-        end
-
 
         --try to override room
         if not room:IsClear() and room:GetType() == RoomType.ROOM_BOSS then
@@ -1000,6 +995,11 @@ else
         if (GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS or GODMODE.room:GetType() == RoomType.ROOM_BOSS) and ent:IsBoss() then
             ent:AddEntityFlags(EntityFlag.FLAG_NO_SPIKE_DAMAGE)
         end
+
+        if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" and GODMODE.armor_blacklist.story_bosses[ent.Type] ~= nil then 
+            ent.HitPoints = ent.HitPoints + math.min(1000,(GODMODE.util.get_basic_dps(nil) / 3.5) * 100)
+            ent.MaxHitPoints = ent.HitPoints
+        end
     end
 
     function GODMODE.mod_object:new_level()
@@ -1099,23 +1099,6 @@ else
             GODMODE.save_manager.save_override = true 
             GODMODE.save_manager.clear_key("ObservatoryGridIdx")
             GODMODE.cached_observatory_ids = nil
-        elseif GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
-            local correction = false
-            GODMODE.util.macro_on_players(function(player) 
-                local base = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats",""..GODMODE.util.get_stat_score(player).score))
-                local scale = GODMODE.util.get_stat_scale()
-                local stat_thres = base * scale + 0.1
-                local stats = GODMODE.util.get_stat_score(player)
-                GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
-
-                if stats.score < stat_thres then 
-                    correction = true
-                    GODMODE.log("Stat score of "..stats.score.." is lower than the threshold (currently "..stat_thres..")", true)
-                end
-            end)
-            if correction == true and GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
-                GODMODE.save_manager.set_data("CorrectionNeeded","true")
-            end
         end
 
         if GODMODE.level:GetStage() == LevelStage.STAGE4_3 and GODMODE.save_manager.get_config("BlueWombRework","true",true) == "true" then
@@ -1169,6 +1152,34 @@ else
             local mural = Isaac.Spawn(GODMODE.registry.entities.palace_mural.type, GODMODE.registry.entities.palace_mural.variant, 0, GODMODE.room:GetCenterPos(), Vector.Zero, nil)
             mural:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             mural:Update()
+        end
+
+        if GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
+            local correction = false
+            GODMODE.save_manager.set_data("CorrectionPortalSpawned","false")
+
+            GODMODE.util.macro_on_players(function(player) 
+                local base = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats",""..GODMODE.util.get_stat_score(player).score))
+                local scale = GODMODE.util.get_stat_scale()
+                local stat_thres = base * scale + 0.1
+                local stats = GODMODE.util.get_stat_score(player)
+                GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
+
+                if stats.score < stat_thres then 
+                    correction = true
+                    GODMODE.log("Stat score of "..stats.score.." is lower than the threshold (currently "..stat_thres..")", true)
+                end
+            end)
+            if correction == true and GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
+                GODMODE.save_manager.set_data("CorrectionNeeded","true")
+            end
+        end
+
+        if GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" and GODMODE.save_manager.get_data("CorrectionPortalSpawned","false") == "false" and GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 then 
+            GODMODE.log("GOTO CORRECTION",true)
+            Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
+                GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,-32))), Vector.Zero, nil)
+            GODMODE.save_manager.set_data("CorrectionPortalSpawned","true")
         end
     end
 
@@ -1228,6 +1239,7 @@ else
 
             MusicManager():Crossfade(GODMODE.registry.music.misfortunate)
             GODMODE.save_manager.set_data("CorrectionNeeded","false")
+            GODMODE.save_manager.set_data("CorrectionPortalSpawned","false",true)
 
             GODMODE.paint_correction_room_fx()
         end
@@ -1282,10 +1294,24 @@ else
         end
 
         if GODMODE.is_at_palace and GODMODE.is_at_palace() then            
-            if room:GetType() == RoomType.ROOM_BOSS then
+            if room:GetType() == RoomType.ROOM_ERROR then
+                GODMODE.util.macro_on_grid(GridEntityType.GRID_TRAPDOOR,-1,function(grident,ind,pos) 
+                    GODMODE.room:RemoveGridEntity(ind,0,true)
+                    grident:Update()
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,Card.CARD_FOOL,pos,Vector.Zero,nil)
+                end)
+            elseif room:GetType() == RoomType.ROOM_BOSS then
                 if not StageAPI.InExtraRoom() then 
                     StageAPI.SetRoomFromList(GODMODE.fallen_light_entrance, true, false, true, room:GetDecorationSeed(), room:GetRoomShape(), false)
                     GODMODE.set_palace_stage(GODMODE.get_palace_stage())                        
+
+                    GODMODE.util.macro_on_grid(GridEntityType.GRID_DOOR,-1,function(grident,ind,pos) 
+
+                        if grident:ToDoor().TargetRoomType ~= RoomType.ROOM_DEFAULT then 
+                            GODMODE.room:RemoveGridEntity(ind,0,true)
+                            grident:Update()    
+                        end
+                    end)
                 else
                     GODMODE.util.macro_on_players(function(player) 
                         player.Position = room:GetCenterPos() + Vector(-24,160)
@@ -1484,6 +1510,7 @@ else
             end
         end
 
+        -- correction room 
         if GODMODE.util.is_correction() then 
             for slot=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
                 -- if GODMODE.util.get_max_doors()
@@ -1720,7 +1747,7 @@ else
 
     -- handle vanilla enemy Godmode alts!
     function GODMODE.mod_object:pre_entity_spawn(type,variant,subtype,pos,vel,spawner,seed)
-        if GODMODE.util.is_start_of_run() or GODMODE.level.EnterDoor == -1 then return end 
+        if GODMODE.util.is_start_of_run() or GODMODE.level.EnterDoor == -1 or seed == 0 then return end 
 
         local rng = RNG()
         rng:SetSeed(seed,35)
@@ -2022,30 +2049,12 @@ else
             end    
         end
 
+
+
         if data then
             if (data.opportunity_cost or 0) > 0 then 
                 player:UseCard(Card.CARD_SOUL_ISAAC,UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
                 data.opportunity_cost = nil
-            end
-
-            if player.FrameCount < 3 then 
-                data.player_inited = GODMODE.save_manager.get_player_data(player, "Init", "false") == "true"
-    
-                if data.player_inited == false then
-                    if GODMODE.players[player:GetPlayerType()] and GODMODE.players[player:GetPlayerType()].init then
-                        GODMODE.players[player:GetPlayerType()]:init(player)
-                    end
-                    
-                    data.player_inited = true
-        
-                    if Isaac.GetChallenge() == GODMODE.registry.challenges.sugar_rush then 
-                        for i=1,4 do 
-                            player:AddCollectible(GODMODE.registry.items.sugar)
-                        end
-                    end
-        
-                    GODMODE.save_manager.set_player_data(player, "Init", "true")
-                end    
             end
 
             data.time = data.time + 1
@@ -2127,6 +2136,22 @@ else
         end
     
         if player_data then 
+            if player.FrameCount < 3 then --start of run stuff
+                if GODMODE.save_manager.get_player_data(player, "Init", "false") == "false" and GODMODE.level.EnterDoor == -1 then
+                    if player_data and player_data.init then
+                        player_data:init(player)
+                    end
+                    
+                    if Isaac.GetChallenge() == GODMODE.registry.challenges.sugar_rush then 
+                        for i=1,4 do 
+                            player:AddCollectible(GODMODE.registry.items.sugar)
+                        end
+                    end
+        
+                    GODMODE.save_manager.set_player_data(player, "Init", "true", true)
+                end    
+            end
+
             if player_data.update then
                 player_data:update(player, data)
             end
@@ -2182,8 +2207,8 @@ else
             end
         end
 
-        if GODMODE.util.get_stage() == 1 and not GODMODE.util.is_start_of_run() then 
-            -- GODMODE.save_manager.set_player_data(player, "BaseStats",GODMODE.util.get_stat_score(player).score)
+        if GODMODE.util.get_stage() > 0 and GODMODE.save_manager.get_player_data(player, "BaseStats","-1") == "-1" then 
+            GODMODE.save_manager.set_player_data(player, "BaseStats",GODMODE.util.get_stat_score(player).score)
         end
 
         local penalty = tonumber(GODMODE.save_manager.get_player_data(player,"SOCPenalty","0"))
@@ -2244,14 +2269,16 @@ else
                 end
             end
 
-            if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and not pickup.Touched and not data.added_to_angel then 
-                data.added_to_angel = true
+            if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and not pickup.Touched and not data.counted_collectible then 
+                data.counted_collectible = true
                 local pool = GODMODE.game:GetItemPool():GetPoolForRoom(GODMODE.room:GetType(), GODMODE.room:GetDecorationSeed())
                 if pool == ItemPoolType.POOL_ANGEL then 
                     GODMODE.save_manager.add_player_list_data(player,"AngelCollected",pickup.SubType,true)
                 elseif pool == ItemPoolType.POOL_DEVIL then 
                     GODMODE.save_manager.add_player_list_data(player,"DevilCollected",pickup.SubType,true)
                 end
+
+                GODMODE.save_manager.add_player_list_data(player,"ItemsCollected",pickup.SubType,true)
             end
 
             if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and pickup.Price < 0 and (pd and pd.devil_choice == true) then 
@@ -2486,6 +2513,23 @@ else
     function GODMODE.mod_object:d10_use(coll,rng,player,useflags,slot,vardata)
         if GODMODE.d10 then 
             GODMODE.d10.on_d10_use(coll,rng,player,useflags,slot,vardata)
+        end
+    end
+
+    function GODMODE.mod_object:pre_pickup_morph(pickup, type, variant, subtype, keep_price, keep_seed, ignore_mods)
+        --picking a random collectible
+        if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and type == pickup.Type and variant == pickup.Variant and subtype == 0 then 
+            GODMODE.log("godmode item? id="..subtype,true)
+            -- make sure we're looking at a godmode collectible
+            if pickup.SubType >= GODMODE.registry.items.morphine and pickup.SubType <= GODMODE.registry.items.vessel_of_purity_3 then 
+                GODMODE.log("quest morph?", true)
+                local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
+                -- Godmode quest items cannot be morphed 
+                if config.Tags & ItemConfig.TAG_QUEST == ItemConfig.TAG_QUEST then 
+                    GODMODE.log("morph denied!",true)
+                    return false 
+                end
+            end
         end
     end
 
@@ -2859,6 +2903,7 @@ else
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, GODMODE.mod_object.post_get_collectible)
 
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, GODMODE.mod_object.pickup_update)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_MORPH, GODMODE.mod_object.pre_pickup_morph)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, GODMODE.mod_object.pickup_collide)
 
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, GODMODE.mod_object.familiar_update)  

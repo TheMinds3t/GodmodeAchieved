@@ -17,7 +17,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,-1,function(item)
             if item:GetDropRNG():RandomFloat() <= 0.33 then 
                 if GODMODE.validate_rgon() then 
-                    item:SetForceBlind(true)
+                    item:ToPickup():SetForceBlind(true)
                 else 
                     item:GetSprite():ReplaceSpritesheet(1,"gfx/items/collectibles/questionmark.png")
                     item:GetSprite():LoadGraphics()    

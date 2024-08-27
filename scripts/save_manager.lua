@@ -201,6 +201,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["ChestInfestChance"] = "30.0"
         save_manager.god_data.config["ChestInfestToggle"] = "true"
         save_manager.god_data.config["HPScaleMode"] = "2"
+        save_manager.god_data.config["VanillaStoryHPBuff"] = "true"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 

@@ -67,6 +67,16 @@ ret.no_champ = {
 	{type=GODMODE.registry.entities.delirious_pile.type,variant=GODMODE.registry.entities.delirious_pile.variant},
 }
 
+ret.story_bosses = {
+	[EntityType.ENTITY_MOM] = 500,
+	[EntityType.ENTITY_MOMS_HEART] = 750,
+	[EntityType.ENTITY_SATAN] = 750,
+	[EntityType.ENTITY_ISAAC] = 750,
+	[EntityType.ENTITY_THE_LAMB] = 750,
+	[EntityType.ENTITY_MEGA_SATAN] = 1000,
+	[EntityType.ENTITY_MEGA_SATAN_2] = 1000,
+}
+
 ret.has_armor = function(self, ent)
 	for i,arment in ipairs(self.entities) do
 		if arment.type == ent.Type and (arment.variant == nil or arment.variant == ent.Variant) then

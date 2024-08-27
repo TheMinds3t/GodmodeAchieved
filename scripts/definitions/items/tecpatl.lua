@@ -48,7 +48,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
-item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) then
         local data = GODMODE.get_ent_data(enthit)
         local tecpatl_time = tonumber(GODMODE.save_manager.get_player_data(enthit:ToPlayer(),"TecpatlUseTime","0"))
@@ -57,6 +57,12 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
             return false
         end
     end
+end
+
+if GODMODE.validate_rgon() then 
+    item.pre_player_hit = hit_func
+else 
+    item.npc_hit = hit_func
 end
 
 item.player_collide = function(self,player,ent2,entfirst,data)

@@ -116,7 +116,7 @@ item.player_update = function(self,player,data)
     end
 end
 
-item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
     local flag = true
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) and amount > 0 and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES then
         local player = enthit:ToPlayer()
@@ -146,6 +146,12 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     if flag == false then
         return false
     end
+end
+
+if GODMODE.validate_rgon() then 
+    item.pre_player_hit = hit_func 
+else
+    item.npc_hit = hit_func
 end
 
 --weight rarer champions lower, randomly select champion color

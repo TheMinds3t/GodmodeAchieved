@@ -14,9 +14,9 @@ item.encyc_entry = {
 item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-    data.num_divines = tonumber(GODMODE.save_manager.get_player_data(player, "NumDivine", "0"))
+    local num = tonumber(GODMODE.save_manager.get_player_data(player, "NumDivine", "0"))
 
-    if data.num_divines < player:GetCollectibleNum(item.instance) then
+    if num < player:GetCollectibleNum(item.instance) then -- fill all hearts with gold hearts
         local soul = player:GetSoulHearts()
         local gold = player:GetGoldenHearts()
         local black = 0
@@ -36,9 +36,7 @@ item.eval_cache = function(self, player,cache,data)
         local gold_add = math.min(24, math.floor((red+soul)/2)-gold)
 
         player:AddGoldenHearts(gold_add)
-
-        data.num_divines = (data.num_divines or 0) + 1
-        GODMODE.save_manager.set_player_data(player, "NumDivine", data.num_divines,true)
+        GODMODE.save_manager.set_player_data(player, "NumDivine", num + 1,true)
     end
 
     if cache == CacheFlag.CACHE_FIREDELAY then

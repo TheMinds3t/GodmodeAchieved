@@ -258,10 +258,20 @@ players[GODMODE.registry.players.t_xaphan] = {
             end
 
             if max_flag then 
-                local shadow = Isaac.Spawn(GODMODE.registry.entities.player_trail_fx.type, GODMODE.registry.entities.player_trail_fx.variant, 0, player.Position+RandomVector()*player.Size, Vector.Zero, player):ToEffect()
+                -- local shadow = Isaac.Spawn(GODMODE.registry.entities.player_trail_fx.type, GODMODE.registry.entities.player_trail_fx.variant, 0, player.Position+RandomVector()*player.Size, Vector.Zero, player):ToEffect()
+                -- shadow.State = self.shadow_life
+                -- shadow:Update()
+                -- table.insert(data.xaphan_trail, shadow)        
+
+                local shadow = Isaac.Spawn(GODMODE.registry.entities.player_trail_fx.type, GODMODE.registry.entities.player_trail_fx.variant, 0, player.Position, Vector.Zero, player):ToEffect()
                 shadow.State = self.shadow_life
+                GODMODE.get_ent_data(shadow).far_color = Color(0,0,0,0.2,0,0,0)
                 shadow:Update()
+                shadow:GetSprite():Load(data.second_sprite:GetFilename(),true)
+                shadow:GetSprite():SetFrame(player:GetSprite():GetAnimation(),player:GetSprite():GetFrame())
+                shadow.DepthOffset = -100
                 table.insert(data.xaphan_trail, shadow)        
+
             end
         end
     end,

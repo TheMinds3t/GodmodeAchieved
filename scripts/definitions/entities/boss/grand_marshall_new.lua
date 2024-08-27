@@ -21,12 +21,14 @@ local max_vel = 1
 local laser_time_range = {100, 200}
 local laser_rotate_speed = 2.5
 local phase_2_thres = 0.5
-local phase_2_wave_safe_thres = 15
+local phase_2_wave_safe_thres = 25
 local phase_2_wave_safe_section = 180
 local phase_2_pulse_offset = Vector(0,-136)
 local phase_2_gridsize = 128
 local phase_2_dagger_explode_time = 40
-local phase_2_dagger_wait = 80
+local phase_2_dagger_wait = 60
+
+local attack_reroll_scalar = 3
 
 
 local spawn_laser = function(ent, pos, angle, delay, timeout)
@@ -106,7 +108,7 @@ local attacks = {
     [0] = {
         { -- holy orders
             id = 0, anim = "Attack01In", anim2 = "Attack01Loop", anim3 = "Attack01Out", --dev_name = "lasers",
-
+            start_atk_chance = -1,
             -- specific stats for this attack's variants
             laser_stats = {
                 { --vertical/horizontal lasers
@@ -198,109 +200,112 @@ local attacks = {
         },
     },
     [1] = {
-        -- { -- holy orders
-        --     id = 0, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "lasers",
+        { -- holy orders
+            id = 0, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "lasers",
+            start_atk_chance = -2,
+            -- specific stats for this attack's variants
+            laser_stats = {
+                { --vertical/horizontal lasers PT 2
+                    update = function(self, ent, data, sprite) 
+                        data.laser_angle = (data.laser_angle + laser_rotate_speed) % 360
+                    end,
+                    spawn = function(self, ent, data, sprite)
+                        --spawn laser
+                        data.vert = not data.vert
+                        local player = ent:GetPlayerTarget()
+                        local ang = math.floor(((player.Position + player.Velocity * 2.5) - GODMODE.room:GetCenterPos()):GetAngleDegrees())
 
-        --     -- specific stats for this attack's variants
-        --     laser_stats = {
-        --         { --vertical/horizontal lasers PT 2
-        --             update = function(self, ent, data, sprite) 
-        --                 data.laser_angle = (data.laser_angle + laser_rotate_speed) % 360
-        --             end,
-        --             spawn = function(self, ent, data, sprite)
-        --                 --spawn laser
-        --                 data.vert = not data.vert
-        --                 local player = ent:GetPlayerTarget()
-        --                 local ang = math.floor(((player.Position + player.Velocity * 2.5) - GODMODE.room:GetCenterPos()):GetAngleDegrees())
+                        for i=-2,2 do 
+                            if data.vert == true then 
+                                spawn_laser(ent, Vector(player.Position.X+phase_2_gridsize * i,-500), 90, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                            else
+                                spawn_laser(ent, Vector(-500,player.Position.Y+phase_2_gridsize*i), 0, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                            end
+                        end
+                    end,
 
-        --                 for i=-2,2 do 
-        --                     if data.vert == true then 
-        --                         spawn_laser(ent, Vector(player.Position.X+phase_2_gridsize * i,-500), 90, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
-        --                     else
-        --                         spawn_laser(ent, Vector(-500,player.Position.Y+phase_2_gridsize*i), 0, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
-        --                     end
-        --                 end
-        --             end,
+                    spawn_delay = 15,
+                    laser_delay = 60,
+                    laser_timeout = 7
+                },
+                { --laser wave CHAOTIC!
+                    update = function(self, ent, data, sprite) 
+                        local add = math.cos(math.rad(ent.FrameCount * 16)) * laser_rotate_speed 
+                        data.laser_angle = (data.laser_angle + laser_rotate_speed * 2 + add * 0.2) % 360
+                    end,
+                    spawn = function(self, ent, data, sprite)
+                        --spawn laser
+                        local dist_from_safe = math.min(
+                            math.abs((data.laser_angle % phase_2_wave_safe_section) - data.laser_safe_space),
+                            math.abs(((data.laser_angle + phase_2_wave_safe_section / 2.0) % phase_2_wave_safe_section) - data.laser_safe_space))
 
-        --             spawn_delay = 15,
-        --             laser_delay = 60,
-        --             laser_timeout = 7
-        --         },
-        --         { --laser wave CHAOTIC!
-        --             update = function(self, ent, data, sprite) 
-        --                 local add = math.cos(math.rad(ent.FrameCount * 16)) * laser_rotate_speed 
-        --                 data.laser_angle = (data.laser_angle + laser_rotate_speed * 2 + add * 0.2) % 360
-        --             end,
-        --             spawn = function(self, ent, data, sprite)
-        --                 --spawn laser
-        --                 local dist_from_safe = math.abs((data.laser_angle % phase_2_wave_safe_section) - data.laser_safe_space)
+                        if dist_from_safe > phase_2_wave_safe_thres then 
+                            spawn_laser(ent, self:get_marshall_pos(ent, data, sprite) + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                        end
+                    end,
 
-        --                 if dist_from_safe > phase_2_wave_safe_thres then 
-        --                     spawn_laser(ent, self:get_marshall_pos(ent, data, sprite) + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
-        --                 end
-        --             end,
+                    spawn_delay = 3,
+                    laser_delay = 80,
+                    laser_timeout = 20
+                },
+                { --cross laser PT 2
+                    update = function(self, ent, data, sprite) 
+                        data.laser_angle = (data.laser_angle + math.cos(math.rad(ent.FrameCount * 8)) * laser_rotate_speed + laser_rotate_speed) % 360
+                    end,
+                    spawn = function(self, ent, data, sprite)
+                        --spawn laser
+                        for i=-3,3 do 
+                            spawn_laser(ent, (GODMODE.room:GetCenterPos() + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                        end
+                    end,
 
-        --             spawn_delay = 3,
-        --             laser_delay = 80,
-        --             laser_timeout = 20
-        --         },
-        --         { --cross laser PT 2
-        --             update = function(self, ent, data, sprite) 
-        --                 data.laser_angle = (data.laser_angle + math.cos(math.rad(ent.FrameCount * 8)) * laser_rotate_speed + laser_rotate_speed) % 360
-        --             end,
-        --             spawn = function(self, ent, data, sprite)
-        --                 --spawn laser
-        --                 for i=-3,3 do 
-        --                     spawn_laser(ent, (GODMODE.room:GetCenterPos() + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
-        --                 end
-        --             end,
+                    spawn_delay = 20,
+                    laser_delay = 30,
+                    laser_timeout = 10
+                },
+            },
 
-        --             spawn_delay = 20,
-        --             laser_delay = 30,
-        --             laser_timeout = 10
-        --         },
-        --     },
+            init = function(self, ent, data, sprite) 
+                local perc = (1.0 - ent.HitPoints / ent.MaxHitPoints)
+                data.laser_time = laser_time_range[1] + math.floor((laser_time_range[2] - laser_time_range[1]) * perc)
+                data.max_laser_time = data.laser_time
+                data.laser_angle = ent:GetDropRNG():RandomInt(360)
+                local pattern = ent:GetDropRNG():RandomInt(#self.laser_stats) + 1
+                data.laser_safe_space = ent:GetDropRNG():RandomFloat(phase_2_wave_safe_section)
 
-        --     init = function(self, ent, data, sprite) 
-        --         local perc = (1.0 - ent.HitPoints / ent.MaxHitPoints)
-        --         data.laser_time = laser_time_range[1] + math.floor((laser_time_range[2] - laser_time_range[1]) * perc)
-        --         data.max_laser_time = data.laser_time
-        --         data.laser_angle = ent:GetDropRNG():RandomInt(360)
-        --         local pattern = ent:GetDropRNG():RandomInt(#self.laser_stats) + 1
-        --         data.laser_safe_space = ent:GetDropRNG():RandomFloat(phase_2_wave_safe_section)
+                if data.laser_pattern ~= nil then --dont do the same pattern twice in a row
+                    local depth = #self.laser_stats * 2
+                    while data.laser_pattern == pattern and depth > 0 do 
+                        pattern = ent:GetDropRNG():RandomInt(#self.laser_stats) + 1
+                        depth = depth - 1
+                    end
+                end
 
-        --         if data.laser_pattern ~= nil then --dont do the same pattern twice in a row
-        --             local depth = #self.laser_stats * 2
-        --             while data.laser_pattern == pattern and depth > 0 do 
-        --                 pattern = ent:GetDropRNG():RandomInt(#self.laser_stats) + 1
-        --                 depth = depth - 1
-        --             end
-        --         end
+                data.laser_pattern = pattern
+            end,
+            update = function(self, ent, data, sprite) 
+                if (data.laser_time or 0) > 0  then 
+                    data.laser_time = (data.laser_time or 0) - 1
+                    self.laser_stats[data.laser_pattern or 1].update(self, ent, data, sprite)
 
-        --         data.laser_pattern = pattern
-        --     end,
-        --     update = function(self, ent, data, sprite) 
-        --         if (data.laser_time or 0) > 0  then 
-        --             data.laser_time = (data.laser_time or 0) - 1
-        --             self.laser_stats[data.laser_pattern or 1].update(self, ent, data, sprite)
-
-        --             if data.laser_time % self.laser_stats[data.laser_pattern].spawn_delay == 1 then 
-        --                 self.laser_stats[data.laser_pattern or 1].spawn(self, ent, data, sprite)
-        --             end
-        --         end
-        --     end,
-        --     is_done = function(self, ent, data, sprite) return (data.laser_time or 1) <= 0 end,
-        --     get_marshall_pos = function(self, ent, data, sprite) 
-        --         return GODMODE.room:GetCenterPos() + 
-        --         Vector(1,0):Rotated(data.laser_angle or 0):Resized(64 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
-        --     end 
-        -- },
+                    if data.laser_time % self.laser_stats[data.laser_pattern].spawn_delay == 1 then 
+                        self.laser_stats[data.laser_pattern or 1].spawn(self, ent, data, sprite)
+                    end
+                end
+            end,
+            is_done = function(self, ent, data, sprite) return (data.laser_time or 1) <= 0 end,
+            get_marshall_pos = function(self, ent, data, sprite) 
+                return GODMODE.room:GetCenterPos() + 
+                Vector(1,0):Rotated(data.laser_angle or 0):Resized(64 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
+            end 
+        },
         { -- dagger projectiles
         id = 0, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "lasers",
 
         knife_interval = 30,
         knife_speed_thres = {12,16},
         knife_count_thres = {6,12},
+        start_atk_chance = -1,
         max_knives = function(self,ent,data,sprite) 
             return self.knife_count_thres[1] + (self.knife_count_thres[2] - self.knife_count_thres[1]) * (1 - ent.HitPoints / ent.MaxHitPoints)
         end,
@@ -347,10 +352,10 @@ local attacks = {
 }
 
 local choose_new_atk = function(ent, data, sprite) 
-    local atk_list = attacks[data.phase or 0]
+    local atk_list = attacks[data.phase or 0] or attacks[0]
     local sel = function() return atk_list[ent:GetDropRNG():RandomInt(#atk_list) + 1] end
     local ret = sel()
-    local depth = #atk_list + 1
+    local depth = (#atk_list + 1) * attack_reroll_scalar
     
     while data.atk_meta ~= nil and data.atk_meta.id == ret.id and depth > 0 do 
         ret = sel()
@@ -358,7 +363,7 @@ local choose_new_atk = function(ent, data, sprite)
     end
 
     data.atk_meta = ret
-    data.atk_chance = -3
+    data.atk_chance = data.atk_meta.start_atk_chance or -3
     data.atk_meta:init(ent, data, sprite)
     return ret 
 end

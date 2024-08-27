@@ -153,7 +153,6 @@ end
 
 monster.do_unlocks = function(self, ent, data)
 	if data.unlock_achieved ~= true then 
-		data.unlock_achieved = true
 		GODMODE.util.macro_on_players(function(player) 
 			GODMODE.achievements.unlock_fallen_light(player)
 		end)
@@ -162,8 +161,16 @@ monster.do_unlocks = function(self, ent, data)
 			Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_BIGCHEST,0,GODMODE.room:FindFreePickupSpawnPosition(ent.Position-Vector(0,96)),Vector.Zero,ent)
 			GODMODE.room:TrySpawnTheVoidDoor()
 		end	
-	
-		if data.soul == nil then GODMODE.save_manager.set_data("FallenLightCleared","true",true) end	
+		
+		if GODMODE.validate_rgon() and GODMODE.save_manager.get_data("FallenLightCleared","false") == "false" then 
+			local add = math.max(0,-1 * Isaac.GetPersistentGameData():GetEventCounter(EventCounter.STREAK_COUNTER))
+			Isaac.GetPersistentGameData():IncreaseEventCounter(EventCounter.STREAK_COUNTER,add + 1)
+			GODMODE.log("adding "..(add + 1).." to win streak!",true)
+		end
+
+		if data.soul == nil then 
+			GODMODE.save_manager.set_data("FallenLightCleared","true",true) 
+		end	
 	end
 end
 
@@ -249,6 +256,10 @@ monster.npc_update = function(self, ent, data, sprite)
 		end
 
 		data.soul_made = true
+	end
+	
+	if data.hole_made == true then 
+		ent.Velocity = GODMODE.room:GetCenterPos() - ent.Position
 	end
 
 	if data.soul ~= nil then

@@ -496,11 +496,11 @@
         <bestiary transform="0,0,1" anim="Spin" />
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
-    <entity anm2path="112_bowl_play.anm2" baseHP="575" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="Bowl Play (Corny)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="0" portrait="84" gridCollision="walls">
+    <entity anm2path="112_bowl_play.anm2" baseHP="450" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="Bowl Play (Corny)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="0" portrait="84" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Corny" />
         <gibs amount="32" poop="1"/>
     </entity>
-    <entity anm2path="112_bowl_play.anm2" baseHP="575" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="Bowl Play (Smiley)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="1" portrait="84" gridCollision="walls">
+    <entity anm2path="112_bowl_play.anm2" baseHP="450" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="Bowl Play (Smiley)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="1" portrait="84" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Smiley" />
         <gibs amount="32" poop="1"/>
     </entity>
@@ -575,7 +575,7 @@
         <preload-snd id="119"/>
     </entity>
 
-    <entity anm2path="121_the_ritual.anm2" baseHP="1900" shieldStrength="8" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="The Ritual" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="121" portrait="57" gridCollision="walls">
+    <entity anm2path="121_the_ritual.anm2" baseHP="1400" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="The Ritual" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="121" portrait="57" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle3" />
     </entity>
     <entity anm2path="121_candle.anm2" baseHP="0" tags="nodelirium noreroll" boss="0" champion="0" collisionDamage="1" collisionMass="16" collisionRadius="8" friction="1" id="700" name="The Ritual's Candle" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="121" subtype="1" portrait="58" gridCollision="walls">
@@ -756,6 +756,8 @@
     </entity>
     <entity anm2path="grid_lucifer_portal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Ivory Portal" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="223" gridCollision="none" shutdoors="false">
     </entity>
+    <entity anm2path="grid_correction_portal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Correction Portal" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="223" subtype="1" gridCollision="none" shutdoors="false">
+    </entity>
     <entity anm2path="grid_ooze_turret.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="16" friction="1" id="700" name="Ooze Turret" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="224" gridCollision="walls" shutdoors="false">
     </entity>
     <entity anm2path="grid_ooze_turret.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="16" friction="1" id="700" name="Ooze Turret (Always On)" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="224" subtype="1" gridCollision="walls" shutdoors="false">
@@ -779,7 +781,7 @@
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
     </entity>
-    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="46" subtype="1" shutdoors="false">
+    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="51" subtype="1" shutdoors="false">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
     </entity>

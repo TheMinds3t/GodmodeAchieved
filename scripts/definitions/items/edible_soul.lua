@@ -40,7 +40,6 @@ end
 item.player_update = function(self,player,data)
 	local flag = GODMODE.save_manager.get_player_data(player, "EdibleSoulApplied", "false") == "true"
 
-
 	if data.edible_soul_eaten == true then 
 		player:AddMaxHearts(-24)
 		player:AddSoulHearts(-24)

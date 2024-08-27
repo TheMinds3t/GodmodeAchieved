@@ -21,7 +21,9 @@ item.player_update = function(self,player,data)
 	end
 end
 
-item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+
+
+local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
     if enthit and enthit:IsVulnerableEnemy() and GODMODE.util.is_player_attack(entsrc) and GODMODE.util.get_player_from_attack(entsrc) and GODMODE.util.get_player_from_attack(entsrc):HasTrinket(item.instance) then
         GODMODE.util.macro_on_players_that_have(item.instance, function(player)
             local data = GODMODE.get_ent_data(player)
@@ -44,6 +46,13 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         end
     end
 end
+
+if GODMODE.validate_rgon() then 
+    item.pre_player_hit = hit_func
+else
+    item.npc_hit = hit_func
+end
+
 item.new_room = function(self)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
         local data = GODMODE.get_ent_data(player)

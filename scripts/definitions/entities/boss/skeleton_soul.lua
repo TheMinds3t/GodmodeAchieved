@@ -3,7 +3,8 @@ monster.name = "The Sign"
 monster.type = GODMODE.registry.entities.the_sign.type
 monster.variant = GODMODE.registry.entities.the_sign.variant
 
-local max_health = 2 * 60 * 30 --two minutes
+-- local max_health = 2 * 60 * 30 --two minutes
+local max_health = 2 * 30 --two seconds
 local max_timeout = 101 --used to penalize the player for standing still
 local cam_damp = 3
 
@@ -257,22 +258,37 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 	end
 end
 
-monster.npc_remove = function(self,ent) 
-	if GODMODE.is_at_palace and GODMODE.is_at_palace() and StageAPI.InExtraRoom() and ent:IsDead() then 
+monster.rewards = function(self,ent)
+	if GODMODE.save_manager.get_data("SignCleared","false") == "false" then 
 		GODMODE.util.macro_on_players(function(player) 
 			GODMODE.achievements.unlock_fallen_light(player)
 			GODMODE.achievements.kill_sign(player)
 		end)
-		local count = GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_1) * 3 + GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_2) * 2 + GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_3) * 1
-
+	
+		local count = GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_1) * 3 
+		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_2) * 2 
+		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_3) * 1
+	
 		for i=1,count+1 do
 			GODMODE.achievements.unlock_sign_buff()
 		end
 		
 		GODMODE.save_manager.set_data("FallenLightCleared","true",true) 
+		GODMODE.save_manager.set_data("SignCleared","true",true) 
+	
+		Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_BIGCHEST,0,GODMODE.room:FindFreePickupSpawnPosition(ent.Position-Vector(0,96)),Vector.Zero,nil)	
+	end
+end
 
-		Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_BIGCHEST,0,GODMODE.room:FindFreePickupSpawnPosition(ent.Position-Vector(0,96)),Vector.Zero,nil)
-		GODMODE.room:TrySpawnTheVoidDoor()
+monster.npc_remove = function(self,ent) 
+	if GODMODE.is_at_palace and GODMODE.is_at_palace() and StageAPI.InExtraRoom() and ent:IsDead() then 
+		monster.rewards(self,ent)
+	end
+end
+
+monster.npc_kill = function(self,ent)
+	if GODMODE.is_at_palace and GODMODE.is_at_palace() and StageAPI.InExtraRoom() and ent:IsDead() then 
+		monster.rewards(self,ent)
 	end
 end
 

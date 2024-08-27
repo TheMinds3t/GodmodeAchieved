@@ -129,6 +129,7 @@ util.stat_dist = {
 	["health"] = 9,
 	["tearflags"] = 5,
 	["transformation"] = 4,
+	["quality"] = 15,
 }
 
 util.stat_buff = {
@@ -141,11 +142,12 @@ util.stat_buff = {
 	["health"] = true,
 	["tearflags"] = false,
 	["transformation"] = false,
+	["quality"] = false,
 }
 
 util.stat_scale = {
 	["damage"] = function(player) 
-		return math.min(util.stat_dist["damage"],player.Damage/1.25) end,
+		return math.min(util.stat_dist["damage"],player.Damage/1.5) end,
 	["firerate"] = function(player) 
 		local cur = 30 / (player.MaxFireDelay + 1)
 		local max = util.get_max_tears(player,player.MaxFireDelay)
@@ -183,6 +185,24 @@ util.stat_scale = {
 			end
 		end
 		return math.min(util.stat_dist["transformation"],total) end,
+	["quality"] = function(player) 
+		local items = GODMODE.save_manager.get_player_list_data(player, "ItemsCollected", false, function(ent) return tonumber(ent) end)
+		local total_quality = 0
+		local total_items = 0
+
+		for item in ipairs(items) do 
+			local config = Isaac.GetItemConfig():GetCollectible(item)
+
+			if config and config:IsCollectible() then 
+				total_quality = total_quality + config.Quality
+				total_items = total_items + 1
+			end
+		end
+
+		if total_items == 0 then return 0 else 
+			return (total_quality / total_items) / 4.0 * util.stat_dist["quality"]
+		end
+	end
 }
 
 util.get_stat_perc = function(player, cache)
@@ -427,7 +447,7 @@ util.add_tears = function(player, firedelay, val, ignore_cap)
 			local scaled_val = mult(firedelay, val)
 			if scaled_val and cur_mult_val > scaled_val 
 				and (not util.player_tear_mults[player.SubType] or 
-				util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val).ignore ~= nil and player_tear_mods[player.SubType].ignore ~= item) then 
+				util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val).ignore ~= nil and util.player_tear_mults[player.SubType].ignore ~= item) then 
 				cur_mult_val = scaled_val
 			end
 		end
@@ -531,6 +551,28 @@ util.macro_on_enemies = function(spawner,type,var,subtype, funct, predicate)
 				funct(enemy)
 			end
 		end
+	end
+end
+
+util.macro_on_grid = function(type,var, funct, predicate)
+	type = type or -1
+	var = var or -1
+	predicate = predicate or function(grid_ent) 
+		return grid_ent ~= nil 
+			and (type == -1 or grid_ent:GetType() == type) 
+			and (var == -1 or grid_ent:GetVariant() == var) 
+	end
+	local room = GODMODE.room
+
+	for y = 1, room:GetGridHeight() - 1 do
+	    for x = 1, room:GetGridWidth() - 1 do
+	        local ind = y * room:GetGridWidth() + x
+	        local grid_ent = room:GetGridEntity(ind)
+
+			if predicate(grid_ent) then 
+				funct(grid_ent,ind,room:GetGridPosition(ind))
+			end
+	    end
 	end
 end
 

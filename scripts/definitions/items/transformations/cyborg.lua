@@ -4,6 +4,7 @@ transform.transformation = true
 transform.eid_transform = GODMODE.util.eid_transforms.CYBORG
 transform.cache_flags = CacheFlag.CACHE_SPEED | CacheFlag.CACHE_DAMAGE
 transform.custom_itemtag = "cyborg"
+transform.costume = GODMODE.registry.costumes.cyborg
 transform.items = {
 	[GODMODE.registry.items.gold_plated_battery] = true,
 	[CollectibleType.COLLECTIBLE_9_VOLT] = true,

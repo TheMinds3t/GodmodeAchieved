@@ -76,6 +76,11 @@ transform.player_update = function(self, player,data)
 					GODMODE.sfx:Play(SoundEffect.SOUND_POWERUP_SPEWER)
 					GODMODE.game:GetHUD():ShowItemText(transform.instance.."!","")
 					Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 1, player.Position, Vector.Zero, player)
+
+					if transform.costume ~= nil then 
+						player:TryRemoveNullCostume(transform.costume)
+						player:AddNullCostume(transform.costume)
+					end
 				end
 			else 
 				transform.transform_update(self, player)
