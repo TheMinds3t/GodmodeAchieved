@@ -447,7 +447,7 @@ util.add_tears = function(player, firedelay, val, ignore_cap)
 			local scaled_val = mult(firedelay, val)
 			if scaled_val and cur_mult_val > scaled_val 
 				and (not util.player_tear_mults[player.SubType] or 
-				util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val).ignore ~= nil and player_tear_mods[player.SubType].ignore ~= item) then 
+				util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val).ignore ~= nil and util.player_tear_mults[player.SubType].ignore ~= item) then 
 				cur_mult_val = scaled_val
 			end
 		end
@@ -551,6 +551,28 @@ util.macro_on_enemies = function(spawner,type,var,subtype, funct, predicate)
 				funct(enemy)
 			end
 		end
+	end
+end
+
+util.macro_on_grid = function(type,var, funct, predicate)
+	type = type or -1
+	var = var or -1
+	predicate = predicate or function(grid_ent) 
+		return grid_ent ~= nil 
+			and (type == -1 or grid_ent:GetType() == type) 
+			and (var == -1 or grid_ent:GetVariant() == var) 
+	end
+	local room = GODMODE.room
+
+	for y = 1, room:GetGridHeight() - 1 do
+	    for x = 1, room:GetGridWidth() - 1 do
+	        local ind = y * room:GetGridWidth() + x
+	        local grid_ent = room:GetGridEntity(ind)
+
+			if predicate(grid_ent) then 
+				funct(grid_ent,ind,room:GetGridPosition(ind))
+			end
+	    end
 	end
 end
 
@@ -767,7 +789,6 @@ util.scaling_presets = {
 			percent = 0
 		end
 	
-		GODMODE.log("stage_score perc = "..percent,true)
 		return 1 + percent
 	end,
 	
@@ -808,7 +829,6 @@ util.scaling_presets = {
 			percent = 0
 		end
 
-		GODMODE.log("stat_score perc = "..percent,true)
 		return 1 + math.max(percent,0)
 	end
 }

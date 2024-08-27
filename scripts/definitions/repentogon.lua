@@ -64,6 +64,12 @@ if GODMODE.validate_rgon() then
 
         local pause_menu = GODMODE.game:IsPauseMenuOpen()
 
+        if GODMODE.sprites.mm_addon_sprite == nil then
+            GODMODE.sprites.mm_addon_sprite = Sprite()
+            GODMODE.sprites.mm_addon_sprite:Load("gfx/ui/main menu/god_mainmenu_addons.anm2", true)
+            GODMODE.log("Loaded Fallen Light/The Sign Completion mark sprite!")
+        end
+
         -- render sign level
         if not pause_menu and playertype == GODMODE.registry.players.the_sign and MenuManager.GetActiveMenu() == MainMenuType.CHARACTER then 
             local kills = tonumber(GODMODE.save_manager.get_persistant_data("PalaceKills","0",true))
@@ -81,12 +87,6 @@ if GODMODE.validate_rgon() then
 
         -- draw fl seal
         if seal ~= nil then 
-            if GODMODE.sprites.mm_addon_sprite == nil then
-                GODMODE.sprites.mm_addon_sprite = Sprite()
-                GODMODE.sprites.mm_addon_sprite:Load("gfx/ui/main menu/god_mainmenu_addons.anm2", true)
-                GODMODE.log("Loaded Fallen Light/The Sign Completion mark sprite!")
-            end
-
             local render_pos = pos + Vector(36,-6) * scale
 
             if pause_menu and MiniPauseMenuPlus_Mod == true then render_pos = render_pos + Vector(-8,8) end

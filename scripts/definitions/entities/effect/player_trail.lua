@@ -37,21 +37,22 @@ monster.effect_update = function(self, ent, data, sprite)
     local perc = math.min(1,math.max(0,off:Length()-0.1))
     local xaphan_flag = spawner:ToPlayer() and spawner:ToPlayer():GetPlayerType() == GODMODE.registry.players.t_xaphan
 
-    if ent.Timeout == ent.State then 
-        sprite:Load(spawner:GetSprite():GetFilename(),true)
-
+    if data.effect_init == false then 
+        ent:GetSprite():Load(spawner:GetSprite():GetFilename(),true)
         if xaphan_flag then 
-            sprite:ReplaceSpritesheet(1,"gfx/characters/xaphan_tainted/xaphan_grey.png")
-            sprite:ReplaceSpritesheet(4,"gfx/characters/xaphan_tainted/xaphan_grey.png")
-            sprite:LoadGraphics()
+            ent:GetSprite():ReplaceSpritesheet(1,"gfx/characters/xaphan_tainted/xaphan_grey.png")
+            ent:GetSprite():ReplaceSpritesheet(4,"gfx/characters/xaphan_tainted/xaphan_grey.png")
+            ent:GetSprite():LoadGraphics()
         end
+        data.effect_init = true
     end
 
-    sprite.Color = Color.Lerp(base_color,data.far_color or far_color,perc*life_perc)
-
+    sprite.Color = far_color--Color.Lerp(base_color,data.far_color or far_color,perc*life_perc)
     if xaphan_flag then 
-        sprite:SetFrame(spawner:GetSprite():GetAnimation(),spawner:GetSprite():GetFrame())
-        sprite:SetOverlayFrame(spawner:GetSprite():GetOverlayAnimation(),spawner:GetSprite():GetOverlayFrame())
+        local spawner_sprite = spawner:GetSprite() 
+        sprite:SetFrame(spawner_sprite:GetAnimation(),spawner_sprite:GetFrame())
+        sprite:SetOverlayFrame(spawner_sprite:GetOverlayAnimation(),spawner_sprite:GetOverlayFrame())
+        GODMODE.log("new spritesheet is "..spawner_sprite:GetFilename().." playing \'"..spawner_sprite:GetAnimation().."\'!",true)
     end
 
     local dist = (ent.Position - spawner.Position):Length() / 4

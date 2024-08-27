@@ -18,13 +18,12 @@ item.encyc_entry = {
 item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
-    data.num_angel_food = tonumber(GODMODE.save_manager.get_player_data(player, "NumAngelFood", "0"))
+    local num = tonumber(GODMODE.save_manager.get_player_data(player, "NumAngelFood", "0"))
 
-    if data.num_angel_food < player:GetCollectibleNum(item.instance) then
+    if num < player:GetCollectibleNum(item.instance) then
         player:AddGoldenHearts(1)
+        GODMODE.save_manager.set_player_data(player, "NumAngelFood", num + 1)
         GODMODE.save_manager.set_data("GildedChance", math.min(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")) + 0.2,1),true)
-        data.num_angel_food = (data.num_angel_food or 0) + 1
-        GODMODE.save_manager.set_player_data(player, "NumAngelFood", data.num_angel_food,true)
     end
 
     if cache == CacheFlag.CACHE_FIREDELAY then
@@ -32,8 +31,8 @@ item.eval_cache = function(self, player,cache,data)
     end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER) and cache == CacheFlag.CACHE_RANGE then
-		player.TearRange = player.TearRange - 2
-	end
+		    player.TearRange = player.TearRange - 2
+	  end
 end
 
 return item

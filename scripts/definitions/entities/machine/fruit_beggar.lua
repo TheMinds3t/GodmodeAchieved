@@ -69,7 +69,7 @@ monster.npc_update = function(self, ent, data, sprite)
         local chance = ent:GetDropRNG():RandomFloat() 
         GODMODE.sfx:Play(SoundEffect.SOUND_SLOTSPAWN,Options.SFXVolume*5.25)
 
-        if chance < math.min(1,-0.25+data.rewards*0.125) then -- item!
+        if chance < math.min(1,-0.5+data.rewards*0.25) then -- item!
             data.rewards = -1
             local item = GODMODE.itempools.get_from_pool("fruit_beggar",ent:GetDropRNG())
             Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,item,GODMODE.room:FindFreePickupSpawnPosition(ent.Position+Vector(0,64)),Vector.Zero,nil)

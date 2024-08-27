@@ -730,6 +730,10 @@ reg.entities = {
         type = Isaac.GetEntityTypeByName("Ivory Portal"),
         variant = Isaac.GetEntityVariantByName("Ivory Portal"),
     },
+    correction_portal = {
+        type = Isaac.GetEntityTypeByName("Correction Portal"),
+        variant = Isaac.GetEntityVariantByName("Correction Portal"),
+    },
     ooze_turret = {
         type = Isaac.GetEntityTypeByName("Ooze Turret"),
         variant = Isaac.GetEntityVariantByName("Ooze Turret"),
@@ -766,6 +770,10 @@ reg.entities = {
     pill_beggar = {
         type = Isaac.GetEntityTypeByName("Pill Beggar"),
         variant = Isaac.GetEntityVariantByName("Pill Beggar")
+    },
+    fruit_beggar = {
+        type = Isaac.GetEntityTypeByName("Fruit Beggar"),
+        variant = Isaac.GetEntityVariantByName("Fruit Beggar")
     },
     closet_tchar = {
         type = Isaac.GetEntityTypeByName("Godmode Tainted Char"),

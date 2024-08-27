@@ -84,4 +84,8 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 end
 
+monster.slot_bomb_drops = function(self, slot) 
+    
+end
+
 return monster
