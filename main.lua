@@ -1287,7 +1287,15 @@ else
         end
 
         if GODMODE.is_at_palace and GODMODE.is_at_palace() then            
-            if room:GetType() == RoomType.ROOM_BOSS then
+            if room:GetType() == RoomType.ROOM_ERROR then
+                GODMODE.util.macro_on_grid(GridEntityType.GRID_TRAPDOOR,-1,function(grident,ind,pos) 
+                    GODMODE.room:RemoveGridEntity(ind,0,true)
+                    grident:Update()
+                end)
+
+                Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()), Vector.Zero, nil)
+            elseif room:GetType() == RoomType.ROOM_BOSS then
+
                 if not StageAPI.InExtraRoom() then 
                     StageAPI.SetRoomFromList(GODMODE.fallen_light_entrance, true, false, true, room:GetDecorationSeed(), room:GetRoomShape(), false)
                     GODMODE.set_palace_stage(GODMODE.get_palace_stage())                        
@@ -2493,6 +2501,21 @@ else
     function GODMODE.mod_object:d10_use(coll,rng,player,useflags,slot,vardata)
         if GODMODE.d10 then 
             GODMODE.d10.on_d10_use(coll,rng,player,useflags,slot,vardata)
+        end
+    end
+
+
+    function GODMODE.mod_object:pre_pickup_morph(pickup, type, variant, subtype, keep_price, keep_seed, ignore_mods)
+        --picking a random collectible
+        if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and type == pickup.Type and variant == pickup.Variant and subtype == 0 then 
+            -- make sure we're looking at a godmode collectible
+            if pickup.SubType >= GODMODE.registry.items.morphine and pickup.SubType <= GODMODE.registry.items.vessel_of_purity_3 then 
+                local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
+                -- Godmode quest items cannot be morphed 
+                if config.Tags & ItemConfig.TAG_QUEST == ItemConfig.TAG_QUEST then 
+                    return false 
+                end
+            end
         end
     end
 
