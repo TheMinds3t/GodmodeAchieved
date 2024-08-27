@@ -25,11 +25,18 @@ item.eval_cache = function(self, player,cache,data)
 end
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-		local data = GODMODE.get_ent_data(player)
-		GODMODE.save_manager.set_player_data(player, "TrophyRoomSeed", GODMODE.room:GetDecorationSeed(),true)
-		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY)
-		player:EvaluateItems()
-		return true
+		local last_used = tonumber(GODMODE.save_manager.get_player_data(player,"TrophyRoomStage","-2"))
+		if last_used + 2 <= GODMODE.level:GetStage() - 1 then 
+			local data = GODMODE.get_ent_data(player)
+			GODMODE.save_manager.set_player_data(player, "TrophyRoomSeed", GODMODE.room:GetDecorationSeed())
+			GODMODE.save_manager.set_player_data(player, "TrophyRoomStage", GODMODE.level:GetStage(),true)
+			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY)
+			player:EvaluateItems()
+			return {Discharge=true,Remove=false,ShowAnim=true}
+		else
+			GODMODE.sfx:Play(SoundEffect.SOUND_BOSS2INTRO_ERRORBUZZ, .75, 0, false, 1.5)
+			return {Discharge=false,Remove=false,ShowAnim=true}
+		end
 	end
 end
 item.new_room = function(self)
@@ -39,13 +46,13 @@ item.new_room = function(self)
 		player:EvaluateItems()
 	end)
 end
+
 item.new_level = function(self)
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
 		local slot = GODMODE.util.get_active_slot(player, item.instance)
 		if player:GetActiveItem(slot) == item.instance then
-			player:SetActiveCharge(player:GetActiveCharge() + 1, slot)
-			if player:GetActiveCharge(slot) > 2 then 
-				player:SetActiveCharge(2, slot) 
+			if player:GetActiveCharge(slot) < 2 then 
+				player:SetActiveCharge(player:GetActiveCharge() + 1, slot)
 			end
 		end
 	end)

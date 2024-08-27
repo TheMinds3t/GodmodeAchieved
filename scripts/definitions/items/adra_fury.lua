@@ -93,7 +93,7 @@ item.player_update = function(self,player,data)
     end
 end
 
-item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
     local flag = true
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) and amount > 0 and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES then
         local player = enthit:ToPlayer()
@@ -134,6 +134,12 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     end
 end
 
+if GODMODE.validate_rgon() then 
+    item.pre_player_hit = hit_func 
+else
+    item.npc_hit = hit_func
+end
+
 --weight rarer champions lower, randomly select champion color
 local gen_color = function(ent)
     local color_type = ent:GetDropRNG():RandomFloat()
@@ -156,7 +162,7 @@ local devil_price = {
 }
 
 item.pickup_collide = function(self, pickup,ent,entfirst)
-	if ent:ToPlayer() and (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and entfirst == false then
+	if ent:ToPlayer() and (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE) and pickup.Price < ent:ToPlayer():GetNumCoins() and entfirst == false then
         local room = GODMODE.room
         local room_data = GODMODE.level:GetCurrentRoomDesc().Data
         item:calc_birthright_chance()

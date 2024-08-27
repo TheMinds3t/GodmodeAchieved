@@ -1077,7 +1077,44 @@ godhook.functions.input_event = function(self,ent,hook,action)
     end
 end
 
+godhook.functions.pre_player_hit = function(self,player,amount,flags,entsrc,countdown)
+    local returned = nil
 
+    if godhook.hook.items["pre_player_hit"] then
+        for ind=1, #godhook.hook.item_keys["pre_player_hit"] do
+            local func = godhook.hook.items["pre_player_hit"][godhook.hook.item_keys["pre_player_hit"][ind]]
+            if func then
+                local ret = func(self,player,amount,flags,entsrc,countdown)
+                if ret ~= nil and returned ~= false then returned = ret end
+            end
+        end
+    end
+
+    if returned ~= nil then 
+        return returned        
+    end
+end
+
+godhook.functions.slot_bomb_drops = function(self, slot)
+    if godhook.hook.monsters["slot_bomb_drops"] and godhook.hook.monsters["slot_bomb_drops"][slot.Type..","..slot.Variant] ~= nil then
+        godhook.hook.monsters["slot_bomb_drops"][slot.Type..","..slot.Variant](self,slot)
+    end
+
+    if godhook.hook.items["slot_bomb_drops"] then
+        for ind=1, #godhook.hook.item_keys["slot_bomb_drops"] do
+            local func = godhook.hook.items["slot_bomb_drops"][godhook.hook.item_keys["slot_bomb_drops"][ind]]
+            if func then
+                func(self,slot)
+            end
+        end
+    end
+end
+
+
+
+--- ##################################################################################################
+--- ###################### GODHOOK CORE SETUP
+--- ##################################################################################################
 
 local is_monster = function(object) return object.type and object.variant end
 
@@ -1274,11 +1311,9 @@ godhook.hook_list = {
     ["input_event"] = function(funcname, object)
         godhook.add_hook(funcname,object,ModCallbacks.MC_INPUT_ACTION)
     end,
-    ["set_delirium_visuals"] = function(funcname, object)
-        godhook.add_hook(funcname,object,nil)
-    end,
 
     --custom hooks
+    ["set_delirium_visuals"] = true, -- called on entities when inside of the delirium room, if it exists allows to apply a delirium skin
     ["first_level"] = true, --called for the first level of the run, use to init variables. Takes no return values. | first_level()
     ["on_item_pickup"] = true, --just for when items are grabbed, doesn't tell what item. Takes no return values. | on_item_pickup(player)
     ["data_init"] = true, --when godmode data is inited this is called, set default data values here. Takes no return values. | data_init(ent,data)
@@ -1289,12 +1324,16 @@ godhook.hook_list = {
 
 
     -- RGON callbacks
-    ["pre_player_damaged"] = function(funcname, object)
+    ["pre_player_hit"] = function(funcname, object)
         if GODMODE.validate_rgon() then 
             godhook.add_hook(funcname,object,ModCallbacks.MC_PRE_PLAYER_TAKE_DMG)
         end
     end,
-
+    ["slot_bomb_drops"] = function(funcname, object)
+        if GODMODE.validate_rgon() then 
+            godhook.add_hook(funcname,object,ModCallbacks.MC_PRE_SLOT_CREATE_EXPLOSION_DROPS)
+        end
+    end,
 
     -- I'll take time to add a bunch of callbacks to make my mod easily manageable and expandable
     -- ["pre_scale_enemy_hp"] = true, 
