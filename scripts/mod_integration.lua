@@ -1140,21 +1140,22 @@ if MinimapAPI then
 
 end
 
--- community remix debug with knife pieces, unfortunately this doesn't seem to work if I put it here on my end but I will keep this here until community remix fixes it
-if communityRemix then 
-    communityRemix:AddPriorityCallback (ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE, function(self, p, flag)
-        if flag == CacheFlag.CACHE_FAMILIARS then
-            local numFamiliars = p:GetTrinketMultiplier(TrinketType.TRINKET_INFANTICIDE) + p:GetEffects():GetTrinketEffectNum(TrinketType.TRINKET_INFANTICIDE)
-             + math.min(p:GetCollectibleNum(CollectibleType.COLLECTIBLE_KNIFE_PIECE_1), p:GetCollectibleNum(CollectibleType.COLLECTIBLE_KNIFE_PIECE_2))
+-- THEYVE DONE IT! THEYVE FIXED IT!
+-- -- community remix debug with knife pieces, unfortunately this doesn't seem to work if I put it here on my end but I will keep this here until community remix fixes it
+-- if communityRemix then 
+--     communityRemix:AddPriorityCallback (ModCallbacks.MC_EVALUATE_CACHE, CallbackPriority.LATE, function(self, p, flag)
+--         if flag == CacheFlag.CACHE_FAMILIARS then
+--             local numFamiliars = p:GetTrinketMultiplier(TrinketType.TRINKET_INFANTICIDE) + p:GetEffects():GetTrinketEffectNum(TrinketType.TRINKET_INFANTICIDE)
+--              + math.min(p:GetCollectibleNum(CollectibleType.COLLECTIBLE_KNIFE_PIECE_1), p:GetCollectibleNum(CollectibleType.COLLECTIBLE_KNIFE_PIECE_2))
            
-            p:CheckFamiliar(
-                FamiliarVariant.KNIFE_FULL,
-                numFamiliars,
-                p:GetTrinketRNG(TrinketType.TRINKET_INFANTICIDE)
-            )
-        end
-    end)    
-end
+--             p:CheckFamiliar(
+--                 FamiliarVariant.KNIFE_FULL,
+--                 numFamiliars,
+--                 p:GetTrinketRNG(TrinketType.TRINKET_INFANTICIDE)
+--             )
+--         end
+--     end)    
+-- end
 
 -- soundtrack menu support
 if SoundtrackSongList then

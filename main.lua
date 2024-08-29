@@ -950,8 +950,7 @@ else
         local greed_enabled = tostring(GODMODE.save_manager.get_config("GMEnable","true")) == "true"
 
         if GODMODE.util.is_valid_enemy(ent,true) and ((GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and hard_enabled) or (GODMODE.game.Difficulty == Difficulty.DIFFICULTY_GREEDIER and greed_enabled)) then
-            local percent = GODMODE.util.get_health_scale(ent, 1)
-            local percent2 = GODMODE.util.get_health_scale(ent, 2)
+            local percent = GODMODE.util.get_health_scale(ent, tonumber(GODMODE.save_manager.get_config("HPScaleMode","2")))
 
             ent.MaxHitPoints = math.floor(ent.MaxHitPoints * percent)
             ent.HitPoints = ent.MaxHitPoints
@@ -997,7 +996,7 @@ else
         end
 
         if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" and GODMODE.armor_blacklist.story_bosses[ent.Type] ~= nil then 
-            ent.HitPoints = ent.HitPoints + math.min(1000,(GODMODE.util.get_basic_dps(nil) / 3.5) * 100)
+            ent.HitPoints = ent.HitPoints + math.min(tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0")),(GODMODE.util.get_basic_dps(nil) / 3.5) * 100)
             ent.MaxHitPoints = ent.HitPoints
         end
     end
@@ -1175,7 +1174,11 @@ else
             end
         end
 
-        if GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" and GODMODE.save_manager.get_data("CorrectionPortalSpawned","false") == "false" and GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 then 
+        if GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" 
+            and GODMODE.save_manager.get_data("CorrectionPortalSpawned","false") == "false" 
+            and ((GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1)
+            or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) then 
+
             GODMODE.log("GOTO CORRECTION",true)
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
                 GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,-32))), Vector.Zero, nil)
@@ -1298,9 +1301,9 @@ else
                 GODMODE.util.macro_on_grid(GridEntityType.GRID_TRAPDOOR,-1,function(grident,ind,pos) 
                     GODMODE.room:RemoveGridEntity(ind,0,true)
                     grident:Update()
-
-                    Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,Card.CARD_FOOL,pos,Vector.Zero,nil)
                 end)
+
+                Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()), Vector.Zero, nil)
             elseif room:GetType() == RoomType.ROOM_BOSS then
                 if not StageAPI.InExtraRoom() then 
                     StageAPI.SetRoomFromList(GODMODE.fallen_light_entrance, true, false, true, room:GetDecorationSeed(), room:GetRoomShape(), false)
@@ -1596,6 +1599,13 @@ else
             end)
         end
 
+        -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
+        if room:IsClear() and room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true then 
+            if GODMODE.save_manager.get_config("DehazardBossRooms","true") == "true" then 
+                GODMODE.util.dehazard_room()
+            end
+        end
+
         -- resprite secret trapdoor to match destination for fruit cellar
         if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage and StageAPI.GetCurrentStage() and StageAPI.GetCurrentStage().Name == "FruitCellar" then
             if room:GetType() == RoomType.ROOM_SECRET_EXIT or room:GetType() == RoomType.ROOM_BOSS then
@@ -1640,6 +1650,13 @@ else
         if level:GetStage() == LevelStage.STAGE5 and GODMODE.is_at_palace and room:GetType() == RoomType.ROOM_BOSS and GODMODE.util.total_item_count(GODMODE.registry.items.blood_key) > 0 then --palace entrance!
             local portal = Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()+Vector(-64,0)),Vector.Zero,nil)
             portal:Update()
+        end
+
+        -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
+        if room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true then 
+            if GODMODE.save_manager.get_config("DehazardBossRooms","true") == "true" then 
+                GODMODE.util.dehazard_room()
+            end
         end
 
         local room_data = GODMODE.level:GetCurrentRoomDesc()
@@ -1687,6 +1704,7 @@ else
                 end
             end
         end
+
 
         if room:GetType() == RoomType.ROOM_DEFAULT then
             if GODMODE.util.has_curse(GODMODE.registry.blessings.fortitude,true) then

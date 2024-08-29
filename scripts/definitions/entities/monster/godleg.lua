@@ -60,6 +60,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 	if sprite:IsEventTriggered("Explode") then
 		GODMODE.game:ShakeScreen(5)
 		GODMODE.game:BombExplosionEffects(ent.Position,10.0,0,Color(1,1,1,1,0,0,0),ent,1.0,false,true)
+		ent.I1 = 1
 	end
 end
 
@@ -68,6 +69,14 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 		(flags & DamageFlag.DAMAGE_EXPLOSION == DamageFlag.DAMAGE_EXPLOSION and 
 			(entsrc.Entity and entsrc.Entity.SpawnerEntity and entsrc.Entity.SpawnerEntity.Type ~= 1 or not (entsrc.Entity and entsrc.Entity.SpawnerEntity) and entsrc.Type ~= 1)) then
 		return false
+	end
+end
+
+-- explode if no attacks happened, prevent softlocks!
+monster.npc_kill = function(self,ent)
+	if ent:ToNPC() and ent:ToNPC().I1 ~= 1 then 
+		GODMODE.game:ShakeScreen(5)
+		GODMODE.game:BombExplosionEffects(ent.Position,10.0,0,Color(1,1,1,1,0,0,0),ent,1.0,false,true)	
 	end
 end
 

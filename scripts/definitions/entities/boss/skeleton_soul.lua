@@ -268,7 +268,7 @@ monster.rewards = function(self,ent)
 		local count = GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_1) * 3 
 		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_2) * 2 
 		+ GODMODE.util.total_item_count(GODMODE.registry.items.vessel_of_purity_3) * 1
-
+	
 		for i=1,count+1 do
 			GODMODE.achievements.unlock_sign_buff()
 		end

@@ -108,7 +108,7 @@ local attacks = {
     [0] = {
         { -- holy orders
             id = 0, anim = "Attack01In", anim2 = "Attack01Loop", anim3 = "Attack01Out", --dev_name = "lasers",
-            start_atk_chance = -1,
+            start_atk_chance = -3,
             -- specific stats for this attack's variants
             laser_stats = {
                 { --vertical/horizontal lasers

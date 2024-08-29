@@ -124,6 +124,7 @@ reg.trinkets = {
     shattered_moonrock = Isaac.GetTrinketIdByName("Shattered Moonrock"),
     cracked_nazar = Isaac.GetTrinketIdByName("Cracked Nazar"),
     white_candle = Isaac.GetTrinketIdByName("White Candle"),
+    bone_feather = Isaac.GetTrinketIdByName("Bone Feather"),
 }
 
 reg.entities = {

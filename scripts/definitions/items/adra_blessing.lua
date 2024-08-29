@@ -25,10 +25,6 @@ item.eval_cache = function(self, player,cache,data)
         player.Luck = player.Luck + 5
     end
 
-    if GODMODE.util.is_start_of_run() then 
-        GODMODE.save_manager.set_player_data(player,"AdraUses","0",true)
-    end
-
     local add = tonumber(GODMODE.save_manager.get_player_data(player,"AdraUses","0"))
 
     if player:GetPlayerType() ~= GODMODE.registry.players.xaphan then 

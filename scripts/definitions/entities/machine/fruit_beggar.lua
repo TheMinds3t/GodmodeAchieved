@@ -73,7 +73,7 @@ monster.npc_update = function(self, ent, data, sprite)
             data.rewards = -1
             local item = GODMODE.itempools.get_from_pool("fruit_beggar",ent:GetDropRNG())
             Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,item,GODMODE.room:FindFreePickupSpawnPosition(ent.Position+Vector(0,64)),Vector.Zero,nil)
-        else -- 1-2 fruit!
+        else -- 2-3 fruit!
             for i = 0, ent:GetDropRNG():RandomInt(2) + 1 do 
                 local speed = 2
                 Isaac.Spawn(GODMODE.registry.entities.fruit.type,GODMODE.registry.entities.fruit.variant,0,ent.Position,(RandomVector()*speed+Vector(0,speed*1.5)):Resized(ent:GetDropRNG():RandomFloat()*3+2),nil)    

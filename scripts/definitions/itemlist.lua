@@ -108,6 +108,7 @@ table.insert(ret, include("scripts.definitions.items.trinkets.cracked_nazar"))
 table.insert(ret, include("scripts.definitions.items.trinkets.white_candle"))
 table.insert(ret, include("scripts.definitions.items.trinkets.trickle_key"))
 table.insert(ret, include("scripts.definitions.items.trinkets.glitched_penny"))
+table.insert(ret, include("scripts.definitions.items.trinkets.bone_feather"))
 
 table.insert(ret, include("scripts.definitions.items.transformations.celeste"))
 table.insert(ret, include("scripts.definitions.items.transformations.cyborg"))

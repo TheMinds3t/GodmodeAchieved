@@ -535,20 +535,24 @@ util.get_max_charge = function(item)
 	end
 end
 
-util.macro_on_enemies = function(spawner,type,var,subtype, funct, predicate)
-	type = type or -1
+util.macro_on_enemies = function(spawner,ent_type,var, subtype, funct, predicate, search_all)
+	ent_type = ent_type or -1
 	var = var or -1
 	subtype = subtype or -1
-	predicate = predicate or function(ent) return true end
+	predicate = predicate or function(ent) 
+		return true
+	end
 
-	local ents = Isaac.FindByType(type,var,subtype,true,false)
+	local ents = (ent_type == -1 or search_all) and Isaac.GetRoomEntities() or Isaac.FindByType(ent_type,var,subtype,true,false)
 
 	for i=1,#ents do 
 		local enemy = ents[i]
 		if enemy then
-			if (spawner == nil or ((enemy.SpawnerEntity ~= nil and GetPtrHash(enemy.SpawnerEntity) == GetPtrHash(spawner)) or 
-				(enemy.Parent ~= nil and GetPtrHash(enemy.Parent) == GetPtrHash(spawner)))) and predicate(enemy) == true then
-				funct(enemy)
+			local spawner_flag = (spawner == nil or ((enemy.SpawnerEntity ~= nil and GetPtrHash(enemy.SpawnerEntity) == GetPtrHash(spawner)) or 
+			(enemy.Parent ~= nil and GetPtrHash(enemy.Parent) == GetPtrHash(spawner))))
+			local type_flag = (ent_type == -1 or enemy.Type == ent_type) and (var == -1 or enemy.Variant == var) and (subtype == -1 or enemy.SubType == subtype)
+			if spawner_flag and predicate(enemy) == true and type_flag then
+					funct(enemy)
 			end
 		end
 	end
@@ -1314,6 +1318,46 @@ util.for_each = function(list, transform)
 	end
 
 	return ret 
+end
+
+util.hazard_grid_types = {
+	[GridEntityType.GRID_ROCK_SPIKED] = GridEntityType.GRID_ROCK,
+	[GridEntityType.GRID_SPIKES_ONOFF] = GridEntityType.GRID_NULL,
+	[GridEntityType.GRID_SPIKES] = GridEntityType.GRID_NULL,
+}
+
+util.hazard_ent_types = {
+	[EntityType.ENTITY_CONSTANT_STONE_SHOOTER] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
+	[EntityType.ENTITY_STONEHEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
+	[EntityType.ENTITY_BRIMSTONE_HEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
+	[EntityType.ENTITY_SPIKEBALL] = function(ent) ent:Die() end,
+	[EntityType.ENTITY_BALL_AND_CHAIN] = function(ent) ent:Remove() end,
+}
+
+util.dehazard_room = function() 
+	if GODMODE.validate_rgon() then 
+		Isaac.ClearBossHazards(true)
+	end
+
+	for targ_type,rep_type in pairs(util.hazard_grid_types) do 
+		GODMODE.util.macro_on_grid(targ_type,-1,function(grident,ind,pos) 
+			GODMODE.room:RemoveGridEntity(ind,0,true)
+			grident:Update()	
+
+			if rep_type ~= GridEntityType.GRID_NULL then 
+				GODMODE.room:SpawnGridEntity(ind,rep_type,grident:GetRNG():GetSeed(),0)
+			end
+
+			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pos, Vector.Zero, nil)
+		end)
+	end
+
+	for targ_type,rep_func in pairs(util.hazard_ent_types) do 
+		GODMODE.util.macro_on_enemies(nil,targ_type,-1,-1,function(ent) 
+			rep_func(ent)
+			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ent.Position, Vector.Zero, nil)
+		end)
+	end
 end
 
 return util

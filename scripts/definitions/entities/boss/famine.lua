@@ -111,6 +111,7 @@ monster.npc_init = function(self,ent)
     if ent.Type == monster.type and ent.Variant == 0 then 
         if StageAPI ~= nil and StageAPI.Loaded and StageAPI.GetCurrentStage() ~= nil and StageAPI.GetCurrentStage().Name == "FruitCellar" or ent:GetDropRNG():RandomFloat() < tonumber(GODMODE.save_manager.get_config("AltHorsemanChance","0.2")) then 
             ent:Morph(ent.Type,monster.variant,0,-1)    
+            ent:SetColor(Color(1,1,1,1),1,1,false,false)
         end
     end
 end

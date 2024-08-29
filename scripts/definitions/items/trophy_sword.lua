@@ -51,7 +51,7 @@ item.new_level = function(self)
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
 		local slot = GODMODE.util.get_active_slot(player, item.instance)
 		if player:GetActiveItem(slot) == item.instance then
-			if player:GetActiveCharge(slot) < 2 then 
+			if player:GetActiveCharge(slot) < 2 or player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BATTERY) then 
 				player:SetActiveCharge(player:GetActiveCharge() + 1, slot)
 			end
 		end

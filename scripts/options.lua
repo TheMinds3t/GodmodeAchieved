@@ -461,6 +461,18 @@ options.layout = {
                 load = function()
                     return tonumber(GODMODE.save_manager.get_config("HPScaleMode","1"))
                 end,
+                displayif = function(button, item, menuObj)
+                    local ret = false 
+                    if item and item.buttons then
+                        for _, btn in ipairs(item.buttons) do
+                            if (btn.str == 'hard hp scaling' or btn.str == 'greedier hp scaling') and btn.setting == 2 then
+                                ret = true 
+                            end
+                        end
+                    end
+
+                    return ret
+                end,
                 store = function(var)
                     GODMODE.save_manager.set_config("HPScaleMode",var,true)
                 end,
@@ -632,6 +644,7 @@ options.layout = {
 
                 tooltip = {strset = {'does enemy', 'health scale', 'with', 'victory laps', '(higher the', 'deeper you', 'are)'}}
             },
+            gap,
             {
                 str = 'hp scale ceiling',
                 min = 0, max = 10000, increment = 50, pref="<= ", setting = 3000,
@@ -645,6 +658,47 @@ options.layout = {
                 end,
 
                 tooltip = {strset = {'if enemy/boss','has more hp','than this,','don\'t scale hp'}}
+            },
+            gap,
+            {
+                str = 'story boss hp buff',
+                choices = bool_choices, setting = 2,
+                variable = 'GodmodeVanillaStoryHPBuff',
+
+                load = function()
+                    return str_bool_map[GODMODE.save_manager.get_config("VanillaStoryHPBuff","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("VanillaStoryHPBuff",bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'do vanilla','story bosses','get similar,','scaling hp','buff to','godmode','story bosses?'}}
+            },
+            {
+                str = 'max story hp buff',
+                min = 0, max = 10000, increment = 50, suf=" hp", setting = 1000,
+
+                variable = 'GodmodeVanillaStoryHPBuffCap',
+                displayif = function(button, item, menuObj)
+                    if item and item.buttons then
+                        for _, btn in ipairs(item.buttons) do
+                            if btn.str == 'story boss hp buff' and btn.setting == 1 then
+                                return false
+                            end
+                        end
+                    end
+
+                    return true
+                end,
+                
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("VanillaStoryHPBuffCap",var,true)
+                end,
+
+                tooltip = {strset = {'how much','extra health','can vanilla','story bosses', 'get?','(seperate','from hp','scaling)'}}
             },
 
             gap,
@@ -951,20 +1005,21 @@ options.layout = {
 
                 tooltip = {strset = {'t. isaac unlock','-----------','what chance','for','chest infestor','to spawn','per chest?'}}
             },
+
             gap,
             {
-                str = 'story boss hp buff',
+                str = 'safe boss rooms',
                 choices = bool_choices, setting = 2,
-                variable = 'GodmodeVanillaStoryHPBuff',
+                variable = 'GodmodeDehazardBossRooms',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("VanillaStoryHPBuff","true")] or 2
+                    return str_bool_map[GODMODE.save_manager.get_config("DehazardBossRooms","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("VanillaStoryHPBuff",bool_map[var],true)
+                    GODMODE.save_manager.set_config("DehazardBossRooms",bool_map[var],true)
                 end,
 
-                tooltip = {strset = {'do vanilla','story bosses','get similar,','scaling hp','buff to','godmode','story bosses?'}}
+                tooltip = {strset = {'do hazards','get cleared','after beating','a boss','or miniboss?'}}
             },
             gap,
             -- -- new autofire mechanic!

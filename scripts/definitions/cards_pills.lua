@@ -158,6 +158,8 @@ cards_pills.card_actions = {
         choice_params = {chance=0.0,playing=false,runes=false,only_runes=false},
         use_effect = function(card,player,flags) 
             local killed = false 
+            GODMODE.log("soc used!",true)
+
             GODMODE.util.macro_on_enemies(nil,GODMODE.registry.entities.call_of_the_void.type,GODMODE.registry.entities.call_of_the_void.variant,-1,function(cotv)
                 GODMODE.log("checking? sub="..cotv.SubType,true)
                 if cotv.SubType > 0 then 
@@ -167,7 +169,7 @@ cards_pills.card_actions = {
                     killed = true
                     GODMODE.log("found one! sub="..cotv.SubType,true)
                 end
-            end)
+            end, nil, true)
 
             if killed then 
                 GODMODE.save_manager.set_player_data(player,"SOCPenalty",tonumber(GODMODE.save_manager.get_player_data(player,"SOCPenalty","0"))+1,true)

@@ -135,4 +135,5 @@
 	<trinket cache="damage speed firedelay shotspeed speed luck" description="The void grows stronger" gfx="observatory/moonrock.png" name="Shattered Moonrock" />
 	<trinket description="Curse of immunity?" gfx="observatory/nazar.png" name="Cracked Nazar" />
 	<trinket description="Blessing of immunity" gfx="observatory/white_candle.png" name="White Candle" />
+	<trinket description="Calling the void" gfx="observatory/bone_feather.png" name="Bone Feather" />
 </items>

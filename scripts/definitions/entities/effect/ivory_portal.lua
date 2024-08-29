@@ -5,7 +5,8 @@ monster.variant = GODMODE.registry.entities.ivory_portal.variant
 
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
-        if GODMODE.is_at_palace and (not GODMODE.is_at_palace() or GODMODE.room:GetType() == RoomType.ROOM_ERROR) and ent.SubType == 0 then 
+        if GODMODE.is_at_palace and (not GODMODE.is_at_palace() or GODMODE.room:GetType() == RoomType.ROOM_ERROR) and ent.SubType == 0 
+            or ent.SubType == 1 and GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather, true) > 0 then 
             data.persistent_state = GODMODE.persistent_state.single_room
         end
 
@@ -23,7 +24,6 @@ monster.npc_update = function(self, ent, data, sprite)
     ent.Velocity = (GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(ent.Position))) - ent.Position
     
     if ent.SubType == 1 and data.player ~= nil then 
-
         if data.player:IsExtraAnimationFinished() then 
             Isaac.ExecuteCommand("goto s.barren.550")
             ent:Remove()    

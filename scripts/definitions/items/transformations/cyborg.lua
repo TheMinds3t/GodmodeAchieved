@@ -43,7 +43,7 @@ transform.eval_cache = function(self, player,cache,data)
 end
 
 transform.use_item = function(self, coll,rng,player,flags,slot,var_data)
-	if has_cyborg(player) then 
+	if has_cyborg(player) and flags & UseFlags.USE_OWNED == UseFlags.USE_OWNED then 
 		local config = Isaac.GetItemConfig():GetCollectible(coll)
 
 		if config.MaxCharges > 0 then
@@ -63,7 +63,7 @@ transform.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	end
 end
 
-transform.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
+local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
 	if enthit:ToPlayer() then 
 		local player = enthit:ToPlayer()
 		local data = GODMODE.get_ent_data(player)
@@ -74,6 +74,12 @@ transform.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 			end
 		end
 	end
+end
+
+if GODMODE.validate_rgon() then 
+    transform.pre_player_hit = hit_func
+else
+    transform.npc_hit = hit_func
 end
 
 return transform

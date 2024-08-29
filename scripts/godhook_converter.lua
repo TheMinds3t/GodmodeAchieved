@@ -3,10 +3,13 @@ local godhook = {}
 -- If you desire, you can add items or monsters to the lists "GODMODE.items" or "GODMODE.monsters" and call GODMODE.godhooks.register_items_and_ents() and it should incorporate custom classes!
 
 --connects functions from files to a singular string to function dictionary
-godhook.hook = {monsters={},monster_keys={},bypass_monster_keys={},items={},item_keys={},hooks_added={}}
-godhook.hook.monsters = {}
-godhook.hook.items = {}
-godhook.effect_data_list = {}
+local reset_hooks = function() 
+    godhook.hook = {monsters={},monster_keys={},bypass_monster_keys={},items={},item_keys={},hooks_added={}}
+    godhook.effect_data_list = {}
+    collectgarbage("collect")
+end
+
+reset_hooks()
 
 --[[
     example of how data is stored:
@@ -1312,8 +1315,13 @@ godhook.hook_list = {
         godhook.add_hook(funcname,object,ModCallbacks.MC_INPUT_ACTION)
     end,
 
+    -- internal hooks
+    -- called on entities when inside of the delirium room, if it exists allows to apply a delirium skin
+    ["set_delirium_visuals"] = function(funcname, object)
+        godhook.add_hook(funcname,object,nil)
+    end,
+
     --custom hooks
-    ["set_delirium_visuals"] = true, -- called on entities when inside of the delirium room, if it exists allows to apply a delirium skin
     ["first_level"] = true, --called for the first level of the run, use to init variables. Takes no return values. | first_level()
     ["on_item_pickup"] = true, --just for when items are grabbed, doesn't tell what item. Takes no return values. | on_item_pickup(player)
     ["data_init"] = true, --when godmode data is inited this is called, set default data values here. Takes no return values. | data_init(ent,data)
@@ -1321,7 +1329,6 @@ godhook.hook_list = {
     ["pre_godmode_restart"] = true, --godmode trinket, pre rewind. Takes no return values. | pre_godmode_restart()
     ["post_godmode_restart"] = true, --godmode trinket, post rewind. Takes no return values. | post_godmode_restart()
     ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance)
-
 
     -- RGON callbacks
     ["pre_player_hit"] = function(funcname, object)
@@ -1376,9 +1383,7 @@ local function registerObject(object)
 end
 
 function godhook.register_items_and_ents()
-    godhook.hook.monsters = {}
-    godhook.hook.items = {}
-    godhook.hook.bypass_monster_keys = {}
+    reset_hooks()
 
     for _,item in pairs(GODMODE.items) do
         registerObject(item)
