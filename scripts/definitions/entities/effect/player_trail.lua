@@ -52,7 +52,7 @@ monster.effect_update = function(self, ent, data, sprite)
         local spawner_sprite = spawner:GetSprite() 
         sprite:SetFrame(spawner_sprite:GetAnimation(),spawner_sprite:GetFrame())
         sprite:SetOverlayFrame(spawner_sprite:GetOverlayAnimation(),spawner_sprite:GetOverlayFrame())
-        GODMODE.log("new spritesheet is "..spawner_sprite:GetFilename().." playing \'"..spawner_sprite:GetAnimation().."\'!",true)
+        -- GODMODE.log("new spritesheet is "..spawner_sprite:GetFilename().." playing \'"..spawner_sprite:GetAnimation().."\'!",true)
     end
 
     local dist = (ent.Position - spawner.Position):Length() / 4

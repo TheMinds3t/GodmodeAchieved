@@ -96,7 +96,7 @@ monster.npc_update = function(self, ent, data, sprite)
         
         if (data.phase or 0) ~= 2 then
             if sprite:IsPlaying("Idle") and sprite:GetFrame() == 49 then
-                if ent:GetDropRNG():RandomFloat() < 0.6 or data.attack_type == -1 then
+                if ent:GetDropRNG():RandomFloat() < 0.6 or data.attack_type == -1 or ent.HitPoints / ent.MaxHitPoints < 0.5 then
                     attempt_play(data,ent,"AttackUp")           
                     data.grid_map = {}
                     data.attack_type = math.max(data.attack_type,0)
@@ -267,7 +267,7 @@ monster.npc_update = function(self, ent, data, sprite)
             end
         
             if sprite:IsPlaying("IdleDown") and sprite:GetFrame() == 49 then
-                if ent:GetDropRNG():RandomFloat() < 0.75 - (0.33 * (data.attack_down_count or 0)) or (data.attack_down_count or 0) == 0 then
+                if ent.HitPoints / ent.MaxHitPoints >= 0.5 and ent:GetDropRNG():RandomFloat() < 0.75 - (0.33 * (data.attack_down_count or 0)) or (data.attack_down_count or 0) == 0 then
                     sprite:Play("AttackDown", true)     
                     data.attack_down_count = (data.attack_down_count or 0) + 1       
                 else

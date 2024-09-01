@@ -257,7 +257,7 @@ players[GODMODE.registry.players.t_xaphan] = {
                 end
             end
 
-            if max_flag then 
+            if max_flag and data.second_sprite then 
                 -- local shadow = Isaac.Spawn(GODMODE.registry.entities.player_trail_fx.type, GODMODE.registry.entities.player_trail_fx.variant, 0, player.Position+RandomVector()*player.Size, Vector.Zero, player):ToEffect()
                 -- shadow.State = self.shadow_life
                 -- shadow:Update()
@@ -270,8 +270,7 @@ players[GODMODE.registry.players.t_xaphan] = {
                 shadow:GetSprite():Load(data.second_sprite:GetFilename(),true)
                 shadow:GetSprite():SetFrame(player:GetSprite():GetAnimation(),player:GetSprite():GetFrame())
                 shadow.DepthOffset = -100
-                table.insert(data.xaphan_trail, shadow)        
-
+                table.insert(data.xaphan_trail, shadow)
             end
         end
     end,

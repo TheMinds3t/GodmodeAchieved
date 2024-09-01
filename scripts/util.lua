@@ -440,14 +440,14 @@ end
 util.add_tears = function(player, firedelay, val, ignore_cap)
     local tears = 30 / (firedelay + 1)
 	local cur_mult_val = val
+	local player_tear_mult = util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val) or nil 
 
 	--scales tears multipliers
 	for item,mult in pairs(util.tear_mods) do
 		if player:HasCollectible(item) then 
 			local scaled_val = mult(firedelay, val)
 			if scaled_val and cur_mult_val > scaled_val 
-				and (not util.player_tear_mults[player.SubType] or 
-				util.player_tear_mults[player.SubType] and util.player_tear_mults[player.SubType](firedelay, val).ignore ~= nil and util.player_tear_mults[player.SubType].ignore ~= item) then 
+				and (player_tear_mult == nil or player_tear_mult.ignore ~= nil and player_tear_mult.ignore ~= item) then 
 				cur_mult_val = scaled_val
 			end
 		end

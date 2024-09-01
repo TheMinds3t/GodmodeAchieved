@@ -1651,6 +1651,7 @@ else
             local portal = Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()+Vector(-64,0)),Vector.Zero,nil)
             portal:Update()
         end
+        local room_data = GODMODE.level:GetCurrentRoomDesc()
 
         -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
         if room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true then 
@@ -1659,7 +1660,6 @@ else
             end
         end
 
-        local room_data = GODMODE.level:GetCurrentRoomDesc()
         if (room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true) and room_data.Data.SubType ~= 15 then --15 = Krampus
             local pos = room:FindFreePickupSpawnPosition(room:GetCenterPos())
             local rewards = {

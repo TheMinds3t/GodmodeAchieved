@@ -224,7 +224,7 @@ item.tear_fire = function(self, tear)
 				end
 
 				data.cough_disablerecursion = false
-				data.cough_mod_level = data.cough_mod_level + 0.25
+				data.cough_mod_level = data.cough_mod_level + 0.125
 				data.cough_mod_level = math.min(data.cough_mod_level, 1.3)
 				GODMODE.sfx:Play(GODMODE.registry.sounds.regular_cough,Options.SFXVolume * 1.8,1,false,1.0+player:GetCollectibleRNG(item.instance):RandomFloat()*0.125)
 				player:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED | CacheFlag.CACHE_RANGE | CacheFlag.CACHE_DAMAGE) 
