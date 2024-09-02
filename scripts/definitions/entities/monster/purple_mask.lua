@@ -33,11 +33,11 @@ monster.npc_update = function(self, ent, data, sprite)
             end
 
             ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
-            ent.Velocity = ((data.heart.Position + data.targ_pos) - ent.Position) / 6.0
-
+            ent.Velocity = (((data.heart or ent).Position + data.targ_pos) - ent.Position) / 6.0
+ 
             local dir = ""
-            local x = (ent.Position.X - data.heart.Position.X)
-            local y = ent.Position.Y - data.heart.Position.Y 
+            local x = ent.Position.X - (data.heart or ent).Position.X
+            local y = ent.Position.Y - (data.heart or ent).Position.Y 
             if math.abs(x) > math.abs(y) then if x < 0 then dir = "Left" else dir = "Right" end else if y < 0 then dir = "Up" else dir = "Down" end end
             sprite:Play("Mask"..dir,false)
         end
