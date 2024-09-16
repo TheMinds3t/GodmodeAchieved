@@ -87,6 +87,10 @@ monster.pickup_update = function(self, pickup, data, sprite)
 	data.display_time = math.max(0,math.min(monster.rev_desc_time,(data.display_time or 0) + (data.display_mod or 0)))
 	data.col_cooldown = math.max(0,(data.col_cooldown or 0) - 1)
 
+	if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+	end
+
 	if data.display_time >= monster.rev_desc_time then data.display_mod = -1 end 
 	if data.display_time <= 0 then data.display_mod = 0 pickup.DepthOffset = 0 else pickup.DepthOffset = 1000+data.display_time*100 end
 end

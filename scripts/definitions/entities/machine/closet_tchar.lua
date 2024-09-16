@@ -77,6 +77,10 @@ monster.npc_update = function(self, ent, data, sprite)
         
     end
 
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+	end
+
     if sprite:IsEventTriggered("Unlock") then 
         GODMODE.achievements.unlock_character(GODMODE.registry.closet_chars[ent.SubType].unlock)
         Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,ent.Position,Vector.Zero,ent)

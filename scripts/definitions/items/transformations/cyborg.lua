@@ -43,7 +43,7 @@ transform.eval_cache = function(self, player,cache,data)
 end
 
 transform.use_item = function(self, coll,rng,player,flags,slot,var_data)
-	if has_cyborg(player) and flags & UseFlags.USE_OWNED == UseFlags.USE_OWNED then 
+	if has_cyborg(player) and coll == player:GetActiveItem(slot) then 
 		local config = Isaac.GetItemConfig():GetCollectible(coll)
 
 		if config.MaxCharges > 0 then

@@ -72,14 +72,14 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 
     if data.time % 30 == 0 then 
         local new_times = {}
-        for ind,time in pairs(data.tear_time) do
+        for ind,time in pairs(data.tear_time or {}) do
             if time ~= nil then
                 new_times[ind] = time
             end
         end
         data.tear_time = new_times 
         local new_tears = {}
-        for ind,tear in pairs(data.tears) do
+        for ind,tear in pairs(data.tears or {}) do
             if tear ~= nil and not tear:IsDead() then
                 new_tears[ind] = tear
             end

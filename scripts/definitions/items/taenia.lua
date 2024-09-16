@@ -18,7 +18,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 
 	if cache == CacheFlag.CACHE_RANGE then
-		player.TearRange = player.TearRange + 5
+		player.TearRange = player.TearRange + GODMODE.util.grid_size * 5
 	end
 
 	if cache == CacheFlag.CACHE_SHOTSPEED then

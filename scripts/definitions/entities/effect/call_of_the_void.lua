@@ -150,7 +150,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.I1 = ent.I1 + 1
 
                 -- valid attack time?
-                if ent:GetDropRNG():RandomFloat() > 2 - ent.I1 * 0.15 and GODMODE.room:IsClear() and not GODMODE.room:HasCurseMist() and (data.pause or -1) < 0 and (data.opacity or 0.8) >= 0.5 then 
+                if ent:GetDropRNG():RandomFloat() > 1.25 - ent.I1 * 0.15 and GODMODE.room:IsClear() and not GODMODE.room:HasCurseMist() and (data.pause or -1) < 0 and (data.opacity or 0.8) >= 0.5 then 
                     ent.I1 = 0
                     if player:ToPlayer() and player:ToPlayer():IsExtraAnimationFinished() or not player:ToPlayer() then
                         local max = (data.power or 0)

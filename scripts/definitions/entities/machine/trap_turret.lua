@@ -53,8 +53,8 @@ monster.npc_update = function(self, ent, data, sprite)
 		ent:Remove()
 	end
 
-	if not ent:HasEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS) then 
-		ent:AddEntityFlags(EntityFlag.FLAG_NO_STATUS_EFFECTS)
+	if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
 	end
 end
 

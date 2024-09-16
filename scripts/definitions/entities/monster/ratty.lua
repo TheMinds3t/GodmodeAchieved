@@ -9,7 +9,7 @@ local pickup_predicate = function(ent)
     and ent.SpriteOffset:Length() == 0
 end
 local pickup_off = Vector(0,-10)
-local rat_tunnel_dist = 224
+local rat_tunnel_dist = 128
 
 monster.npc_update = function(self, ent, data, sprite)
     if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end	

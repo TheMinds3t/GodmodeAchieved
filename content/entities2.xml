@@ -622,7 +622,7 @@
         <gibs amount="18" blood="1" bone="1" eye="0" gut="1" large="1"/>
     </entity>
 
-    <entity anm2path="131_bathemo_swarm.anm2" baseHP="200" boss="1" champion="0" collisionDamage="1" collisionMass="999" collisionRadius="48" friction="1" id="700" name="Bathemo Swarm" numGridCollisionPoints="12" shadowSize="48" stageHP="20" variant="131" portrait="67" gridCollision="walls">
+    <entity anm2path="131_bathemo_swarm.anm2" baseHP="275" boss="1" champion="0" collisionDamage="1" collisionMass="999" collisionRadius="48" friction="1" id="700" name="Bathemo Swarm" numGridCollisionPoints="12" shadowSize="48" stageHP="20" variant="131" portrait="67" gridCollision="walls">
         <gibs amount="32" blood="1" bone="1" eye="1" gut="1" large="1" />
     </entity>
 

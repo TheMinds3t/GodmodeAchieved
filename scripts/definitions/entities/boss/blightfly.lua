@@ -86,7 +86,7 @@ end
 
 monster.npc_init = function(self, ent)
     if GODMODE.level:GetAbsoluteStage() == LevelStage.STAGE4_1 and GODMODE.level:GetStageType() == StageType.STAGETYPE_REPENTANCE then 
-        Isaac.Spawn(EntityType.ENTITY_ENVIRONMENT,1,10,ent.Position,Vector.Zero,nil) --disable water
+        -- Isaac.Spawn(EntityType.ENTITY_ENVIRONMENT,1,10,ent.Position,Vector.Zero,nil) --disable water
 
         if GODMODE.validate_rgon() then 
             GODMODE.room:SetWaterAmount(0.0)
@@ -336,6 +336,7 @@ monster.npc_update = function(self, ent, data, sprite)
             blood.DepthOffset = 100
             local bubble = Isaac.Spawn(GODMODE.registry.entities.toxic_bubble_l.type,GODMODE.registry.entities.toxic_bubble_l.variant,GODMODE.registry.entities.toxic_bubble_l.subtype,ent.Position+head_offset(ent),Vector(0,4),ent)
             bubble:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+            bubble:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags() & ~EntityFlag.FLAG_NO_STATUS_EFFECTS & ~EntityFlag.FLAG_NO_FLASH_ON_DAMAGE)
             bubble:Update()
             bubble.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
             ent.Velocity = ent.Velocity + Vector(0,-4)

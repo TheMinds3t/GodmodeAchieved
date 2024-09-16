@@ -45,6 +45,8 @@ local fire_tear = function(ent,ang,speed,scale)
         tear.FallingAccel = -(5.0/60.0)
         tear.Scale = scale
     end
+
+    return tear
 end
 
 local fire_bubble_tear = function(ent,ang,speed,size,timeout,i2)
@@ -56,12 +58,15 @@ local fire_bubble_tear = function(ent,ang,speed,size,timeout,i2)
     local tear = Isaac.Spawn(monster.type,monster.variant,size,ent.Position + vel,vel,ent)
     tear:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
     tear:ToNPC().I2 = i2
+    tear:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags() & ~EntityFlag.FLAG_NO_STATUS_EFFECTS & ~EntityFlag.FLAG_NO_FLASH_ON_DAMAGE)
 
     if timeout ~= nil then 
         GODMODE.get_ent_data(tear).timeout = timeout
     end
 
     tear:Update()
+
+    return tear
 end
 
 
@@ -108,7 +113,7 @@ monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
     ent.SplatColor = Color(0.1,0.25,0.5,0.4,0.3,0.9,1.0)
 
-    if ent.SubType == 0 then 
+    if ent.SubType == 0 then -- bubbly plum
         if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) then 
             ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             sprite:Play("Appear",true)
@@ -456,7 +461,12 @@ monster.npc_remove = function(self,ent)
                 creep(ent,scale,time)
                 if ent.SubType == 1 then 
                     for i=1,8 do 
-                        fire_tear(ent,360/8*i,8.0+GODMODE.game.Difficulty % 2 * 2,1.25)
+                        local tear = fire_tear(ent,360/8*i,6.0+GODMODE.game.Difficulty % 2 * 1.5,1.25)
+                        if tear:ToProjectile() then 
+                            tear.ProjectileFlags = tear.ProjectileFlags | ProjectileFlags.ACCELERATE 
+                        else
+                            tear.TearFlags = tear.TearFlags | TearFlags.TEAR_ACCELERATE
+                        end
                     end
                 end
             else

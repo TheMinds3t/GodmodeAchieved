@@ -95,6 +95,9 @@ monster.pickup_update = function(self, ent, data, sprite)
         end
     end
 
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+        ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+    end
     -- GODMODE.log("hi!",true)
 end
 

@@ -28,6 +28,10 @@ monster.pickup_update = function(self, ent, data, sprite)
 	if ent.DepthOffset ~= -200 then
 		ent.DepthOffset = -200
 	end	
+
+	if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+	end
 end
 
 return monster

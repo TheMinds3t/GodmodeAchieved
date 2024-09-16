@@ -17,7 +17,7 @@ item.eval_cache = function(self, player,cache,data)
 
     if tonumber(GODMODE.save_manager.get_player_data(player, "MorphineBrokens", "0")) < player:GetCollectibleNum(item.instance) then
         player:AddBrokenHearts(2)
-        GODMODE.save_manager.set_player_data(player, "MorphineBrokens", num + 1, true)
+        GODMODE.save_manager.set_player_data(player, "MorphineBrokens", player:GetCollectibleNum(item.instance), true)
     end
 
     if cache == CacheFlag.CACHE_DAMAGE then

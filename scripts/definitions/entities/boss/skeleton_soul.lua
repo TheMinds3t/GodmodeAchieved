@@ -3,8 +3,8 @@ monster.name = "The Sign"
 monster.type = GODMODE.registry.entities.the_sign.type
 monster.variant = GODMODE.registry.entities.the_sign.variant
 
--- local max_health = 2 * 60 * 30 --two minutes
-local max_health = 2 * 30 --two seconds
+local max_health = 2 * 60 * 30 --two minutes
+-- local max_health = 2 * 30 --two seconds
 local max_timeout = 101 --used to penalize the player for standing still
 local cam_damp = 3
 
@@ -152,6 +152,16 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 			data.death_time = data.death_time - 1
 			if sprite:IsPlaying("Idle4") and data.death_time <= -120 then
 				sprite:Play("Death", true)
+
+				if GODMODE.validate_rgon() then 
+					Isaac.ClearBossHazards(true)
+				end
+
+				--destroy projectiles
+				GODMODE.util.macro_on_enemies(-1,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
+					proj.ProjectileFlags = proj.ProjectileFlags & ~ProjectileFlags.EXPLODE 
+					proj:Die() 
+				end)
 			end
 
 			if sprite:IsFinished("Death") then
@@ -181,7 +191,6 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 				local fall_accel = -((5.1)/60.0)
 				local used_flag = false
 				local color = Color(1,1,1,1)
-
 
 				if used_flag == false and (data.phase_count == 1 or (data.phase_count >= 2 and data.wave_type == 0)) then
 					count = 6
@@ -248,7 +257,6 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 			end
 		end
 	end
-
 
 	if GODMODE.validate_rgon() then 
 		local targ = (GODMODE.room:GetCenterPos() * 3 + player.Position * 2 + ent.Position) / 6.0

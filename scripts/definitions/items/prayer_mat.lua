@@ -12,8 +12,9 @@ item.encyc_entry = {
 item.player_update = function(self, player,data)
 	if player:HasCollectible(item.instance) then
         local diff = player:GetCollectibleNum(item.instance)
+        local prayer_used = GODMODE.save_manager.get_player_data(player,"PrayerUsed","false")
 
-        if (player.Velocity:Length() > 0.2 or data.prayer_used == "true" or GODMODE.room:IsClear()) and data.finish_anim ~= true then
+        if (player.Velocity:Length() > 0.2 or prayer_used == "true" or GODMODE.room:IsClear()) and data.finish_anim ~= true then
             diff = -1
             data.prayer_mat = math.min(data.prayer_mat or 0,5)
         end
@@ -30,8 +31,7 @@ item.player_update = function(self, player,data)
             data.finish_anim = nil
         end
 
-        data.prayer_used = GODMODE.save_manager.get_player_data(player,"PrayerUsed","false")
-        if data.prayer_glow:IsEventTriggered("Success") and data.prayer_used ~= "true" then
+        if data.prayer_glow:IsEventTriggered("Success") and prayer_used ~= "true" and diff > 0 then
             GODMODE.save_manager.set_player_data(player,"PrayerUsed","true",true)
             data.finish_anim = true
             player:AddSoulHearts(1)
@@ -42,11 +42,17 @@ item.player_update = function(self, player,data)
     end
 end
 
+item.room_rewards = function(self,rng,pos)
+    GODMODE.util.macro_on_players_that_have(item.instance,function(player) 
+        GODMODE.save_manager.set_player_data(player,"PrayerUsed","true",true)
+        GODMODE.get_ent_data(player).prayer_mat = 0
+    end)
+end
+
 item.new_room = function(self)
     GODMODE.util.macro_on_players_that_have(item.instance,function(player) 
         GODMODE.save_manager.set_player_data(player,"PrayerUsed","false",true)
         GODMODE.get_ent_data(player).prayer_mat = 0
-        GODMODE.get_ent_data(player).prayer_used = false
     end)
 end
 

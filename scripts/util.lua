@@ -22,6 +22,8 @@ util.eid_transforms = {
 	["JACK_OF_ALL_TRADES"] = "godmodeAchJackIcon", --unique icon rather than all icons
 }
 
+util.grid_size = 40.0
+
 -- For stageapi
 util.base_room_door = {
     RequireCurrent = {RoomType.ROOM_DEFAULT, RoomType.ROOM_MINIBOSS, RoomType.ROOM_SACRIFICE, RoomType.ROOM_BARREN, RoomType.ROOM_ISAACS, RoomType.ROOM_DICE, RoomType.ROOM_CHEST},
@@ -88,7 +90,7 @@ util.tearflag_mods = {
 	[TearFlags.TEAR_JACOBS] = 0.35,
 	[TearFlags.TEAR_HORN] = 0.45,
 	[TearFlags.TEAR_LASERSHOT] = 0.2,
-	[TearFlags.TEAR_HYDROBOUNCE] = 0.1,
+	[TearFlags.TEAR_HYDROBOUNCE] = 0.2,
 	[TearFlags.TEAR_BURSTSPLIT] = 0.35,
 	[TearFlags.TEAR_PUNCH] = 0.25,
 	[TearFlags.TEAR_ICE] = 0.5,
@@ -120,15 +122,15 @@ util.transform_mods = {
 }
 
 util.stat_dist = {
-	["damage"] = 15,
+	["damage"] = 20,
 	["firerate"] = 10,
-	["luck"] = 5,
+	["luck"] = 10,
 	["range"] = 4,
 	["shotspeed"] = 3,
 	["speed"] = 5,
 	["health"] = 9,
-	["tearflags"] = 5,
-	["transformation"] = 4,
+	["tearflags"] = 12,
+	["transformation"] = 12,
 	["quality"] = 15,
 }
 
@@ -147,16 +149,16 @@ util.stat_buff = {
 
 util.stat_scale = {
 	["damage"] = function(player) 
-		return math.min(util.stat_dist["damage"],player.Damage/1.5) end,
+		return math.min(util.stat_dist["damage"],player.Damage) end,
 	["firerate"] = function(player) 
 		local cur = 30 / (player.MaxFireDelay + 1)
-		local max = util.get_max_tears(player,player.MaxFireDelay)
+		local max = util.get_max_tears(player)
 
 		return math.min(util.stat_dist["firerate"],cur/max*util.stat_dist["firerate"]) end,
 	["luck"] = function(player) 
-		return math.min(util.stat_dist["luck"],player.Luck/2.0) end,
+		return math.min(util.stat_dist["luck"],player.Luck/1.25) end,
 	["range"] = function(player) 
-		return math.min(util.stat_dist["range"],player.TearRange/52.0/4) end,
+		return math.min(util.stat_dist["range"],player.TearRange/util.grid_size/2) end,
 	["shotspeed"] = function(player) 
 		return math.min(util.stat_dist["shotspeed"],player.ShotSpeed/2.0*util.stat_dist["shotspeed"]) end,
 	["speed"] = function(player) 
@@ -173,7 +175,7 @@ util.stat_scale = {
 				total = total + amt
 			end
 		end
-		return math.min(util.stat_dist["tearflags"],total) end,
+		return math.min(util.stat_dist["tearflags"],total*8) end,
 	["transformation"] = function(player)
 		local total = 0
 		for form,amt in pairs(util.transform_mods) do 
@@ -184,7 +186,7 @@ util.stat_scale = {
 				total = total + amt
 			end
 		end
-		return math.min(util.stat_dist["transformation"],total) end,
+		return math.min(util.stat_dist["transformation"],total*5) end, --total used to be 4, now is 12
 	["quality"] = function(player) 
 		local items = GODMODE.save_manager.get_player_list_data(player, "ItemsCollected", false, function(ent) return tonumber(ent) end)
 		local total_quality = 0
@@ -425,6 +427,18 @@ util.get_max_tears = function(player,firedelay)
 		end
 	end
 
+	local cur_mult_val = 1
+
+	for item,mult in pairs(util.tear_mods) do
+		if player:HasCollectible(item) then 
+			local scaled_val = mult(firedelay, 1)
+			if scaled_val and cur_mult_val > scaled_val 
+				and (player_tear_mult == nil or player_tear_mult.ignore ~= nil and player_tear_mult.ignore ~= item) then 
+				cur_mult_val = scaled_val
+			end
+		end
+	end
+
 	--cancer!
 	cap = cap + player:GetTrinketMultiplier(TrinketType.TRINKET_CANCER) * 2
 
@@ -434,7 +448,7 @@ util.get_max_tears = function(player,firedelay)
 		cap = cap * 5.5
 	end
 
-	return cap
+	return cap * cur_mult_val
 end
 
 util.add_tears = function(player, firedelay, val, ignore_cap)
@@ -833,6 +847,10 @@ util.scaling_presets = {
 			percent = 0
 		end
 
+		if GODMODE.level:GetAbsoluteStage() == 1 then 
+			return 1
+		end
+
 		return 1 + math.max(percent,0)
 	end
 }
@@ -973,7 +991,7 @@ util.is_cotv_counting = function()
 	return GODMODE.util.total_item_count(GODMODE.registry.items.a_second_thought) == 0 and room:IsClear() and not util.is_death_certificate() and
             ((((room:GetType() == RoomType.ROOM_CHALLENGE and Isaac.CountEnemies()+Isaac.CountBosses() == 0 or room:GetType() ~= RoomType.ROOM_CHALLENGE) and room:GetType() ~= RoomType.ROOM_BOSSRUSH and room:GetType() ~= RoomType.ROOM_ARCADE and room:GetType() ~= RoomType.ROOM_ISAACS) 
             and GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and (not GODMODE.is_at_palace or not GODMODE.is_at_palace()) and GODMODE.save_manager.get_config("CallOfTheVoid","false") == "true" 
-            and GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and GODMODE.level:GetAbsoluteStage() <= LevelStage.STAGE5) or (GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time))
+            and GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and GODMODE.level:GetAbsoluteStage() <= LevelStage.STAGE5 and GODMODE.level:GetAbsoluteStage() > 1) or (GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time))
             and GODMODE.save_manager.get_data("VoidSpawned","false") ~= "true" and not GODMODE.paused and not GODMODE.is_in_secrets() and not room:HasCurseMist()
 end
 
@@ -1330,8 +1348,14 @@ util.hazard_ent_types = {
 	[EntityType.ENTITY_CONSTANT_STONE_SHOOTER] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
 	[EntityType.ENTITY_STONEHEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
 	[EntityType.ENTITY_BRIMSTONE_HEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
+	[EntityType.ENTITY_QUAKE_GRIMACE] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
 	[EntityType.ENTITY_SPIKEBALL] = function(ent) ent:Die() end,
 	[EntityType.ENTITY_BALL_AND_CHAIN] = function(ent) ent:Remove() end,
+	[EntityType.ENTITY_FIREPLACE] = function(ent) 
+		if ent.Variant % 2 == 1 then 
+			ent:ToNPC():Morph(ent.Type,ent.Variant - 1, ent.SubType, -1)
+		end
+	end,
 }
 
 util.dehazard_room = function() 
@@ -1346,6 +1370,8 @@ util.dehazard_room = function()
 
 			if rep_type ~= GridEntityType.GRID_NULL then 
 				GODMODE.room:SpawnGridEntity(ind,rep_type,grident:GetRNG():GetSeed(),0)
+			else 
+				GODMODE.room:SetGridPath(ind,0)
 			end
 
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pos, Vector.Zero, nil)

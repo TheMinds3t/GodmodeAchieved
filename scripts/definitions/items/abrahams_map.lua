@@ -89,7 +89,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 				local depth = 0
 
 				while flag == -1 or flag == nil do 
-					flag = GODMODE.special_items:get_item_of_quality(4) 
+					flag = GODMODE.special_items:get_item_of_quality(4, player:GetCollectibleRNG(item.instance)) 
 
 					local config = Isaac.GetItemConfig():GetCollectible(flag)
 					if config and config:IsCollectible() and not config.Hidden then

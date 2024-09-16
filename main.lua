@@ -339,13 +339,22 @@ else
             local time = math.min(tonumber(GODMODE.save_manager.get_data("FloorEnterTime","120000")),tonumber(GODMODE.save_manager.get_config("VoidEnterTime","9005")))
             local time_inc = 1
 
-            if GODMODE.util.has_curse(LevelCurse.CURSE_OF_LABYRINTH) then time_inc = 0.5 end
+            if GODMODE.cached_max_speed == nil or GODMODE.game:GetFrameCount() % 20 == 0 then 
+                local max_speed = 0
+                GODMODE.util.macro_on_players(function(player) 
+                    if player.MoveSpeed > max_speed then max_speed = player.MoveSpeed end 
+                end) 
+
+                time_inc = max_speed / 2.0
+            end
+
+            if GODMODE.util.has_curse(LevelCurse.CURSE_OF_LABYRINTH) then time_inc = time_inc / 2 end
 
             GODMODE.save_manager.set_data("FloorEnterTime",""..time-time_inc)
 
             if time <= 0 or GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time then
                 GODMODE.save_manager.set_data("VoidSpawned", "true")
-                GODMODE.save_manager.set_data("VoidBHProj",tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) + 4)
+                GODMODE.save_manager.set_data("VoidBHProj",tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) + tonumber(GODMODE.save_manager.get_config("VoidStrength","4")))
                 GODMODE.save_manager.set_data("VoidPower",tonumber(GODMODE.save_manager.get_data("VoidPower","0")) + 1)
                 -- GODMODE.save_manager.set_data("VoidDMProj",tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))+3)
 
@@ -650,7 +659,14 @@ else
             local cotv_spawned = GODMODE.util.is_cotv_spawned()
             local power = tonumber(GODMODE.save_manager.get_data("VoidBHProj","0"))+tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))
             local active_skull_off = Vector.Zero
-            local inc_flag = (GODMODE.save_manager.get_config("CallOfTheVoid","true") ~= "true" or cotv_spawned or GODMODE.game.Difficulty ~= Difficulty.DIFFICULTY_HARD) and not challenge_flag
+
+            local input_pressed = Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)), Isaac.GetPlayer().ControllerIndex)
+            local inc_flag = (input_pressed or GODMODE.paused) and false or not input_pressed and (
+                anim_type == "TimerPaused" or 
+                anim_type == "TimerDisabled" or 
+                (GODMODE.save_manager.get_config("CallOfTheVoid","true") ~= "true" or 
+                cotv_spawned or 
+                GODMODE.game.Difficulty ~= Difficulty.DIFFICULTY_HARD) and not challenge_flag)
 
             if inc_flag then 
                 GODMODE.cotv_timer_counter = math.max((GODMODE.cotv_timer_counter or 0)-1,0)
@@ -658,7 +674,6 @@ else
                 GODMODE.cotv_timer_counter = math.min((GODMODE.cotv_timer_counter or 0)+1,100)
             end
             
-
             if power > 0 or (GODMODE.cotv_skull_counter or 0) > 0 then 
                 if inc_flag then 
                     active_skull_off = Vector(24,0)
@@ -897,7 +912,6 @@ else
                         ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
                         ent.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE
                         ent:AddEntityFlags(EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_FRIENDLY)
-                        if data.exit_room ~= nil then data.exit_room(ent) end
                     else
                         if data.persistent_data.position_x and data.persistent_data.position_y and data.persistent_data.in_room == false then
                             ent.GridCollisionClass = data.persistent_data.grid_coll_class or ent.GridCollisionClass
@@ -1141,7 +1155,7 @@ else
 
             local broken = tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))
             if broken > 0 then 
-                GODMODE.save_manager.set_player_data(player, "FaithlessHearts", broken - 1,true)
+                GODMODE.save_manager.set_player_data(player, "FaithlessHearts", broken - tonumber(GODMODE.save_manager.get_config("FaithlessStageDecay","2")), true)
                 Isaac.Spawn(GODMODE.registry.entities.temp_broken_fx.type,GODMODE.registry.entities.temp_broken_fx.variant,GODMODE.registry.entities.temp_broken_fx.subtype,
                             player.Position,Vector.Zero,nil)
             end
@@ -1181,7 +1195,7 @@ else
 
             GODMODE.log("GOTO CORRECTION",true)
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
-                GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,-32))), Vector.Zero, nil)
+                GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,64))), Vector.Zero, nil)
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","true")
         end
     end
@@ -1600,7 +1614,7 @@ else
         end
 
         -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
-        if room:IsClear() and room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true then 
+        if room:IsClear() and (room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true) then 
             if GODMODE.save_manager.get_config("DehazardBossRooms","true") == "true" then 
                 GODMODE.util.dehazard_room()
             end
@@ -2487,7 +2501,7 @@ else
         local stage = GODMODE.level:GetStage()
 
         if GODMODE.game.Difficulty < Difficulty.DIFFICULTY_GREED and stage ~= LevelStage.STAGE4_3 and stage < LevelStage.STAGE7 then 
-            local chance = 0.05 + math.min(0.95,GODMODE.util.total_item_count(GODMODE.registry.items.brass_cross) * 0.25)+0.1*GODMODE.util.total_item_count(GODMODE.registry.trinkets.white_candle,true)
+            local chance = 0.05 + math.min(0.95,GODMODE.util.total_item_count(GODMODE.registry.items.brass_cross) * 0.25)+0.15*GODMODE.util.total_item_count(GODMODE.registry.trinkets.white_candle,true)
             local hook_chance = GODMODE.godhooks.additive_call_hook("modify_blessing_chance",chance)
             GODMODE.log("Blessing chance for the stage is "..hook_chance.." (pre hook = "..chance.."), attempting roll...")
     
@@ -2532,20 +2546,6 @@ else
     function GODMODE.mod_object:d10_use(coll,rng,player,useflags,slot,vardata)
         if GODMODE.d10 then 
             GODMODE.d10.on_d10_use(coll,rng,player,useflags,slot,vardata)
-        end
-    end
-
-    function GODMODE.mod_object:pre_pickup_morph(pickup, type, variant, subtype, keep_price, keep_seed, ignore_mods)
-        --picking a random collectible
-        if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and type == pickup.Type and variant == pickup.Variant and subtype == 0 then 
-            -- make sure we're looking at a godmode collectible
-            if pickup.SubType >= GODMODE.registry.items.morphine and pickup.SubType <= GODMODE.registry.items.vessel_of_purity_3 then 
-                local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
-                -- Godmode quest items cannot be morphed 
-                if config.Tags & ItemConfig.TAG_QUEST == ItemConfig.TAG_QUEST then 
-                    return false 
-                end
-            end
         end
     end
 
@@ -2919,7 +2919,7 @@ else
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, GODMODE.mod_object.post_get_collectible)
 
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_PICKUP_UPDATE, GODMODE.mod_object.pickup_update)
-    GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_MORPH, GODMODE.mod_object.pre_pickup_morph)
+
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_COLLISION, GODMODE.mod_object.pickup_collide)
 
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_FAMILIAR_UPDATE, GODMODE.mod_object.familiar_update)  
@@ -3006,6 +3006,18 @@ else
             if params ~= nil and tonumber(params) ~= nil then 
                 Isaac.ExecuteCommand("stage "..tonumber(params)) 
             end
+        elseif cmd == "stagetester" then  --debug command to execute a sequence of commands to set up for testing bosses
+            Isaac.ExecuteCommand("debug 3")
+            Isaac.ExecuteCommand("debug 4")
+            Isaac.ExecuteCommand("debug 8")
+            Isaac.ExecuteCommand("g c84")
+            Isaac.ExecuteCommand("g c182")
+            Isaac.ExecuteCommand("g c1")
+            Isaac.ExecuteCommand("g c27")
+
+            if params ~= nil and tonumber(params) ~= nil then 
+                Isaac.ExecuteCommand("stage "..tonumber(params)) 
+            end
         elseif cmd == "dbdps" and params ~= nil and tonumber(params) then 
             local count = tonumber(params)
 
@@ -3026,19 +3038,19 @@ else
             local display_func = function(player)
                 local score = GODMODE.util.get_stat_score(player)
                 local base_score = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats","-1"))
-
+                local max_score = GODMODE.util.get_max_stat_score()
                 Isaac.ConsoleOutput("Score for player "..player.ControllerIndex.." ("..player:GetName().."):")
 
                 for stat,score in pairs(score.breakdown) do 
                     Isaac.ConsoleOutput("\n"..stat..": "..score.."/"..GODMODE.util.stat_dist[stat])
                 end
 
-                Isaac.ConsoleOutput("\nTotal Score: "..score.score.."/60")
+                Isaac.ConsoleOutput("\nTotal Score: "..score.score.."/"..max_score)
 
                 if base_score == -1 then 
                     Isaac.ConsoleOutput("\nBase Score is still being calculated. It will be an average of this score throughout the first floor.")
                 else
-                    Isaac.ConsoleOutput("\nBase Score ("..base_score.."/60) Scaled Value: "..(base_score * GODMODE.util.get_stat_scale()).."/60")
+                    Isaac.ConsoleOutput("\nBase Score ("..base_score.."/"..max_score..") Scaled Value: "..(base_score * GODMODE.util.get_stat_scale()).."/"..max_score)
                 end
             end
 

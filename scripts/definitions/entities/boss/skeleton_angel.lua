@@ -152,6 +152,16 @@ monster.npc_init = function(self, ent, data)
 end
 
 monster.do_unlocks = function(self, ent, data)
+	if GODMODE.validate_rgon() then 
+		Isaac.ClearBossHazards(true)
+	end
+
+	--destroy projectiles
+	GODMODE.util.macro_on_enemies(-1,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
+		proj.ProjectileFlags = proj.ProjectileFlags & ~ProjectileFlags.EXPLODE 
+		proj:Die() 
+	end)
+	
 	if data.unlock_achieved ~= true then 
 		GODMODE.util.macro_on_players(function(player) 
 			GODMODE.achievements.unlock_fallen_light(player)
@@ -292,6 +302,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	if sprite:IsFinished("Transition") then 
 		sprite:Play("Hole",true)
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
 	end
 
 	if sprite:IsPlaying("Appear") or sprite:IsPlaying("Transition") then
@@ -702,7 +713,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 		local phase_locks = {0.666,0.444,0.05}
 
 		if enthit.HitPoints / enthit.MaxHitPoints < phase_locks[(data.cur_phase or 0) + 1] then 
-			GODMODE.log("phase="..data.cur_phase,true)
+			-- GODMODE.log("phase="..data.cur_phase,true)
 
 			if (data.cur_phase or 0) == 2 then 
 				enthit.HitPoints = enthit.MaxHitPoints * phase_locks[(data.cur_phase or 0) + 1]

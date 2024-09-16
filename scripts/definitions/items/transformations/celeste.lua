@@ -20,6 +20,9 @@ transform.items = {
 	[GODMODE.registry.items.jack_of_all_trades] = true,
 }
 
+local star_color_unmodified = Color(0.8,0.8,0.2,1,0.25,0.25,0)
+local star_color_2 = Color(0.8,0.8,0.1,1,0.5,0.5,0)
+
 transform.eval_cache = function(self, player,cache,data)
 	if GODMODE.save_manager.get_player_data(player,"Celeste","false") == "true" or Isaac.GetChallenge() == GODMODE.registry.challenges.the_galactic_approach then
 		if cache == CacheFlag.CACHE_SPEED then
@@ -73,14 +76,14 @@ transform.transform_update = function(self, player)
 	end
 
 	local frame = math.max(floor,math.floor(player.MaxFireDelay*1.1))
-	if math.floor(data.real_time) % frame == 0 and not GODMODE.room:IsClear() then
+	if math.floor(data.real_time) % frame == 0 and Isaac.CountEnemies() + Isaac.CountBosses() > 0 then
 		data.celeste_fire = true
 		data.gehazi_keep_coin = true
 		local tear = player:FireTear(player.Position+Vector(player:GetDropRNG():RandomInt(math.floor(player.Size*16))-player.Size*8,player:GetDropRNG():RandomInt(math.floor(player.Size*16))-player.Size*8),-player.Velocity:Resized(math.min(player.Velocity:Length(),1)) * math.max(0.1,player.ShotSpeed*0.5-0.4),false,true,false,player,1.0)
 		data.gehazi_keep_coin = false
 		data.celeste_fire = false
 		
-		tear:SetColor(Color(0.8,0.8,0.2,1,0.25,0.25,0),200,99,false,false)
+		tear:SetColor(star_color_unmodified,200,99,false,false)
 
 		tear.FallingSpeed = 0.0
 		tear.FallingAcceleration = -(4/60.0)
@@ -99,7 +102,7 @@ transform.transform_update = function(self, player)
 			end
 
 			tear.TearFlags = TearFlags.TEAR_NORMAL | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_HOMING | TearFlags.TEAR_ORBIT
-			tear:SetColor(Color(0.8,0.8,0.1,1,0.5,0.5,0),200,99,false,false)
+			tear:SetColor(star_color_2,200,99,false,false)
 			tear:ResetSpriteScale()
 			GODMODE.get_ent_data(tear).celeste_tear = true
 

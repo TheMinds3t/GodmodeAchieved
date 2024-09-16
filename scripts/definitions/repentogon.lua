@@ -143,6 +143,33 @@ if GODMODE.validate_rgon() then
         end
     end
 
+    function GODMODE.mod_object:pre_pickup_morph(pickup, type, variant, subtype, keep_price, keep_seed, ignore_mods)
+        --picking a random collectible
+        if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and type == pickup.Type and variant == pickup.Variant and subtype == 0 then 
+            -- make sure we're looking at a godmode collectible
+            if pickup.SubType >= GODMODE.registry.items.morphine and pickup.SubType <= GODMODE.registry.items.vessel_of_purity_3 then 
+                local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
+                -- Godmode quest items cannot be morphed 
+                if config.Tags & ItemConfig.TAG_QUEST == ItemConfig.TAG_QUEST then 
+                    return false 
+                end
+            end
+        end
+    end
+
+    function GODMODE.mod_object:post_pickup_morph(pickup, type, variant, subtype, keep_price, keep_seed, ignore_mods)
+        --picking a random collectible
+        if pickup.Type == EntityType.ENTITY_PICKUP and pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and type == pickup.Type and variant == pickup.Variant then 
+            -- resprite pedestals to use new MORE OPTIONS mechanic
+            local more_options = GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS)
+            if more_options > 0 and GODMODE.save_manager.get_config("MoreOptionsRework","true") == "true" then 
+                GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,nil,function(item)
+                    item:GetSprite():ReplaceSpritesheet(5,"gfx/grid/options_altar_"..item:ToPickup().OptionsPickupIndex..".png")
+                    item:GetSprite():LoadGraphics()
+                end)
+            end
+        end
+    end
 
     -- function GODMODE.mod_object:post_level_layout(room_slot, room_config, seed)
 
@@ -151,6 +178,8 @@ if GODMODE.validate_rgon() then
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_COMPLETION_MARKS_RENDER, GODMODE.mod_object.post_comp_mark_render)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_SAVESLOT_LOAD, GODMODE.mod_object.post_saveslot_loaded)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_RENDER, GODMODE.mod_object.pre_pickup_render)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_MORPH, GODMODE.mod_object.pre_pickup_morph)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_PICKUP_MORPH, GODMODE.mod_object.post_pickup_morph)
     -- GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_LEVEL_LAYOUT_GENERATED, GODMODE.mod_object.post_level_layout)
     ret.loaded = true
 else 

@@ -17,6 +17,17 @@ local function set_kill_msgs()
         {"Have you even eaten today?"},
         {"Have you even showered today?", "I smell you from *my*", "screen..."},
         {"meehoy meenoy"},
+        {"zoo wee mama!"},
+        {"shabang!", "item, just like that!"},
+        {"nice.", "anyways, how's", "that hangnail doin?"},
+        {"L + time + waste + ratio"},
+        {"W!!"},
+        {"poggers!!"},
+        {"that's some juice right there"},
+        {"now that's that dirt"},
+        {"yeet"},
+        {"so it seems","you've discovered","my little secret."},
+        {"ggwp"},
         {"do you like my sword", "sword sword my", "diamond sword sword"},
     }
 end
@@ -59,10 +70,10 @@ end
 
 monster.npc_kill = function(self, ent)
     if ent.Type == monster.type and ent.Variant == monster.variant and ent.SubType ~= 4 and not ent:HasEntityFlags(EntityFlag.FLAG_ICE) then
-        local flag = false 
+        local flag = GODMODE.room:GetType() == RoomType.ROOM_BOSS and GODMODE.is_at_palace and GODMODE.is_at_palace()
 
         GODMODE.util.macro_on_enemies(nil,GODMODE.registry.entities.masked_angel_statue.type,GODMODE.registry.entities.masked_angel_statue.variant,nil,
-            function(statue) flag = (ent.Position - statue.Position):Length() < 256 end)
+            function(statue) flag = flag or (ent.Position - statue.Position):Length() < 256 end)
         Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF02,1,ent.Position,Vector.Zero,ent)
         Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF02,2,ent.Position,Vector.Zero,ent)
 

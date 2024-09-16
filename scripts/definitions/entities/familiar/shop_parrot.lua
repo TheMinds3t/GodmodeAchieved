@@ -84,7 +84,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		sprite:Play("Idle"..add,false)
 	end
 
-	if data.talk_sprite ~= nil then 
+	if data.talk_sprite ~= nil and GODMODE.save_manager.get_config("MuteShopBird","false") == "false" then 
 		local volume_mod = 1 - math.min(1,((ent.Position - player.Position):Length()- min_volume_range) / (max_volume_range))
 		data.time = math.floor(data.time)
 

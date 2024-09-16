@@ -1,11 +1,11 @@
 local item = {}
 item.instance = GODMODE.registry.trinkets.white_candle
-item.eid_description = "Additional 5% chance for blessings to occur"
+item.eid_description = "Additional 15% chance for blessings to occur"
 item.trinket = true
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},
-      {str = "Adds a 10% chance for blessings to occur when entering a new stage"},
+      {str = "Adds a 15% chance for blessings to occur when entering a new stage"},
     },
 }
 

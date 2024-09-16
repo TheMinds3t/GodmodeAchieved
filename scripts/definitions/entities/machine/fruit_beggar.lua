@@ -84,6 +84,10 @@ monster.npc_update = function(self, ent, data, sprite)
     if sprite:IsEventTriggered("Disappear") then 
         ent:Remove()
     end
+
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+        ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+    end
 end
 
 return monster

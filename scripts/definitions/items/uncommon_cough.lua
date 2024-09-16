@@ -184,10 +184,10 @@ item.player_update = function(self,player,data)
 
 				if amt < 0 then 
 					t.FallingSpeed = t.FallingSpeed + amt
-					amt = amt / (player.TearRange/52.0 * 10)
+					amt = amt / (player.TearRange/GODMODE.util.grid_size * 10)
 					t.FallingAcceleration = 1.2
 				else 
-					amt = amt + (player.TearRange/52.0 / 10)
+					amt = amt + (player.TearRange/GODMODE.util.grid_size / 10)
 					t.FallingAcceleration = 0.75
 				end
 

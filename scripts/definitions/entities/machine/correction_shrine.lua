@@ -8,6 +8,8 @@ local bh_spacing = 26
 local max_stat_types = 7 --stats that are buffable
 local shrine_sprite_off = 6
 
+local max_item_sel_depth = 25
+
 local active_color = Color(1,1,1,1,0.8,0.8,0.8)
 local active_radius = 128
 
@@ -27,18 +29,32 @@ end
 
 monster.get_unique_item = function(ent,player,cache)
     local item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
+    local gd = Isaac.GetPersistentGameData()
 
-    --if GODMODE.validate_rgon() is enabled, disable the correction shrines from giving you locked items
+    --if repentogon is enabled, disable the correction shrines from giving you locked items
     local rep_unlock_flag = function(item) 
         if not GODMODE.validate_rgon() then return true else 
             local config = Isaac.GetItemConfig():GetCollectible(item)
-            local gd = Isaac.GetPersistentGameData()
             return config and config:IsAvailable() and config:IsCollectible() and gd:Unlocked(config.AchievementID)
         end
     end
 
-    while GODMODE.util.total_item_count(item) > 0 and not monster.shrine_has(ent,item) and rep_unlock_flag(item) do 
+    local quality_flag = function(item)
+        local config = Isaac.GetItemConfig():GetCollectible(item)
+
+        if config and config:IsCollectible() then return config.Quality >= math.ceil(GODMODE.level:GetAbsoluteStage() / 2) + 1 end
+    end
+
+    local depth = max_item_sel_depth 
+
+    while 
+        GODMODE.util.total_item_count(item) > 0 
+        and not monster.shrine_has(ent,item) 
+        and rep_unlock_flag(item)
+        and quality_flag(item) and depth > 0 do 
+
         item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
+        depth = depth - 1
     end
 
     return item
@@ -198,6 +214,10 @@ monster.pickup_update = function(self, ent, data, sprite)
         GODMODE.game:MakeShockwave(ent.Position, 0.0375, 0.005, 20)
         player.Velocity = player.Velocity * 0.5 + (player.Position - ent.Position):Resized(6)
         ent:Remove()
+    end
+
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+        ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
     end
 end
 

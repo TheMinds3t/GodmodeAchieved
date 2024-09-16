@@ -31,8 +31,8 @@ item.eval_cache = function(self, player,cache,data)
     end
 
     if player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER) and cache == CacheFlag.CACHE_RANGE then
-		    player.TearRange = player.TearRange - 2
-	  end
+        player.TearRange = player.TearRange + GODMODE.util.grid_size * 2
+    end
 end
 
 return item

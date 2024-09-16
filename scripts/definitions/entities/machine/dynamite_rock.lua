@@ -18,6 +18,10 @@ monster.npc_update = function(self, ent, data, sprite)
 	if ent:IsChampion() then 
 		ent:Morph(ent.Type, ent.Variant, ent.SubType, -1)
 	end
+
+	if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+	end
 end
 
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)

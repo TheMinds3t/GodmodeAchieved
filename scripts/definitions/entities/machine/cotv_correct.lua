@@ -157,6 +157,10 @@ monster.npc_update = function(self, ent, data, sprite)
         fx:SetColor(Color(0,0,0,1),999,1,false,false)
         fx.DepthOffset = -100
     end
+
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+        ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+    end
 end
 
 monster.npc_post_render = function(self,ent,offset)

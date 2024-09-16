@@ -15,7 +15,11 @@ monster.npc_update = function(self, ent, data, sprite)
         if data.real_time == 2 then
             sprite:Play("PukeUp", true)
             ent.Velocity = data.speed
-        end            
+        end
+
+        if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+            ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+        end
 
         ent.Velocity = ent.Velocity * 0.9
         ent.SpriteOffset = ent.SpriteOffset * 0.9 + Vector(0,0) * 0.1

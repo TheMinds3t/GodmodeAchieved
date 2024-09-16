@@ -16,6 +16,10 @@ monster.npc_update = function(self, ent, data, sprite)
 		sprite:Play("Idle", true)
 	end
 
+	if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+		ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+	end
+
 	data.spider_time = data.spider_time - 1
 	ent.Velocity = ent.Velocity * 0.0125
 

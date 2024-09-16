@@ -2,7 +2,7 @@ local options = {}
 
 options.mod = RegisterMod("GodmodeAchievedOptions", 1)
 
-local dssinit = include("scripts.godmodemenucore")
+local dsscore = include("scripts.godmodemenucore")
 -- DSSCoreVersion determines which menu controls the mod selection menu that allows you to enter other mod menus.
 -- Don't change it unless you really need to and make sure if you do that you can handle mod selection and global mod options properly.
 local DSSCoreVersion = 7
@@ -95,7 +95,7 @@ function menu_provider.SaveMenusPoppedUp(var)
 end
 
 -- This function returns a table that some useful functions and defaults are stored on
-local dssmod = dssinit("Dead Sea Scrolls (Godmode Achieved)", DSSCoreVersion, menu_provider)
+local dssmod = dsscore.init("Dead Sea Scrolls (Godmode Achieved)", menu_provider)
 local gap = {
     -- Creating gaps in your page can be done simply by inserting a blank button.
     -- The "nosel" tag will make it impossible to select, so it'll be skipped over when traversing the menu, while still rendering!
@@ -842,6 +842,50 @@ options.layout = {
 
                 tooltip = {strset = {'when does','call of','the void','spawn'}}
             },
+            {
+                str = 'cotv strength',
+                min = 1, max = 12, increment = 1, suf=' charges', setting = 4,
+                variable = 'GodmodeVoidStrength',
+
+                -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
+                -- It passes in all the same args as "func"
+                -- In this example, this button will be hidden if the "slider option" button above is set to its maximum value.
+                displayif = function(button, item, menuObj)
+                    if item and item.buttons then
+                        for _, btn in ipairs(item.buttons) do
+                            if btn.str == 'call of the void' and btn.setting == 1 then
+                                return false
+                            end
+                        end
+                    end
+
+                    return true
+                end,
+                
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("VoidStrength","4"))
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("VoidStrength",var,true)
+                end,
+
+                tooltip = {strset = {'how many','charges does','call of','the void','receive on','spawn?'}}
+            },
+            gap,
+            {
+                str = 'faithless decay',
+                min = 1, max = 12, increment = 1, suf=' charges', setting = 2,
+                variable = 'GodmodeFaithlessDecay',
+                
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("FaithlessStageDecay","2"))
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("FaithlessStageDecay",var,true)
+                end,
+
+                tooltip = {strset = {'how many','faithless','hearts get','removed','when entering','a new stage?'}}
+            },
 
             gap,
             --door hazard
@@ -1169,6 +1213,7 @@ options.layout = {
 
                 tooltip = {strset = {'render','cosmetic','shadow around','the screen','in the void?'}}
             },
+            gap,
             {
                 str = 'keepah',
                 choices = bool_choices, setting = 2,
@@ -1183,6 +1228,33 @@ options.layout = {
 
                 tooltip = {strset = {'spawn keepah','the shop','parrot in','every shop?'}}
             },
+            {
+                str = 'mute keepah?',
+                choices = bool_choices, setting = 2,
+                variable = 'GodmodeMuteShopParrot',
+
+                load = function()
+                    return str_bool_map[GODMODE.save_manager.get_config("MuteShopBird","false")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("MuteShopBird",bool_map[var],true)
+                end,
+
+                displayif = function(button, item, menuObj)
+                    if item and item.buttons then
+                        for _, btn in ipairs(item.buttons) do
+                            if btn.str == 'keepah' and btn.setting == 1 then
+                                return false
+                            end
+                        end
+                    end
+
+                    return true
+                end,
+
+                tooltip = {strset = {'mute keepah?','','(he is sad but','understands)'}}
+            },
+            gap,
             {
                 str = 'mod reqs prompt',
                 choices = bool_choices, setting = 2,

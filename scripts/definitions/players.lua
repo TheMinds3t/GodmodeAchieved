@@ -12,7 +12,7 @@ players[GODMODE.registry.players.recluse] = {
             player.MoveSpeed = player.MoveSpeed + 0.1
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange + 26*2
+            player.TearRange = player.TearRange + GODMODE.util.grid_size
         end,
         ["on_item_pickup"] = function(self, player)
             player:TryRemoveNullCostume(GODMODE.registry.costumes.arac_head)
@@ -158,7 +158,7 @@ players[GODMODE.registry.players.xaphan] = {
             player.Luck = player.Luck - 6.0
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*2
+            player.TearRange = player.TearRange - GODMODE.util.grid_size
         end,
     },
     update = function(self, player, data)
@@ -225,7 +225,7 @@ players[GODMODE.registry.players.t_xaphan] = {
             player.Luck = player.Luck - 10.0
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*1
+            player.TearRange = player.TearRange - GODMODE.util.grid_size
         end,
         [CacheFlag.CACHE_FLYING] = function(self, player)
             player.CanFly = true
@@ -329,7 +329,7 @@ players[GODMODE.registry.players.elohim] = {
             player.Luck = player.Luck + 2
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange + 26
+            player.TearRange = player.TearRange + GODMODE.util.grid_size / 2.0
         end,
 
 
@@ -397,7 +397,7 @@ players[GODMODE.registry.players.t_elohim] = {
             player.Luck = player.Luck - 1
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange + 52
+            player.TearRange = player.TearRange + GODMODE.util.grid_size
         end,
     },
     encyclopedia_entry = {{ -- Start Data
@@ -452,7 +452,7 @@ players[GODMODE.registry.players.gehazi] = {
             player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,1)
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*1.25
+            player.TearRange = player.TearRange - GODMODE.util.grid_size / 2.0
         end,
         [CacheFlag.CACHE_LUCK] = function(self, player)
             player.Luck = player.Luck - 1
@@ -521,7 +521,7 @@ players[GODMODE.registry.players.t_gehazi] = {
             player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay, 1)
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*1.25
+            player.TearRange = player.TearRange - GODMODE.util.grid_size / 2.0
         end,
         [CacheFlag.CACHE_LUCK] = function(self, player)
             player.Luck = player.Luck + 1
@@ -918,7 +918,7 @@ players[GODMODE.registry.players.deli] = {
             player.Damage = player.Damage * mod
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*4
+            player.TearRange = player.TearRange - GODMODE.util.grid_size / 2.0
         end,
         [CacheFlag.CACHE_FIREDELAY] = function(self, player)
             local mod = 1.2
@@ -1019,7 +1019,7 @@ players[GODMODE.registry.players.t_deli] = {
             player.Damage = player.Damage * mod
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
-            player.TearRange = player.TearRange - 26*3
+            player.TearRange = player.TearRange - GODMODE.util.grid_size * 1.5
         end,
         [CacheFlag.CACHE_FIREDELAY] = function(self, player)
             local mod = 1.1
@@ -1116,7 +1116,7 @@ players[GODMODE.registry.players.the_sign] = {
         end,
         [CacheFlag.CACHE_RANGE] = function(self, player)
             local mod = player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) and 0.75 or 1
-            player.TearRange = player.TearRange * mod + 26*1.25
+            player.TearRange = player.TearRange * mod + GODMODE.util.grid_size * 0.75
         end,
     },
     update = function(self, player, data)
@@ -1190,6 +1190,7 @@ players[GODMODE.registry.players.the_sign] = {
 }
 
 players[PlayerType.PLAYER_THELOST_B] = {
+    red_health = false, soul_health = true,
     init = function(self, player)
         if player.SubType == PlayerType.PLAYER_THELOST_B and GODMODE.save_manager.get_config("TaintedLostWish","true") == "true" then
             player:AddCollectible(GODMODE.registry.items.moms_wish,1,true,ActiveSlot.SLOT_POCKET)

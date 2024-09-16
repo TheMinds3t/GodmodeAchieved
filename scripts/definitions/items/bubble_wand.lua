@@ -26,7 +26,9 @@ item.new_room = function(self)
 				end
 	
 				bubble:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+				bubble:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags() & ~EntityFlag.FLAG_NO_STATUS_EFFECTS & ~EntityFlag.FLAG_NO_FLASH_ON_DAMAGE)
 				bubble:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
+
 				if bubble.SubType == 2 then 
 					bubble:ToNPC().I2 = 1
 					bubble.CollisionDamage = player.Damage * 0.75
