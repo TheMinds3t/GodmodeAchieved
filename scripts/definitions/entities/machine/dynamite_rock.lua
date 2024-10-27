@@ -24,6 +24,12 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 end
 
+monster.npc_kill = function(ent)
+	if GODMODE.get_ent_data(ent).broken ~= true then 
+		Isaac.Spawn(ent.Type,ent.Variant,ent.SubType,ent.Position,Vector.Zero,ent.SpawnerEntity)
+	end
+end
+
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	if enthit.Type == monster.type and enthit.Variant == monster.variant then
 		return false

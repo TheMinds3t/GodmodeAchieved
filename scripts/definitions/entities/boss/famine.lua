@@ -9,7 +9,7 @@ monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
 
     if sprite:IsEventTriggered("Shoot") and sprite:IsPlaying("AttackDashStart") then 
-        -- GODMODE.sfx:Play(SoundEffect.SOUND_MONSTER_YELL_A)
+        GODMODE.sfx:Play(SoundEffect.SOUND_MONSTER_YELL_A)
     end
 
     if sprite:IsEventTriggered("AltShoot") then 

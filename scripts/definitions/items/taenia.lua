@@ -27,7 +27,7 @@ item.eval_cache = function(self, player,cache,data)
 end
 
 local function action_to_direction(action)
-    local mirror_flag = GODMODE.util.is_mirror()
+    local mirror_flag = GODMODE.util.is_in_quest()
     if action == ButtonAction.ACTION_SHOOTLEFT then 
         return mirror_flag and Direction.RIGHT or Direction.LEFT
     elseif action == ButtonAction.ACTION_SHOOTRIGHT then 

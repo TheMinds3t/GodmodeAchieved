@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="2/17/2023 4:55:06 PM" Version="74" Fps="20"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="10/21/2024 11:51:55 AM" Version="76" Fps="20"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\souleater2.png" Id="0"/>
@@ -46,7 +46,7 @@
 				</LayerAnimation>
 				<LayerAnimation LayerId="1" Visible="true">
 					<Frame XPosition="-24" YPosition="-92" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
-					<Frame XPosition="-24" YPosition="-86" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="-24" YPosition="-86" XPivot="16" YPivot="16" XCrop="0" YCrop="256" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 					<Frame XPosition="-24" YPosition="-90" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 					<Frame XPosition="-24" YPosition="-92" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>

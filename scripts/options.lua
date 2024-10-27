@@ -1066,6 +1066,20 @@ options.layout = {
                 tooltip = {strset = {'do hazards','get cleared','after beating','a boss','or miniboss?'}}
             },
             gap,
+            {
+                str = 'light item rooms',
+                choices = bool_choices, setting = 1,
+                variable = 'GodmodeLighterTreasure',
+
+                load = function()
+                    return str_bool_map[GODMODE.save_manager.get_config("LighterTreasure","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("LighterTreasure",bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'only 1 item','per item room', 'or get','all items?','','(just makes','godmode','multi rooms','a choice)'}}
+            },
             -- -- new autofire mechanic!
             -- {
             --     str = 'auto attack',

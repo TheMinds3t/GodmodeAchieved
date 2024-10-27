@@ -110,6 +110,8 @@ else
         GODMODE.special_items = include("scripts.definitions.special_items")
         GODMODE.special_items:fill_item_lists()
         GODMODE.registry = include("scripts.definitions.registry")
+        GODMODE.config_presets = include("scripts.definitions.config_presets")
+        GODMODE.config_presets.gen_vanilla_presets()
         
         GODMODE.shader_params = GODMODE.shader_params or {}
         GODMODE.shader_params.godmode_trinket_time = 0
@@ -141,6 +143,11 @@ else
         return flag
     end
 
+    local ending_item_blacklist = {
+        CollectibleType.COLLECTIBLE_STOPWATCH,
+        CollectibleType.COLLECTIBLE_BROKEN_STOPWATCH
+    }
+
     function GODMODE.play_ending() 
         if GODMODE.playing_ending then GODMODE.log("Already played Godmode ending!",true) return else 
             if GODMODE.validate_rgon() then 
@@ -148,6 +155,15 @@ else
                 GODMODE.playing_ending = Isaac.GetPlayer().InitSeed 
                 GODMODE.shader_params.ending_shader = 0.0
             else 
+                GODMODE.util.macro_on_players(function(player) 
+                    for _,coll in ipairs(ending_item_blacklist) do 
+                        while player:HasCollectible(coll) do 
+                            GODMODE.log("Removed \'"..coll.."\' from "..player:GetName().." for ending sequence stability!")
+                            player:RemoveCollectible(coll)
+                        end
+                    end
+                end)
+                
                 local ending = Sprite()
                 ending:Load("gfx/cutscenes/ending.anm2", true)
                 ending.PlaybackSpeed = 0.666
@@ -494,7 +510,7 @@ else
 
         --render godmode hearts 
         --faithless
-        if broken > 0 and not GODMODE.util.has_curse(LevelCurse.CURSE_OF_THE_UNKNOWN) then 
+        if broken > 0 and not GODMODE.util.has_curse(LevelCurse.CURSE_OF_THE_UNKNOWN) and GODMODE.registry.hidden_heart_players[player:GetPlayerType()] ~= true then 
             local cur = broken 
             local anim_name = "Faithless"
             GODMODE.sprites.heart_ui_sprite.Color = Color.Default
@@ -963,46 +979,13 @@ else
         local hard_enabled = tostring(GODMODE.save_manager.get_config("HMEnable","true")) == "true"
         local greed_enabled = tostring(GODMODE.save_manager.get_config("GMEnable","true")) == "true"
 
-        if GODMODE.util.is_valid_enemy(ent,true) and ((GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and hard_enabled) or (GODMODE.game.Difficulty == Difficulty.DIFFICULTY_GREEDIER and greed_enabled)) then
+        if GODMODE.util.is_valid_enemy(ent,true) and 
+            ((GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and hard_enabled) or 
+             (GODMODE.game.Difficulty == Difficulty.DIFFICULTY_GREEDIER and greed_enabled)) then
             local percent = GODMODE.util.get_health_scale(ent, tonumber(GODMODE.save_manager.get_config("HPScaleMode","2")))
 
             ent.MaxHitPoints = math.floor(ent.MaxHitPoints * percent)
             ent.HitPoints = ent.MaxHitPoints
-            
-            -- local max_stage = 12
-            -- local scale = tonumber(GODMODE.save_manager.get_config("HMEScale","2.0"))
-
-            -- if GODMODE.game.Difficulty > Difficulty.DIFFICULTY_HARD then 
-            --     max_stage = 7 
-            --     scale = tonumber(GODMODE.save_manager.get_config("GMEScale","1.5"))
-            -- end
-
-            -- if (GODMODE.room:GetType() == RoomType.ROOM_BOSS or GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS) and ent:IsBoss() then
-            --     if GODMODE.game.Difficulty > 1 then
-            --         scale = tonumber(GODMODE.save_manager.get_config("GMBScale","1.8"))
-            --     else
-            --         scale = tonumber(GODMODE.save_manager.get_config("HMBScale","2.3"))
-            --     end
-            -- end
-
-            -- -- if GODMODE.level:GetStageType() > StageType.STAGETYPE_GREEDMODE then 
-            -- --     scale = scale * 0.8 
-            -- -- end --make repentance stages easier since less items generally compared to main path
-
-            -- local max_health = tonumber(GODMODE.save_manager.get_config("ScaleSelectorMax","3000"))
-            
-            -- local cur_stage = GODMODE.level:GetAbsoluteStage()
-
-            -- if StageAPI and StageAPI.Loaded and GODMODE.stages ~= nil and StageAPI.GetCurrentStage ~= nil and StageAPI.GetCurrentStage() ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name] ~= nil and GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage ~= nil then
-            --     cur_stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage
-            -- end
-
-            -- if ent.MaxHitPoints < max_health and not GODMODE.armor_blacklist:has_armor(ent) then
-            --     local percent = (cur_stage-1) / math.max(1,max_stage-1) * math.max(1.0,scale-1.0)
-            --     --GODMODE.log("hp scale: "..((1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)), true)
-            --     ent.MaxHitPoints = ent.MaxHitPoints * (1.0 + (scale-1) * (GODMODE.game:GetVictoryLap() + 1) * percent)
-            --     ent.HitPoints = ent.MaxHitPoints
-            -- end
         end
 
         if (GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS or GODMODE.room:GetType() == RoomType.ROOM_BOSS) and ent:IsBoss() then
@@ -1015,21 +998,32 @@ else
         end
     end
 
+    local keys = {
+        Card.CARD_CRACKED_KEY,
+        GODMODE.cards_pills.cards.pok_2,
+        GODMODE.cards_pills.cards.pok_3,
+        GODMODE.cards_pills.cards.pok_4,
+        GODMODE.cards_pills.cards.pok_5,
+        GODMODE.cards_pills.cards.pok_6,
+        GODMODE.cards_pills.cards.pok_7,
+        GODMODE.cards_pills.cards.pok_8
+    }
+
     function GODMODE.mod_object:new_level()
         GODMODE.level = GODMODE.game:GetLevel()
         GODMODE.room_override.wipe_overrides()
 
         if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then
-            if GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and not StageAPI.InNewStage() then 
-                GODMODE.try_switch_stage()
-            end
+            -- if GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and not StageAPI.InNewStage() then 
+            --     GODMODE.try_switch_stage()
+            -- end
 
             GODMODE.save_manager.clear_key("ObservatoryGridIdx",true)
             GODMODE.cached_observatory_ids = nil
         
             local save_val = GODMODE.save_manager.get_data("ObservatoryChance","0.0")
 
-            if save_val ~= "X" then
+            if save_val ~= "X" and not GODMODE.level:IsAscent() and GODMODE.level:GetStage() < LevelStage.STAGE4_1 then
                 local observatory_chance = tonumber(save_val)
 
                 if GODMODE.util.random() < observatory_chance then 
@@ -1111,6 +1105,7 @@ else
             -- GODMODE.push_items_monsters("first_level", true, function(monster) return true end, nil)
             GODMODE.save_manager.save_override = true 
             GODMODE.save_manager.clear_key("ObservatoryGridIdx")
+            GODMODE.save_manager.clear_key("GildedChance")
             GODMODE.cached_observatory_ids = nil
         end
 
@@ -1123,16 +1118,7 @@ else
                 end
             end
             local key_count = 8
-            local keys = {
-                Card.CARD_CRACKED_KEY,
-                GODMODE.cards_pills.cards.pok_2,
-                GODMODE.cards_pills.cards.pok_3,
-                GODMODE.cards_pills.cards.pok_4,
-                GODMODE.cards_pills.cards.pok_5,
-                GODMODE.cards_pills.cards.pok_6,
-                GODMODE.cards_pills.cards.pok_7,
-                GODMODE.cards_pills.cards.pok_8
-            }
+
 
             local count = 8/GODMODE.game:GetNumPlayers()
 
@@ -1167,7 +1153,7 @@ else
             mural:Update()
         end
 
-        if GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
+        if GODMODE.save_manager.get_config("StatHelp","true") == "true" and not GODMODE.level:IsAscent() and GODMODE.level:GetStage() < LevelStage.STAGE8 then 
             local correction = false
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","false")
 
@@ -1181,6 +1167,8 @@ else
                 if stats.score < stat_thres then 
                     correction = true
                     GODMODE.log("Stat score of "..stats.score.." is lower than the threshold (currently "..stat_thres..")", true)
+                else 
+                    GODMODE.log("Stat score of "..stats.score.." is above than the threshold (currently "..stat_thres.."), no correction needed", true)
                 end
             end)
             if correction == true and GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
@@ -1188,10 +1176,9 @@ else
             end
         end
 
-        if GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" 
+        if (GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) 
             and GODMODE.save_manager.get_data("CorrectionPortalSpawned","false") == "false" 
-            and ((GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1)
-            or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) then 
+            and (GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1) and not GODMODE.level:IsAscent() then 
 
             GODMODE.log("GOTO CORRECTION",true)
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
@@ -1314,6 +1301,7 @@ else
             if room:GetType() == RoomType.ROOM_ERROR then
                 GODMODE.util.macro_on_grid(GridEntityType.GRID_TRAPDOOR,-1,function(grident,ind,pos) 
                     GODMODE.room:RemoveGridEntity(ind,0,true)
+                    grident:Destroy(true)
                     grident:Update()
                 end)
 
@@ -2157,15 +2145,14 @@ else
 
         local player_data = GODMODE.players[player:GetPlayerType()]
 
-        if (data.collectible_num_cache or -1) ~= player:GetCollectibleCount() then 
+        if tonumber(GODMODE.save_manager.get_player_data(player,"CollCacheCount","-1")) ~= player:GetCollectibleCount() then 
             if player_data and player_data.stats and player_data.stats["on_item_pickup"] then 
                 player_data.stats["on_item_pickup"](player_data,player)
             end
 
             GODMODE.godhooks.call_hook("on_item_pickup",player)
             -- GODMODE.push_items("on_item_pickup",function(item) return player:HasCollectible(item.instance) end, player)
-
-            data.collectible_num_cache = player:GetCollectibleCount()
+            GODMODE.save_manager.set_player_data(player,"CollCacheCount",player:GetCollectibleCount(), true)
         end
     
         if player_data then 
@@ -2453,9 +2440,16 @@ else
                     Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TRINKET,TrinketType.TRINKET_TELESCOPE_LENS,GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()), Vector.Zero, nil)
                 end
             end
+
+            local vanilla_item_loot = GODMODE.save_manager.get_config("LighterTreasure", "false") == "true"
             
-            if GODMODE.room:GetType() == RoomType.ROOM_TREASURE and GODMODE.level:GetStageType() > StageType.STAGETYPE_AFTERBIRTH and GODMODE.save_manager.get_config("BothRepPathItems", "true") == "true" then
-                pickup.OptionsPickupIndex = 0
+            if GODMODE.room:GetType() == RoomType.ROOM_TREASURE then 
+                if vanilla_item_loot and string.match(GODMODE.level:GetCurrentRoomDesc().Data.Name,"GODMODE") then 
+                    pickup.OptionsPickupIndex = 1
+                elseif (GODMODE.level:GetStageType() > StageType.STAGETYPE_AFTERBIRTH 
+                    and GODMODE.save_manager.get_config("BothRepPathItems", "true") == "true") and not vanilla_item_loot then
+                    pickup.OptionsPickupIndex = 0
+                end
             end
 
             -- if GODMODE.save_manager.get_config("ShopQualityScale","true") == "true" and pickup:IsShopItem() and false then
@@ -3006,7 +3000,7 @@ else
             if params ~= nil and tonumber(params) ~= nil then 
                 Isaac.ExecuteCommand("stage "..tonumber(params)) 
             end
-        elseif cmd == "stagetester" then  --debug command to execute a sequence of commands to set up for testing bosses
+        elseif cmd == "stagetester" then  --debug command to execute a sequence of commands to set up for testing stages
             Isaac.ExecuteCommand("debug 3")
             Isaac.ExecuteCommand("debug 4")
             Isaac.ExecuteCommand("debug 8")
@@ -3104,7 +3098,7 @@ else
             GODMODE.birthday_mode = not GODMODE.birthday_mode
             Isaac.ConsoleOutput("Birthday Mode Toggled for this session!! Enjoy the cake!")
         elseif cmd == "gm_setdata" or cmd == "gm_sd" then 
-            params = GODMODE.util.string_split(params," ")
+            params = GODMODE.util.string_split(string.lower(params)," ")
             local key = params[1] or nil 
             local val = params[2] or nil
             if key == "" then key = nil end 
@@ -3142,9 +3136,74 @@ else
             else
                 Isaac.ConsoleOutput("Usage: \'gm_setdata <key> <value>\' or \'gm_setdata list\'")
             end
+        elseif cmd == "gm_config_preset" or cmd == "gm_cp" then 
+            params = GODMODE.util.string_split(params," ")
+            local task = string.lower(params[1])
+            local name = string.lower(params[2] or "")
+            local show_useage = nil
+            if name == "" then name = nil end 
+            if task == "" then task = nil end
+            local vanilla_preset_flag = (name == "amplified" or name == "default" or name == "lite")
+            
+            if task ~= nil then 
+                if task == "load" then 
+                    if name == nil then 
+                        Isaac.ConsoleOutput("\nHere are the available presets:\n")
+                        for key,_ in pairs(GODMODE.config_presets.presets) do 
+                            Isaac.ConsoleOutput("\t"..string.gsub(string.lower(key), "custom_", "").."\n")
+                        end
+
+                        show_useage = "One of the above names need to be specified to load a config preset. \n"
+                    else
+                        GODMODE.config_presets.load_preset(name, not vanilla_preset_flag)
+                        Isaac.ConsoleOutput("\nLoaded preset \'"..name.."\'!\n")
+                    end
+                elseif task == "save" then 
+                    if name == nil then 
+                        show_useage = "\nTo save the current config values as preset, please provide a name."
+                    else
+                        if vanilla_preset_flag then 
+                            show_useage = "\nCan't overwrite a vanilla preset!"
+                        else
+                            GODMODE.config_presets.save_as_preset(name, not vanilla_preset_flag)
+                            Isaac.ConsoleOutput("\nSaved to preset \'"..name.."\'!\n")
+                        end
+                    end
+                elseif task == "view" then 
+                    if name == nil then 
+                        Isaac.ConsoleOutput("\nHere are the available presets:\n")
+                        for key,_ in pairs(GODMODE.config_presets.presets) do 
+                            Isaac.ConsoleOutput("\t"..string.gsub(string.lower(key), "custom_", "").."\n")
+                        end
+                        show_useage = "\nTo view a config preset, please provide one of the above names.\n"
+                    else
+                        local preset = GODMODE.config_presets.get_preset(name, not vanilla_preset_flag)
+                        Isaac.ConsoleOutput("Here are the values of the \'"..name.."\' preset:")
+                        local sep = 0
+                        local cur = ""
+    
+                        for key,val in pairs(preset) do 
+                            cur = cur..key.." ("..val..") | "
+                            sep = sep + 1
+    
+                            if sep >= 3 then 
+                                sep = 0 
+                                Isaac.ConsoleOutput(cur.."\n")
+                                cur = ""
+                            end
+                        end
+                    end
+                end
+            else 
+                show_useage = "Please specify a task to execute.\n"
+            end
+        
+            if show_useage ~= nil then 
+                Isaac.ConsoleOutput(show_useage.."\nUsage: \'gm_config_preset <load|save|view> <name>")
+            end
         end
     end)
 
 
-    GODMODE.log("Loaded Successfully! (V0.9)\nGodmode commands to try: gm_setconfig, cotv_debug, fabrun, statscore", true)
+    GODMODE.log("Loaded Successfully! (V0.9)\nGodmode commands to try: gm_setconfig, gm_config_preset, cotv_debug, fabrun, statscore", true)
 end

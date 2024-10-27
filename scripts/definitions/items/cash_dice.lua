@@ -29,7 +29,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
             end
     
             GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,-1,function(item)
-                if (closest == nil or dist_func(player,item,closest) and item:ToPickup().Price <= closest.Price) and item:ToPickup():CanReroll() then 
+                if (closest == nil or dist_func(player,item,closest) and item:ToPickup().Price <= closest.Price) and item:ToPickup():CanReroll() and item.SubType ~= 0 then 
                     closest = item:ToPickup()
                 end
             end)

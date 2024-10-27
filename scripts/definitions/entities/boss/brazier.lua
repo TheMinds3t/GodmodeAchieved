@@ -361,6 +361,7 @@ monster.npc_collide = function(self,ent,ent2,entfirst)
 		ent = ent:ToNPC()
         if ent.I2 > 0 and ent.I2 < max_charge * 0.8 then 
             GODMODE.game:BombExplosionEffects(ent2.Position, 20.0, 0, Color(1.0,1.0,1.0,1.0,0,0,0), ent2, 1.0, false, true)--Isaac.Explode(ent.Position, ent, 40.0)
+            GODMODE.get_ent_data(ent2).broken = true
             ent2:Remove()
             ent:TakeDamage(ent.MaxHitPoints / 4.0,DamageFlag.DAMAGE_EXPLOSION,EntityRef(ent),0)
         end

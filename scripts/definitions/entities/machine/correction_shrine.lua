@@ -8,7 +8,7 @@ local bh_spacing = 26
 local max_stat_types = 7 --stats that are buffable
 local shrine_sprite_off = 6
 
-local max_item_sel_depth = 25
+local max_item_sel_depth = CollectibleType.NUM_COLLECTIBLES / 10
 
 local active_color = Color(1,1,1,1,0.8,0.8,0.8)
 local active_radius = 128
@@ -28,21 +28,28 @@ monster.shrine_has = function(ent,item)
 end
 
 monster.get_unique_item = function(ent,player,cache)
+    GODMODE.log("getting unique item..",true)
+
     local item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
-    local gd = Isaac.GetPersistentGameData()
 
     --if repentogon is enabled, disable the correction shrines from giving you locked items
     local rep_unlock_flag = function(item) 
         if not GODMODE.validate_rgon() then return true else 
             local config = Isaac.GetItemConfig():GetCollectible(item)
-            return config and config:IsAvailable() and config:IsCollectible() and gd:Unlocked(config.AchievementID)
+            return config and config:IsAvailable() and config:IsCollectible() and Isaac.GetPersistentGameData():Unlocked(config.AchievementID)
         end
     end
 
     local quality_flag = function(item)
         local config = Isaac.GetItemConfig():GetCollectible(item)
 
-        if config and config:IsCollectible() then return config.Quality >= math.ceil(GODMODE.level:GetAbsoluteStage() / 2) + 1 end
+        if config and config:IsCollectible() then 
+            local max_qual = math.ceil(GODMODE.level:GetAbsoluteStage() / 2) + 1
+            GODMODE.log("quality of "..item.." = "..config.Quality..", max_qual="..max_qual,true)
+            return config.Quality > max_qual and config.Quality < 4 
+        else 
+            return true 
+        end
     end
 
     local depth = max_item_sel_depth 
@@ -52,7 +59,10 @@ monster.get_unique_item = function(ent,player,cache)
         and not monster.shrine_has(ent,item) 
         and rep_unlock_flag(item)
         and quality_flag(item) and depth > 0 do 
-
+        
+        GODMODE.log("item_flag="..(GODMODE.util.total_item_count(item) > 0)..
+            "\nshrine_has="..(not monster.shrine_has(ent,item))..
+            "\nrep_unlock_flag="..rep_unlock_flag(item).."\nquality_flag="..quality_flag(item).."\ndepth = "..depth.."\n",true)
         item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
         depth = depth - 1
     end
@@ -202,7 +212,7 @@ monster.pickup_update = function(self, ent, data, sprite)
             elseif data.buff.type == "stat" then 
                 if data.buff.stat_type == "health" then 
                     for i=1,data.buff.val do 
-                        Isaac.Spawn(GODMODE.registry.entities.heart_container.type,GODMODE.registry.entities.heart_container.variant,0,ent.Position,RandomVector():Resized(1.5+RandomFloat()*2),nil)
+                        Isaac.Spawn(GODMODE.registry.entities.heart_container.type,GODMODE.registry.entities.heart_container.variant,0,ent.Position,RandomVector():Resized(1.5+ent:GetDropRNG():RandomFloat()*2),nil)
                     end
                 end
             end    
@@ -228,7 +238,7 @@ end
 -- end
 
 monster.pickup_init = function(self,ent)
-    if GODMODE.util.is_mirror() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
+    if GODMODE.util.is_in_quest() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
     ent:GetSprite():Play("Appear",true)
 end
 

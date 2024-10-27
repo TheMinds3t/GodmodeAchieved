@@ -38,7 +38,7 @@ end
 -- end
 
 monster.pickup_init = function(self,ent)
-    if GODMODE.util.is_mirror() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
+    if GODMODE.util.is_in_quest() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
     ent:GetSprite():Play("Appear",true)
 
 end

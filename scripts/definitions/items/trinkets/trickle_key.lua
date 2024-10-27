@@ -20,7 +20,7 @@ end
 
 item.new_level = function(self)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        for slot=0,4 do 
+        for slot=0,3 do 
             if player:NeedsCharge(slot) then 
                 player:SetActiveCharge(player:GetActiveCharge(slot) + math.ceil(player:GetTrinketMultiplier(item.instance)),slot)
             end

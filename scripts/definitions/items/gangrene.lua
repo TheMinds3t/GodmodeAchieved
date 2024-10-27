@@ -25,10 +25,10 @@ item.player_update = function(self, player, data)
 				data.sign_not = false
 				
 				if player:GetCollectibleRNG(item.instance):RandomFloat() < 0.1 + (math.min(12,player.Luck)/12*0.65) then 
-					tear.TearFlags = TearFlags.TEAR_POISON 
+					tear.TearFlags = TearFlags.TEAR_POISON | TearFlags.TEAR_NO_GRID_DAMAGE
 					tear:SetColor(Color(0.25,1,0.25,1,0,0.0,0),200,99,false,false)
 				else
-					tear.TearFlags = TearFlags.TEAR_NORMAL 
+					tear.TearFlags = TearFlags.TEAR_NORMAL | TearFlags.TEAR_NO_GRID_DAMAGE
 					tear:SetColor(Color(0.2,0.3,0.2,1,0,0.0,0),200,99,false,false)
 				end
 

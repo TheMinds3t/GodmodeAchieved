@@ -1,11 +1,15 @@
 local json = require("json")
 
 local save_manager = {}
-save_manager.god_data = {persistant = {}, dynamic = {persistent_entities={}}, config={}, dss={}}
+save_manager.god_data = {persistant = {}, dynamic = {persistent_entities={}}, config={}, presets={}, dss={}}
 save_manager.version = "0.2" --used to refresh outdated save files for Godmode
 save_manager.save_override = false 
 
 save_manager.save = function()
+    if GODMODE.config_presets then 
+        save_manager.set_config_presets(GODMODE.config_presets.get_presets(), false)
+    end
+
     GODMODE.mod_object:SaveData(json.encode(save_manager.god_data))
     GODMODE.save_manager_lock = false
 end
@@ -129,6 +133,11 @@ save_manager.load = function()
     if not save_manager.has_loaded then 
         GODMODE.log("Save manager loaded!",true)
     end
+    
+    if GODMODE.config_presets and next(save_manager.god_data.presets) ~= nil then 
+        GODMODE.config_presets.presets = save_manager.god_data.presets
+        GODMODE.config_presets.gen_vanilla_presets()
+    end
 
     save_manager.has_loaded = true
 end
@@ -207,6 +216,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["MuteShopBird"] = "true"
         save_manager.god_data.config["FaithlessStageDecay"] = "2"
         save_manager.god_data.config["VoidStrength"] = "4"
+        save_manager.god_data.config["LighterTreasure"] = "false"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 
@@ -421,6 +431,18 @@ end
 
 save_manager.set_dss = function(dss,save)
     save_manager.god_data.dss = dss 
+
+    if save then 
+        save_manager.save()
+    end
+end
+
+save_manager.get_config_presets = function()
+    return save_manager.god_data.presets or {}
+end
+
+save_manager.set_config_presets = function(presets,save)
+    save_manager.god_data.presets = presets
 
     if save then 
         save_manager.save()

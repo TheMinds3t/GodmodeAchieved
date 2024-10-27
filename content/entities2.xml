@@ -46,12 +46,8 @@
 	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
     </entity>
 
-    <!-- <entity anm2path="pickup_secret_light.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="14" friction="1" id="700" name="Secret Light" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="204" gridCollision="none"  shutdoors="false">
-    </entity> -->
     <entity anm2path="pickup_secret_light.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="14" friction="1" id="5" name="Secret Light" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="700" gridCollision="none"  shutdoors="false">
     </entity>
-    <!-- <entity anm2path="pickup_redcoin.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="12" friction="1" id="700" name="Red Coin" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="205" shutdoors="false">
-    </entity> -->
     <entity anm2path="pickup_redcoin.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="12" collisionRadius="12" friction="1" id="5" name="Red Coin" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="701" subtype="0" shutdoors="false">
     </entity>
     <entity anm2path="pickup_heart_container.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="12" friction="1" id="5" name="Heart Container (Pickup)" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="702" subtype="0" shutdoors="false">
@@ -522,7 +518,7 @@
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="115_brazier.anm2" baseHP="400" boss="1" champion="0" tags="nodelirium" collisionDamage="1" collisionMass="160" collisionRadius="54" friction="1" id="700" name="Brazier (Poky)" numGridCollisionPoints="24" shadowSize="48" stageHP="0" variant="115" portrait="88">
-        <bestiary transform="0,0,1" anim="Brazier" />
+        <bestiary transform="0,0,1" anim="Bestiary" />
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="115_brazier.anm2" baseHP="1" boss="0" champion="0" tags="nodelirium" collisionDamage="0" collisionMass="160" collisionRadius="54" friction="1" id="700" name="Brazier Dead (Poky)" numGridCollisionPoints="24" shadowSize="48" stageHP="0" variant="115" subtype="1" portrait="88" shutdoors="false">
@@ -605,11 +601,12 @@
         <bestiary transform="0,0,1" anim="Idle" />
         <gibs amount="16" blood="1" bone="0" eye="1" gut="1" large="0"/>
     </entity>
-    <entity anm2path="127_grand_marshall.anm2" baseHP="2000" shieldStrength="30" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="The Grand Marshall" numGridCollisionPoints="12" shadowSize="32" stageHP="0" variant="127" portrait="64" gridCollision="walls">
+    <entity anm2path="127_grand_marshall_new.anm2" baseHP="2000" shieldStrength="30" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="The Grand Marshall" numGridCollisionPoints="12" shadowSize="32" stageHP="0" variant="127" portrait="64" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Attack1" />
         <gibs amount="50" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
-
+    <entity anm2path="127_grand_marshall_new.anm2" baseHP="0" shieldStrength="0" boss="0" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="Marshall Blade" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="127" subtype="1" portrait="64" gridCollision="walls">
+    </entity>
     
 
 
@@ -657,8 +654,6 @@
     </entity>
     <entity anm2path="effect_aztec_shield.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="16" friction="1" id="1000" name="Aztec Shield" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="704" subtype="1" gridCollision="none"  shutdoors="false">
     </entity>
-    <!-- <entity anm2path="pickup_heart_container.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="12" friction="1" id="700" name="Heart Container (Pickup)" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="208" shutdoors="false">
-    </entity> -->
 
     <!-- MACHINES -->
     <entity anm2path="mach_unlock_pedestal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="12" friction="1" id="5" name="[GODMODE] Unlock Pedestal" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="703" shutdoors="false">
@@ -674,6 +669,15 @@
     <entity anm2path="mach_closet_tchar.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="18" friction="1" id="700" name="Godmode Tainted Char" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="230" gridCollision="none" shutdoors="false">
     </entity>
 
+    <entity anm2path="mach_pill_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Pill Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="46" subtype="0" shutdoors="false">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
+    </entity>
+    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="51" subtype="1" shutdoors="false">
+        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
+	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
+    </entity>
+    
     <!-- REAL FX -->
     <entity anm2path="effect_soft_serve_puddle.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="15" friction="1" id="1000" name="Soft Serve Spawner" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="700" subtype="0" gridCollision="none"  shutdoors="false">
     </entity>
@@ -766,7 +770,7 @@
     </entity>
     <entity anm2path="grid/door_hazards.anm2" baseHP="20" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="20" friction="1" id="700" name="Door Hazard (Broken)" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="225" subtype="1" gridCollision="none" shutdoors="false">
     </entity>
-    <entity anm2path="grid/dynamite_rock.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="24" friction="1" id="700" name="Dynamite Rock (Brazier)" numGridCollisionPoints="4" shadowSize="0" stageHP="0" variant="226" gridCollision="none" portrait="74" shutdoors="false">
+    <entity anm2path="grid/dynamite_rock.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="32" friction="1" id="700" name="Dynamite Rock (Brazier)" numGridCollisionPoints="4" shadowSize="0" stageHP="0" variant="226" gridCollision="none" portrait="74" shutdoors="false">
     </entity>
     <entity anm2path="backdrop/observatory/observatory.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="0" friction="1" id="700" name="Observatory FX" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="227" shutdoors="false">
     </entity>
@@ -777,14 +781,6 @@
     <entity anm2path="grid/cursed_altar.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="18" friction="1" id="700" name="Observatory Cursed Altar" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="232" gridCollision="none" shutdoors="false">
     </entity>
 
-    <entity anm2path="mach_pill_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Pill Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="46" subtype="0" shutdoors="false">
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
-    </entity>
-    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="51" subtype="1" shutdoors="false">
-        <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
-	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
-    </entity>
 
     <!-- EFFECTS / PICKUPS / GRID END -->
 

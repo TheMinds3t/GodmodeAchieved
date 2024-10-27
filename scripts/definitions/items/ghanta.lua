@@ -26,7 +26,11 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_HEART, HeartSubType.HEART_HALF_SOUL, player.Position, Vector(-4+player:GetDropRNG():RandomFloat()*8,-4+player:GetDropRNG():RandomFloat()*8), player) 
 			end
 
-			player:AddMaxHearts(-2)
+			if player:GetBoneHearts() * 2 == player:GetMaxHearts() then 
+				player:AddMaxHearts(-1)
+			else 
+				player:AddMaxHearts(-2)
+			end
 
 			local saved_hearts = tonumber(GODMODE.save_manager.get_persistant_data("GhantaHearts","0",true))
 			GODMODE.save_manager.set_persistant_data("GhantaHearts", saved_hearts + hearts/2)

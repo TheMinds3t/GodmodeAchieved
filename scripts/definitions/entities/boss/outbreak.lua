@@ -16,7 +16,7 @@ monster.burrow_health_pool_scaled = 20
 monster.max_enemies = 5
 
 monster.burrow_spawn_int = 2
-monster.burrow_spawn_var = 3
+monster.burrow_spawn_var = 2
 
 monster.health_max = 12
 
@@ -91,13 +91,14 @@ end
 local function get_rand_pos(ent,player,dist)
     local room = GODMODE.room
     local targ_pos = room:GetGridPosition(room:GetGridIndex(room:GetRandomPosition(16.0)))
-    local depth = 20
-    dist = dist or 96
+    local depth = 55
+    dist = dist or 32
+    
     local grid_flag = function(pos)
-        return room:GetGridCollisionAtPos(pos) == GridCollisionClass.COLLISION_NONE
+        return room:GetGridEntity(room:GetGridIndex(pos)) ~= nil
     end
 
-    while (targ_pos - player.Position):Length() < dist and depth > 0 and grid_flag(targ_pos) do 
+    while depth > 0 and (grid_flag(targ_pos) or (targ_pos - player.Position):Length() < dist) do 
         targ_pos = room:GetGridPosition(room:GetGridIndex(room:GetRandomPosition(16.0)))
         depth = depth - 1
     end
@@ -112,9 +113,7 @@ local function spawn_rock_fx(ent)
     end
 end
 
-
 monster.spider_logic = function(self,data,ent, sprite)
-
     data.target_pos = data.target_pos or ent.Position
     local player = ent:GetPlayerTarget()
     if sprite:IsFinished("Appear") then 
@@ -305,7 +304,9 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
             return false 
         end
 
-        if (enthit:GetSprite():IsPlaying("DigIn") or enthit:GetSprite():IsPlaying("DigOut") or enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0 then 
+        GODMODE.log("flags = "..flags,true)
+
+        if ((enthit:GetSprite():IsPlaying("DigIn") or enthit:GetSprite():IsPlaying("DigOut") or enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0) then
             return false 
         elseif math.ceil(enthit.HitPoints) % 3 == 0 and math.ceil(enthit.HitPoints) < enthit.MaxHitPoints then
             enthit:GetSprite():Play("DigIn",true)

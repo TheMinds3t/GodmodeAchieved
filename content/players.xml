@@ -1,4 +1,4 @@
-<players root="gfx/characters/" portraitroot="gfx/ui/stage/" nameimageroot="gfx/ui/boss/" bigportraitroot="gfx/ui/stage/">
+<players root="gfx/characters/" portraitroot="gfx/ui/player/portraits/" nameimageroot="gfx/ui/player/names/">
     <player name="Xaphan" skin="xaphan/xaphan.png" hp="2" black="4" bombs="0"
           nameimage="names/xaphan.png" 
           portrait="xaphan.png" 
@@ -31,25 +31,25 @@
           birthright="Freedom!" healthtype="1" achievement="GODMODE_TheSign" />
     <player name="Tainted Recluse" skin="arac_tainted/arac.png" hp="0" black="4" bombs="0"
           nameimage="names/arac.png" 
-          portrait="arac.png" 
+          portrait="tainted_arac.png" 
           bSkinParent="Recluse"
           pocketActive="38" skinColor="1" 
           birthright="Healthy friends" achievement="GODMODE_TRecluse"/>
     <player name="Tainted Deli" skin="deli_tainted/deli.png" hp="6" black="0" bombs="1"
           nameimage="names/deli.png" 
-          portrait="deli.png" 
+          portrait="tainted_deli.png" 
           bSkinParent="Deli"
           skinColor="0" pocketActive="38"
           birthright="Fragmentation" healthlimit="2" achievement="GODMODE_TDeli" />
       <player name="Tainted Xaphan" skin="xaphan_tainted/xaphan.png" black="2" bombs="1"
           nameimage="names/xaphan.png" 
-          portrait="xaphan.png" 
+          portrait="tainted_xaphan.png" 
           bSkinParent="Xaphan"
           skinColor="5" pocketActive="38" card="12" 
           birthright="Boundless fury" healthtype="1" achievement="GODMODE_TXaphan" />
       <player name="Tainted Elohim" skin="elohim_tainted/elohim.png" armor="2"
           nameimage="names/elohim.png" 
-          portrait="elohim.png" 
+          portrait="tainted_elohim.png" 
           bSkinParent="Elohim"
           skinColor="-1" pocketActive="38" 
           birthright="Wrath = deeper strength" achievement="GODMODE_TElohim" />

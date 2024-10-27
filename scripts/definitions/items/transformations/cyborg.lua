@@ -69,7 +69,7 @@ local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
 		local data = GODMODE.get_ent_data(player)
 
 		if has_cyborg(player) then 
-			if flags & DamageFlag.DAMAGE_EXPLOSION == DamageFlag.DAMAGE_EXPLOSION or flags & DamageFlag.DAMAGE_CRUSH == DamageFlag.DAMAGE_CRUSH then 
+			if (flags & DamageFlag.DAMAGE_EXPLOSION == DamageFlag.DAMAGE_EXPLOSION and not player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)) or flags & DamageFlag.DAMAGE_CRUSH == DamageFlag.DAMAGE_CRUSH then 
 				return false
 			end
 		end

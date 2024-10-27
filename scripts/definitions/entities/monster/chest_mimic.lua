@@ -215,9 +215,11 @@ monster.pickup_post_render = function(self, pickup, offset)
 			end
 		
 			local chest_nf = ent:GetSprite():GetNullFrame("chest")
+			local reg = GODMODE.registry.mimic_chests[data.chest.Variant]
+
 			monster.eye_sprite.Scale = chest_nf:GetScale()
 			monster.eye_sprite.Color = ent:GetSprite().Color
-			monster.eye_sprite.Offset = (GODMODE.registry.mimic_chests[pickup.Variant].eye_pos_off or Vector.Zero)
+			monster.eye_sprite.Offset = (reg.eye_pos_off or Vector.Zero)
 			-- local pos = pickup.Position + base_eye_offset + (GODMODE.registry.mimic_chests[pickup.Variant].eye_pos_off or Vector.Zero)
 		
 			monster.eye_sprite:SetFrame("Eye"..ent:GetSprite():GetAnimation(),ent:GetSprite():GetFrame())
@@ -249,11 +251,13 @@ monster.npc_post_render = function(self, ent, offset)
 				monster.eye_sprite:Load("gfx/50_chest_mimic.anm2",true)
 			end
 		
+			local reg = GODMODE.registry.mimic_chests[data.chest.Variant]
+
 			local chest_nf = ent:GetSprite():GetNullFrame("chest")
 			monster.eye_sprite.Scale = chest_nf:GetScale()
 			monster.eye_sprite.Color = chest_nf:GetColor()
-			monster.eye_sprite.Offset = chest_nf:GetPos() + base_offset + (GODMODE.registry.mimic_chests[data.chest.Variant].null_pos_off or Vector.Zero)
-			local pos = ent.Position + base_eye_offset + (GODMODE.registry.mimic_chests[data.chest.Variant].eye_pos_off or Vector.Zero)
+			monster.eye_sprite.Offset = chest_nf:GetPos() + base_offset + (reg.null_pos_off or Vector.Zero)
+			local pos = ent.Position + base_eye_offset + (reg.eye_pos_off or Vector.Zero)
 		
 			monster.eye_sprite:SetFrame("Eye"..ent:GetSprite():GetAnimation(),ent:GetSprite():GetFrame())
 			monster.eye_sprite:Render(Isaac.WorldToScreen(pos),Vector.Zero,Vector.Zero)	

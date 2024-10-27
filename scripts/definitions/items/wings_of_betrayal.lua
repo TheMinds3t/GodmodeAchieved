@@ -17,7 +17,10 @@ item.eval_cache = function(self, player,cache,data)
 			player.CanFly = true     
 		end
 
-		player:AddNullCostume(GODMODE.registry.costumes.wings_of_betrayal)
+		if data.added_wings_costume ~= true then 
+			data.added_wings_costume = true 
+			player:AddNullCostume(GODMODE.registry.costumes.wings_of_betrayal)	
+		end
 
 		if cache == CacheFlag.CACHE_DAMAGE then
 			player.Damage = player.Damage * 1.2
@@ -27,21 +30,12 @@ item.eval_cache = function(self, player,cache,data)
 			player.MoveSpeed = player.MoveSpeed + 0.1
 		end
 	else
+		data.added_wings_costume = nil
 		for i=-1,6 do 
 			player:TryRemoveNullCostume(GODMODE.registry.costumes.wings_of_betrayal)
 		end
 	end
 end
-
-item.on_item_pickup = function(self,player)
-	if player:HasCollectible(item.instance) then 
-		if GODMODE.get_ent_data(player).luc_wing_trigger then 
-			player:TryRemoveNullCostume(GODMODE.registry.costumes.wings_of_betrayal)
-			player:AddNullCostume(GODMODE.registry.costumes.wings_of_betrayal)
-		end
-	end
-end
-
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	if enthit.Type == EntityType.ENTITY_PLAYER and enthit:ToPlayer():HasCollectible(item.instance) then

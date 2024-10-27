@@ -136,7 +136,12 @@ GODMODE.api.add_chest_infest_variant = function(pickup_variant, mimic_data)
     }
 end
 
-
+-- registers a playertype to hide Godmode heart UI for. In vanilla, just PLAYER_THEFORGOTTEN_B, PLAYER_THELOST, and PLAYER_THELOST_B
+-- playertype: PlayerType. the numeric playertype for the player in question.
+-- hidden: boolean. Whether to hide the UI or not, if not specified this function toggles the current state of the playertype.
+GODMODE.api.add_player_to_ui_blacklist = function(playertype, hidden)
+    GODMODE.registry.hidden_heart_players[playertype] = hidden or not GODMODE.registry.hidden_heart_players[playertype]
+end
 
 
 
@@ -738,6 +743,7 @@ function load_stageapi_integration()
         return tonumber(GODMODE.save_manager.get_data("Deterioration","1"))
     end
 
+
     StageAPI.AddCallback(GODMODE.mod_id, "PRE_CHANGE_ROOM_GFX", 2, function(currentRoom)
         if GODMODE.is_at_palace and GODMODE.is_at_palace() then
             local ind = tonumber(GODMODE.save_manager.get_data("Deterioration","1"))
@@ -754,7 +760,7 @@ function load_stageapi_integration()
     end)
 
 
-    StageAPI.AddCallback(GODMODE.mod_id, "PRE_SELECT_NEXT_STAGE", 2, function(currentStage, secretExit)
+    StageAPI.AddCallback(GODMODE.mod_id, "PRE_SELECT_NEXT_STAGE", 1, function(currentStage, secretExit)
         if currentStage ~= nil then
             for _,stage in pairs(GODMODE.stages) do
                 if stage.secret_next and stage.api_id == currentStage.Name and secretExit then 
@@ -765,6 +771,12 @@ function load_stageapi_integration()
                     return stage:next(stage.stage)
                 end
             end
+        end
+    end)
+
+    StageAPI.AddCallback(GODMODE.mod_id, "PRE_BOSS_SELECT", 1, function(bosses, rng, roomDesc, ignoreNoOptions) 
+        if GODMODE.is_at_palace and GODMODE.is_at_palace() then 
+            return 
         end
     end)
 
@@ -825,7 +837,6 @@ function load_stageapi_integration()
         GODMODE.cur_splash_pos = GODMODE.util.get_center_of_screen()
     end
 
-    GODMODE.first_level_load = nil 
     GODMODE.try_switch_stage = function()
         if GODMODE.util.is_start_of_run() then return end 
         

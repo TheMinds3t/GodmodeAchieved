@@ -703,7 +703,6 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 end
 
-
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     local data = GODMODE.get_ent_data(enthit)
 	--Isaac.DebugString("Parent type: "..tostring(entsrc.Entity.Parent.Type)..", Spawner type: "..tostring(entsrc.Entity.SpawnerEntity.Type)..", Child type: "..tostring(entsrc.Entity.Child.Type)..", Child type: "..tostring(entsrc.Entity.Child.Type))

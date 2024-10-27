@@ -3,6 +3,14 @@ monster.name = "Souleater"
 monster.type = GODMODE.registry.entities.souleater.type
 monster.variant = GODMODE.registry.entities.souleater.variant
 
+local fire_circle_off = function(ent,data) 
+    if data and data.p2 ~= nil then 
+        return Vector(0,-32)
+    else
+        return Vector(8 * (ent.FlipX and -1 or 1),-80) 
+    end
+end
+
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
         if not data.hitpoint_buff then
@@ -155,7 +163,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 local ang = data.tell + i * (360 / 8)
                 local f = math.rad(ang)
                 local offset = Vector(math.cos(f)*dist,math.sin(f)*dist)
-                local tell = Isaac.Spawn(GODMODE.registry.entities.unholy_order.type,GODMODE.registry.entities.unholy_order.variant,math.floor(ang),ent.Position+offset,Vector.Zero,ent)
+                local tell = Isaac.Spawn(GODMODE.registry.entities.unholy_order.type,GODMODE.registry.entities.unholy_order.variant,math.floor(ang),ent.Position+offset+fire_circle_off(ent),Vector.Zero,ent)
                 local tell_data = GODMODE.get_ent_data(tell)
                 tell_data.laser_timeout = 45
             end    
@@ -175,10 +183,11 @@ monster.npc_update = function(self, ent, data, sprite)
             for i=0,cnt do 
                 local speed = min_speed + (max_speed - min_speed)*((l+1)/cnt)
                 local vel = Vector(1,0):Rotated(360/cnt*i+spread*l):Resized(speed)
-                local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,ProjectileVariant.PROJECTILE_FIRE,0,ent.Position,vel,ent)
+                local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,ProjectileVariant.PROJECTILE_FIRE,0,ent.Position+fire_circle_off(ent),vel,ent)
                 proj = proj:ToProjectile()
-                proj:AddProjectileFlags(ProjectileFlags.ACCELERATE)
+                proj:AddProjectileFlags(ProjectileFlags.ACCELERATE | ProjectileFlags.SINE_VELOCITY)
                 proj.SpriteOffset = Vector(0,-proj.Height-4)
+                proj:SetColor(Color(0.6,0.25,0.25,1,0.2,0,0),999,1,false,false)
 
                 if not GODMODE.util.is_delirium() then 
                     proj.FallingAccel = -(6/60.0)
@@ -194,16 +203,18 @@ monster.npc_update = function(self, ent, data, sprite)
         local cnt = 5
         local spread = 360
         local off = ent:GetDropRNG():RandomFloat()*(spread/cnt+1)*2
+        local orbit_flag = ent:GetDropRNG():RandomInt(2) == 0 and ProjectileFlags.MEGA_WIGGLE or ProjectileFlags.SINE_VELOCITY
 
         for i=0,cnt do 
             local speed = 3
             local vel = Vector(1,0):Rotated(dir:GetAngleDegrees()+spread/2-i*spread/(cnt+1)+off):Resized(speed)
-            local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,ProjectileVariant.PROJECTILE_NORMAL,0,ent.Position,vel,ent)
+            local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,ProjectileVariant.PROJECTILE_NORMAL,0,ent.Position+fire_circle_off(ent),vel,ent)
             proj = proj:ToProjectile()
             proj:AddProjectileFlags(ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT | ProjectileFlags.WIGGLE)
-            proj:AddChangeFlags(ProjectileFlags.ACCELERATE | ProjectileFlags.WIGGLE)
+            proj:AddChangeFlags(ProjectileFlags.ACCELERATE | ProjectileFlags.WIGGLE | orbit_flag)
             proj.Parent = ent
             proj.ChangeTimeout = 40
+            proj.Scale = 1.5
 
             if not GODMODE.util.is_delirium() then 
                 proj.FallingAccel = -(6/60.0)
@@ -236,6 +247,10 @@ monster.npc_update = function(self, ent, data, sprite)
             phase3 = 0
             total = 12
         end
+
+        if data.p2 == nil and data.p3 ~= true then 
+            sped = 2
+        end
         
         local tear_move_scale = {1.0,0.8}
         for l=0,phase3 do
@@ -243,7 +258,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 local spd = sped - l * (sped * 0.375)
                 local off = (data.firelooptime * 4) % 360
                 if sprite:IsPlaying("HeadIdle") or sprite:IsPlaying("HeadIdleVulnerable") 
-                    or sprite:IsPlaying("BrimFire") then off = (data.time * 6) % 360 end
+                    or sprite:IsPlaying("BrimFire") then off = (data.time * 5.3 + ent:GetDropRNG():RandomInt(360 / total) * 0.75) % 360 end
                 local ang = off + i * (360 / total) + l * of
                 if data.p3 == true then
                     ang = data.time * 4 + i * (360 / total) + l * 45
@@ -254,7 +269,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
                 local f = math.rad(ang)
                 ang = Vector(math.cos(f)*spd,math.sin(f)*spd)
-                local t = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position + ang,ang*spd*Vector(tear_move_scale[1],tear_move_scale[2]),ent)
+                local t = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position + ang+fire_circle_off(ent,data),ang*spd*Vector(tear_move_scale[1],tear_move_scale[2]),ent)
                 t = t:ToProjectile()
                 t.Height = t.Height * (1.5)
                 t.FallingSpeed = t.FallingSpeed * 0.0001
@@ -277,6 +292,10 @@ monster.npc_update = function(self, ent, data, sprite)
                 else
                     t.Color = Color(1.0,1.0,1.0,1.0,150/255,0,0)
                     t:AddProjectileFlags(ProjectileFlags.ACCELERATE)
+                end
+
+                if data.p3 ~= true then 
+                    t:AddProjectileFlags(ProjectileFlags.SINE_VELOCITY)
                 end
             end
         end

@@ -28,7 +28,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 			if void_flag then
 				GODMODE.save_manager.set_player_data(player,"MushroomVoid","true",true)
 			else
-				return {Discharge=true,Remove=true,ShowAnim=false}
+				return {Discharge=true,Remove=true,ShowAnim=true}
 			end
 		end
 
@@ -48,9 +48,16 @@ item.player_update = function(self,player,data)
 			GODMODE.shader_params.black_mushroom_intensity = math.min(5,(GODMODE.shader_params.black_mushroom_intensity or 0)+(30-time)*(1/95.0))
 	
 			if time == 0 then 
-				player:AddMaxHearts(-4,false)
+				-- special clause for forgotten and other bone heart situations
+				if player:GetBoneHearts() * 2 == player:GetMaxHearts() then 
+					player:AddMaxHearts(-2,true)
+				else 
+					player:AddMaxHearts(-4,true)
+				end
+				
 				player:AddHearts(24)
 				player:AddSoulHearts(4)
+
 				player:UseActiveItem(CollectibleType.COLLECTIBLE_FORGET_ME_NOW, false, true, true, false)
 				data.bm_use = nil
 				GODMODE.shader_params.black_mushroom_intensity = 0

@@ -20,6 +20,9 @@ if GODMODE.validate_rgon() then
     Console.RegisterCommand("birthday_mode",
         "Toggles the Birthday Mode for this gameplay session (all boss items are Birthday Slice).",
         "keepah_mode", false, AutocompleteType.NONE)
+    Console.RegisterCommand("gm_config_preset",
+        "Allows you to view, load and save config presets.",
+        "keepah_mode", false, AutocompleteType.NONE)
     ret.player_type_to_name = {}
 
     ret.gather_player_name_list = function()

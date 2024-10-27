@@ -3,7 +3,7 @@ monster.name = "Bathemo Swarm"
 monster.type = GODMODE.registry.entities.bathemo_swarm.type
 monster.variant = GODMODE.registry.entities.bathemo_swarm.variant
 local spawn_thres_min = 0.3
-local slam_spam_thres = 0.2
+local slam_spam_thres = 0.25
 local max_slam_dist = 320
 local min_slam_dist = 160
 
@@ -22,6 +22,26 @@ end
 monster.set_delirium_visuals = function(self,ent)
 	ent:GetSprite():ReplaceSpritesheet(0,"gfx/bosses/deliriumforms/bathemo.png")
     ent:GetSprite():LoadGraphics()
+end
+
+local sel_atk = function(ent,data,sprite)
+	local perc = ent.HitPoints / ent.MaxHitPoints
+	local spawn_flag = perc > spawn_thres_min
+	local task = ent:GetDropRNG():RandomFloat()
+
+	local base_thres = 0.25 + (not spawn_flag and 0.25 or 0.0)
+
+	if perc < slam_spam_thres then 
+		return "Slam"
+	elseif task < base_thres then
+		return "Attack"
+	elseif task < base_thres + 0.25 then
+		return "Slam"
+	elseif spawn_flag then
+		return "Spawn"
+	else 
+		return "Idle"
+	end
 end
 
 monster.npc_update = function(self, ent, data, sprite)
@@ -68,22 +88,18 @@ monster.npc_update = function(self, ent, data, sprite)
 			local task = ent:GetDropRNG():RandomFloat()
 
 			local base_thres = 0.25 + (not spawn_flag and 0.25 or 0.0)
-
-			if perc < slam_spam_thres then 
-				sprite:Play("Slam",true)
-				data.slam_dest = nil
-				data.airborn = nil
-			elseif task < base_thres then
-				sprite:Play("Attack",true)
-			elseif task < base_thres + 0.25 then
-				sprite:Play("Slam",true)
-				data.slam_dest = nil
-				data.airborn = nil
-			elseif spawn_flag then
-				sprite:Play("Spawn",true)
-			else 
-				sprite:Play("Idle",true)
+			local new_atk = sel_atk(ent,data,sprite)
+			local depth = 10 
+			
+			while data.last_atk and new_atk == data.last_atk and depth > 0 do 
+				new_atk = sel_atk(ent,data,sprite)
+				depth = depth - 1
 			end
+
+			data.last_atk = new_atk
+			data.slam_dest = nil
+			data.airborn = nil
+			sprite:Play(new_atk,true)
 		else
 			sprite:Play("Idle",true)
 		end
@@ -104,8 +120,9 @@ monster.npc_update = function(self, ent, data, sprite)
 				end
 			end
 
-			local shock = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, ent.Position+Vector(ent.Size,ent.Size):Resized(ent.Size/2):Rotated(ent:GetDropRNG():RandomFloat()*360), Vector.Zero, ent)
+			local shock = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, ent.Position+Vector(ent.Size,ent.Size):Resized(ent.Size/2):Rotated(ent:GetDropRNG():RandomFloat()*360), Vector.Zero, ent):ToEffect()
 			shock.Parent = ent
+			shock.MaxRadius = GODMODE.util.grid_size * 1.5
 			GODMODE.game:MakeShockwave(ent.Position, 0.0575, 0.005, 20)
 			GODMODE.game:ShakeScreen(10)
 		end

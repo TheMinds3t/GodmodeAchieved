@@ -11,17 +11,23 @@ local function spawn_tendrils(ent,data,count,center,radius)
         local grid = room:GetGridIndex(center + RandomVector():Resized(ent:GetDropRNG():RandomFloat()*radius))
         local depth = 25 
 
-        while (data.grid_map[tostring(grid)] ~= nil or not room:IsPositionInRoom(room:GetGridPosition(grid),1)) and depth > 0 do 
+        while (data.grid_map[tostring(grid)] ~= nil or not room:IsPositionInRoom(room:GetGridPosition(grid),1)) 
+            and room:GetGridEntity(grid) ~= nil
+            and depth > 0 do 
+            
             grid = room:GetGridIndex(center + RandomVector():Resized(ent:GetDropRNG():RandomFloat()*radius))
             depth = depth - 1
         end
 
         data.grid_map[tostring(grid)] = true
         local tendril_pos = room:GetGridPosition(grid)
-        local tendril = Isaac.Spawn(monster.type,monster.variant,1,tendril_pos,Vector.Zero,ent)
-        tendril.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
-        tendril:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-        tendril.Position = tendril_pos
+
+        if room:GetGridEntity(grid) == nil then 
+            local tendril = Isaac.Spawn(monster.type,monster.variant,1,tendril_pos,Vector.Zero,ent)
+            tendril.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+            tendril:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+            tendril.Position = tendril_pos    
+        end
     end
 end
 
@@ -118,10 +124,12 @@ monster.npc_update = function(self, ent, data, sprite)
                     Vector(br.X-26,tl.Y)
                 }
 
-                for _,pos in ipairs(corns) do 
-                    local cluster = Isaac.Spawn(GODMODE.registry.entities.nerve_cluster.type,GODMODE.registry.entities.nerve_cluster.variant,1,room:GetGridPosition(room:GetClampedGridIndex(pos)),Vector.Zero,ent)
-                    cluster.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
-                    cluster:Update()
+                if not GODMODE.util.is_delirium() then 
+                    for _,pos in ipairs(corns) do 
+                        local cluster = Isaac.Spawn(GODMODE.registry.entities.nerve_cluster.type,GODMODE.registry.entities.nerve_cluster.variant,1,room:GetGridPosition(room:GetClampedGridIndex(pos)),Vector.Zero,ent)
+                        cluster.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+                        cluster:Update()
+                    end    
                 end
 
                 sprite:Play("Idle2",true)

@@ -20,9 +20,9 @@ end
 local max_vel = 1
 local laser_time_range = {100, 200}
 local laser_rotate_speed = 2.5
-local phase_2_thres = 0.5
-local phase_2_wave_safe_thres = 25
-local phase_2_wave_safe_section = 180
+local phase_2_thres = 0.66
+local phase_2_wave_safe_thres = 22.5
+local phase_2_wave_safe_section = 360
 local phase_2_pulse_offset = Vector(0,-136)
 local phase_2_gridsize = 128
 local phase_2_dagger_explode_time = 40
@@ -30,12 +30,28 @@ local phase_2_dagger_wait = 60
 
 local attack_reroll_scalar = 3
 
+local phase_2_sword_speed = 13
+local phase_2_sword_offset = Vector(4,72)
+local phase_2_sword_fire_max = 10
+local phase_2_sword_fire_step = -(180 / 18.0)
+local phase_2_sword_fire_speed = 9
+local phase_2_sword_fire_frequency = 2
+local phase_2_sword_eye_offset = Vector(0,-48)
+local phase_2_sword_laser_delay = 84
+local phase_2_sword_fire_density = 8 -- for impact
+local phase_2_sword_fire_layers = 2 -- for impact
+
+
+local phase_2_eye_offset = Vector(-2,-148.5)
+local phase_2_eye_size = 7
+local phase_2_eye_scalar = Vector(1.125,6.0/8.0)
 
 local spawn_laser = function(ent, pos, angle, delay, timeout)
     local order = Isaac.Spawn(GODMODE.registry.entities.holy_order.type, GODMODE.registry.entities.holy_order.variant, math.floor(angle),pos,Vector.Zero,ent)
     local dat = GODMODE.get_ent_data(order)
     dat.fire_time = delay or 20
     dat.laser_timeout = timeout or 30
+    return order
 end
 
 local spawn_dagger = function(ent, pos, angle, vel)
@@ -79,22 +95,21 @@ monster.projectile_update = function(self, dagger, data, sprite)
                 sprite:Play("Impact",true)
                 GODMODE.game:ShakeScreen(5)
                 
-                spawn_laser(dagger, dagger.Position, (marshall:GetPlayerTarget().Position - dagger.Position):GetAngleDegrees() % 360, 40, 20)
+                spawn_laser(dagger, dagger.Position, (marshall:GetPlayerTarget().Position - dagger.Position):GetAngleDegrees() % 360, 40, 15)
 
                 for i=1,8 do 
-                    spawn_fire(marshall, dagger.Position, sprite.Rotation-90 + dagger:GetDropRNG():RandomFloat() * 45 - 22.5, i / 2.0 + 0.5 + dagger:GetDropRNG():RandomFloat())
+                    spawn_fire(marshall, dagger.Position, sprite.Rotation-90 + dagger:GetDropRNG():RandomFloat() * 22.5 - 11.25, i + 1 + dagger:GetDropRNG():RandomFloat())
                 end
             end
 
             dagger.Velocity = Vector.Zero
-
             data.explode_timer = (data.explode_timer or (phase_2_dagger_explode_time + 1)) - 1
 
             if sprite:IsEventTriggered("Explode") then 
                 dagger:Remove()
                 GODMODE.game:ShakeScreen(5)
 
-                GODMODE.game:BombExplosionEffects (dagger.Position, 20)
+                GODMODE.game:BombExplosionEffects (dagger.Position, 20, TearFlags.TEAR_NORMAL, Color(1,0.8,0.2,1,0.4,0.25,0.1))
             end
 
             if data.explode_timer <= 0 and not sprite:IsPlaying("Explode") then 
@@ -104,11 +119,21 @@ monster.projectile_update = function(self, dagger, data, sprite)
     end
 end
 
+local center_hori_dist = 160
+local get_hori_center = function(player,ent)
+    local center = GODMODE.room:GetCenterPos()
+    if player.Position.X < center.X then 
+        return center + Vector(center_hori_dist,0)
+    else
+        return center - Vector(center_hori_dist,0)
+    end
+end
+
 local attacks = {
-    [0] = {
+    [0] = { -- PHASE 1
         { -- holy orders
             id = 0, anim = "Attack01In", anim2 = "Attack01Loop", anim3 = "Attack01Out", --dev_name = "lasers",
-            start_atk_chance = -3,
+            start_atk_chance = -2,
             -- specific stats for this attack's variants
             laser_stats = {
                 { --vertical/horizontal lasers
@@ -161,7 +186,7 @@ local attacks = {
 
                     spawn_delay = 20,
                     laser_delay = 50,
-                    laser_timeout = 12
+                    laser_timeout = 6
                 },
             },
 
@@ -199,10 +224,10 @@ local attacks = {
             end 
         },
     },
-    [1] = {
+    [1] = { -- PHASE 2
         { -- holy orders
             id = 0, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "lasers",
-            start_atk_chance = -2,
+            start_atk_chance = -1,
             -- specific stats for this attack's variants
             laser_stats = {
                 { --vertical/horizontal lasers PT 2
@@ -240,7 +265,7 @@ local attacks = {
                             math.abs(((data.laser_angle + phase_2_wave_safe_section / 2.0) % phase_2_wave_safe_section) - data.laser_safe_space))
 
                         if dist_from_safe > phase_2_wave_safe_thres then 
-                            spawn_laser(ent, self:get_marshall_pos(ent, data, sprite) + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                            spawn_laser(ent, GODMODE.room:GetCenterPos() + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
                         end
                     end,
 
@@ -255,13 +280,21 @@ local attacks = {
                     spawn = function(self, ent, data, sprite)
                         --spawn laser
                         for i=-3,3 do 
-                            spawn_laser(ent, (GODMODE.room:GetCenterPos() + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                            spawn_laser(ent, 
+                                (GODMODE.room:GetCenterPos() + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), 
+                                data.laser_angle+180, 
+                                math.max(self.laser_stats[data.laser_pattern].min_delay, self.laser_stats[data.laser_pattern].laser_delay - data.num_lasers * 3), 
+                                math.max(self.laser_stats[data.laser_pattern].min_timeout, self.laser_stats[data.laser_pattern].laser_timeout - data.num_lasers * 2))
                         end
+
+                        data.num_lasers = data.num_lasers + 1
                     end,
 
                     spawn_delay = 20,
-                    laser_delay = 30,
-                    laser_timeout = 10
+                    laser_delay = 50,
+                    min_delay = 30,
+                    laser_timeout = 15,
+                    min_timeout = 10
                 },
             },
 
@@ -272,6 +305,7 @@ local attacks = {
                 data.laser_angle = ent:GetDropRNG():RandomInt(360)
                 local pattern = ent:GetDropRNG():RandomInt(#self.laser_stats) + 1
                 data.laser_safe_space = ent:GetDropRNG():RandomFloat(phase_2_wave_safe_section)
+                data.num_lasers = 0
 
                 if data.laser_pattern ~= nil then --dont do the same pattern twice in a row
                     local depth = #self.laser_stats * 2
@@ -295,59 +329,74 @@ local attacks = {
             end,
             is_done = function(self, ent, data, sprite) return (data.laser_time or 1) <= 0 end,
             get_marshall_pos = function(self, ent, data, sprite) 
-                return GODMODE.room:GetCenterPos() + 
+                return get_hori_center(ent:GetPlayerTarget(),ent) + 
                 Vector(1,0):Rotated(data.laser_angle or 0):Resized(64 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
             end 
         },
         { -- dagger projectiles
-        id = 0, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "lasers",
+            id = 1, anim = "Attack1", anim2 = "Idle1", anim3 = "Attack1", --dev_name = "daggers",
 
-        knife_interval = 30,
-        knife_speed_thres = {12,16},
-        knife_count_thres = {6,12},
-        start_atk_chance = -1,
-        max_knives = function(self,ent,data,sprite) 
-            return self.knife_count_thres[1] + (self.knife_count_thres[2] - self.knife_count_thres[1]) * (1 - ent.HitPoints / ent.MaxHitPoints)
-        end,
-        knife_vel = function(self,ent,data,sprite)
-            return self.knife_speed_thres[1] + (self.knife_speed_thres[2] - self.knife_speed_thres[1]) * (1 - ent.HitPoints / ent.MaxHitPoints)
-        end,
+            knife_interval = 30,
+            knife_speed_thres = {14,17},
+            knife_count_thres = {6,12},
+            start_atk_chance = -1,
+            max_knives = function(self,ent,data,sprite) 
+                return self.knife_count_thres[1] + (self.knife_count_thres[2] - self.knife_count_thres[1]) * (1 - ent.HitPoints / ent.MaxHitPoints)
+            end,
+            knife_vel = function(self,ent,data,sprite)
+                return self.knife_speed_thres[1] + (self.knife_speed_thres[2] - self.knife_speed_thres[1]) * (1 - ent.HitPoints / ent.MaxHitPoints)
+            end,
 
-        init = function(self, ent, data, sprite) 
-            local perc = (1.0 - ent.HitPoints / ent.MaxHitPoints)
-            data.laser_angle = ent:GetDropRNG():RandomInt(4) * 90
-            data.knives_left = self.max_knives(self,ent,data,sprite)
-            data.knife_explode_time = nil
+            init = function(self, ent, data, sprite) 
+                local perc = (1.0 - ent.HitPoints / ent.MaxHitPoints)
+                data.laser_angle = ent:GetDropRNG():RandomInt(4) * 90
+                data.knives_left = self.max_knives(self,ent,data,sprite)
+                data.knife_explode_time = nil
 
-        end,
-        update = function(self, ent, data, sprite)
-            local player = ent:GetPlayerTarget()
-            
-            if player then 
-                if ent:IsFrame(self.knife_interval,1) and data.knives_left > 0 then 
-                    local dagger = spawn_dagger(ent,
-                        ent:GetPlayerTarget().Position,
-                        data.laser_angle - 90,
-                        self:knife_vel(ent,data,sprite))
+            end,
+            update = function(self, ent, data, sprite)
+                local player = ent:GetPlayerTarget()
+                
+                if player then 
+                    if ent:IsFrame(self.knife_interval,1) and data.knives_left > 0 then 
+                        local dagger = spawn_dagger(ent,
+                            ent:GetPlayerTarget().Position,
+                            data.laser_angle - 90,
+                            self:knife_vel(ent,data,sprite))
 
-                    dagger.Position = dagger.Position - dagger.Velocity:Resized(500)
-                    GODMODE.get_ent_data(dagger).passed_room = nil
+                        dagger.Position = dagger.Position - dagger.Velocity:Resized(500)
+                        GODMODE.get_ent_data(dagger).passed_room = nil
 
-                    data.knives_left = data.knives_left - 1
-                    data.laser_angle = data.laser_angle + 90
+                        data.knives_left = data.knives_left - 1
+                        data.laser_angle = data.laser_angle + 90
+                    end
+
+                    if data.knives_left <= 0 then 
+                        data.knife_explode_time = (data.knife_explode_time or (phase_2_dagger_wait + 1)) - 1
+                    end
                 end
+            end,
+            is_done = function(self, ent, data, sprite) return (data.knives_left or 0) <= 0 and (data.knife_explode_time or 0) <= 0 end,
+            get_marshall_pos = function(self, ent, data, sprite) 
+                return get_hori_center(ent:GetPlayerTarget(),ent) + Vector(0,80) + 
+                Vector(1,0):Rotated(ent.FrameCount * 4):Resized(32 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
+            end 
+        },
+        { -- sword
+            id = 2, anim = "Attack1In", anim2 = "Attack1Loop", anim3 = "Attack1End", --dev_name = "sword",
+            start_atk_chance = -4,
 
-                if data.knives_left <= 0 then 
-                    data.knife_explode_time = (data.knife_explode_time or (phase_2_dagger_wait + 1)) - 1
-                end
-            end
-        end,
-        is_done = function(self, ent, data, sprite) return (data.knives_left or 0) <= 0 and (data.knife_explode_time or 0) <= 0 end,
-        get_marshall_pos = function(self, ent, data, sprite) 
-            return ent:GetPlayerTarget().Position - Vector(0,80) + 
-            Vector(1,0):Rotated(ent.FrameCount * 4):Resized(32 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
-        end 
-    },
+            init = function(self, ent, data, sprite) 
+            end,
+            update = function(self, ent, data, sprite)
+
+            end,
+            is_done = function(self, ent, data, sprite) return sprite:IsFinished("Attack1Loop") end,
+            get_marshall_pos = function(self, ent, data, sprite) 
+                return GODMODE.room:GetCenterPos() + Vector(0,-32) + 
+                Vector(1,0):Rotated(ent.FrameCount * 4):Resized(32 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
+            end 
+        },
     }
 }
 
@@ -363,7 +412,7 @@ local choose_new_atk = function(ent, data, sprite)
     end
 
     data.atk_meta = ret
-    data.atk_chance = data.atk_meta.start_atk_chance or -3
+    data.atk_chance = data.atk_meta.start_atk_chance or -1
     data.atk_meta:init(ent, data, sprite)
     return ret 
 end
@@ -373,7 +422,7 @@ local get_next_anim = function(ent, data, sprite)
         if ent.HitPoints / ent.MaxHitPoints <= phase_2_thres then 
             data.phase = 1
             data.phase_transition = true  
-            data.atk_chance = -3
+            data.atk_chance = -2
             ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
             ent.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE
             ent.CollisionDamage = 0
@@ -381,7 +430,7 @@ local get_next_anim = function(ent, data, sprite)
             return "Phase"
         else 
             if data.atk_meta == nil then 
-                data.atk_chance = (data.atk_chance or -4) + 1
+                data.atk_chance = (data.atk_chance or -3) + 1
                 if data.cur_anim == "Idle0" and ent:GetDropRNG():RandomFloat() < 0.0 + data.atk_chance * 0.4 then 
                     return choose_new_atk(ent,data,sprite).anim
                 else 
@@ -396,7 +445,7 @@ local get_next_anim = function(ent, data, sprite)
             return "Phase"
         else
             if data.atk_meta == nil then 
-                data.atk_chance = (data.atk_chance or -4) + 1
+                data.atk_chance = (data.atk_chance or -3) + 1
                 if data.cur_anim == "Idle1" and ent:GetDropRNG():RandomFloat() < 0.06 + data.atk_chance * 0.33 then 
                     return choose_new_atk(ent,data,sprite).anim
                 else 
@@ -419,43 +468,134 @@ local get_target_pos = function(ent, data, sprite)
     if (data.phase or 0) == 0 then 
         return GODMODE.room:GetCenterPos()
     else 
-        return (ent:GetPlayerTarget().Position) + Vector(64,64):Rotated(ent.FrameCount):Resized(math.cos(ent.FrameCount / 3.14 / 6) * 32 + 160)
+        return get_hori_center(ent:GetPlayerTarget(),ent) + Vector(64,64):Rotated(ent.FrameCount):Resized(math.cos(ent.FrameCount / 3.14 / 6) * 32 + 160)
+    end
+end
+
+monster.npc_init = function(self, ent, data, sprite)
+    if ent.SubType == 1 then --blade
+        ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+        ent:GetSprite():Play("Sword",true)
+        ent.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE
     end
 end
 
 monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
 
-    -- animation machine
-    if sprite:IsFinished((data.cur_anim or "Appear")) then
-        if data.atk_meta ~= nil then --if currently in attack
-            if data.atk_meta:is_done(ent, data, sprite) then 
-                data.cur_anim = data.atk_meta.anim3 or nil --get outro animation if it exists
-                data.atk_meta = nil -- wipe old attack
-                data.cur_anim = data.cur_anim or get_next_anim(ent, data, sprite) -- if outro does not exist, select new animation
-            else 
-                data.cur_anim = data.atk_meta.anim2
+    if ent.SubType == 0 then -- grand marshall update
+        -- animation machine
+        if sprite:IsFinished((data.cur_anim or "Appear")) then
+            if data.atk_meta ~= nil then --if currently in attack
+                if data.atk_meta:is_done(ent, data, sprite) then 
+                    data.cur_anim = data.atk_meta.anim3 or nil --get outro animation if it exists
+                    data.atk_meta = nil -- wipe old attack
+                    data.cur_anim = data.cur_anim or get_next_anim(ent, data, sprite) -- if outro does not exist, select new animation
+                else 
+                    data.cur_anim = data.atk_meta.anim2
+                end
+            else -- if not currently in an attack
+                data.cur_anim = get_next_anim(ent, data, sprite)
             end
-        else -- if not currently in an attack
-            data.cur_anim = get_next_anim(ent, data, sprite)
+            
+            sprite:Play(data.cur_anim, true)
         end
-        
-        sprite:Play(data.cur_anim, true)
+
+        -- update active attack
+        if data.atk_meta ~= nil then 
+            data.atk_meta:update(ent, data, sprite)
+        end
+
+        -- movement
+        local targ_pos = get_target_pos(ent, data, sprite)
+        local new_vel = (targ_pos - ent.Position)
+        ent.Velocity = ent.Velocity * 0.75 + new_vel:Resized(math.min(new_vel:Length() / 52.0,max_vel))
+
+        if sprite:IsEventTriggered("Pulse") then 
+            GODMODE.game:MakeShockwave(ent.Position + phase_2_pulse_offset + ent.Velocity, 0.0025, 0.005, 20)
+
+            -- local perc = ent.HitPoints / ent.MaxHitPoints
+            -- if perc < phase_2_thres and data.atk_meta == nil and data.atk_chance >= 0 then 
+            --     local speed = ent:GetDropRNG():RandomFloat()
+            --     for i=0,3 do 
+            --         local fire = spawn_fire(ent, ent.Position, (i % 2) * 60 - 30 + math.floor(i / 2) * 180, 2 + speed * 4 + 4 * (1 - perc / phase_2_thres))
+            --         fire.GridCollisionClass = GridCollisionClass.COLLISION_NONE
+            --         fire.FallingAccel = -5.2 / 60.0
+            --         fire.FallingSpeed = 1.0
+            --     end
+            -- end
+        end
+
+        if sprite:IsEventTriggered("Fire") and sprite:IsPlaying("Attack1End") then 
+            local sword = Isaac.Spawn(ent.Type, ent.Variant, 1, ent.Position + phase_2_sword_offset, Vector.Zero, ent)
+        end
+
+        if data.second_sprite ~= nil then 
+            data.second_sprite:Update()
+        end
+
+
+    elseif ent.SubType == 1 then -- marshall blade update
+        data.in_room = data.in_room or false 
+
+        if GODMODE.room:IsPositionInRoom(ent.Position, 0) then 
+            data.in_room = true 
+        elseif data.in_room == true and not sprite:IsPlaying("SwordEnter") then 
+            sprite:Play("SwordEnter",true)
+        end
+
+        if sprite:IsPlaying("Sword") then 
+            ent.Velocity = Vector(0,phase_2_sword_speed)
+        elseif sprite:IsPlaying("SwordEnter") then 
+            ent.Velocity = Vector.Zero
+            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
+            
+            if sprite:IsEventTriggered("Pulse") then -- impact
+                GODMODE.game:ShakeScreen(30)
+
+
+                -- for i=1,phase_2_sword_fire_density + 1 do 
+                --     for l=1,phase_2_sword_fire_layers + 1 do 
+                --         local l_scale = (l - 1) / phase_2_sword_fire_layers
+                --         local flame = spawn_fire(ent.SpawnerEntity or ent, ent.Position + phase_2_sword_eye_offset, 
+                --         15 - (i + l_scale - 1) * ((210 - 30 * l_scale) / phase_2_sword_fire_density), 
+                --         2 * (1.0 + (l - 1) / 1.5))
+
+                --         flame.FallingAccel = -(5.0/60.0)        
+                --         flame.FallingSpeed = 0.8
+                --     end
+                -- end
+
+                for i=1,12 do 
+                    spawn_fire(ent.SpawnerEntity or ent, ent.Position + phase_2_sword_eye_offset * Vector(1,0.5), -3 + 186 * (i % 2), 12 - math.floor(i / 2) * 2)
+                end
+            end
+
+            if sprite:IsEventTriggered("Fire") then -- sweep start
+                data.fire_angle = 0
+                data.fire_count = 0
+                data.fire_left = phase_2_sword_fire_max
+            end
+
+            if (data.fire_left or 0) > 0 and ent:IsFrame(phase_2_sword_fire_frequency, 0) then -- sweep
+                spawn_fire(ent.SpawnerEntity or ent, ent.Position + phase_2_sword_eye_offset * Vector(1,0.5), (data.fire_angle + 360) % 360, 6).FallingAccel = -4.8 / 60.0
+
+                local laser = spawn_laser(ent, ent.Position + phase_2_sword_eye_offset + Vector(0,-16), (data.fire_angle + 360) % 360, phase_2_sword_laser_delay - data.fire_count * phase_2_sword_fire_frequency, 20)
+                laser:GetSprite().PlaybackSpeed = 0.7
+                data.fire_angle = (data.fire_angle) + phase_2_sword_fire_step * phase_2_sword_fire_frequency
+                data.fire_count = data.fire_count + 1
+                data.fire_left = data.fire_left - 1
+
+            end
+
+            if sprite:IsEventTriggered("Phase") then 
+                GODMODE.game:ShakeScreen(10)
+                GODMODE.game:BombExplosionEffects (ent.Position, 20, TearFlags.TEAR_NORMAL, Color(1,0.8,0.2,1,0.4,0.25,0.1), ent.SpawnerEntity, 1.5)
+                ent:Remove()
+            end
+        end
     end
 
-    -- update active attack
-    if data.atk_meta ~= nil then 
-        data.atk_meta:update(ent, data, sprite)
-    end
-
-    -- movement
-    local targ_pos = get_target_pos(ent, data, sprite)
-    local new_vel = (targ_pos - ent.Position)
-    ent.Velocity = ent.Velocity * 0.75 + new_vel:Resized(math.min(new_vel:Length() / 52.0,max_vel))
-
-    if sprite:IsEventTriggered("Pulse") then 
-        GODMODE.game:MakeShockwave(ent.Position + phase_2_pulse_offset + ent.Velocity, 0.0025, 0.005, 20)
-    end
 end
 
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
@@ -463,6 +603,28 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         flags & DamageFlag.DAMAGE_LASER == DamageFlag.DAMAGE_LASER and entsrc.Type ~= 1) then
         return false
     end
+end
+
+monster.npc_post_render = function(self,ent,offset)
+    if ent.SubType ~= 0 or string.match(ent:GetSprite():GetAnimation(), "0") then return end
+    local data = GODMODE.get_ent_data(ent)
+
+    if data.second_sprite == nil then 
+        data.second_sprite = Sprite()
+        data.second_sprite:Load(ent:GetSprite():GetFilename(),true)
+        data.second_sprite:Play("Pupil",false)
+    end
+
+    data.second_sprite.Offset = ent.SpriteOffset
+    data.second_sprite.Color = Color.Lerp(Color(1,1,1,1),ent:GetSprite().Color,0.5)
+
+    local eye_pos = ent.Position + phase_2_eye_offset
+
+    if ent:GetPlayerTarget() ~= nil then
+        eye_pos = eye_pos + (ent:GetPlayerTarget().Position - (ent.Position + phase_2_eye_offset * Vector(0,0.5))):Resized(phase_2_eye_size) * phase_2_eye_scalar
+    end
+
+    data.second_sprite:Render(Isaac.WorldToScreen(eye_pos))
 end
 
 return monster

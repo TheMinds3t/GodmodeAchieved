@@ -35,7 +35,6 @@ local pok_count = { --count for helper function
     [Card.CARD_CRACKED_KEY] = 1,
 }
 
-
 cards_pills.is_red_key = function(subtype)
     return pok_transition[subtype] ~= nil or subtype == Card.CARD_CRACKED_KEY
 end
@@ -276,6 +275,7 @@ cards_pills.use_pill = function(pill, player, flags)
 
         if red_perc < 1 then player:AddHearts(1) else player:AddSoulHearts(1) end
         GODMODE.save_manager.set_player_data(player, "SugarPillRolls", math.max(sugar_uses - 1,0), true)
+        GODMODE.log("added \'"..sel_item.."\' due to Sugar Pills!")
     end
 end
 

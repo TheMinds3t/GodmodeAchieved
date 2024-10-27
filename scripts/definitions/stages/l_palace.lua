@@ -38,6 +38,14 @@ local default_graphics = {
         {graphic="gfx/grid/"..stage_prefix.."doors/arcade.png", req={RequireEither = {RoomType.ROOM_ARCADE}}},
         {graphic="gfx/grid/"..stage_prefix.."doors/sacrifice.png", req={RequireEither = {RoomType.ROOM_SACRIFICE}}},
         {graphic="gfx/grid/"..stage_prefix.."doors/ambush.png", req={RequireEither = {RoomType.ROOM_CHALLENGE}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_LIBRARY},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_CHEST}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_CHEST},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_PLANETARIUM}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_PLANETARIUM},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_DICE}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DICE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
     }
 }
 

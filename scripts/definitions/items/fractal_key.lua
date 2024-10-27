@@ -42,7 +42,7 @@ end
 item.split_gold_val = 3
 
 item.pickup_update = function(self, pickup, data, sprite)
-    if pickup.FrameCount == 1 then 
+    if pickup.FrameCount == 1 and not GODMODE.room:HasCurseMist() then 
         local uses = tonumber(GODMODE.save_manager.get_data("FractalKeyUses","0"))
         local convert_sub = item.pickup_conversions[pickup.Variant]
     
@@ -126,7 +126,7 @@ end
 
 -- decay gilded chance
 item.new_room = function(self)
-    if GODMODE.room:IsFirstVisit() and not GODMODE.room:IsClear() then 
+    if GODMODE.room:IsFirstVisit() and not GODMODE.room:IsClear() and not GODMODE.room:HasCurseMist() then 
         GODMODE.save_manager.set_data("GildedChance", math.min(1,math.max(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")) - 0.01,0)),true)
     end
 end

@@ -19,7 +19,6 @@ end
 
 monster.npc_update = function(self, ent, data, sprite)
     sprite:Play("Idle",false)
-    local player = Isaac.GetPlayer(0)
     ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
     ent.Velocity = (GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(ent.Position))) - ent.Position
     
@@ -39,6 +38,13 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
         ent2 = ent2:ToPlayer()
         if ent.SubType == 0 then -- ivory portal
             ent2:PlayExtraAnimation("LightTravel")
+            local player2 = ent2:GetSubPlayer() or ent2:GetMainTwin() or ent2:GetOtherTwin()
+            if GetPtrHash(player2) == GetPtrHash(ent2) then player2 = ent2:GetOtherTwin() or ent2:GetMainTwin() or ent2:GetSubPlayer() end 
+            
+            if player2 ~= nil then 
+                player2:PlayExtraAnimation("LightTravel")
+            end
+            
             if GODMODE.is_at_palace and GODMODE.is_at_palace() ~= true then --teleport to ivory palace
                 if GODMODE.transition_to_palace then
                     GODMODE.transition_to_palace()
@@ -53,7 +59,7 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
                         local pos = GODMODE.room:GetCenterPos()+Vector(0,96)
                         GODMODE.util.macro_on_players(function(player)
                             player.Position = pos
-                        end)         
+                        end)
                     elseif rt == RoomType.ROOM_ERROR then --teleport to previous room
                         GODMODE.game:StartRoomTransition(GODMODE.level:GetPreviousRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
                     end

@@ -863,6 +863,13 @@ reg.players = {
     the_sign = Isaac.GetPlayerTypeByName("The Sign",false),   
 }
 
+-- used to hide godmode heart ui 
+reg.hidden_heart_players = {
+    [PlayerType.PLAYER_THELOST] = true,
+    [PlayerType.PLAYER_THELOST_B] = true,
+    [PlayerType.PLAYER_THEFORGOTTEN_B] = true,
+}
+
 reg.music = {
     a_blackened_light = Isaac.GetMusicIdByName("GODMODE A Blackened Light"),
     experiencing_revelation = Isaac.GetMusicIdByName("GODMODE Experiencing Revelation"),

@@ -46,7 +46,7 @@ end
 -- end
 
 monster.pickup_init = function(self,ent)
-    if GODMODE.util.is_mirror() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
+    if GODMODE.util.is_in_quest() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
     if ent.SubType == 0 then 
         ent:Morph(ent.Type,ent.Variant,ent:GetDropRNG():RandomInt(num_subs)+1,true,true)
     end

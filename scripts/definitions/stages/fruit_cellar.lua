@@ -26,9 +26,22 @@ stage.graphics = {
 
     doors = {
         {graphic="gfx/grid/"..stage_prefix.."doors/normal.png", req=GODMODE.util.base_room_door},
-        {graphic="gfx/grid/basedoors/door_00_shopdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_SHOP}}},
-        {graphic="gfx/grid/basedoors/door_05_arcaderoomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_ARCADE}}},
-        {graphic="gfx/grid/basedoors/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
+        {graphic="gfx/grid/door_00_shopdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_SHOP}}},
+        {graphic="gfx/grid/door_00_shopdoor.png", req={RequireCurrent = {RoomType.ROOM_SHOP},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_LIBRARY},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_04_selfsacrificeroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_SACRIFICE}}},
+        {graphic="gfx/grid/door_04_selfsacrificeroomdoor.png", req={RequireCurrent = {RoomType.ROOM_SACRIFICE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_CHEST}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_CHEST},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_05_arcaderoomdoor.png", req={RequireCurrent = {RoomType.ROOM_ARCADE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_05_arcaderoomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_ARCADE}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_PLANETARIUM}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_PLANETARIUM},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_DICE}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DICE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_03_ambushroomdoor.png", req={RequireCurrent = {RoomType.ROOM_CHALLENGE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_03_ambushroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_CHALLENGE}}},
     }
 }
 

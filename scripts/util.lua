@@ -26,8 +26,8 @@ util.grid_size = 40.0
 
 -- For stageapi
 util.base_room_door = {
-    RequireCurrent = {RoomType.ROOM_DEFAULT, RoomType.ROOM_MINIBOSS, RoomType.ROOM_SACRIFICE, RoomType.ROOM_BARREN, RoomType.ROOM_ISAACS, RoomType.ROOM_DICE, RoomType.ROOM_CHEST},
-    RequireTarget = {RoomType.ROOM_DEFAULT, RoomType.ROOM_MINIBOSS, RoomType.ROOM_SACRIFICE, RoomType.ROOM_BARREN, RoomType.ROOM_ISAACS, RoomType.ROOM_DICE, RoomType.ROOM_CHEST}
+    RequireCurrent = {RoomType.ROOM_DEFAULT, RoomType.ROOM_MINIBOSS, RoomType.ROOM_SACRIFICE, RoomType.ROOM_BARREN, RoomType.ROOM_ISAACS},
+    RequireTarget = {RoomType.ROOM_DEFAULT, RoomType.ROOM_MINIBOSS, RoomType.ROOM_SACRIFICE, RoomType.ROOM_BARREN, RoomType.ROOM_ISAACS}
 }
 
 util.wrap_angle = function(angle, degrees)
@@ -716,14 +716,18 @@ util.random = function(min,max)
 	end
 end
 
-util.is_mirror = function()
-    for i=0,168 do
-        local data=GODMODE.level:GetRoomByIdx(i).Data
-        if data and data.Name=='Knife Piece Room' and GODMODE.level:GetAbsoluteStage() == 2 then
-            return true
-        end
-    end
-    return false
+-- checks mirror dimension and checks for curse of the mist being present
+util.is_in_quest = function()
+	if GODMODE.level:GetAbsoluteStage() == 2 then 
+		for i=0,168 do
+			local data=GODMODE.level:GetRoomByIdx(i).Data
+			if data and data.Name=='Knife Piece Room' then
+				return true
+			end
+		end
+	end
+
+	return GODMODE.room:HasCurseMist()
 end
 
 util.is_correction = function()
@@ -991,7 +995,7 @@ util.is_cotv_counting = function()
 	return GODMODE.util.total_item_count(GODMODE.registry.items.a_second_thought) == 0 and room:IsClear() and not util.is_death_certificate() and
             ((((room:GetType() == RoomType.ROOM_CHALLENGE and Isaac.CountEnemies()+Isaac.CountBosses() == 0 or room:GetType() ~= RoomType.ROOM_CHALLENGE) and room:GetType() ~= RoomType.ROOM_BOSSRUSH and room:GetType() ~= RoomType.ROOM_ARCADE and room:GetType() ~= RoomType.ROOM_ISAACS) 
             and GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and (not GODMODE.is_at_palace or not GODMODE.is_at_palace()) and GODMODE.save_manager.get_config("CallOfTheVoid","false") == "true" 
-            and GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and GODMODE.level:GetAbsoluteStage() <= LevelStage.STAGE5 and GODMODE.level:GetAbsoluteStage() > 1) or (GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time))
+            and GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and GODMODE.level:GetAbsoluteStage() < LevelStage.STAGE5 and GODMODE.level:GetAbsoluteStage() > 1) or (GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time))
             and GODMODE.save_manager.get_data("VoidSpawned","false") ~= "true" and not GODMODE.paused and not GODMODE.is_in_secrets() and not room:HasCurseMist()
 end
 
@@ -1338,10 +1342,21 @@ util.for_each = function(list, transform)
 	return ret 
 end
 
+local red_poop_var = GODMODE.validate_rgon() and GridPoopVariant.RED or 1
+local corn_poop_var = GODMODE.validate_rgon() and GridPoopVariant.CORN or 2
+
 util.hazard_grid_types = {
 	[GridEntityType.GRID_ROCK_SPIKED] = GridEntityType.GRID_ROCK,
 	[GridEntityType.GRID_SPIKES_ONOFF] = GridEntityType.GRID_NULL,
 	[GridEntityType.GRID_SPIKES] = GridEntityType.GRID_NULL,
+	[GridEntityType.GRID_POOP] = function(grident,ind,pos) 
+		if grident:GetVariant() == red_poop_var or grident:GetVariant() == corn_poop_var then 
+			grident:SetVariant(0)
+			grident:SetType(GridEntityType.GRID_POOP)
+			grident:Update()
+			GODMODE.log("new variant is "..grident:GetVariant(),true)	
+		end
+	end,
 }
 
 util.hazard_ent_types = {
@@ -1364,18 +1379,27 @@ util.dehazard_room = function()
 	end
 
 	for targ_type,rep_type in pairs(util.hazard_grid_types) do 
-		GODMODE.util.macro_on_grid(targ_type,-1,function(grident,ind,pos) 
-			GODMODE.room:RemoveGridEntity(ind,0,true)
-			grident:Update()	
+		if type(rep_type) ~= "function" then 
+			GODMODE.util.macro_on_grid(targ_type,-1,function(grident,ind,pos) 
+				GODMODE.room:RemoveGridEntity(ind,0,true)
+				grident:Update()	
 
-			if rep_type ~= GridEntityType.GRID_NULL then 
-				GODMODE.room:SpawnGridEntity(ind,rep_type,grident:GetRNG():GetSeed(),0)
-			else 
-				GODMODE.room:SetGridPath(ind,0)
-			end
+				util.schedule_function(function() 
+					if rep_type ~= GridEntityType.GRID_NULL then 
+						GODMODE.room:SpawnGridEntity(ind,rep_type,grident:GetRNG():GetSeed(),0)
+					else 
+						GODMODE.room:SetGridPath(ind,0)
+					end							
+				end,1)
 
-			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pos, Vector.Zero, nil)
-		end)
+				Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pos, Vector.Zero, nil)		
+			end)
+		else
+			GODMODE.util.macro_on_grid(targ_type,-1,function(grident,ind,pos) 
+				rep_type(grident,ind,pos)
+				Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, pos, Vector.Zero, nil)		
+			end)
+		end
 	end
 
 	for targ_type,rep_func in pairs(util.hazard_ent_types) do 
