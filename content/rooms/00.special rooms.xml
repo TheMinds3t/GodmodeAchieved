@@ -91517,7 +91517,7 @@
 			<entity type="700" variant="106" subtype="0" weight="1.0"/>
 			<entity type="17" variant="0" subtype="0" weight="1.0"/>
 			<entity type="17" variant="0" subtype="0" weight="1.0"/>
-			<entity type="1940" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1940" variant="0" subtype="0"  weight="1.0"/>
 			<entity type="17" variant="0" subtype="0" weight="1.0"/>
 			<entity type="700" variant="106" subtype="0" weight="1.0"/>
 			<entity type="700" variant="106" subtype="0" weight="1.0"/>

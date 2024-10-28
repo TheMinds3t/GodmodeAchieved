@@ -1153,16 +1153,16 @@ else
             mural:Update()
         end
 
+        local correction = false
+
         if GODMODE.save_manager.get_config("StatHelp","true") == "true" and not GODMODE.level:IsAscent() and GODMODE.level:GetStage() < LevelStage.STAGE8 then 
-            local correction = false
-            GODMODE.save_manager.set_data("CorrectionPortalSpawned","false")
 
             GODMODE.util.macro_on_players(function(player) 
                 local base = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats",""..GODMODE.util.get_stat_score(player).score))
                 local scale = GODMODE.util.get_stat_scale()
                 local stat_thres = base * scale + 0.1
                 local stats = GODMODE.util.get_stat_score(player)
-                GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
+                -- GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
 
                 if stats.score < stat_thres then 
                     correction = true
@@ -1171,19 +1171,22 @@ else
                     GODMODE.log("Stat score of "..stats.score.." is above than the threshold (currently "..stat_thres.."), no correction needed", true)
                 end
             end)
+
             if correction == true and GODMODE.save_manager.get_config("StatHelp","true") == "true" then 
-                GODMODE.save_manager.set_data("CorrectionNeeded","true")
+                GODMODE.save_manager.set_data("CorrectionPortalSpawned","false")
+                GODMODE.save_manager.set_data("CorrectionNeeded","true",true)
             end
         end
 
-        if (GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true" or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) 
-            and GODMODE.save_manager.get_data("CorrectionPortalSpawned","false") == "false" 
-            and (GODMODE.level:GetStage() <= LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1) and not GODMODE.level:IsAscent() then 
+        if ((correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) 
+            and GODMODE.save_manager.get_data("CorrectionPortalSpawned","true") == "false" 
+            and GODMODE.level:GetStage() < LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 and not GODMODE.level:IsAscent() then 
 
             GODMODE.log("GOTO CORRECTION",true)
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
                 GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,64))), Vector.Zero, nil)
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","true")
+            GODMODE.save_manager.set_data("CorrectionNeeded","false",true) 
         end
     end
 

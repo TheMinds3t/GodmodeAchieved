@@ -113,6 +113,7 @@ local credits = {
 "     ultrinik",
 "   cupbeem2487, buglord",
 "     sly0795",
+"     mcyum6815",
 "",
 "a cutie patootie",
 "     you :)",

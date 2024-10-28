@@ -134,7 +134,7 @@ save_manager.load = function()
         GODMODE.log("Save manager loaded!",true)
     end
     
-    if GODMODE.config_presets and next(save_manager.god_data.presets) ~= nil then 
+    if GODMODE.config_presets and save_manager.god_data.presets ~= nil then 
         GODMODE.config_presets.presets = save_manager.god_data.presets
         GODMODE.config_presets.gen_vanilla_presets()
     end

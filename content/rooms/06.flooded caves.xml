@@ -9074,16 +9074,16 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9092,7 +9092,7 @@
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
@@ -9101,16 +9101,16 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5051" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9119,16 +9119,16 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="1">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="23" variant="0" subtype="0" weight="1.0"/>
@@ -9140,13 +9140,13 @@
 			<entity type="23" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5052" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9155,19 +9155,19 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
 			<entity type="21" variant="0" subtype="0" weight="1.0"/>
@@ -9182,19 +9182,19 @@
 			<entity type="21" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5053" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9203,22 +9203,22 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="879" variant="0" subtype="0" weight="1.0"/>
@@ -9230,22 +9230,22 @@
 			<entity type="879" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5054" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9257,31 +9257,31 @@
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="4">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
@@ -9293,55 +9293,55 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="1">
 			<entity type="30" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="5">
 			<entity type="30" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5056" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9350,13 +9350,13 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="0">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9365,43 +9365,43 @@
 			<entity type="25" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="25" variant="2" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="6">
 			<entity type="25" variant="2" subtype="0" weight="1.0"/>
@@ -9410,13 +9410,13 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5057" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9425,22 +9425,22 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9452,22 +9452,22 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5058" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9476,49 +9476,49 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="5" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="288" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5059" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9527,61 +9527,61 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="0">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="2">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5060" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9596,22 +9596,22 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9626,7 +9626,7 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9635,25 +9635,25 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="303" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9662,7 +9662,7 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5062" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9671,16 +9671,16 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="2">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9689,7 +9689,7 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9698,16 +9698,16 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5063" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9719,37 +9719,37 @@
 			<entity type="242" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="234" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
 			<entity type="242" variant="0" subtype="0" weight="1.0"/>
@@ -9761,19 +9761,19 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
 			<entity type="217" variant="0" subtype="0" weight="1.0"/>
@@ -9785,19 +9785,19 @@
 			<entity type="217" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5065" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9806,43 +9806,43 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="0">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="86" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
 			<entity type="86" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5066" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9851,13 +9851,13 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="1">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9866,13 +9866,13 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9881,13 +9881,13 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5067" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9896,13 +9896,13 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="1">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9917,7 +9917,7 @@
 			<entity type="21" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
 			<entity type="21" variant="0" subtype="0" weight="1.0"/>
@@ -9932,13 +9932,13 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5068" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9947,10 +9947,10 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -9965,22 +9965,22 @@
 			<entity type="21" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5069" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -9989,16 +9989,16 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="3" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="1">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10013,7 +10013,7 @@
 			<entity type="23" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
 			<entity type="23" variant="0" subtype="0" weight="1.0"/>
@@ -10028,10 +10028,10 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5070" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10040,7 +10040,7 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10049,25 +10049,25 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="2" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
 			<entity type="26" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
 			<entity type="26" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="10" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10076,7 +10076,7 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5071" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10085,19 +10085,19 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
 			<entity type="24" variant="0" subtype="0" weight="1.0"/>
@@ -10109,16 +10109,16 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5072" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10127,19 +10127,19 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="2">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
 			<entity type="22" variant="0" subtype="0" weight="1.0"/>
@@ -10148,19 +10148,19 @@
 			<entity type="22" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="4">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5073" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10169,7 +10169,7 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="0">
 			<entity type="206" variant="0" subtype="0" weight="1.0"/>
@@ -10178,31 +10178,31 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="11" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="1" y="6">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10211,7 +10211,7 @@
 			<entity type="206" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5074" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10220,16 +10220,16 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="1">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10238,13 +10238,13 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="4">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10253,16 +10253,16 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="5">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5075" name="[GODMODE] Teether" type="1" subtype="0" shape="1" width="13" height="7" difficulty="3" weight="3.0">
@@ -10271,13 +10271,13 @@
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
 		<spawn x="0" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="0">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="2">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="2">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
@@ -10286,31 +10286,31 @@
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="4" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="5" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="7" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="8" y="3">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="9" y="3">
 			<entity type="700" variant="18" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="4">
-			<entity type="700" variant="18" subtype="0" weight="0.0"/>
+			<entity type="700" variant="18" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="0" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 		<spawn x="12" y="6">
-			<entity type="1000" variant="0" subtype="0" weight="0.0"/>
+			<entity type="1000" variant="0" subtype="0"  weight="1.0"/>
 		</spawn>
 	</room>
 	<room variant="5000" name="[GODMODE] easy" type="11" subtype="10" shape="1" width="13" height="7" difficulty="1" weight="1.0">
