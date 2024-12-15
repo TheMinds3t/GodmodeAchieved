@@ -105,7 +105,7 @@ monster.player_update = function(self, player, data)
         end
     end
 
-    if flags > 0 then 
+    if flags > 0 and player:IsFrame(20,1) then 
         player:AddCacheFlags(flags)
         player:EvaluateItems()    
     end

@@ -463,10 +463,10 @@
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
 
-    <entity anm2path="108_callofthevoid.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="48" friction="1" id="700" name="Call of the Void" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="108" portrait="55" gridCollision="none" shutdoors="false">
+    <entity anm2path="108_callofthevoid_new.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="48" friction="1" id="700" name="Call of the Void" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="108" portrait="55" gridCollision="none" shutdoors="false">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
-    <entity anm2path="108.1_cotv_orb.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="8" friction="1" id="700" name="Void Soul (Call of the Void Projectile)" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="108" subtype="1" portrait="55" gridCollision="none" shutdoors="false">
+    <entity anm2path="108.1_cotv_orb_new.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="8" friction="1" id="700" name="Void Soul (Call of the Void Projectile)" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="108" subtype="1" portrait="55" gridCollision="none" shutdoors="false">
     </entity>
     <entity anm2path="108.2_skeletal_orb_new.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="7" friction="1" id="700" name="Skeletal Soul (The Fallen Light Projectile)" numGridCollisionPoints="12" shadowSize="8" stageHP="0" variant="108" subtype="2" portrait="56" gridCollision="none" shutdoors="false">
     </entity>
@@ -631,6 +631,15 @@
         <gibs amount="16" blood="1" bone="1" eye="0" gut="1" large="0" />
     </entity>
 
+    <entity anm2path="151_cotv.anm2" baseHP="1000" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="The Collapsed" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="151" portrait="76" gridCollision="walls">
+        <bestiary transform="0,2,0.5" anim="1Idle" />
+    </entity>
+
+    <entity anm2path="151_cotv.anm2" baseHP="1000" boss="0" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="40" friction="1" id="700" name="The Collapsed (Hand)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="1" portrait="69" gridCollision="none">
+    </entity>
+    <entity anm2path="151_cotv.anm2" baseHP="0" boss="0" tags="nodelirium noreroll" champion="0" collisionDamage="2" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="The Collapsed (Dark Matter)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="2" portrait="69" gridCollision="walls">
+    </entity>
+
     <entity anm2path="153_skeletal_angel_new.anm2" baseHP="2000" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="2" collisionMass="99999" collisionRadius="22" friction="1" id="700" name="The Fallen Light" numGridCollisionPoints="12" shadowSize="28" stageHP="0" variant="153" portrait="69" gridCollision="walls">
         <bestiary transform="0,2,1" anim="Idle" />
         <gibs amount="18" blood="0" bone="1" eye="0" gut="1" large="1"/>
@@ -664,7 +673,7 @@
     </entity>
     <entity anm2path="grid/fatal_attraction.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="12" friction="1" id="5" name="[GODMODE] Correction Shrine" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="708" shutdoors="false">
     </entity>
-    <entity anm2path="machine_cotv.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="24" friction="1" id="700" name="COTV (Correction Room)" numGridCollisionPoints="4" shadowSize="0" stageHP="0" variant="229" gridCollision="none" shutdoors="false">
+    <entity anm2path="machine_cotv_new.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="24" friction="1" id="700" name="COTV (Correction Room)" numGridCollisionPoints="4" shadowSize="0" stageHP="0" variant="229" gridCollision="none" shutdoors="false">
     </entity>
     <entity anm2path="mach_closet_tchar.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="999999" collisionRadius="18" friction="1" id="700" name="Godmode Tainted Char" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="230" gridCollision="none" shutdoors="false">
     </entity>

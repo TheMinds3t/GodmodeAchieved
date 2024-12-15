@@ -8,27 +8,28 @@ local bh_spacing = 26
 local max_stat_types = 7 --stats that are buffable
 local shrine_sprite_off = 6
 
-local max_item_sel_depth = CollectibleType.NUM_COLLECTIBLES / 10
+local max_item_sel_depth = math.floor(CollectibleType.NUM_COLLECTIBLES / 10)
 
 local active_color = Color(1,1,1,1,0.8,0.8,0.8)
 local active_radius = 128
 
 monster.shrine_has = function(ent,item)
+    local ret = false 
     GODMODE.util.macro_on_enemies(nil,monster.type,monster.variant,nil,function(shrine) 
         if GetPtrHash(shrine) ~= GetPtrHash(ent) then 
             local data = GODMODE.get_ent_data(shrine)
 
             if data.buff and data.buff.type == "item" and data.buff.id == item then 
-                return true
+                ret = true
             end
         end
     end)
     
-    return false 
+    return ret
 end
 
 monster.get_unique_item = function(ent,player,cache)
-    GODMODE.log("getting unique item..",true)
+    GODMODE.log("getting unique item..")
 
     local item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
 
@@ -40,33 +41,36 @@ monster.get_unique_item = function(ent,player,cache)
         end
     end
 
+    local max_qual = math.ceil(GODMODE.level:GetAbsoluteStage() / 2) + 1
+
     local quality_flag = function(item)
         local config = Isaac.GetItemConfig():GetCollectible(item)
 
         if config and config:IsCollectible() then 
-            local max_qual = math.ceil(GODMODE.level:GetAbsoluteStage() / 2) + 1
-            GODMODE.log("quality of "..item.." = "..config.Quality..", max_qual="..max_qual,true)
-            return config.Quality > max_qual and config.Quality < 4 
+            GODMODE.log("quality of "..item.." = "..config.Quality..", max_qual="..max_qual)
+            return config.Quality > max_qual or config.Quality == 4
         else 
-            return true 
+            return false
         end
     end
 
     local depth = max_item_sel_depth 
 
     while 
-        GODMODE.util.total_item_count(item) > 0 
-        and not monster.shrine_has(ent,item) 
-        and rep_unlock_flag(item)
-        and quality_flag(item) and depth > 0 do 
+        GODMODE.util.total_item_count(item) == 0 -- players do not have this item yet?
+        and not monster.shrine_has(ent,item) -- another correction shrine has this?
+        and rep_unlock_flag(item) -- RGON: is unlocked?
+        and quality_flag(item) -- cap quality
+        and depth > 0 do -- no infinite loops
         
-        GODMODE.log("item_flag="..(GODMODE.util.total_item_count(item) > 0)..
-            "\nshrine_has="..(not monster.shrine_has(ent,item))..
-            "\nrep_unlock_flag="..rep_unlock_flag(item).."\nquality_flag="..quality_flag(item).."\ndepth = "..depth.."\n",true)
+        GODMODE.log("item_flag="..tostring(GODMODE.util.total_item_count(item) == 0)..
+            "\nshrine_has="..tostring(not monster.shrine_has(ent,item))..
+            "\nrep_unlock_flag="..tostring(rep_unlock_flag(item)).."\nquality_flag="..tostring(quality_flag(item)).."\ndepth = "..depth.."\n")
         item = GODMODE.special_items:get_item_with_cache(cache,ent:GetDropRNG(),true)
         depth = depth - 1
     end
 
+    GODMODE.log("returned item = "..item)
     return item
 end
 

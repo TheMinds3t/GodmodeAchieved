@@ -150,7 +150,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.I1 = ent.I1 + 1
 
                 -- valid attack time?
-                if ent:GetDropRNG():RandomFloat() > 1.25 - ent.I1 * 0.15 and GODMODE.room:IsClear() and not GODMODE.room:HasCurseMist() and (data.pause or -1) < 0 and (data.opacity or 0.8) >= 0.5 then 
+                if ent:GetDropRNG():RandomFloat() > 1.25 - ent.I1 * 0.15 and GODMODE.room:IsClear() and not GODMODE.room:HasCurseMist() and (data.pause or -1) < 0 and (data.opacity or 0.9) >= 0.6 then 
                     ent.I1 = 0
                     if player:ToPlayer() and player:ToPlayer():IsExtraAnimationFinished() or not player:ToPlayer() then
                         local max = (data.power or 0)
@@ -174,17 +174,24 @@ monster.npc_update = function(self, ent, data, sprite)
         end
 
         -- hide COTV in uncleared rooms AND correction rooms
-        data.opacity = data.opacity or 0.8
+        data.opacity = data.opacity or 0.9
+
+        ent.FlipX = player.Position.X > ent.Position.X
 
         if correct_flag then 
             data.opacity = 0.0
         elseif not GODMODE.room:IsClear() then 
             data.opacity = math.max(0.1,(data.opacity - 1/60.0))
         else
-            data.opacity = math.min(math.cos(math.rad(data.real_time*3))*0.15+0.7,data.opacity + 1/60.0)
+            data.opacity = math.min(math.cos(math.rad(data.real_time*3))*0.15+0.8,data.opacity + 1/60.0)
         end
 
-        ent:SetColor(Color(data.opacity,data.opacity-(data.roar_fx or 0.0),data.opacity-(data.roar_fx or 0.0),math.min(data.opacity+(data.roar_fx or 0) * 2,1.0),(data.roar_fx or 0.0)/2.0,0,0,0),999,999,false,false)
+        if sprite:IsPlaying("Appear") or sprite:IsPlaying("Disappear") or sprite:IsPlaying("Attack") then 
+            data.opacity = 1.0
+        end
+
+        local col_mod = data.opacity-(data.roar_fx or 0.0)
+        ent:SetColor(Color(col_mod,col_mod,col_mod,math.min(data.opacity+(data.roar_fx or 0) * 2,1.0)),999,999,false,false)
 
         -- no projectiles left to spawn, checks for existing projectiles before disappearing once they are all gone
         if (data.opacity or 0) >= 0.5 and ent.FrameCount > 10 then 
@@ -244,6 +251,15 @@ monster.npc_update = function(self, ent, data, sprite)
             else
                 GODMODE.sfx:Play(SoundEffect.SOUND_MONSTER_ROAR_0,1,2,false,0.5)
             end
+        end
+
+        if ent:IsFrame(2,1) then 
+            local fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HAEMO_TRAIL, 0, ent.Position+RandomVector():Resized(ent:GetDropRNG():RandomFloat() * ent.Size) * Vector(1,1.25) - Vector(0,40), Vector.Zero, nil):ToEffect()
+            fx:SetTimeout(10)
+            fx.LifeSpan = 20
+            fx.Scale = ent:GetDropRNG():RandomFloat() * 0.5 + 1.0
+            fx:SetColor(Color(0,0,0,0.25),999,1,false,false)
+            fx.DepthOffset = -100
         end
     end
 

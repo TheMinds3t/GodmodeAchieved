@@ -1,8 +1,8 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="8/30/2022 5:30:01 PM" Version="107" Fps="30"/>
+	<Info CreatedBy="robot" CreatedOn="12/7/2024 10:01:35 PM" Version="108" Fps="30"/>
 	<Content>
 		<Spritesheets>
-			<Spritesheet Path="bulletatlas.png" Id="0"/>
+			<Spritesheet Path="alt_bulletatlas.png" Id="0"/>
 		</Spritesheets>
 		<Layers>
 			<Layer Name="body" Id="0" SpritesheetId="0"/>

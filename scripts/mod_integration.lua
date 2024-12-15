@@ -15,7 +15,7 @@ end
 
 -- adds a new tearflag to the tearflag stat score. 
 -- tearflag: custom TearFlag
--- add_val: function. Check for and return the statscore modifier for your custom tearflag. The max value for the tearflag stat score is 5, so keep that in mind.
+-- add_val: function. Check for and return the statscore modifier for your custom tearflag. The max value for the tearflag stat score is 12, so keep that in mind.
 -- examples of basegame values:
 --[[
 	TearFlags.TEAR_SPECTRAL = 0.3,
@@ -29,7 +29,7 @@ end
 
 -- adds a new transformation to the transformation stat score. 
 -- transform: string. transformation name
--- add_val: function. Check for and return the statscore modifier for your custom transformation. The max value for the transformation stat score is 4, so keep that in mind.
+-- add_val: function. Check for and return the statscore modifier for your custom transformation. The max value for the transformation stat score is 12, so keep that in mind.
 -- examples of basegame values:
 --[[
 	PlayerForm.PLAYERFORM_GUPPY = 2.5,
@@ -52,7 +52,7 @@ end
 -- gets the current number of charges active for Call of the Void, with the faithless parameter dictating whether you're getting the faithless heart charges or the damaging charges.
 -- faithless: boolean. True to get the # of faithless charges, false to get the # of damaging charges
 GODMODE.api.get_cotv_charges = function(faithless)
-    faithless = faithless or true 
+    faithless = faithless == nil and true or faithless 
     return faithless and tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) or tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))
 end
 
@@ -83,8 +83,8 @@ end
 -- safegrididx: int. This should just be the roomdescriptor's SafeGridIndex. Defaults to the current room's safe grid index.
 -- observatory: boolean. True to set the specified room to render observatory fx, false to clear/not set it to render the observatory fx. Defaults to true.
 GODMODE.api.set_observatory = function(safegrididx, observatory)
-    safegrididx = safegrididx or GODMODE.level:GetCurrentRoomDesc().SafeGridIndex
-    observatory = observatory or true 
+    safegrididx = safegrididx == nil and GODMODE.level:GetCurrentRoomDesc().SafeGridIndex or safegrididx
+    observatory = observatory == nil and true or observatory 
 
     if observatory then 
         GODMODE.save_manager.add_list_data("ObservatoryGridIdx",safegrididx,true)
@@ -760,14 +760,16 @@ function load_stageapi_integration()
     end)
 
 
-    StageAPI.AddCallback(GODMODE.mod_id, "PRE_SELECT_NEXT_STAGE", 1, function(currentStage, secretExit)
+    StageAPI.AddCallback(GODMODE.mod_id, "PRE_SELECT_NEXT_STAGE", 99, function(currentStage, secretExit)
         if currentStage ~= nil then
             for _,stage in pairs(GODMODE.stages) do
+                GODMODE.log("Testing "..(stage.api_id or "NIL"),true)
+
+                GODMODE.save_manager.set_data("StageReseed"..GODMODE.level:GetStage(),"true",true)
+
                 if stage.secret_next and stage.api_id == currentStage.Name and secretExit then 
                     return stage:secret_next(stage.stage)
-                elseif stage.next and stage.api_id == currentStage.Name then                     
-                    -- GODMODE.save_manager.set_data("StageReseed"..GODMODE.level:GetStage(),"true",true)
-
+                elseif stage.next and stage.api_id == currentStage.Name then
                     return stage:next(stage.stage)
                 end
             end
@@ -1029,6 +1031,22 @@ function load_stageapi_integration()
         }
     })
 
+    GODMODE.backdrops.lower_level = GODMODE.make_room_gfx({
+        backdrop_gfx = {
+            Walls = {"1"},
+            NFloors = {"nfloor"},
+            LFloors = {"lfloor"},
+            Corners = {"corner"}
+        }, 
+    
+        backdrop_prefix = "gfx/backdrop/lower/lower_", 
+        backdrop_suffix = ".png",
+    
+        doors = {
+            {graphic="gfx/grid/correction_door.png", req=GODMODE.util.base_room_door},
+        }
+    })
+
     GODMODE.backdrop_overlays = {
         -- [LevelStage.STAGE5..","..StageType.STAGETYPE_ORIGINAL] = "SheolToPalace",
         -- [LevelStage.STAGE5..","..StageType.STAGETYPE_WOTL] = "CathedralToPalace",
@@ -1057,32 +1075,29 @@ function load_stageapi_integration()
         [RoomType.ROOM_MINIBOSS] = true
     }
 
-    local overlay_func = function()
-        if not StageAPI.IsHUDAnimationPlaying() then
-            local room = GODMODE.room
-            local level = GODMODE.level
-            local listIndex = StageAPI.GetCurrentListIndex()
-            local type = StageAPI.GetCurrentRoomType()
-
-            if type == RoomType.ROOM_DEFAULT then 
-                local bd_key = level:GetAbsoluteStage()..","..level:GetStageType()
-                -- GODMODE.log("right room type! bd_key="..tostring(bd_key),true)
-
-                if GODMODE.backdrop_overlays and GODMODE.backdrop_overlays[bd_key]
-                    and GODMODE.save_manager.get_config(GODMODE.backdrop_config_toggles[bd_key],"false") == "true" then 
-
-                    -- GODMODE.log("rendering overlay!",true)
-                    GODMODE.backdrop_overlays[bd_key]:SetAlpha(1)
-                    GODMODE.backdrop_overlays[bd_key]:Render(false)
+    if GODMODE.validate_rgon() then 
+        function GODMODE.mod_object:pre_render_walls() 
+            if not StageAPI.IsHUDAnimationPlaying() then
+                local room = GODMODE.room
+                local level = GODMODE.level
+                local listIndex = StageAPI.GetCurrentListIndex()
+                local type = StageAPI.GetCurrentRoomType()
+    
+                if type == RoomType.ROOM_DEFAULT then 
+                    local bd_key = level:GetAbsoluteStage()..","..level:GetStageType()
+                    -- GODMODE.log("right room type! bd_key="..tostring(bd_key),true)
+    
+                    if GODMODE.backdrop_overlays and GODMODE.backdrop_overlays[bd_key]
+                        and GODMODE.save_manager.get_config(GODMODE.backdrop_config_toggles[bd_key],"false") == "true" then 
+    
+                        -- GODMODE.log("rendering overlay!",true)
+                        GODMODE.backdrop_overlays[bd_key]:SetAlpha(1)
+                        GODMODE.backdrop_overlays[bd_key]:Render(false)
+                    end
                 end
             end
         end
-    end
 
-    if GODMODE.validate_rgon() then 
-        function GODMODE.mod_object:pre_render_walls() 
-            overlay_func()
-        end
         GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_BACKDROP_RENDER_WATER, GODMODE.mod_object.pre_render_walls)
     else 
         -- StageAPI.AddCallback(GODMODE.mod_id, "PRE_TRANSITION_RENDER", 2, function()
@@ -1148,7 +1163,6 @@ if MinimapAPI then
     MinimapAPI:AddMapFlag("GODMODEBlessing_Justice", curse_predicate(GODMODE.registry.blessings["justice"]), GODMODE.sprites.minimapapi_sprite, "BlessingJustice", 0)
     MinimapAPI:AddMapFlag("GODMODEBlessing_Fortitude", curse_predicate(GODMODE.registry.blessings["fortitude"]), GODMODE.sprites.minimapapi_sprite, "BlessingFortitude", 0)
     MinimapAPI:AddMapFlag("GODMODEBlessing_Patience", curse_predicate(GODMODE.registry.blessings["patience"]), GODMODE.sprites.minimapapi_sprite, "BlessingPatience", 0)
-
 end
 
 -- THEYVE DONE IT! THEYVE FIXED IT!

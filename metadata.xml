@@ -52,7 +52,7 @@ For a full list of credits, refer to the [url=https://tboigodmode.wiki.gg/wiki/D
 [img]https://i.imgur.com/eLl9vc2.png[/img]
 
 The custom ending voiceover was trained with the RVC Project, a model located [url=https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI]here![/url]</description>
-    <version>1.285</version>
+    <version>1.286</version>
     <visibility>Private</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

@@ -185,7 +185,7 @@ reg.entities = {
         variant = Isaac.GetEntityVariantByName("Vengeful Dagger"),
     },
 
-    opia_tear = {
+    opia_soul = {
         type = Isaac.GetEntityTypeByName("Opia Soul"),
         variant = Isaac.GetEntityVariantByName("Opia Soul"),
     },
@@ -582,6 +582,20 @@ reg.entities = {
         type = Isaac.GetEntityTypeByName("Bathemo Devote"),
         variant = Isaac.GetEntityVariantByName("Bathemo Devote"),
         subtype = GODMODE.validate_rgon() and Isaac.GetEntitySubTypeByName("Bathemo Devote") or 1
+    },
+    the_collapsed = {
+        type = Isaac.GetEntityTypeByName("The Collapsed"),
+        variant = Isaac.GetEntityVariantByName("The Collapsed")
+    },
+    the_collapsed_hand = {
+        type = Isaac.GetEntityTypeByName("The Collapsed (Hand)"),
+        variant = Isaac.GetEntityVariantByName("The Collapsed (Hand)"),
+        subtype = 1
+    },
+    the_collapsed_matter = {
+        type = Isaac.GetEntityTypeByName("The Collapsed (Dark Matter)"),
+        variant = Isaac.GetEntityVariantByName("The Collapsed (Dark Matter)"),
+        subtype = 2
     },
     the_fallen_light = {
         type = Isaac.GetEntityTypeByName("The Fallen Light"),

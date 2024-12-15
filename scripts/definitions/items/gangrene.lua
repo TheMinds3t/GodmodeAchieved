@@ -11,16 +11,19 @@ item.encyc_entry = {
     },
 }
 
+local gangrene_vel_thres = 0.85
+local gangrene_vel_inherit = 0.25
+
 item.player_update = function(self, player, data)
 	if player:HasCollectible(item.instance) then
 		if not player:IsDead() then
 			data.gangrene_counter = (data.gangrene_counter or 0) + player:GetCollectibleRNG(item.instance):RandomFloat()
 
-			if math.floor(data.gangrene_counter) % 3 == 0 then
+			if math.floor(data.gangrene_counter) % 3 == 0 and player.Velocity:Length() > gangrene_vel_thres then
 				data.gangrene_counter = data.gangrene_counter + 1
 				data.sign_not = true
 				data.gehazi_keep_coin = true
-				local tear = player:FireTear(player.Position+Vector(player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size,player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size),-player.Velocity:Resized(math.min(player.Velocity:Length(),1)) * math.max(0.1,player.ShotSpeed*0.5-0.4),false,true,false,player,1.0)
+				local tear = player:FireTear(player.Position+Vector(player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size,player:GetCollectibleRNG(item.instance):RandomInt(math.floor(player.Size*2))-player.Size), player.Velocity * Vector(1,1):Resized(gangrene_vel_inherit) * (math.max(0.1,player.ShotSpeed*0.5-0.2) * 10),false,true,false,player,1.0)
 				data.gehazi_keep_coin = false
 				data.sign_not = false
 				

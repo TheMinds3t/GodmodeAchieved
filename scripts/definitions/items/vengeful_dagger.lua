@@ -96,7 +96,7 @@ item.player_update = function(self, player, data)
         if data.birthright then 
             data.vd_charge = math.min(br_swing_time,(data.vd_charge or 0) + 1)
         end
-    elseif (data.cached_dagger or true) == true then 
+    elseif (data.cached_dagger or false) == true then 
         player:AddCacheFlags(CacheFlag.CACHE_FAMILIARS)
         player:EvaluateItems()
         data.cached_dagger = false
@@ -138,8 +138,8 @@ end
 item.render_player_ui = function(self,player)
     if player:HasCollectible(item.instance) then 
         local data = GODMODE.get_ent_data(player)
-        if data.birthright == true then 
-            if Input.IsActionPressed (ButtonAction.ACTION_MAP, player.ControllerIndex) or data and (data.vd_charge or br_swing_time) < br_swing_time then
+        if data and data.birthright == true then 
+            if Input.IsActionPressed (ButtonAction.ACTION_MAP, player.ControllerIndex) or (data.vd_charge or br_swing_time) < br_swing_time then
                 data.vd_display = math.min(50,(data.vd_display or 0) + 5)
             end
         

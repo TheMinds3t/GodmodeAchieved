@@ -123,4 +123,5 @@
 	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Bloody Gabriel.png" ID="272" Name="Bloody Gabriel" Variant="700" Subtype="0" Boss="1" />
 	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Demon Priest.png" ID="700" Name="Demon Priest" Variant="32" Subtype="1" />
 	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Angelusossa.png" ID="700" Name="The Fallen Light" Variant="153" Subtype="1" />
+	<entity Group="Bosses" Kind="Godmode" Image="resources/Entities/Godmode/Collapsed.png" ID="700" Name="The Collapsed" Variant="151" Subtype="0" />
 </data>

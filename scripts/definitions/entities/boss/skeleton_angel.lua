@@ -157,7 +157,8 @@ monster.do_unlocks = function(self, ent, data)
 	end
 
 	--destroy projectiles
-	GODMODE.util.macro_on_enemies(-1,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
+	GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
+		proj = proj:ToProjectile()
 		proj.ProjectileFlags = proj.ProjectileFlags & ~ProjectileFlags.EXPLODE 
 		proj:Die() 
 	end)

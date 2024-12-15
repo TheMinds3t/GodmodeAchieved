@@ -112,6 +112,8 @@ else
         GODMODE.registry = include("scripts.definitions.registry")
         GODMODE.config_presets = include("scripts.definitions.config_presets")
         GODMODE.config_presets.gen_vanilla_presets()
+        GODMODE.date_events = include("scripts.definitions.date_events")
+        GODMODE.date_events.get_active_events(true)
         
         GODMODE.shader_params = GODMODE.shader_params or {}
         GODMODE.shader_params.godmode_trinket_time = 0
@@ -676,8 +678,8 @@ else
             local power = tonumber(GODMODE.save_manager.get_data("VoidBHProj","0"))+tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))
             local active_skull_off = Vector.Zero
 
-            local input_pressed = Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)), Isaac.GetPlayer().ControllerIndex)
-            local inc_flag = (input_pressed or GODMODE.paused) and false or not input_pressed and (
+            local input_pressed = GODMODE.paused or Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)), Isaac.GetPlayer().ControllerIndex)
+            local inc_flag = (input_pressed and false) or not input_pressed and (
                 anim_type == "TimerPaused" or 
                 anim_type == "TimerDisabled" or 
                 (GODMODE.save_manager.get_config("CallOfTheVoid","true") ~= "true" or 
@@ -1014,9 +1016,9 @@ else
         GODMODE.room_override.wipe_overrides()
 
         if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then
-            -- if GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and not StageAPI.InNewStage() then 
-            --     GODMODE.try_switch_stage()
-            -- end
+            if GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and not StageAPI.InNewStage() then 
+                GODMODE.try_switch_stage()
+            end
 
             GODMODE.save_manager.clear_key("ObservatoryGridIdx",true)
             GODMODE.cached_observatory_ids = nil
@@ -2444,7 +2446,7 @@ else
                 end
             end
 
-            local vanilla_item_loot = GODMODE.save_manager.get_config("LighterTreasure", "false") == "true"
+            local vanilla_item_loot = GODMODE.save_manager.get_config("LighterTreasure", "false") == "true" and GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS) == 0
             
             if GODMODE.room:GetType() == RoomType.ROOM_TREASURE then 
                 if vanilla_item_loot and string.match(GODMODE.level:GetCurrentRoomDesc().Data.Name,"GODMODE") then 

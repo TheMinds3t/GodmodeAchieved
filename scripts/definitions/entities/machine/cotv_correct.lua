@@ -11,7 +11,8 @@ monster.player_collide = function(self,ent2,ent,ent_first)
     if ent2:ToPlayer() then
         if ent_first and ent:GetSprite():IsPlaying("Idle") then 
             local data = GODMODE.get_ent_data(ent)
-            if ent2:ToPlayer():GetBrokenHearts() >= 12 - (data.reroll_cost or 1) then 
+            ent2 = ent2:ToPlayer()
+            if ent2:GetBrokenHearts() + tonumber(GODMODE.save_manager.get_player_data(ent2,"FaithlessHearts","0")) >= 12 - (data.reroll_cost or 1) then 
                 data.queue_laugh = true
             else
                 if data.player_target == nil then 
@@ -28,6 +29,12 @@ end
 
 
 monster.npc_update = function(self, ent, data, sprite)
+    if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) then 
+        ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+        sprite:Play("Appear",true)
+        ent.Position = ent.Position + Vector(0,20)
+    end
+
     data.origin = data.origin or ent.Position
     ent.Velocity = ((data.origin or ent.Position) - ent.Position) / 4
 
@@ -130,9 +137,9 @@ monster.npc_update = function(self, ent, data, sprite)
             local pitch = 0.5
             if sprite:IsPlaying("Attack") then
                 GODMODE.game:ShakeScreen(5)
-            else pitch = 0.75 end
+            else pitch = 0.7 end
 
-            if ent:GetDropRNG():RandomInt(2) == 1 then
+            if ent:GetDropRNG():RandomInt(2) == 1 or sprite:IsPlaying("Cackle") then
                 GODMODE.sfx:Play(SoundEffect.SOUND_MONSTER_YELL_A,1,2,false,pitch)
             else
                 GODMODE.sfx:Play(SoundEffect.SOUND_MONSTER_YELL_B,1,2,false,pitch)

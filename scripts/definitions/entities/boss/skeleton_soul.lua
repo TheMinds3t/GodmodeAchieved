@@ -158,9 +158,9 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 				end
 
 				--destroy projectiles
-				GODMODE.util.macro_on_enemies(-1,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
-					proj.ProjectileFlags = proj.ProjectileFlags & ~ProjectileFlags.EXPLODE 
-					proj:Die() 
+				GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PROJECTILE,-1,-1,function(proj) 
+					proj:Remove() 
+					Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BULLET_POOF,0,proj.Position,Vector.Zero,nil)
 				end)
 			end
 

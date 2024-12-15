@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="10/21/2024 11:51:55 AM" Version="76" Fps="20"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="11/10/2024 5:27:02 PM" Version="78" Fps="20"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\souleater2.png" Id="0"/>
@@ -46,8 +46,8 @@
 				</LayerAnimation>
 				<LayerAnimation LayerId="1" Visible="true">
 					<Frame XPosition="-24" YPosition="-92" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
-					<Frame XPosition="-24" YPosition="-86" XPivot="16" YPivot="16" XCrop="0" YCrop="256" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
-					<Frame XPosition="-24" YPosition="-90" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="4" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="-24" YPosition="-86" XPivot="16" YPivot="16" XCrop="0" YCrop="320" Width="112" Height="64" XScale="100" YScale="100" Delay="6" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
+					<Frame XPosition="-24" YPosition="-90" XPivot="16" YPivot="16" XCrop="0" YCrop="256" Width="112" Height="64" XScale="100" YScale="100" Delay="2" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 					<Frame XPosition="-24" YPosition="-92" XPivot="16" YPivot="16" XCrop="0" YCrop="128" Width="112" Height="64" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="true"/>
 				</LayerAnimation>
 				<LayerAnimation LayerId="3" Visible="true"/>
@@ -100,6 +100,7 @@
 				<NullAnimation NullId="0" Visible="true"/>
 			</NullAnimations>
 			<Triggers>
+				<Trigger EventId="1" AtFrame="15"/>
 				<Trigger EventId="3" AtFrame="20"/>
 			</Triggers>
 		</Animation>
@@ -272,7 +273,7 @@
 			<Triggers>
 				<Trigger EventId="1" AtFrame="4"/>
 				<Trigger EventId="0" AtFrame="25"/>
-				<Trigger EventId="4" AtFrame="34"/>
+				<Trigger EventId="4" AtFrame="35"/>
 				<Trigger EventId="4" AtFrame="45"/>
 				<Trigger EventId="4" AtFrame="55"/>
 				<Trigger EventId="4" AtFrame="65"/>

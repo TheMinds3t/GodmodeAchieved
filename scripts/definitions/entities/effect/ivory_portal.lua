@@ -22,13 +22,26 @@ monster.npc_update = function(self, ent, data, sprite)
     ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
     ent.Velocity = (GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(ent.Position))) - ent.Position
     
-    if ent.SubType == 1 and data.player ~= nil then 
-        if data.player:IsExtraAnimationFinished() then 
-            Isaac.ExecuteCommand("goto s.barren.550")
-            ent:Remove()    
-        else 
-            data.player.Velocity = ent.Position - data.player.Position
-            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+    
+
+    if ent.SubType == 1 then 
+        if ent:IsFrame(2,1) then 
+            local fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HAEMO_TRAIL, 0, ent.Position+RandomVector():Resized(ent:GetDropRNG():RandomFloat() * ent.Size) * Vector(1,1.25), Vector.Zero, nil):ToEffect()
+            fx:SetTimeout(10)
+            fx.LifeSpan = 20
+            fx.Scale = ent:GetDropRNG():RandomFloat() * 0.5 + 1.0
+            fx:SetColor(Color(0,0,0,0.25),999,1,false,false)
+            fx.DepthOffset = -100
+        end
+
+        if data.player ~= nil then 
+            if data.player:IsExtraAnimationFinished() then 
+                Isaac.ExecuteCommand("goto s.barren.550")
+                ent:Remove()    
+            else 
+                data.player.Velocity = ent.Position - data.player.Position
+                ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+            end    
         end
     end
 end

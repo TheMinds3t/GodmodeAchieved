@@ -32,7 +32,7 @@ util.base_room_door = {
 
 util.wrap_angle = function(angle, degrees)
 	degrees = degrees or true
-	if degrees then angle = angle / 180 * math.pi end
+	if degrees then return math.deg(util.wrap_angle(angle,false)) end
 
 	if angle < 0 then return math.abs(angle) else
 		return (math.pi - angle) + math.pi
@@ -550,6 +550,7 @@ util.get_max_charge = function(item)
 end
 
 util.macro_on_enemies = function(spawner,ent_type,var, subtype, funct, predicate, search_all)
+	spawner = spawner == -1 and nil or spawner or nil 
 	ent_type = ent_type or -1
 	var = var or -1
 	subtype = subtype or -1
@@ -1143,12 +1144,13 @@ util.get_faithless = function(player)
 	return tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))
 end
 
-util.calc_broken_perc = function()
+util.calc_broken_perc = function(include_faithless)
+	include_faithless = include_faithless == nil and true or include_faithless
     local total_broken = 0
     local total_capacity = 0
 
     GODMODE.util.macro_on_players(function(player) 
-        total_broken = total_broken + player:GetBrokenHearts()
+        total_broken = total_broken + player:GetBrokenHearts() + tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))
         total_capacity = total_capacity + player:GetHeartLimit()
     end)
 
@@ -1408,6 +1410,14 @@ util.dehazard_room = function()
 			Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ent.Position, Vector.Zero, nil)
 		end)
 	end
+end
+
+util.is_in_view = function(pos)
+	local render_off = GODMODE.room:GetRenderScrollOffset()
+	local top_left = GODMODE.room:GetTopLeftPos() - render_off
+	local bottom_right = GODMODE.room:GetBottomRightPos() - render_off
+
+	return pos.X > top_left.X and pos.Y > top_left.Y and pos.X < bottom_right.X and pos.Y < bottom_right.Y
 end
 
 return util
