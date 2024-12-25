@@ -85,6 +85,7 @@ reg.items = {
     party_hat = Isaac.GetItemIdByName("Party Hat"),
     fractal_key = Isaac.GetItemIdByName("Fractal Key"),
     fractal_key_inverse = Isaac.GetItemIdByName("Inverse Key"),
+    eggnog = Isaac.GetItemIdByName("Cup O' Nog"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
