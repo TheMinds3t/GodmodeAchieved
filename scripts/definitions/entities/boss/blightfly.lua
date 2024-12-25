@@ -174,7 +174,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 GODMODE.sfx:Play(SoundEffect.SOUND_TEARS_FIRE,Options.SFXVolume*1.0+0.75)    
             end
 
-            if ent.I2 <= 0 and (GODMODE.room:GetCenterPos() - ent.Position):Length() < 160 then 
+            if ent.I2 <= 0 and ((GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position):Length() < 160 then 
                 ent.Velocity = ent.Velocity * 0.7
                 sprite:Play("OutOfCharge",true)
             end
@@ -227,13 +227,13 @@ monster.npc_update = function(self, ent, data, sprite)
 
         data.in_wall = not GODMODE.room:IsPositionInRoom(ent.Position,0.0)
 
-        if data.in_wall == true and not (ent.Position.X > GODMODE.room:GetCenterPos().X and not ent.FlipX or ent.Position.X < GODMODE.room:GetCenterPos().X and ent.FlipX) then 
+        if data.in_wall == true and not (ent.Position.X > (GODMODE.room_center or GODMODE.room:GetCenterPos()).X and not ent.FlipX or ent.Position.X < (GODMODE.room_center or GODMODE.room:GetCenterPos()).X and ent.FlipX) then 
             data.in_wall = false 
         end
     end
     
     if sprite:IsPlaying("Spin") then 
-        ent.Velocity = ent.Velocity * 0.95 + (GODMODE.room:GetCenterPos() - ent.Position) * (1 / 300.0)
+        ent.Velocity = ent.Velocity * 0.95 + ((GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position) * (1 / 300.0)
     end
 
     if sprite:IsEventTriggered("MoveR") then 

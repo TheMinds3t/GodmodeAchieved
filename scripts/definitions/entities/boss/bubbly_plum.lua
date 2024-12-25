@@ -330,7 +330,7 @@ monster.npc_update = function(self, ent, data, sprite)
         end
 
         if sprite:IsPlaying("Attack4") then 
-            ent.Velocity = ent.Velocity * 0.5-- + (GODMODE.room:GetCenterPos() - ent.Position) * (1/20.0)
+            ent.Velocity = ent.Velocity * 0.5-- + ((GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position) * (1/20.0)
         end
 
         if sprite:IsPlaying("Attack1") and sprite:GetFrame() == 20 then 

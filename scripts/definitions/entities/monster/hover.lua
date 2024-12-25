@@ -19,10 +19,10 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 
 		ent.Velocity = ent.Velocity*0.8 + Vector(data.dirx * 0.395,data.diry * 0.365)
 
-		if ent.Position.X <= GODMODE.room:GetTopLeftPos().X+ent.Size*2 then data.dirx = 1 end
-		if ent.Position.Y <= GODMODE.room:GetTopLeftPos().Y+ent.Size*2 then data.diry = 1 end
-		if ent.Position.X >= GODMODE.room:GetBottomRightPos().X-ent.Size*2 then data.dirx = -1 end
-		if ent.Position.Y >= GODMODE.room:GetBottomRightPos().Y-ent.Size*2 then data.diry = -1 end
+		if ent.Position.X <= (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X+ent.Size*2 then data.dirx = 1 end
+		if ent.Position.Y <= (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+ent.Size*2 then data.diry = 1 end
+		if ent.Position.X >= (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X-ent.Size*2 then data.dirx = -1 end
+		if ent.Position.Y >= (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y-ent.Size*2 then data.diry = -1 end
 
 		if sprite:IsPlaying("Walk") and ent:GetDropRNG():RandomFloat() < 0.4 and math.floor(data.time) % 25 == 0 and data:canspawn() then
 			sprite:Play("Attack",false)

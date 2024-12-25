@@ -20,8 +20,8 @@ monster.familiar_update = function(self, fam, data)
         else
             local v = player:GetShootingJoystick()--Vector(math.sin(math.rad(d)), math.cos(math.rad(d)))
             fam.Velocity = fam.Velocity * 0.75 + v * 3
-            local tl = GODMODE.room:GetTopLeftPos()
-            local br = GODMODE.room:GetBottomRightPos()
+            local tl = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos())
+            local br = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos())
 
             if fam.Position.X < tl.X then 
                 fam.Position.X = tl.X 

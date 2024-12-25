@@ -1414,8 +1414,8 @@ end
 
 util.is_in_view = function(pos)
 	local render_off = GODMODE.room:GetRenderScrollOffset()
-	local top_left = GODMODE.room:GetTopLeftPos() - render_off
-	local bottom_right = GODMODE.room:GetBottomRightPos() - render_off
+	local top_left = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()) - render_off
+	local bottom_right = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()) - render_off
 
 	return pos.X > top_left.X and pos.Y > top_left.Y and pos.X < bottom_right.X and pos.Y < bottom_right.Y
 end

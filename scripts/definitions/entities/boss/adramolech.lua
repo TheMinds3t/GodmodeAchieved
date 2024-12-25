@@ -17,7 +17,7 @@ monster.npcUpdate = function(self, ent)
         ent:GetSprite():Play("Attack",true)
     end
 
-    ent.Position = Vector(ent.Position.X+25.5,GODMODE.room:GetTopLeftPos().Y+5*51)
+    ent.Position = Vector(ent.Position.X+25.5,(GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+5*51)
 end
 monster.postRender = function(self)
 end

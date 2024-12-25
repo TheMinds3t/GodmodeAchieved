@@ -62,7 +62,7 @@ monster.npc_update = function(self, ent, data, sprite)
     ent.Velocity = Vector(0,0)
 
     if ent.SubType ~= 8 then 
-        ent.Position = GODMODE.room:GetCenterPos()
+        ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
     elseif not GODMODE.is_in_observatory() then 
         ent.DepthOffset = 200
     end
@@ -89,7 +89,7 @@ monster.npc_update = function(self, ent, data, sprite)
         local offy = math.sin(math.rad(ent.FrameCount*4*moon_time_scale))*moon_dist_scale
         ent.SpriteOffset = Vector(offx, offy)
 
-        local dist = math.min(1.0,(GODMODE.room:GetCenterPos() - (ent.Position + ent.SpriteOffset)):Length() / moon_dist_scale)
+        local dist = math.min(1.0,((GODMODE.room_center or GODMODE.room:GetCenterPos()) - (ent.Position + ent.SpriteOffset)):Length() / moon_dist_scale)
         local scale = 1 - dist*moon_size_dif
         ent.Scale = scale
         -- GODMODE.log("ent.scale = "..ent.Scale,true)

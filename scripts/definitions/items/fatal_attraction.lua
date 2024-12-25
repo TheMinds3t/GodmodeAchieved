@@ -22,7 +22,7 @@ item.new_level = function(self)
 
 	if actual_count > 0 then 
 		local total = actual_count
-		local spawn_pos = GODMODE.room:GetCenterPos() + Vector(0,-80) - Vector(total / 2*spacing+spacing / 2,0)
+		local spawn_pos = (GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(0,-80) - Vector(total / 2*spacing+spacing / 2,0)
 		for i=1,total do 
 			local spawn_off 
 			local choice = Isaac.Spawn(GODMODE.registry.entities.fatal_attraction_station.type,GODMODE.registry.entities.fatal_attraction_station.variant,GODMODE.util.random(0,29),

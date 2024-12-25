@@ -449,8 +449,8 @@ monster.npc_update = function(self, ent, data, sprite)
         end
 
         local r_off = Vector(math.cos(data.time / 40.0) * 32, math.sin(data.time / 40.0) * 32)
-        local targ = GODMODE.room:GetCenterPos() + r_off
-        if data.cur_attack == 5 then targ = GODMODE.room:GetCenterPos() + r_off * 0.2 end
+        local targ = (GODMODE.room_center or GODMODE.room:GetCenterPos()) + r_off
+        if data.cur_attack == 5 then targ = (GODMODE.room_center or GODMODE.room:GetCenterPos()) + r_off * 0.2 end
         ent.Velocity = ent.Velocity * 0.9 + (targ - ent.Position) * (1 / 50)
 
         if sprite:IsEventTriggered("Attack") then

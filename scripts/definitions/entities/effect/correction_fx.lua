@@ -40,7 +40,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
     ent.DepthOffset = base_depth_off + depth_offsets[ent.SubType]
     ent.Velocity = Vector(0,0)
-    ent.Position = GODMODE.room:GetCenterPos()
+    ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 
     if ent.SubType == 0 then 
         if data.active == true or ent.Visible == true then 

@@ -68,7 +68,7 @@ monster.npc_update = function(self, ent, data, sprite)
 if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local player = ent:GetPlayerTarget()
 
-	local dest = GODMODE.room:GetCenterPos()
+	local dest = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 
 	ent.Position = (ent.Position * 59.0 + dest) / 60.0
 	ent.Velocity = Vector(0,0)
@@ -259,7 +259,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 	end
 
 	if GODMODE.validate_rgon() then 
-		local targ = (GODMODE.room:GetCenterPos() * 3 + player.Position * 2 + ent.Position) / 6.0
+		local targ = ((GODMODE.room_center or GODMODE.room:GetCenterPos()) * 3 + player.Position * 2 + ent.Position) / 6.0
 		data.cam_pos = ((data.cam_pos or targ) * (cam_damp - 1) + targ) / cam_damp
 
 		GODMODE.room:GetCamera():SetFocusPosition(data.cam_pos)

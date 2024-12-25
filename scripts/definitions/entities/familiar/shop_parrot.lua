@@ -218,7 +218,7 @@ monster.new_room = function(self)
 							+ kc_count * 2 --keepah card count
 
 			for i=1,count do 
-				local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()),Vector.Zero,nil)
+				local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
 				config_parrot(parrot, not GODMODE.room:IsFirstVisit() or is_not_shop())	
 
 				if not is_not_shop() and i > 1 then 
@@ -229,9 +229,9 @@ monster.new_room = function(self)
 
 		if GODMODE.save_manager.get_config("ShopFog","true") == "true" and not is_not_shop() then 
 			local poses = {
-				{pos=GODMODE.room:GetCenterPos(),vel=RandomVector()*0.05},
-				{pos=GODMODE.room:GetTopLeftPos(),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
-				{pos=GODMODE.room:GetBottomRightPos(),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
+				{pos=(GODMODE.room_center or GODMODE.room:GetCenterPos()),vel=RandomVector()*0.05},
+				{pos=(GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
+				{pos=(GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
 			}
 	
 			for _,pos in ipairs(poses) do

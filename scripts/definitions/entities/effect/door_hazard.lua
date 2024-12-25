@@ -149,7 +149,7 @@ monster.npc_update = function(self, ent, data, sprite)
     if ent.I1 > 0 then 
         if GODMODE.room:IsDoorSlotAllowed(ent.I1-1) then 
             local door_pos = GODMODE.room:GetDoorSlotPosition(ent.I1-1)
-            local ang = math.floor((GODMODE.room:GetCenterPos() - door_pos):GetAngleDegrees()/90)*90
+            local ang = math.floor(((GODMODE.room_center or GODMODE.room:GetCenterPos()) - door_pos):GetAngleDegrees()/90)*90
             ent.Position = door_pos
             ent.SpriteRotation = ((ent.I1-1)%4)*90-90
         end

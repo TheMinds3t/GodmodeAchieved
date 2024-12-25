@@ -123,10 +123,10 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
         local ti = player.Position - ent.Position
 
         if sprite:IsPlaying("Phase2") and sprite:GetFrame() == 2 then
-            local tx = GODMODE.room:GetTopLeftPos().X
-            local ty = GODMODE.room:GetTopLeftPos().Y
-            local bx = GODMODE.room:GetBottomRightPos().X
-            local by = GODMODE.room:GetBottomRightPos().Y
+            local tx = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X
+            local ty = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y
+            local bx = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X
+            local by = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y
             for l=0,1 do
                 local x = {26+ent:GetDropRNG():RandomFloat()*(bx-tx),bx-26,26+ent:GetDropRNG():RandomFloat()*(bx-tx),26}
                 local y = {ty+26,26+ent:GetDropRNG():RandomFloat()*(by-ty),by-26,26+ent:GetDropRNG():RandomFloat()*(by-ty)}
@@ -148,10 +148,10 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 
         if ent.HitPoints / ent.MaxHitPoints < 0.33 and not data.p3 then
             if not GODMODE.util.is_delirium() then 
-                local tx = GODMODE.room:GetTopLeftPos().X
-                local ty = GODMODE.room:GetTopLeftPos().Y
-                local bx = GODMODE.room:GetBottomRightPos().X
-                local by = GODMODE.room:GetBottomRightPos().Y
+                local tx = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X
+                local ty = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y
+                local bx = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X
+                local by = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y
                 for l=0,3 do
                     local x = {26+ent:GetDropRNG():RandomFloat()*(bx-tx),bx-26,26+ent:GetDropRNG():RandomFloat()*(bx-tx),26}
                     local y = {ty+26,26+ent:GetDropRNG():RandomFloat()*(by-ty),by-26,26+ent:GetDropRNG():RandomFloat()*(by-ty)}
@@ -213,7 +213,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
                    + GODMODE.util.count_enemies(nil, GODMODE.registry.entities.guard_of_the_father.type, GODMODE.registry.entities.guard_of_the_father.variant)
 
                    if nm == 0 then
-                    ent.Position = GODMODE.room:GetCenterPos()
+                    ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
                     sprite:Play("TeleportDown",true)
                 end
             end
@@ -222,7 +222,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
         if ent.HitPoints / ent.MaxHitPoints > 0.66 then
             if not sprite:IsPlaying(get_idle_name()) then spd = 1.0 end
             if data.laser_cool > 0 then spd = 0 data.laser_cool = data.laser_cool - 1 end
-            ent.Position = (ent.Position*60 + (ent.Position+Vector(math.cos(math.rad(ti:GetAngleDegrees())) * spd,math.sin(math.rad(ti:GetAngleDegrees())) * spd)) * 60 + GODMODE.room:GetCenterPos() * 1) / 121.0
+            ent.Position = (ent.Position*60 + (ent.Position+Vector(math.cos(math.rad(ti:GetAngleDegrees())) * spd,math.sin(math.rad(ti:GetAngleDegrees())) * spd)) * 60 + (GODMODE.room_center or GODMODE.room:GetCenterPos()) * 1) / 121.0
             ent.Velocity = ent.Velocity * 0.9
                     
             if ent:GetDropRNG():RandomFloat() < 0.8 and (data.time) % 36 == 0 and sprite:IsPlaying(get_idle_name()) and data.laser_cool <= 0 then
@@ -250,8 +250,8 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
                         for i=0,6 do
                             if l == 0 or l == 6 or i == 0 or i == 6 then if ent:GetDropRNG():RandomFloat() < 0.7 and total < 20 then
                                 total = total + 1
-                                local posx = (GODMODE.room:GetTopLeftPos().X + 16) + (GODMODE.room:GetBottomRightPos().X-16) / 7 * i
-                                local posy = (GODMODE.room:GetTopLeftPos().Y+16) + (GODMODE.room:GetBottomRightPos().Y-128) / 7 * l
+                                local posx = ((GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 16) + ((GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X-16) / 7 * i
+                                local posy = ((GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+16) + ((GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y-128) / 7 * l
                                 if i ~= 0 then posx = posx - ent:GetDropRNG():RandomFloat() * 16 end
                                 if l ~= 0 then posy = posy - ent:GetDropRNG():RandomFloat() * 16 end
                                 local t = Isaac.Spawn(GODMODE.registry.entities.crack_the_sky.type,GODMODE.registry.entities.crack_the_sky.variant,0,Vector(posx,posy),Vector(0,0),ent)
@@ -271,10 +271,10 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
                         data.attack_type = 0
                     end
                 elseif data.attack_type == 3 and data.attack_count % 2 == 1 then
-                    local lx = GODMODE.room:GetTopLeftPos().X + 26
-                    local rx = GODMODE.room:GetBottomRightPos().X - 26
-                    local ty = GODMODE.room:GetTopLeftPos().Y + 26
-                    local by = GODMODE.room:GetBottomRightPos().Y - 26
+                    local lx = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 26
+                    local rx = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X - 26
+                    local ty = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y + 26
+                    local by = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y - 26
                     local hdist = rx - lx
                     local vdist = by - ty
                     for i=0,3 do
@@ -304,7 +304,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
         elseif not sprite:IsPlaying("Phase2") and not sprite:IsPlaying("TeleportLoop") then
             if not sprite:IsPlaying(get_idle_name()) then spd = 1.5 else spd = 2.4 end
             if data.laser_cool > 0 then spd = 0 data.laser_cool = data.laser_cool - 1 end
-            ent.Position = (ent.Position*60 + (ent.Position+Vector(math.cos(math.rad(ti:GetAngleDegrees())) * spd,math.sin(math.rad(ti:GetAngleDegrees())) * spd)) * 60 + GODMODE.room:GetCenterPos() * 3) / 123.0
+            ent.Position = (ent.Position*60 + (ent.Position+Vector(math.cos(math.rad(ti:GetAngleDegrees())) * spd,math.sin(math.rad(ti:GetAngleDegrees())) * spd)) * 60 + (GODMODE.room_center or GODMODE.room:GetCenterPos()) * 3) / 123.0
             ent.Velocity = ent.Velocity * 0.9
 
             if ent:GetDropRNG():RandomFloat() < 0.8 and (data.time) % 36 == 0 and sprite:IsPlaying(get_idle_name()) and data.laser_cool <= 0 then
@@ -334,8 +334,8 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
                         for i=0,6 do
                             if l <= 2 or l >= 4 or i <= 2 or i >= 4 then if ent:GetDropRNG():RandomFloat() < 0.5 and total < 40 then
                                 total = total + 1
-                                local posx = (GODMODE.room:GetTopLeftPos().X + 16) + (GODMODE.room:GetBottomRightPos().X-16) / 7 * i
-                                local posy = (GODMODE.room:GetTopLeftPos().Y+16) + (GODMODE.room:GetBottomRightPos().Y-128) / 7 * l
+                                local posx = ((GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 16) + ((GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X-16) / 7 * i
+                                local posy = ((GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+16) + ((GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y-128) / 7 * l
                                 if i ~= 0 then posx = posx - ent:GetDropRNG():RandomFloat() * 16 end
                                 if l ~= 0 then posy = posy - ent:GetDropRNG():RandomFloat() * 16 end
                                 local t = Isaac.Spawn(GODMODE.registry.entities.crack_the_sky.type,GODMODE.registry.entities.crack_the_sky.variant,0,Vector(posx,posy),Vector(0,0),ent)
@@ -358,10 +358,10 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
                     local mp = 2
                     if data.p3 then mp = 4 end
 
-                    local lx = GODMODE.room:GetTopLeftPos().X + 26
-                    local rx = GODMODE.room:GetBottomRightPos().X - 26
-                    local ty = GODMODE.room:GetTopLeftPos().Y + 26
-                    local by = GODMODE.room:GetBottomRightPos().Y - 26
+                    local lx = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 26
+                    local rx = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X - 26
+                    local ty = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y + 26
+                    local by = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y - 26
                     local hdist = rx - lx
                     local vdist = by - ty
             

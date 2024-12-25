@@ -43,8 +43,8 @@ local cam_damp = 3
 
 
 local function is_in_room(pos)
-	local tl = GODMODE.room:GetTopLeftPos()
-	local br = GODMODE.room:GetBottomRightPos()
+	local tl = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos())
+	local br = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos())
 	return pos.X >= tl.X and pos.Y >= tl.Y and pos.X <= br.X and pos.Y <= br.Y
 end
 
@@ -142,7 +142,7 @@ monster.npc_init = function(self, ent, data)
         ent.HitPoints = 1
         ent.MaxHitPoints = 1
 		data.hole_made = true
-		ent.Position = GODMODE.room:GetCenterPos()
+		ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 		ent.Velocity = Vector(0,0)
 		ent.DepthOffset = -150
 
@@ -246,7 +246,7 @@ monster.npc_update = function(self, ent, data, sprite)
         ent.HitPoints = 1
         ent.MaxHitPoints = 1
 		data.hole_made = true
-		ent.Position = GODMODE.room:GetCenterPos()
+		ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 		ent.Velocity = Vector(0,0)
 
 		-- for _,ent2 in ipairs(Isaac.FindInRadius(ent.Position,99999.0,EntityPartition.ENEMY)) do
@@ -270,7 +270,7 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 	
 	if data.hole_made == true then 
-		ent.Velocity = GODMODE.room:GetCenterPos() - ent.Position
+		ent.Velocity = (GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position
 	end
 
 	if data.soul ~= nil then
@@ -308,14 +308,14 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	if sprite:IsPlaying("Appear") or sprite:IsPlaying("Transition") then
 		GODMODE.game:ShakeScreen(10)
-		ent.Position = GODMODE.room:GetCenterPos()
+		ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 		ent.Velocity = Vector(0,0)
 	elseif sprite:IsPlaying("Idle") then
 		local ti = player.Position - ent.Position
 	    local spd = 2.35
 	    
 	    if data.final_phase == true then
-	    	ti = GODMODE.room:GetCenterPos() - ent.Position
+	    	ti = (GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position
 	    	spd = 2.35
 		elseif ent:IsFrame(12, ((data.time or 0) - (data.real_time or 0)) % 12) and ent:GetDropRNG():RandomFloat() < 0.9 then
 			local choose_atk = function()
@@ -405,11 +405,11 @@ monster.npc_update = function(self, ent, data, sprite)
 			end
 			sprite:LoadGraphics()
 			ent.DepthOffset = -100
-			ent.Position = GODMODE.room:GetCenterPos()
+			ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
 			sprite:Play("Transition", true)
 		end
 	else
-		local ti = GODMODE.room:GetCenterPos() - ent.Position
+		local ti = (GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position
 	    local spd = 0.25
 	    if sprite:IsPlaying("Attack3") then spd = 0.0 end
 	    if sprite:IsPlaying("Attack2") then spd = 0.6 end
@@ -420,7 +420,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	-- camera logic!
 	if GODMODE.validate_rgon() and data.hole_made ~= true then 
-		local targ = (GODMODE.room:GetCenterPos() * 3 + player.Position * 2 + ent.Position) / 6.0
+		local targ = ((GODMODE.room_center or GODMODE.room:GetCenterPos()) * 3 + player.Position * 2 + ent.Position) / 6.0
 		data.cam_pos = ((data.cam_pos or targ) * (cam_damp - 1) + targ) / cam_damp
 
 		GODMODE.room:GetCamera():SetFocusPosition(data.cam_pos)

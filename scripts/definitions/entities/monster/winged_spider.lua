@@ -6,8 +6,8 @@ monster.variant = GODMODE.registry.entities.winged_spider.variant
 monster.item_instance = GODMODE.registry.items.reclusive_tendencies
 
 local function is_in_room(pos)
-	local tl = GODMODE.room:GetTopLeftPos()
-	local br = GODMODE.room:GetBottomRightPos()
+	local tl = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos())
+	local br = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos())
 	return pos.X >= tl.X and pos.Y >= tl.Y and pos.X <= br.X and pos.Y <= br.Y
 end
 

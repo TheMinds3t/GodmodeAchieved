@@ -58,7 +58,7 @@ item.player_update = function(self, player)
 					end
 				end
 
-				local grid = GODMODE.room:GetGridEntityFromPos(GODMODE.room:GetCenterPos())
+				local grid = GODMODE.room:GetGridEntityFromPos((GODMODE.room_center or GODMODE.room:GetCenterPos()))
 
 				if grid ~= nil and grid:GetType() == GridEntityType.GRID_TRAPDOOR then 
 					local pos = grid.Position

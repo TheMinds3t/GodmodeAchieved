@@ -47,11 +47,11 @@ monster.new_room = function(self)
             if sel_player ~= nil and (GODMODE.validate_rgon() and Isaac.GetPersistentGameData():Unlocked(GODMODE.registry.closet_chars[sel_player].achievement) == false) then 
                 -- 
                 Isaac.CreateTimer(function() 
-                    GODMODE.util.clear_radius(GODMODE.room:GetCenterPos(), 64.0, function(ent) return (GODMODE.room:GetCenterPos() - ent.Position):Length() < 80.0 end)                
+                    GODMODE.util.clear_radius((GODMODE.room_center or GODMODE.room:GetCenterPos()), 64.0, function(ent) return ((GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position):Length() < 80.0 end)                
                 end, 2, 1, false)
 
                 Isaac.CreateTimer(function() 
-                    local tchar = Isaac.Spawn(monster.type,monster.variant,sel_player, GODMODE.room:GetCenterPos(), Vector.Zero, nil)
+                    local tchar = Isaac.Spawn(monster.type,monster.variant,sel_player, (GODMODE.room_center or GODMODE.room:GetCenterPos()), Vector.Zero, nil)
                     tchar:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
     
                     GODMODE.log("tainted character placed! sel_player = "..sel_player,true)

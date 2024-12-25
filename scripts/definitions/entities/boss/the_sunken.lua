@@ -29,7 +29,7 @@ monster.npcUpdate = function(self, ent)
     if data.P3 ~= nil then f = f * 8 end
     if data.Prime ~= nil then f = f * 6 end
     if ent:GetSprite():IsPlaying("BrimFire") then ent.Velocity = Vector(0,0) mspeed = mspeed / 5 end
-    local t = GODMODE.room:GetCenterPos() - ent.Position + f
+    local t = (GODMODE.room_center or GODMODE.room:GetCenterPos()) - ent.Position + f
     ent.Velocity = ent.Velocity +  t * mspeed / 100
     ent.Position = ent.Position + t * mspeed
 

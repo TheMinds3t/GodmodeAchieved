@@ -80,6 +80,7 @@
 	<passive id="94" description="Hot! Hot! Hot" gfx="hot_potato.png" tags="offensive" name="Hot Potato" quality = "3" />
 	<passive id="95" cache="firedelay damage shotspeed speed luck" description="All stats up" gfx="cake_slice.png" hearts="4" soulhearts="2" tags="offensive food" name="Birthday Slice" quality = "2" customtags="cake" />
 	<passive id="96" escription="Join the party" gfx="party_hat.png" tags="quest" name="Party Hat" quality = "0" />
+	<passive id="97" cache="luck" description="Nice and Hearty" gfx="eggnog.png" hearts="6" maxhearts="2" tags="offensive food" name="Cup O' Nog" quality = "2" customtags="holiday" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />

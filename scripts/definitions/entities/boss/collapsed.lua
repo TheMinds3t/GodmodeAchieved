@@ -15,6 +15,15 @@ local raise_damp = 3
 local raise_height = 64
 local raise_deadzone = 8
 
+local eye_offset = Vector(24,-18)
+local eye2_offset = Vector(-eye_offset.X,eye_offset.Y)
+local cry_threshold = 0.66
+local phase2_threshold = 0.33
+local phase2_health_scalar = 0.4
+
+local raw_eye_offset = Vector(32,-18)
+local raw_eye2_offset = Vector(-raw_eye_offset.X,raw_eye_offset.Y)
+
 local lower_atk_bullet_off = Vector(0,64)
 local bullet_timeout_floor = 70
 local bullet_timeout_ceil = 200
@@ -29,6 +38,14 @@ local dark_matter_life = 100
 
 local fx_beam_step = 28
 local fx_variance = Vector(0.75,0.3)
+
+local grace_period = 100
+
+local phase2_flags = {
+    ProjectileFlags.SINE_VELOCITY,
+    0,
+    ProjectileFlags.WIGGLE,
+}
 
 monster.fx_beam = function(ent, pos1, pos2)
     local dist = (pos2 - pos1):Length()
@@ -73,9 +90,13 @@ monster.bullet = function(ent,pos,ang,speed,flags,mod_func)
     return proj
 end
 
-monster.ring = function(ent,pos,ang,speed,count,flags,mod_func)
+monster.ring = function(ent,pos,ang,speed,count,flags,mod_func,only_below)
     for i=1,count do 
-        local proj = monster.bullet(ent, pos, (i * (360 / count) + ang) % 360, speed, flags, mod_func)
+        local ang = (i * (360 / count) + ang) % 360
+
+        if only_below == true and ang >= 0 and ang <= 180 or only_below ~= true then 
+            local proj = monster.bullet(ent, pos, ang, speed, flags, mod_func)
+        end
     end
 end
 
@@ -241,61 +262,196 @@ monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
     ent.SizeMulti = Vector(1,0.5)
 
+    if data.dark_light == nil then 
+        data.dark_light = Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.LIGHT,0,ent.Position,Vector.Zero,ent)
+        data.dark_light:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+    end
+
     if ent.SubType == 0 then 
         data.atk_cooldown = math.max(0,(data.atk_cooldown or 0)-1)
         GODMODE.game:Darken(1, 300)
+        local perc = ent.HitPoints / ent.MaxHitPoints
         -- for _,hand in ipairs(data.hands) do 
 
         -- end    
 
-        if not sprite:IsPlaying("1Idle") then 
-            sprite:Play("1Idle",true)
+        if sprite:IsFinished("1Idle") or sprite:IsFinished("1CryLoop") or sprite:IsFinished("1CryIn") or sprite:IsFinished("1CryOut") or sprite:IsFinished("1CryFlash") or 
+            sprite:IsFinished("1Transition") or sprite:IsFinished("2CryIn") or sprite:IsFinished("2CryOut") or sprite:IsFinished("2CryLoop") or sprite:IsFinished("2Idle") then 
+            if data.phase2 == true then 
+                if sprite:IsFinished("1CryOut") or sprite:IsPlaying("1Idle") then 
+                    sprite:Play("1Transition",true)
+                elseif sprite:IsFinished("1Transition") or sprite:IsFinished("2CryIn") or sprite:IsFinished("2CryOut") or sprite:IsFinished("2CryLoop") or sprite:IsFinished("2Idle") then 
+                    if sprite:IsFinished("2CryLoop") or sprite:IsFinished("2CryIn") then 
+                        data.cry_time = data.cry_time - 1 
+    
+                        if data.cry_time <= 0 then 
+                            sprite:Play("2CryOut",true)
+                            local dir = (ent:GetDropRNG():RandomInt(2) == 1 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT)
+                            monster.ring(ent, Vector.Zero, 
+                            0, 
+                            1.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
+                            32 - ((GODMODE.game.Difficulty + 1) % 2) * 8, dir | ProjectileFlags.ACCELERATE, function(proj) 
+                                proj.Scale = 2
+                                proj.CurvingStrength = 1 / 240
+                            end)
 
-            if data.atk_cooldown == 0 then 
-                local atk = ent:GetDropRNG():RandomFloat()
-                if atk < 0.3 then
-                    if ent.I1 == 0 then 
-                        ent.I1 = 3
-                        ent.I2 = 4  
-                        data.atk_cooldown = dark_matter_life + 75
+                            data.phase2_flag = phase2_flags[ent:GetDropRNG():RandomInt(#phase2_flags) + 1]
+                        else
+                            sprite:Play("2CryLoop",true)
+                            data.cry_dir = ent:GetDropRNG():RandomInt(2)
+                        end
                     else
-                        ent.I1 = 3  
-                    end
-                elseif atk < 0.6 then
-                    local hand = ent:GetDropRNG():RandomInt(2)
-                    local off_hand = ent:GetDropRNG():RandomInt(2)
-                    
-                    if hand == 0 and ent.I1 == 0 then 
-                        if ent.I2 ~= 2 then 
-                            ent.I1 = 2
-                            ent.I2 = off_hand == 1 and 3 or 1
-                            data.atk_cooldown = slam_time + 120
-                        end    
-                    elseif hand == 1 and ent.I2 == 0 then 
-                        if ent.I1 ~= 2 then 
-                            ent.I1 = off_hand == 1 and 3 or 1
-                            ent.I2 = 2
-                            data.atk_cooldown = slam_time + 120
+                        local atk = ent:GetDropRNG():RandomFloat()
+    
+                        if atk < 0.5 then 
+                            sprite:Play("2CryIn",true)
+                            data.cry_time = ent:GetDropRNG():RandomInt(5) + 4
+                        else 
+                            sprite:Play("2Idle",true)
                         end
                     end
-                elseif ent.I1 == 0 and ent.I2 == 0 then 
-                    local var = ent:GetDropRNG():RandomInt(4)
-                    ent.I1 = var % 2 == 1 and 3 or 1 
-                    ent.I2 = var >= 2 and 3 or 1 
-                    data.atk_cooldown = 60 + ((var > 0 and var < 3) and 50 or var == 3 and 90 or 0)
                 end
+            else
+                if sprite:IsFinished("1CryIn") or sprite:IsFinished("1CryLoop") or sprite:IsFinished("1CryFlash") then 
+                    sprite:Play("1CryLoop",true)
+                else
+                    if perc < cry_threshold and perc > phase2_threshold then 
+                        sprite:Play("1CryIn",true)
+                    else 
+                        sprite:Play("1Idle",true)
+                    end
+                end
+    
+                local cry_flag = sprite:IsPlaying("1CryLoop")
+    
+                if perc <= phase2_threshold then 
+                    
+                    if data.phase2 == nil and sprite:IsPlaying("1CryLoop") then 
+                        data.phase2 = true 
+                        sprite:Play("1CryOut",true)
+                        ent.MaxHitPoints = ent.MaxHitPoints * phase2_health_scalar
+                        ent.HitPoints = ent.HitPoints * phase2_health_scalar
+                    elseif sprite:IsFinished("1CryOut") or sprite:IsPlaying("1Idle") then 
+                        sprite:Play("1Transition",true)
+                    end
+                end
+    
+                if data.atk_cooldown == 0 and data.phase2 ~= true and ent.FrameCount > grace_period then 
+                    local atk = ent:GetDropRNG():RandomFloat()
+    
+                    if cry_flag and ent:GetDropRNG():RandomFloat() < 0.2 + (data.cry_chance or 0) * 0.3 then 
+                        sprite:Play("1CryFlash",true)
+                        data.atk_cooldown = 60
+                        data.cry_dir = ent:GetDropRNG():RandomInt(2)
+                        data.cry_chance = (data.cry_chance or 0) - 2
+                        data.cry_speed = nil
+                    else -- non crying attacks
+                        if cry_flag then 
+                            data.cry_chance = (data.cry_chance or 0) + 1
+                        end
+    
+                        if atk < 0.3 then
+                            if ent.I1 == 0 then 
+                                ent.I1 = 3
+                                ent.I2 = 4  
+                                data.atk_cooldown = dark_matter_life + 75
+                            else
+                                ent.I1 = 3  
+                            end
+                        elseif atk < 0.6 then
+                            local hand = ent:GetDropRNG():RandomInt(2)
+                            local off_hand = ent:GetDropRNG():RandomInt(2)
+                            
+                            if hand == 0 and ent.I1 == 0 then 
+                                if ent.I2 ~= 2 then 
+                                    ent.I1 = 2
+                                    ent.I2 = off_hand == 1 and 3 or 1
+                                    data.atk_cooldown = slam_time + 120
+                                end    
+                            elseif hand == 1 and ent.I2 == 0 then 
+                                if ent.I1 ~= 2 then 
+                                    ent.I1 = off_hand == 1 and 3 or 1
+                                    ent.I2 = 2
+                                    data.atk_cooldown = slam_time + 120
+                                end
+                            end
+                        elseif ent.I1 == 0 and ent.I2 == 0 then 
+                            local var = ent:GetDropRNG():RandomInt(4)
+                            ent.I1 = var % 2 == 1 and 3 or 1 
+                            ent.I2 = var >= 2 and 3 or 1 
+                            data.atk_cooldown = 60 + ((var > 0 and var < 3) and 50 or var == 3 and 90 or 0)
+                        end    
+                    end
+                end    
             end
         end    
 
-        -- -- camera logic!
-        -- if GODMODE.validate_rgon() then 
-        --     local targ = (player.Position + ent.Position) / 2.0
-        --     -- data.cam_pos = ((data.cam_pos or targ) * (cam_damp - 1) + targ) / cam_damp
+        if sprite:IsEventTriggered("Down") then
+            if sprite:IsPlaying("1Transition") then 
+                monster.ring(ent, Vector.Zero, 0,
+                5,
+                32, 0, function(proj) 
+                    proj.Scale = 3
+                end)
+            end
+        end
 
-        --     GODMODE.room:GetCamera():SetFocusPosition(targ)
-        -- end
+        if sprite:IsPlaying("1Transition") then 
+            ent.HitPoints = math.min(ent.HitPoints + ent.MaxHitPoints * 0.05, ent.MaxHitPoints)
+        end
 
-        local targ_pos = Vector(GODMODE.room:GetCenterPos().X, GODMODE.room:GetTopLeftPos().Y + 80)
+        if sprite:IsEventTriggered("Fire") then
+            if sprite:IsPlaying("1Transition") then 
+                GODMODE.game:ShakeScreen(3)
+            elseif sprite:IsPlaying("2CryLoop") then 
+                local flag1 = data.cry_dir == 0 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT
+                local flag2 = flag1 == ProjectileFlags.CURVE_LEFT and ProjectileFlags.CURVE_RIGHT or ProjectileFlags.CURVE_LEFT
+                local count = 12 - data.cry_time
+                monster.ring(ent, raw_eye_offset, 
+                    360 / count, 
+                    2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_time / 8.0 * 1.5, 
+                    count, flag1 | ProjectileFlags.ACCELERATE | (data.phase2_flag or 0), function(proj) 
+                        proj.Scale = 2
+                        proj.CurvingStrength = 1 / 360
+                    end, true)
+
+                monster.ring(ent, raw_eye2_offset, 
+                    -360 / count, 
+                    2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_time / 8.0 * 1.5, 
+                    count, flag2 | ProjectileFlags.ACCELERATE | (data.phase2_flag or 0), function(proj) 
+                        proj.Scale = 2
+                        proj.CurvingStrength = 1 / 360
+                    end, true)
+            elseif sprite:IsPlaying("1CryFlash") then 
+                data.cry_speed = (data.cry_speed or 1) - 1 
+                local flag1 = data.cry_dir == 0 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT
+                local flag2 = flag1 == ProjectileFlags.CURVE_LEFT and ProjectileFlags.CURVE_RIGHT or ProjectileFlags.CURVE_LEFT
+                
+                monster.ring(ent, eye_offset, 
+                    0, 
+                    2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_speed * 0.3, 
+                    24 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag1 | ProjectileFlags.ACCELERATE, function(proj) 
+                        proj.Scale = 2
+                        proj.CurvingStrength = 1 / 360
+                    end, true)
+
+                monster.ring(ent, eye2_offset, 
+                    0, 
+                    2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_speed * 0.3, 
+                    24 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag2 | ProjectileFlags.ACCELERATE, function(proj) 
+                        proj.Scale = 2
+                        proj.CurvingStrength = 1 / 360
+                    end, true)
+
+            end
+        end
+
+        -- camera logic!
+        if GODMODE.validate_rgon() and ent.FrameCount < grace_period then 
+            GODMODE.room:GetCamera():SetFocusPosition(ent.Position)
+        end
+
+        local targ_pos = Vector((GODMODE.room_center or GODMODE.room:GetCenterPos()).X, (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y + 80)
 
         targ_pos = targ_pos + Vector((player.Position.X - ent.Position.X) / 4.0, math.cos(math.rad(ent.FrameCount * 5)) * 4)
 
@@ -303,7 +459,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
     elseif ent.SubType == GODMODE.registry.entities.the_collapsed_hand.subtype then 
         ent.FlipX = ent.I1 % 2 == 1
-        ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
+        ent.EntityCollisionClass = ent.SpriteOffset.Y <= -32 and EntityCollisionClass.ENTCOLL_NONE or EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
         if ent.Parent ~= nil then 
             local parent = ent.Parent:ToNPC()
             local targ = parent.Position + hand_anchors[ent.I1]
@@ -458,6 +614,7 @@ monster.npc_update = function(self, ent, data, sprite)
             end)
 
             ent:Remove()
+            data.dark_light:Remove()
             GODMODE.game:MakeShockwave(ent.Position, 0.1, 0.015, 30)
         end
 
@@ -520,7 +677,12 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         if enthit.Parent ~= nil and enthit.SubType == GODMODE.registry.entities.the_collapsed_hand.subtype then 
             enthit.Parent:TakeDamage(amount,flags,entsrc,countdown)
             return true
-        elseif enthit.SubType == 0 and data.hands then 
+        elseif enthit.SubType == 0 and data.hands then
+            local sprite = enthit:GetSprite()
+            
+            if sprite:IsPlaying("1Transition") or sprite:IsPlaying("1CryOut") then 
+                return false 
+            end
         end
 	end
 end

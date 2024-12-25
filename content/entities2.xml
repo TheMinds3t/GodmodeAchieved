@@ -631,11 +631,11 @@
         <gibs amount="16" blood="1" bone="1" eye="0" gut="1" large="0" />
     </entity>
 
-    <entity anm2path="151_cotv.anm2" baseHP="1000" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="The Collapsed" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="151" portrait="76" gridCollision="walls">
+    <entity anm2path="151_cotv.anm2" baseHP="3333" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="The Collapsed" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="151" portrait="76" gridCollision="none">
         <bestiary transform="0,2,0.5" anim="1Idle" />
     </entity>
 
-    <entity anm2path="151_cotv.anm2" baseHP="1000" boss="0" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="40" friction="1" id="700" name="The Collapsed (Hand)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="1" portrait="69" gridCollision="none">
+    <entity anm2path="151_cotv.anm2" baseHP="3333" boss="0" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="40" friction="1" id="700" name="The Collapsed (Hand)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="1" portrait="69" gridCollision="none">
     </entity>
     <entity anm2path="151_cotv.anm2" baseHP="0" boss="0" tags="nodelirium noreroll" champion="0" collisionDamage="2" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="The Collapsed (Dark Matter)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="2" portrait="69" gridCollision="walls">
     </entity>

@@ -35,7 +35,7 @@ monster.data_init = function(self, ent,data)
         end
         data.phase = 0
         data.move_function = function(ent,phase,offset)
-            local center = GODMODE.room:GetCenterPos()
+            local center = (GODMODE.room_center or GODMODE.room:GetCenterPos())
             local circle_vec = Vector(math.cos((data.time+offset * 60) / 30)*128,math.sin((data.time+offset * 60) / 30)*128)
             local typ = 0
             if phase == offset then typ = 1 end
@@ -113,10 +113,10 @@ monster.npc_update = function(self, ent, data, sprite)
     data.move_function(ent,data.phase,0)
 
     if data.time % 10 == 0 then
-        local x = GODMODE.room:GetTopLeftPos().X + 20              
-        local x2 = GODMODE.room:GetBottomRightPos().X-8
-        local y = GODMODE.room:GetTopLeftPos().Y+23
-        local y2 = GODMODE.room:GetBottomRightPos().Y+11
+        local x = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 20              
+        local x2 = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X-8
+        local y = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+23
+        local y2 = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y+11
         local e = EffectVariant.CRACK_THE_SKY
         if data.phase == 3 then e = EffectVariant.CROSS_POOF end
         for i=0,(y2 - y) / ((y2 - y) / 7)-1 do
@@ -236,7 +236,7 @@ monster.npc_update = function(self, ent, data, sprite)
             p.Spread = 180
             local ra = ent:GetDropRNG():RandomInt(73)
             for i=0,2 do
-                local cen = GODMODE.room:GetCenterPos()
+                local cen = (GODMODE.room_center or GODMODE.room:GetCenterPos())
                 local r = math.rad((data.body.Position - ent.Position):GetAngleDegrees() + ent:GetDropRNG():RandomFloat() * 45 - 22.5)
                 local off = Vector(math.cos(r)*192,math.sin(r)*192)
                 p.Scale = 1.0
@@ -263,9 +263,9 @@ monster.npc_update = function(self, ent, data, sprite)
     if ent.HitPoints / ent.MaxHitPoints <= 0.05 then order_flag = ent:IsFrame(20,0) end
 
     if order_flag then
-        local x = GODMODE.room:GetTopLeftPos().X + 26
-        local x2 = GODMODE.room:GetBottomRightPos().X - 26
-        local y = GODMODE.room:GetTopLeftPos().Y - 16
+        local x = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X + 26
+        local x2 = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X - 26
+        local y = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y - 16
         local order_poses = { Vector(x,y), Vector(x2,y) }
 
         local order_pos = order_poses[data.cur_light + 1]

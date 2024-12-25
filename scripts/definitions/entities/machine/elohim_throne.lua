@@ -11,16 +11,16 @@ end
 
 local item_group_clamps = {
 	{
-		x=function(x) return x < GODMODE.room:GetCenterPos().X-32 end,
-		y=function(y) return y > GODMODE.room:GetCenterPos().Y end
+		x=function(x) return x < (GODMODE.room_center or GODMODE.room:GetCenterPos()).X-32 end,
+		y=function(y) return y > (GODMODE.room_center or GODMODE.room:GetCenterPos()).Y end
 	},
 	{
-		x=function(x) return x > GODMODE.room:GetCenterPos().X+32 end,
-		y=function(y) return y > GODMODE.room:GetCenterPos().Y end
+		x=function(x) return x > (GODMODE.room_center or GODMODE.room:GetCenterPos()).X+32 end,
+		y=function(y) return y > (GODMODE.room_center or GODMODE.room:GetCenterPos()).Y end
 	},
 	{
 		x=function(x) return true end,
-		y=function(y) return y < GODMODE.room:GetCenterPos().Y-96 end
+		y=function(y) return y < (GODMODE.room_center or GODMODE.room:GetCenterPos()).Y-96 end
 	},
 }
 

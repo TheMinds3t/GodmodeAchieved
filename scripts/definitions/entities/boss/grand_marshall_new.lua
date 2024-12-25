@@ -121,7 +121,7 @@ end
 
 local center_hori_dist = 160
 local get_hori_center = function(player,ent)
-    local center = GODMODE.room:GetCenterPos()
+    local center = (GODMODE.room_center or GODMODE.room:GetCenterPos())
     if player.Position.X < center.X then 
         return center + Vector(center_hori_dist,0)
     else
@@ -144,7 +144,7 @@ local attacks = {
                         --spawn laser
                         data.vert = not data.vert
                         local player = ent:GetPlayerTarget()
-                        local ang = math.floor(((player.Position + player.Velocity * 2.5) - GODMODE.room:GetCenterPos()):GetAngleDegrees())
+                        local ang = math.floor(((player.Position + player.Velocity * 2.5) - (GODMODE.room_center or GODMODE.room:GetCenterPos())):GetAngleDegrees())
 
                         if data.vert == true then 
                             spawn_laser(ent, Vector(player.Position.X,-500), 90, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
@@ -219,7 +219,7 @@ local attacks = {
             end,
             is_done = function(self, ent, data, sprite) return (data.laser_time or 1) <= 0 end,
             get_marshall_pos = function(self, ent, data, sprite) 
-                return GODMODE.room:GetCenterPos() + 
+                return (GODMODE.room_center or GODMODE.room:GetCenterPos()) + 
                 Vector(1,0):Rotated(data.laser_angle or 0):Resized(64 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
             end 
         },
@@ -238,7 +238,7 @@ local attacks = {
                         --spawn laser
                         data.vert = not data.vert
                         local player = ent:GetPlayerTarget()
-                        local ang = math.floor(((player.Position + player.Velocity * 2.5) - GODMODE.room:GetCenterPos()):GetAngleDegrees())
+                        local ang = math.floor(((player.Position + player.Velocity * 2.5) - (GODMODE.room_center or GODMODE.room:GetCenterPos())):GetAngleDegrees())
 
                         for i=-2,2 do 
                             if data.vert == true then 
@@ -265,7 +265,7 @@ local attacks = {
                             math.abs(((data.laser_angle + phase_2_wave_safe_section / 2.0) % phase_2_wave_safe_section) - data.laser_safe_space))
 
                         if dist_from_safe > phase_2_wave_safe_thres then 
-                            spawn_laser(ent, GODMODE.room:GetCenterPos() + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
+                            spawn_laser(ent, (GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(500,0):Rotated(data.laser_angle), data.laser_angle+180, self.laser_stats[data.laser_pattern].laser_delay, self.laser_stats[data.laser_pattern].laser_timeout)
                         end
                     end,
 
@@ -281,7 +281,7 @@ local attacks = {
                         --spawn laser
                         for i=-3,3 do 
                             spawn_laser(ent, 
-                                (GODMODE.room:GetCenterPos() + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), 
+                                ((GODMODE.room_center or GODMODE.room:GetCenterPos()) + RandomVector():Resized(ent:GetDropRNG():RandomFloat(phase_2_gridsize)):Rotated(ent:GetDropRNG():RandomFloat(360))) + Vector(500,i*phase_2_gridsize * 0.75):Rotated(data.laser_angle), 
                                 data.laser_angle+180, 
                                 math.max(self.laser_stats[data.laser_pattern].min_delay, self.laser_stats[data.laser_pattern].laser_delay - data.num_lasers * 3), 
                                 math.max(self.laser_stats[data.laser_pattern].min_timeout, self.laser_stats[data.laser_pattern].laser_timeout - data.num_lasers * 2))
@@ -393,7 +393,7 @@ local attacks = {
             end,
             is_done = function(self, ent, data, sprite) return sprite:IsFinished("Attack1Loop") end,
             get_marshall_pos = function(self, ent, data, sprite) 
-                return GODMODE.room:GetCenterPos() + Vector(0,-32) + 
+                return (GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(0,-32) + 
                 Vector(1,0):Rotated(ent.FrameCount * 4):Resized(32 * (1 - (data.laser_time or 0) / (data.max_laser_time or 1)))
             end 
         },
@@ -466,7 +466,7 @@ local get_target_pos = function(ent, data, sprite)
     end
 
     if (data.phase or 0) == 0 then 
-        return GODMODE.room:GetCenterPos()
+        return (GODMODE.room_center or GODMODE.room:GetCenterPos())
     else 
         return get_hori_center(ent:GetPlayerTarget(),ent) + Vector(64,64):Rotated(ent.FrameCount):Resized(math.cos(ent.FrameCount / 3.14 / 6) * 32 + 160)
     end

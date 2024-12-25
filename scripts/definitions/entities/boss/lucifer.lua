@@ -24,7 +24,7 @@ monster.npcUpdate = function(self, ent)
                 ent.Position = player.Position
             elseif ent.SubType == 2 then
                 ent:GetSprite():Play("Eye", true)
-                ent.Position = GODMODE.room:GetCenterPos()
+                ent.Position = (GODMODE.room_center or GODMODE.room:GetCenterPos())
             elseif ent.SubType == 3 then
                 data.attacks_left = 20 + ent:GetDropRNG():RandomFloat() * 8
                 ent:GetSprite():Play("Invisible", true)
@@ -177,7 +177,7 @@ monster.npcUpdate = function(self, ent)
                     for i=0,3 do
                         local ang = (data.time+data.time / 2+i*90) % 360 + 180
                         local v = Vector(math.cos(math.rad(ang)),math.sin(math.rad(ang)))
-                        GODMODE.game:Spawn(800, 200, GODMODE.room:GetCenterPos() + v * 48, Vector(0,0), player, math.floor(ang), player.InitSeed)
+                        GODMODE.game:Spawn(800, 200, (GODMODE.room_center or GODMODE.room:GetCenterPos()) + v * 48, Vector(0,0), player, math.floor(ang), player.InitSeed)
                     end
                     data.attacks_left = data.attacks_left - 2
                 end
@@ -186,7 +186,7 @@ monster.npcUpdate = function(self, ent)
                     for i=0,3 do
                         local ang = (-data.time-data.time / 2+i*90) % 360 + 180
                         local v = Vector(math.cos(math.rad(ang)),math.sin(math.rad(ang)))
-                        GODMODE.game:Spawn(800, 200, GODMODE.room:GetCenterPos() + v * 48, Vector(0,0), player, math.floor(ang), player.InitSeed)
+                        GODMODE.game:Spawn(800, 200, (GODMODE.room_center or GODMODE.room:GetCenterPos()) + v * 48, Vector(0,0), player, math.floor(ang), player.InitSeed)
                     end
                     data.attacks_left = data.attacks_left - 2
                 end

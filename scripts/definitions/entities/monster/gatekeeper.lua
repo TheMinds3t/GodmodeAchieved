@@ -79,7 +79,7 @@ monster.new_room = function(self)
 				sub = 1
 			end
 	
-			Isaac.Spawn(monster.type,monster.variant,sub,GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()),Vector.Zero,nil)
+			Isaac.Spawn(monster.type,monster.variant,sub,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
 			GODMODE.save_manager.set_data("GatekeeperSpawned",true)	
 		end
 	end

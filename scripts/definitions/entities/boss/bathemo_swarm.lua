@@ -48,7 +48,7 @@ monster.npc_update = function(self, ent, data, sprite)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local player = ent:GetPlayerTarget()
 
-	local dest = (GODMODE.room:GetCenterPos() * 3 + player.Position + Vector(1,0):Resized(ent.InitSeed % 40):Rotated((ent.InitSeed / 20 + ent.FrameCount * 2) % 360)) / 4
+	local dest = ((GODMODE.room_center or GODMODE.room:GetCenterPos()) * 3 + player.Position + Vector(1,0):Resized(ent.InitSeed % 40):Rotated((ent.InitSeed / 20 + ent.FrameCount * 2) % 360)) / 4
 	local speed = 0.3
 	local dampen = 0.9
 

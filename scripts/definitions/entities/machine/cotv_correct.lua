@@ -82,10 +82,10 @@ monster.npc_update = function(self, ent, data, sprite)
 
         if ent:IsFrame(8,1) and ent:GetDropRNG():RandomFloat() < (data.cur_scale_lvl or 0) then 
             local fx = Isaac.Spawn(GODMODE.registry.entities.correction_hand.type, GODMODE.registry.entities.correction_hand.variant, GODMODE.registry.entities.correction_hand.subtype, 
-                GODMODE.room:GetCenterPos()
+                (GODMODE.room_center or GODMODE.room:GetCenterPos())
                 +RandomVector():Resized(128)*Vector(3,2), Vector.Zero, nil)
 
-            local targ = GODMODE.room:GetCenterPos()
+            local targ = (GODMODE.room_center or GODMODE.room:GetCenterPos())
             fx:GetSprite().Rotation = (targ - fx.Position):GetAngleDegrees() + 90
             
             local scale = fx:GetDropRNG():RandomFloat() * 0.5 + 0.0

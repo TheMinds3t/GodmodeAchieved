@@ -897,7 +897,7 @@ else
 
         if data and GODMODE.save_manager_lock ~= true then
             if data.dark_light ~= nil then 
-                data.dark_light.Velocity = ent.Position - data.dark_light.Position 
+                data.dark_light.Velocity = (ent.Position + ent.SpriteOffset) - data.dark_light.Position 
             end
 
             data.time = data.time + 1
@@ -954,7 +954,7 @@ else
                             local dir = GODMODE.room:GetDoor(door_pos).Direction
                             if door_pos_mods[dir] ~= nil then 
                                 if door_pos ~= -1 then
-                                    ent.Position = ent.Position - GODMODE.room:GetBottomRightPos() * door_pos_mods[dir]
+                                    ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()) * door_pos_mods[dir]
                                     data.persistent_data.room = GODMODE.room:GetDecorationSeed()
                                 end
                             else
@@ -1125,7 +1125,7 @@ else
             local count = 8/GODMODE.game:GetNumPlayers()
 
             while key_count > 0 do 
-                Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,keys[math.floor((8/GODMODE.game:GetNumPlayers()))],GODMODE.room:GetCenterPos()-Vector(0,64),Vector.Zero,ent)
+                Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,keys[math.floor((8/GODMODE.game:GetNumPlayers()))],(GODMODE.room_center or GODMODE.room:GetCenterPos())-Vector(0,64),Vector.Zero,ent)
                 key_count = key_count - (8/GODMODE.game:GetNumPlayers())
             end
         end
@@ -1150,7 +1150,7 @@ else
         end)
 
         if GODMODE.is_at_palace and GODMODE.is_at_palace() then
-            local mural = Isaac.Spawn(GODMODE.registry.entities.palace_mural.type, GODMODE.registry.entities.palace_mural.variant, 0, GODMODE.room:GetCenterPos(), Vector.Zero, nil)
+            local mural = Isaac.Spawn(GODMODE.registry.entities.palace_mural.type, GODMODE.registry.entities.palace_mural.variant, 0, (GODMODE.room_center or GODMODE.room:GetCenterPos()), Vector.Zero, nil)
             mural:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             mural:Update()
         end
@@ -1186,7 +1186,7 @@ else
 
             GODMODE.log("GOTO CORRECTION",true)
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
-                GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(GODMODE.room:GetCenterPos() + Vector(-102,64))), Vector.Zero, nil)
+                GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex((GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(-102,64))), Vector.Zero, nil)
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","true")
             GODMODE.save_manager.set_data("CorrectionNeeded","false",true) 
         end
@@ -1197,7 +1197,10 @@ else
 
     function GODMODE.mod_object:new_room()
         GODMODE.room = GODMODE.game:GetRoom()
-
+        GODMODE.room_top_left = GODMODE.room:GetTopLeftPos()
+        GODMODE.room_bottom_right = GODMODE.room:GetBottomRightPos()
+        GODMODE.room_center = GODMODE.room:GetCenterPos()
+        
         if not GODMODE.save_manager.has_loaded then 
             if not GODMODE.util.is_start_of_run() then
                 GODMODE.save_manager_lock = true
@@ -1310,7 +1313,7 @@ else
                     grident:Update()
                 end)
 
-                Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()), Vector.Zero, nil)
+                Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())), Vector.Zero, nil)
             elseif room:GetType() == RoomType.ROOM_BOSS then
                 if not StageAPI.InExtraRoom() then 
                     StageAPI.SetRoomFromList(GODMODE.fallen_light_entrance, true, false, true, room:GetDecorationSeed(), room:GetRoomShape(), false)
@@ -2442,7 +2445,7 @@ else
                 pickup.OptionsPickupIndex = 0 --Enable more than one planetarium item to be picked up in certain rooms
 
                 if pickup.FrameCount == 60 and GODMODE.util.count_enemies(nil,EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, nil) == 1 and GODMODE.util.count_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TRINKET,TrinketType.TRINKET_TELESCOPE_LENS) == 0 and GODMODE.util.total_item_count(TrinketType.TRINKET_TELESCOPE_LENS, true) == 0 then 
-                    Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TRINKET,TrinketType.TRINKET_TELESCOPE_LENS,GODMODE.room:FindFreePickupSpawnPosition(GODMODE.room:GetCenterPos()), Vector.Zero, nil)
+                    Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TRINKET,TrinketType.TRINKET_TELESCOPE_LENS,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())), Vector.Zero, nil)
                 end
             end
 
@@ -2620,9 +2623,9 @@ else
         end
 
         local poses = {
-			{pos=GODMODE.room:GetCenterPos(),vel=RandomVector()*0.05},
-			{pos=GODMODE.room:GetTopLeftPos(),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
-			{pos=GODMODE.room:GetBottomRightPos(),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
+			{pos=(GODMODE.room_center or GODMODE.room:GetCenterPos()),vel=RandomVector()*0.05},
+			{pos=(GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
+			{pos=(GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
 		}
 
 		for _,pos in ipairs(poses) do
@@ -3102,6 +3105,9 @@ else
         elseif cmd == "birthday_mode" then 
             GODMODE.birthday_mode = not GODMODE.birthday_mode
             Isaac.ConsoleOutput("Birthday Mode Toggled for this session!! Enjoy the cake!")
+        elseif cmd == "christmas_mode" then 
+            GODMODE.christmas_mode = not GODMODE.christmas_mode
+            Isaac.ConsoleOutput("Christmas Mode Toggled for this session!! Happy Holidays!")
         elseif cmd == "gm_setdata" or cmd == "gm_sd" then 
             params = GODMODE.util.string_split(string.lower(params)," ")
             local key = params[1] or nil 

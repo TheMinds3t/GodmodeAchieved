@@ -32,8 +32,8 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 		GODMODE.game:ShakeScreen(10)
 		local monsters = {}
 		local player_pos = player.Position
-		local topleft = GODMODE.room:GetTopLeftPos()
-		local botright = GODMODE.room:GetBottomRightPos()
+		local topleft = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos())
+		local botright = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos())
 
 		if data.phase == 2 then
 			monsters = {
@@ -123,7 +123,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 end
 
 monster.npc_kill = function(self,ent)
-	local statue = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:GetCenterPos(),Vector.Zero,nil)
+	local statue = Isaac.Spawn(monster.type,monster.variant,0,(GODMODE.room_center or GODMODE.room:GetCenterPos()),Vector.Zero,nil)
 	GODMODE.get_ent_data(statue).phase = GODMODE.get_ent_data(ent).phase
 	GODMODE.get_ent_data(statue).prev_phase = GODMODE.get_ent_data(ent).prev_phase
 	GODMODE.get_ent_data(statue).spawned_item = GODMODE.get_ent_data(ent).spawned_item

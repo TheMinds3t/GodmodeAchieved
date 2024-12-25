@@ -45,10 +45,10 @@ monster.npc_update = function(self, ent, data, sprite)
 
 		ent.Velocity = ent.Velocity*0.85 + Vector(data.dirx * 0.195,data.diry * 0.165)*data.move_speed
 
-		if ent.Position.X <= GODMODE.room:GetTopLeftPos().X+ent.Size*2 then data.dirx = 1 end
-		if ent.Position.Y <= GODMODE.room:GetTopLeftPos().Y+ent.Size*2 then data.diry = 1 end
-		if ent.Position.X >= GODMODE.room:GetBottomRightPos().X-ent.Size*2 then data.dirx = -1 end
-		if ent.Position.Y >= GODMODE.room:GetBottomRightPos().Y-ent.Size*2 then data.diry = -1 end
+		if ent.Position.X <= (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).X+ent.Size*2 then data.dirx = 1 end
+		if ent.Position.Y <= (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()).Y+ent.Size*2 then data.diry = 1 end
+		if ent.Position.X >= (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).X-ent.Size*2 then data.dirx = -1 end
+		if ent.Position.Y >= (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()).Y-ent.Size*2 then data.diry = -1 end
 
 		data.burst_cooldown = (data.burst_cooldown or 0) - 1
 		if (sprite:IsPlaying("Idle") or sprite:IsPlaying("IdleUnmasked")) and (data.burst_cooldown or 0) <= 0 then

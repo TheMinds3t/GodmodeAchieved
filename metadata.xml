@@ -43,7 +43,7 @@
 Also, compatible with most large-scale mods for Repentance!
 [/b][/h1]
 
-[img]https://i.imgur.com/w9SvitU.png[/img]
+[img]https://i.imgur.com/DwmzA6p.png[/img]
 [h1][b]
 For a full list of credits, refer to the [url=https://tboigodmode.wiki.gg/wiki/Developers]wiki page[/url] or the ingame version!
 [/b][/h1]
@@ -52,7 +52,7 @@ For a full list of credits, refer to the [url=https://tboigodmode.wiki.gg/wiki/D
 [img]https://i.imgur.com/eLl9vc2.png[/img]
 
 The custom ending voiceover was trained with the RVC Project, a model located [url=https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI]here![/url]</description>
-    <version>1.286</version>
+    <version>1.288</version>
     <visibility>Private</visibility>
     <tag id="Lua"/>
     <tag id="Items"/>

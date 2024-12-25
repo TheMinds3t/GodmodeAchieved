@@ -275,10 +275,10 @@ monster.npc_update = function(self, ent, data, sprite)
     if sprite:IsPlaying("BrimFire") or sprite:IsPlaying("FireLoop") 
         or sprite:IsPlaying("BodyDeath") then spd = 1/100 end
     if data.p3 == true then spd = 1/50 end
-    local targ = (ti * 0.5 + GODMODE.room:GetCenterPos() * 2.5) / 3
+    local targ = (ti * 0.5 + (GODMODE.room_center or GODMODE.room:GetCenterPos()) * 2.5) / 3
 
     if sprite:IsPlaying("HeadIdleRage") then
-        targ = (ti * 0.5 + GODMODE.room:GetCenterPos() * 5) / 5.5
+        targ = (ti * 0.5 + (GODMODE.room_center or GODMODE.room:GetCenterPos()) * 5) / 5.5
     end
 
     ent.Velocity = ent.Velocity * 0.9 + (targ - ent.Position):Resized(spd)

@@ -69,7 +69,7 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
                     if rt == RoomType.ROOM_BOSS then -- teleport to FL fight
                         Isaac.ExecuteCommand("croom 1000 IvoryPalace-General")
                         StageAPI.PlayBossAnimation(StageAPI.GetBossData("IvoryPalace_Angelusossa"))
-                        local pos = GODMODE.room:GetCenterPos()+Vector(0,96)
+                        local pos = (GODMODE.room_center or GODMODE.room:GetCenterPos())+Vector(0,96)
                         GODMODE.util.macro_on_players(function(player)
                             player.Position = pos
                         end)

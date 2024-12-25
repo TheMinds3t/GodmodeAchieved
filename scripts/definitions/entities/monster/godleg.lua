@@ -3,6 +3,7 @@ monster.name = "Godleg"
 monster.type = GODMODE.registry.entities.godleg.type
 monster.variant = GODMODE.registry.entities.godleg.variant
 
+
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
 		data.init = true
@@ -11,7 +12,7 @@ monster.data_init = function(self, ent,data)
 end
 
 monster.npc_update = function(self, ent, data, sprite)
-if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
+	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local player = ent:GetPlayerTarget()
 
 	if not sprite:IsPlaying("Attack") and not sprite:IsPlaying("Walk") then

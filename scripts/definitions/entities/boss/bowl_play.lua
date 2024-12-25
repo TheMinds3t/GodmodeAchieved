@@ -67,7 +67,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.V1 = Vector(math.cos(ent.FrameCount/25.0+7.5)*80,math.sin(ent.FrameCount/25.0+7.5)*96)
             end
 
-            ent.Velocity = ent.Velocity * 0.5 + (((data.anchor_pos or GODMODE.room:GetCenterPos())+ent.V1) - ent.Position) / 120.0
+            ent.Velocity = ent.Velocity * 0.5 + (((data.anchor_pos or (GODMODE.room_center or GODMODE.room:GetCenterPos()))+ent.V1) - ent.Position) / 120.0
             ent.I1 = #data.body
         end
 

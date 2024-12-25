@@ -12,7 +12,7 @@ item.encyc_entry = {
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-        local angel = Isaac.Spawn(GODMODE.registry.entities.bloody_uriel.type, GODMODE.registry.entities.bloody_uriel.variant, 0, GODMODE.room:GetCenterPos()-Vector(0,64), Vector.Zero, player)
+        local angel = Isaac.Spawn(GODMODE.registry.entities.bloody_uriel.type, GODMODE.registry.entities.bloody_uriel.variant, 0, (GODMODE.room_center or GODMODE.room:GetCenterPos())-Vector(0,64), Vector.Zero, player)
         angel:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
         angel:Update()
         angel.MaxHitPoints = angel.MaxHitPoints * 0.666

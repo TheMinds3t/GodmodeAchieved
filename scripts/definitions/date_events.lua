@@ -29,6 +29,28 @@ events.dates = {
             GODMODE.keepah_mode = true 
         end 
     },
+
+    {
+        name="Christmas Eve",
+        date = {month=12, day=24},
+        modifier = function() 
+            GODMODE.christmas_mode = true 
+        end 
+    },
+    {
+        name="Christmas Day",
+        date = {month=12, day=25},
+        modifier = function() 
+            GODMODE.christmas_mode = true 
+        end 
+    },
+    {
+        name="Post-Christmas Day",
+        date = {month=12, day=26},
+        modifier = function() 
+            GODMODE.christmas_mode = true 
+        end 
+    },
 }
 
 events.get_active_events = function(activate) -- thank you @psi_starbean in MOI #resources for the date checking template!
