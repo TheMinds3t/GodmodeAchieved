@@ -40,8 +40,8 @@ monster.familiar_update = function(self, fam, data)
 		local pd = GODMODE.get_ent_data(player)
 
 		if fam.SubType == states.dagger or fam.SubType == states.swing_dagger then 
-			data.spawn_room = data.spawn_room or GODMODE.room:GetDecorationSeed()
-			if GODMODE.room:GetDecorationSeed() ~= data.spawn_room then fam:Remove() end
+			data.spawn_room = data.spawn_room or (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
+			if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.spawn_room then fam:Remove() end
 
 			data.continue_vel = data.continue_vel or fam.Velocity
 			fam.Velocity = data.continue_vel	

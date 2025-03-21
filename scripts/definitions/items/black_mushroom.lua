@@ -19,9 +19,9 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 		if void_flag and GODMODE.save_manager.get_player_data(player,"MushroomVoid","false") == "false" 
 			or not void_flag then
 			
-			GODMODE.save_manager.set_player_data(player,"MushroomUse",""..GODMODE.room:GetDecorationSeed(),true)
+			GODMODE.save_manager.set_player_data(player,"MushroomUse",""..(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),true)
 			
-			if GODMODE.room:GetType() == RoomType.ROOM_ERROR then 
+			if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ERROR then 
 				GODMODE.save_manager.set_player_data(player,"MushroomTime","100",true)
 			end
 
@@ -68,7 +68,7 @@ item.player_update = function(self,player,data)
 				GODMODE.room:MamaMegaExplosion(player.Position)
 			end	
 		else 
-			if use_room == GODMODE.room:GetDecorationSeed() then 
+			if use_room == (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then 
 				GODMODE.shader_params.black_mushroom_intensity = math.min(2.2,(GODMODE.shader_params.black_mushroom_intensity or 0)+(1/120.0))
 			end	
 		end	
@@ -79,7 +79,7 @@ item.new_room = function(self)
 	GODMODE.util.macro_on_players(function(player) 
 		local use_room = tonumber(GODMODE.save_manager.get_player_data(player,"MushroomUse","-1"))
 
-		if use_room ~= GODMODE.room:GetDecorationSeed() and use_room ~= -1 then 
+		if use_room ~= (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) and use_room ~= -1 then 
 			GODMODE.save_manager.set_player_data(player,"MushroomUse","-1",true)
 			GODMODE.save_manager.set_player_data(player,"MushroomTime","100",true)
 		end

@@ -161,7 +161,7 @@ monster.npc_update = function(self, ent, data, sprite)
             table.remove(monster.explode_checks,index)
             ent:Kill()
             break
-        elseif explode.time - GODMODE.game:GetFrameCount() < -5 then 
+        elseif explode.time - (GODMODE.frame_count or GODMODE.game:GetFrameCount()) < -5 then 
             table.remove(monster.explode_checks,index)
             break
         end
@@ -223,7 +223,7 @@ end
 monster.effect_update = function(self,fx)
     if fx.Variant == EffectVariant.BOMB_EXPLOSION and fx.FrameCount == 1 then 
         -- GODMODE.log("test!",true)
-        table.insert(monster.explode_checks, {time=GODMODE.game:GetFrameCount(),pos=fx.Position,size=fx.Scale*explosion_size})
+        table.insert(monster.explode_checks, {time=(GODMODE.frame_count or GODMODE.game:GetFrameCount()),pos=fx.Position,size=fx.Scale*explosion_size})
 
         -- GODMODE.util.macro_on_enemies(nil,monster.type,monster.variant,nil,function(door)
         --     GODMODE.log("hi? len = "..((hazard.Position-fx.Position):Length()),true)

@@ -102,7 +102,7 @@ save_manager.load = function()
                         persistent_ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
                         persistent_ent:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
                         
-                        if GODMODE.room and GODMODE.room.GetDecorationSeed and data.persistent_data and data.persistent_data.room == GODMODE.room:GetDecorationSeed() then 
+                        if GODMODE.room and GODMODE.room.GetDecorationSeed and data.persistent_data and data.persistent_data.room == (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then 
                             persistent_ent.Position = Vector(ent.x, ent.y)
                         end
                         -- persistent_ent:Update()
@@ -217,6 +217,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["FaithlessStageDecay"] = "2"
         save_manager.god_data.config["VoidStrength"] = "4"
         save_manager.god_data.config["LighterTreasure"] = "false"
+        save_manager.god_data.config["RedJuiceSetting"] = "1"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 

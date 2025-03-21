@@ -20,7 +20,7 @@ local split_dist = 8
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-        local uses = tonumber(GODMODE.save_manager.get_player_data(player,"ShopDice"..GODMODE.room:GetDecorationSeed(),"0"))
+        local uses = tonumber(GODMODE.save_manager.get_player_data(player,"ShopDice"..(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),"0"))
 
         if uses < 5 then 
             local closest = nil 
@@ -35,7 +35,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
             end)
     
             if closest ~= nil then 
-                GODMODE.save_manager.set_player_data(player,"ShopDice"..GODMODE.room:GetDecorationSeed(),uses+1,true)
+                GODMODE.save_manager.set_player_data(player,"ShopDice"..(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),uses+1,true)
 
                 if closest.Price == 0 then 
                     closest.ShopItemId = -1

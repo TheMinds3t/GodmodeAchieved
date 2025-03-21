@@ -228,6 +228,8 @@ monster.pickup_update = function(self, ent, data, sprite)
         GODMODE.game:MakeShockwave(ent.Position, 0.0375, 0.005, 20)
         player.Velocity = player.Velocity * 0.5 + (player.Position - ent.Position):Resized(6)
         ent:Remove()
+
+        GODMODE.sfx:Play(GODMODE.registry.sounds.correction_bell, 1.0, 1, false, 1)
     end
 
     if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
@@ -286,8 +288,8 @@ monster.pickup_post_render = function(self,ent,offset)
         -- draw sprites
         while count > 1 do 
             count = count - 1
-            local off = math.rad((360 / max_count * count + (GODMODE.game:GetFrameCount() + ent.Index) * 6 + ent.Index * 30) % 360)
-            local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(off-GODMODE.game:GetFrameCount()*12))*4+4)
+            local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + ent.Index * 30) % 360)
+            local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(off-(GODMODE.frame_count or GODMODE.game:GetFrameCount())*12))*4+4)
             data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.1+0.125)
             data.second_sprite:Render(Isaac.WorldToScreen(ent.Position
                 +Vector(math.floor(count / 2) * -bh_spacing+base_off,
@@ -336,8 +338,8 @@ monster.pickup_post_render = function(self,ent,offset)
     -- draw sprites
     while count > 1 do 
         count = count - 1
-        local off = math.rad((360 / max_count * count + (GODMODE.game:GetFrameCount() + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
-        local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(math.deg(off)-(GODMODE.game:GetFrameCount() + ent.Index*20)*12))*8+6)
+        local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
+        local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(math.deg(off)-((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index*20)*12))*8+6)
 
         if death_flag then 
             data.second_sprite.Scale = Vector(0.8+count*0.06125,0.8+count*0.06125)+Vector(math.cos(off),math.sin(off)):Resized(0.2)

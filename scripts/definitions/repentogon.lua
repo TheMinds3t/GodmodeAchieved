@@ -37,7 +37,7 @@ if GODMODE.validate_rgon() then
                 local id = entry.id or Isaac.GetPlayerTypeByName(name)
     
                 ret.player_type_to_name[id] = name
-                GODMODE.log("PLAYERNAME |  "..id.." = '"..name.."'",true)
+                GODMODE.log("PLAYERNAME |  "..id.." = '"..name.."'")
             end
         end
     end

@@ -195,9 +195,9 @@ monster.npc_post_render = function(self,ent,offset)
     -- draw sprites
     while count > 1 do 
         count = count - 1
-        local off = math.rad((360 / max_count * count + (GODMODE.game:GetFrameCount() + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
+        local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
 
-        local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.abs(math.sin(math.rad(math.deg(off)-(GODMODE.game:GetFrameCount() + ent.Index)*12))*4+2))
+        local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.abs(math.sin(math.rad(math.deg(off)-((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index)*12))*4+2))
         
         data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.15+0.2)
         data.second_sprite:Render(Isaac.WorldToScreen(ent.Position

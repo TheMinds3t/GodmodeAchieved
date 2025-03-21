@@ -8,7 +8,7 @@ local max_volume_range = 320 --silent
 local min_volume_range = 80 --loudest
 
 local is_not_shop = function()
-	return GODMODE.room:GetType() ~= RoomType.ROOM_SHOP
+	return (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_SHOP
 end
 
 monster.npc_init = function(self,ent,data,sprite)
@@ -195,7 +195,7 @@ local config_parrot = function(parrot, appear2)
 
 	if appear2 then
 		parrot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-		if GODMODE.room:GetType() == RoomType.ROOM_SHOP then 
+		if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP then 
 			parrot:GetSprite():Play("Appear2",true)
 		else 
 			parrot:GetSprite():Play("Idle",true)
@@ -210,10 +210,10 @@ local config_parrot = function(parrot, appear2)
 end
 
 monster.new_room = function(self)
-	if true then --GODMODE.room:GetType() == RoomType.ROOM_SHOP then
+	if true then --(GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP then
 		if GODMODE.save_manager.get_config("ShopParrot","true") == "true" then 
 			local kc_count = GODMODE.util.total_item_count(GODMODE.registry.trinkets.keepah_card, true)
-			local count = (GODMODE.room:GetType() == RoomType.ROOM_SHOP and 1 --shop count
+			local count = ((GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP and 1 --shop count
 							or GODMODE.keepah_mode == true and GODMODE.level:GetAbsoluteStage() or 0) --april fools count
 							+ kc_count * 2 --keepah card count
 

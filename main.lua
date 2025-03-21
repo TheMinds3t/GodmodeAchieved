@@ -244,11 +244,23 @@ else
 
         MusicManager():Enable()
         GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover)
-        GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover_joke)
         GODMODE.cur_splash = nil
     end 
 
     function GODMODE.mod_object:post_update()
+        GODMODE.room_render_scroll = GODMODE.room:GetRenderScrollOffset()
+        GODMODE.frame_count = GODMODE.game:GetFrameCount()
+        local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
+        local distort_lerp = tonumber(GODMODE.save_manager.get_data("RedJuiceDistortLerp","0"))
+
+        if distort > 0 then
+            if math.abs(distort_lerp - distort) > 0.05 then 
+                GODMODE.save_manager.set_data("RedJuiceDistortLerp",(distort_lerp * 39.0 + distort) / 40.0)                
+            end
+        else 
+            GODMODE.save_manager.set_data("RedJuiceDistortLerp",(distort_lerp * 39.0 + 0) / 40.0)                
+        end
+        
         GODMODE.paused = (ModConfigMenu ~= nil and ModConfigMenu.IsVisible or false) or (DeadSeaScrollsMenu == nil and false or DeadSeaScrollsMenu.IsOpen())
         -- used to blacken screen after taking damage
         GODMODE.shader_params.godmode_trinket_time = math.max(0,(GODMODE.shader_params.godmode_trinket_time or 0)-1)
@@ -284,13 +296,7 @@ else
             end
             
             if GODMODE.cur_splash:IsEventTriggered("Start") then 
-                if GODMODE.save_manager.get_data("EndingAchieved","false") == "true" and Isaac.GetPlayer():GetDropRNG():RandomFloat() < 0.3 then 
-                    GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover_joke,3)
-                    GODMODE.log("mlg moment",true)
-                else 
-                    GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover,3)
-                end
-
+                GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover,3)
                 GODMODE.save_manager.set_data("EndingAchieved","true",true)
             end
 
@@ -342,7 +348,7 @@ else
         end
 
         --spawn call of the void when charges exist
-        if tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) + tonumber(GODMODE.save_manager.get_data("VoidDMProj","0")) > 0 and GODMODE.game:GetFrameCount() % 30 == 0 then 
+        if tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) + tonumber(GODMODE.save_manager.get_data("VoidDMProj","0")) > 0 and (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 30 == 0 then 
             --spawn new if none exists
             if GODMODE.util.count_enemies(nil,GODMODE.registry.entities.call_of_the_void.type, GODMODE.registry.entities.call_of_the_void.variant, -1) == 0 then
                 local void = Isaac.Spawn(GODMODE.registry.entities.call_of_the_void.type, GODMODE.registry.entities.call_of_the_void.variant,0,room:GetCenterPos(),Vector.Zero,nil)
@@ -357,7 +363,7 @@ else
             local time = math.min(tonumber(GODMODE.save_manager.get_data("FloorEnterTime","120000")),tonumber(GODMODE.save_manager.get_config("VoidEnterTime","9005")))
             local time_inc = 1
 
-            if GODMODE.cached_max_speed == nil or GODMODE.game:GetFrameCount() % 20 == 0 then 
+            if GODMODE.cached_max_speed == nil or (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 20 == 0 then 
                 local max_speed = 0
                 GODMODE.util.macro_on_players(function(player) 
                     if player.MoveSpeed > max_speed then max_speed = player.MoveSpeed end 
@@ -388,7 +394,7 @@ else
 
                     for i=0, rooms.Size-1 do
                         local room = rooms:Get(i)
-                        if room.Data.Type == RoomType.ROOM_DEFAULT and room.DecorationSeed ~= GODMODE.room:GetDecorationSeed() then
+                        if room.Data.Type == RoomType.ROOM_DEFAULT and room.DecorationSeed ~= (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then
                             if GODMODE.util.random() < chance then
                                 GODMODE.save_manager.set_data("SOCSpawnSeed",room.DecorationSeed, true)
                                 break
@@ -456,11 +462,11 @@ else
         end
 
         if GODMODE.util.is_correction() then 
-            for i=0,GODMODE.game:GetFrameCount() % 2 do 
-                local pos = room:GetCenterPos()+RandomVector():Resized(math.cos(GODMODE.game:GetFrameCount())*128)*Vector(2,1.4)
+            for i=0,(GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 2 do 
+                local pos = room:GetCenterPos()+RandomVector():Resized(math.cos((GODMODE.frame_count or GODMODE.game:GetFrameCount()))*128)*Vector(2,1.4)
                 local depth = 5
                 while math.abs(pos.X - room:GetCenterPos().X) < 64 and math.abs(pos.Y - room:GetTopLeftPos().Y) < 64 and depth > 0 do 
-                    pos = room:GetCenterPos()+RandomVector():Resized(math.cos(GODMODE.game:GetFrameCount())*128)*Vector(2,1.4)
+                    pos = room:GetCenterPos()+RandomVector():Resized(math.cos((GODMODE.frame_count or GODMODE.game:GetFrameCount()))*128)*Vector(2,1.4)
                     depth = depth - 1
                 end
 
@@ -468,7 +474,7 @@ else
                     pos, Vector.Zero, nil):ToEffect()
                 fx:SetTimeout(10)
                 fx.LifeSpan = 40
-                fx.Scale = math.sin(GODMODE.game:GetFrameCount()) * 0.5 + 0.6
+                fx.Scale = math.sin((GODMODE.frame_count or GODMODE.game:GetFrameCount())) * 0.5 + 0.6
                 fx:SetColor(Color(0,0,0,0.95),999,1,false,false)
                 fx.DepthOffset = -100    
             end
@@ -500,7 +506,7 @@ else
         -- --render broken heart sprite
         local broken = tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))
         -- local broken_flag = broken > 0
-        -- local opac = math.cos(math.rad(GODMODE.game:GetFrameCount()*5+broken * 3))*0.3 + 0.6
+        -- local opac = math.cos(math.rad((GODMODE.frame_count or GODMODE.game:GetFrameCount())*5+broken * 3))*0.3 + 0.6
         -- if not broken_flag then opac = 0 end 
         -- local space_between = 24
         -- GODMODE.sprites.temp_bh_sprite.Color = Color(1,1,1,(GODMODE.sprites.temp_bh_sprite.Color.A + opac) / 2.0)
@@ -520,7 +526,7 @@ else
             while cur > 0 do 
                 local spot = GODMODE.util.get_heart_pos_for(player,GODMODE.util.get_heart_ind_for(player,GODMODE.registry.hearts.faithless) + cur)
                 if spot ~= nil then 
-                    GODMODE.sprites.heart_ui_sprite:SetFrame(anim_name,math.floor(GODMODE.game:GetFrameCount() / 2 % (heart_ui_anim_size[anim_name] * 2)))
+                    GODMODE.sprites.heart_ui_sprite:SetFrame(anim_name,math.floor((GODMODE.frame_count or GODMODE.game:GetFrameCount()) / 2 % (heart_ui_anim_size[anim_name] * 2)))
                     GODMODE.sprites.heart_ui_sprite:Render(spot)    
                 end
 
@@ -537,7 +543,7 @@ else
             GODMODE.sprites.heart_ui_sprite.Color = Color(1,1,1,data.deli_heart_opacity)
 
             if spot ~= nil then 
-                GODMODE.sprites.heart_ui_sprite:SetFrame(anim_name,math.floor(GODMODE.game:GetFrameCount() / 2 % (heart_ui_anim_size[anim_name] * 2)))
+                GODMODE.sprites.heart_ui_sprite:SetFrame(anim_name,math.floor((GODMODE.frame_count or GODMODE.game:GetFrameCount()) / 2 % (heart_ui_anim_size[anim_name] * 2)))
                 GODMODE.sprites.heart_ui_sprite:Render(spot)    
             end
         elseif player:GetPlayerType() == GODMODE.registry.players.t_recluse then 
@@ -566,7 +572,9 @@ else
             data.red_coin_count = tonumber(GODMODE.save_manager.get_player_data(player, "RedCoinCount", "0"))
             data.red_coin_display = data.red_coin_display or 0
 
-            if Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)), player.ControllerIndex) or Input.IsActionPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterButton",ButtonAction.ACTION_MAP)), player.ControllerIndex) then
+            local red_coin_keybind = GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)
+            if red_coin_keybind ~= nil and Input.IsButtonPressed (tonumber(red_coin_keybind) or Keyboard.KEY_TAB, player.ControllerIndex) --keyboard
+            or Input.IsActionPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterButton",ButtonAction.ACTION_MAP)), player.ControllerIndex) then --controller
                 data.red_coin_display = math.min(50,data.red_coin_display + 5)
             end
 
@@ -677,8 +685,14 @@ else
             local cotv_spawned = GODMODE.util.is_cotv_spawned()
             local power = tonumber(GODMODE.save_manager.get_data("VoidBHProj","0"))+tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))
             local active_skull_off = Vector.Zero
+            
+            local red_coin_keybind = GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)
+            local input_pressed = GODMODE.paused 
 
-            local input_pressed = GODMODE.paused or Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)), Isaac.GetPlayer().ControllerIndex)
+            if red_coin_keybind ~= nil then 
+                input_pressed = input_pressed or Input.IsButtonPressed (tonumber(red_coin_keybind) or Keyboard.KEY_TAB, Isaac.GetPlayer().ControllerIndex)
+            end
+
             local inc_flag = (input_pressed and false) or not input_pressed and (
                 anim_type == "TimerPaused" or 
                 anim_type == "TimerDisabled" or 
@@ -705,7 +719,7 @@ else
 
                 local col_mod = GODMODE.cotv_skull_counter/100.0
                 GODMODE.sprites.cotv_timer_sprite.Color = Color(col_mod,col_mod,col_mod,col_mod)
-                GODMODE.sprites.cotv_timer_sprite:SetFrame("Skull",GODMODE.game:GetFrameCount()%12)
+                GODMODE.sprites.cotv_timer_sprite:SetFrame("Skull",(GODMODE.frame_count or GODMODE.game:GetFrameCount())%12)
 
                 local skull_text_dist = Vector(4,0)
                 GODMODE.sprites.cotv_timer_sprite:RemoveOverlay()
@@ -733,7 +747,7 @@ else
                 GODMODE.sprites.cotv_timer_sprite:RemoveOverlay()
             end
 
-            -- if GODMODE.game:GetFrameCount() % 20 == 0 then 
+            -- if (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 20 == 0 then 
             --     GODMODE.cotv_timer_st_cache = nil
             -- end
 
@@ -741,9 +755,9 @@ else
 
             
             if GODMODE.cotv_timer_st_cache > 0 then 
-                GODMODE.sprites.cotv_timer_sprite:SetFrame("TimerBackST",GODMODE.game:GetFrameCount()%40)
+                GODMODE.sprites.cotv_timer_sprite:SetFrame("TimerBackST",(GODMODE.frame_count or GODMODE.game:GetFrameCount())%40)
             else 
-                GODMODE.sprites.cotv_timer_sprite:SetFrame("TimerBack",GODMODE.game:GetFrameCount()%40)
+                GODMODE.sprites.cotv_timer_sprite:SetFrame("TimerBack",(GODMODE.frame_count or GODMODE.game:GetFrameCount())%40)
             end
             GODMODE.sprites.cotv_timer_sprite:Render(GODMODE.util.get_cotv_counter_pos()+active_skull_off, Vector(0,0), Vector(0,0))
         end
@@ -911,7 +925,7 @@ else
 
                 if not data.persistent_data then
                     data.persistent_data = saved_data or {
-                        room = GODMODE.room:GetDecorationSeed(),
+                        room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),
                         in_room = true,
                         floor = GODMODE.level:GetStage(),
                     }
@@ -922,7 +936,7 @@ else
                         ent:Remove()
                     end
                     
-                    if GODMODE.room:GetDecorationSeed() ~= data.persistent_data.room then
+                    if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.persistent_data.room then
 
                         data.persistent_data.in_room = false
                         ent.Visible = false
@@ -948,14 +962,14 @@ else
                         data.persistent_data.grid_coll_class = ent.GridCollisionClass
                     end
                 elseif data.persistent_state >= GODMODE.persistent_state.between_rooms then
-                    if GODMODE.room:GetDecorationSeed() ~= data.persistent_data.room then
+                    if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.persistent_data.room then
                         local door_pos = GODMODE.level.EnterDoor
                         if GODMODE.room:GetDoor(door_pos) ~= nil then 
                             local dir = GODMODE.room:GetDoor(door_pos).Direction
                             if door_pos_mods[dir] ~= nil then 
                                 if door_pos ~= -1 then
                                     ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()) * door_pos_mods[dir]
-                                    data.persistent_data.room = GODMODE.room:GetDecorationSeed()
+                                    data.persistent_data.room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
                                 end
                             else
                                 GODMODE.log("doorpos \'"..dir.."\' not registered, please fix")
@@ -990,7 +1004,7 @@ else
             ent.HitPoints = ent.MaxHitPoints
         end
 
-        if (GODMODE.room:GetType() == RoomType.ROOM_MINIBOSS or GODMODE.room:GetType() == RoomType.ROOM_BOSS) and ent:IsBoss() then
+        if ((GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_MINIBOSS or (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS) and ent:IsBoss() then
             ent:AddEntityFlags(EntityFlag.FLAG_NO_SPIKE_DAMAGE)
         end
 
@@ -1170,7 +1184,7 @@ else
                     correction = true
                     GODMODE.log("Stat score of "..stats.score.." is lower than the threshold (currently "..stat_thres..")", true)
                 else 
-                    GODMODE.log("Stat score of "..stats.score.." is above than the threshold (currently "..stat_thres.."), no correction needed", true)
+                    GODMODE.log("Stat score of "..stats.score.." is above the threshold (currently "..stat_thres.."), no correction needed", true)
                 end
             end)
 
@@ -1200,6 +1214,8 @@ else
         GODMODE.room_top_left = GODMODE.room:GetTopLeftPos()
         GODMODE.room_bottom_right = GODMODE.room:GetBottomRightPos()
         GODMODE.room_center = GODMODE.room:GetCenterPos()
+        GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
+        GODMODE.room_type = (GODMODE.room_type or GODMODE.room:GetType())
         
         if not GODMODE.save_manager.has_loaded then 
             if not GODMODE.util.is_start_of_run() then
@@ -1294,7 +1310,7 @@ else
 
                 Isaac.ExecuteCommand("debug 8")
                 Isaac.ExecuteCommand("debug 3")
-            elseif GODMODE.game:GetFrameCount() > 10 then 
+            elseif (GODMODE.frame_count or GODMODE.game:GetFrameCount()) > 10 then 
                 GODMODE.game:FinishChallenge()
             else 
                 if level:GetStageType() ~= StageType.STAGETYPE_ORIGINAL then 
@@ -1445,7 +1461,7 @@ else
                     for i, roomidx in pairs(GODMODE.roomgen.minimaprooms) do
                         local minimaproom = MinimapAPI:GetRoomByIdx(roomidx)
                         local ids = GODMODE.get_observatory_ids()
-                        local cur_flag = ids[GODMODE.room:GetDecorationSeed()] == true
+                        local cur_flag = ids[(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())] == true
 
                         if minimaproom then
                             minimaproom.Color = Color(MinimapAPI.Config.DefaultRoomColorR, MinimapAPI.Config.DefaultRoomColorG, MinimapAPI.Config.DefaultRoomColorB, 1, 0, 0, 0)
@@ -1834,12 +1850,12 @@ else
 
     function GODMODE.mod_object:pre_npc_update(ent)
         if GODMODE.vs_played_in == nil then GODMODE.vs_played_in = {} end
-        if GODMODE.bosses[ent.Variant] and GODMODE.room:GetType() == RoomType.ROOM_BOSS and GODMODE.vs_played_in[GODMODE.room:GetDecorationSeed()] ~= true and not StageAPI then
+        if GODMODE.bosses[ent.Variant] and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and GODMODE.vs_played_in[(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())] ~= true and not StageAPI then
             GODMODE.sprites.vs_sprite:ReplaceSpritesheet(0, GODMODE.bosses[ent.Variant].portrait)
             GODMODE.sprites.vs_sprite:ReplaceSpritesheet(1, GODMODE.bosses[ent.Variant].name)
             GODMODE.sprites.vs_sprite:ReplaceSpritesheet(4, GODMODE.bosses[ent.Variant].spot)
             GODMODE.sprites.vs_sprite:LoadGraphics()
-            GODMODE.vs_played_in[GODMODE.room:GetDecorationSeed()] = true
+            GODMODE.vs_played_in[(GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())] = true
             GODMODE.cur_splash = GODMODE.sprites.vs_sprite
             GODMODE.cur_splash_pos = GODMODE.util.get_center_of_screen()
         end
@@ -1870,12 +1886,12 @@ else
                             and not player:HasWeaponType(WeaponType.WEAPON_TEARS)) then
 
                 if not (data.celeste_fire or false) then 
-                    local flag = data.deli_last_fire_frame ~= GODMODE.game:GetFrameCount()
+                    local flag = data.deli_last_fire_frame ~= (GODMODE.frame_count or GODMODE.game:GetFrameCount())
 
                     if player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) then
-                        flag = GODMODE.game:GetFrameCount() - data.deli_last_fire_frame > 10
+                        flag = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) - data.deli_last_fire_frame > 10
                     elseif player:HasCollectible(CollectibleType.COLLECTIBLE_SOY_MILK) then
-                        flag = GODMODE.game:GetFrameCount() % 20 == 1
+                        flag = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 20 == 1
                     end
                     
                     data.cur_deli_ang = laser.AngleDegrees
@@ -1888,7 +1904,7 @@ else
     
                     if data.deli_last_fire_frame == nil or flag and not player:HasCollectible(CollectibleType.COLLECTIBLE_TRISAGION) then
                         data.proj_ref = laser
-                        data.deli_last_fire_frame = GODMODE.game:GetFrameCount()
+                        data.deli_last_fire_frame = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
                         GODMODE.players[player:GetPlayerType()]:clone_fire(player, laser.Position, laser)
                     end
                 end
@@ -1980,10 +1996,10 @@ else
             elseif (player:GetPlayerType() == GODMODE.registry.players.deli or player:GetPlayerType() == GODMODE.registry.players.t_deli) and player:GetFireDirection() ~= Direction.NO_DIRECTION then
                 local data = GODMODE.get_ent_data(player)
 
-                if (data.deli_last_fire_frame == nil or data.deli_last_fire_frame ~= GODMODE.game:GetFrameCount()) and not data.celeste_fire then
+                if (data.deli_last_fire_frame == nil or data.deli_last_fire_frame ~= (GODMODE.frame_count or GODMODE.game:GetFrameCount())) and not data.celeste_fire then
                     data.proj_ref = tear
                     data.cur_deli_ang = tear.Velocity:GetAngleDegrees()
-                    data.deli_last_fire_frame = GODMODE.game:GetFrameCount()
+                    data.deli_last_fire_frame = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
                     GODMODE.players[player:GetPlayerType()]:clone_fire(player, tear.Position - tear.Velocity, tear)
                 end
             elseif (player:GetPlayerType() == GODMODE.registry.players.xaphan or player:GetPlayerType() == GODMODE.registry.players.t_elohim) and tear.Variant == TearVariant.BLUE then
@@ -2113,7 +2129,7 @@ else
                         end
 
                         if enemy then 
-                            if GODMODE.room:GetType() == RoomType.ROOM_BOSS and (enemy.Type == EntityType.ENTITY_THE_HAUNT or GODMODE.util.count_enemies(nil,EntityType.ENTITY_GIDEON) > 0) or enemy:IsBoss() then 
+                            if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and (enemy.Type == EntityType.ENTITY_THE_HAUNT or GODMODE.util.count_enemies(nil,EntityType.ENTITY_GIDEON) > 0) or enemy:IsBoss() then 
                                 enemy:TakeDamage(enemy.MaxHitPoints * 0.05, 0, EntityRef(player), 1)
                             else 
                                 enemy:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
@@ -2299,7 +2315,7 @@ else
 
             if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and not pickup.Touched and not data.counted_collectible then 
                 data.counted_collectible = true
-                local pool = GODMODE.game:GetItemPool():GetPoolForRoom(GODMODE.room:GetType(), GODMODE.room:GetDecorationSeed())
+                local pool = GODMODE.game:GetItemPool():GetPoolForRoom((GODMODE.room_type or GODMODE.room:GetType()), (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()))
                 if pool == ItemPoolType.POOL_ANGEL then 
                     GODMODE.save_manager.add_player_list_data(player,"AngelCollected",pickup.SubType,true)
                 elseif pool == ItemPoolType.POOL_DEVIL then 
@@ -2361,7 +2377,7 @@ else
                 return false
             end
 
-            if entfirst == false and GODMODE.room:GetType() ~= RoomType.ROOM_CURSE and pickup.Variant == PickupVariant.PICKUP_TAROTCARD and GODMODE.cards_pills.is_red_key(pickup.SubType) then 
+            if entfirst == false and (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_CURSE and pickup.Variant == PickupVariant.PICKUP_TAROTCARD and GODMODE.cards_pills.is_red_key(pickup.SubType) then 
                 local sub = pickup.SubType 
 
                 if sub > GODMODE.cards_pills.cards.pok_8 and sub <= GODMODE.cards_pills.cards.pok_2 or sub == Card.CARD_CRACKED_KEY then 
@@ -2406,7 +2422,7 @@ else
     function GODMODE.mod_object:pickup_update(pickup)
         if pickup.Variant == PickupVariant.PICKUP_TAROTCARD and GODMODE.cards_pills.is_red_key(pickup.SubType) and pickup.FrameCount < 2 then 
             GODMODE.util.macro_on_players(function(player) 
-                if GODMODE.get_ent_data(player).red_key_prevent_dupe == (GODMODE.game:GetFrameCount() - pickup.FrameCount) then 
+                if GODMODE.get_ent_data(player).red_key_prevent_dupe == ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) - pickup.FrameCount) then 
                     pickup:Remove()
                     GODMODE.get_ent_data(player).red_key_prevent_dupe = nil
                 end
@@ -2441,7 +2457,7 @@ else
         end
 
         if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM then
-            if GODMODE.room:GetType() == RoomType.ROOM_PLANETARIUM and GODMODE.save_manager.get_config("MultiPlanetItems", "true") == "true" then
+            if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_PLANETARIUM and GODMODE.save_manager.get_config("MultiPlanetItems", "true") == "true" then
                 pickup.OptionsPickupIndex = 0 --Enable more than one planetarium item to be picked up in certain rooms
 
                 if pickup.FrameCount == 60 and GODMODE.util.count_enemies(nil,EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_COLLECTIBLE, nil) == 1 and GODMODE.util.count_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TRINKET,TrinketType.TRINKET_TELESCOPE_LENS) == 0 and GODMODE.util.total_item_count(TrinketType.TRINKET_TELESCOPE_LENS, true) == 0 then 
@@ -2451,7 +2467,7 @@ else
 
             local vanilla_item_loot = GODMODE.save_manager.get_config("LighterTreasure", "false") == "true" and GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS) == 0
             
-            if GODMODE.room:GetType() == RoomType.ROOM_TREASURE then 
+            if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_TREASURE then 
                 if vanilla_item_loot and string.match(GODMODE.level:GetCurrentRoomDesc().Data.Name,"GODMODE") then 
                     pickup.OptionsPickupIndex = 1
                 elseif (GODMODE.level:GetStageType() > StageType.STAGETYPE_AFTERBIRTH 
@@ -2560,7 +2576,7 @@ else
             return params
         elseif shaderName == 'GODMODE_BlackMushroom' then
             local params = {
-                Time = GODMODE.game:GetFrameCount(),
+                Time = (GODMODE.frame_count or GODMODE.game:GetFrameCount()),
                 Intensity = GODMODE.shader_params.black_mushroom_intensity or 0,
             }
             return params
@@ -2573,6 +2589,20 @@ else
             local params = {
                 Intensity = GODMODE.shader_params.ending_shader or 1.0,
             }
+            return params
+        elseif shaderName == 'GODMODE_KoolAid' then 
+            local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistortLerp","0"))
+
+            if (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 10 == 0 or GODMODE.shader_params.red_juice_setting == nil then 
+                GODMODE.shader_params.red_juice_setting = tonumber(GODMODE.save_manager.get_config("RedJuiceSetting","1"))
+            end
+
+            local params = {
+                Intensity = math.min(1,distort),
+                Time = (GODMODE.frame_count or GODMODE.game:GetFrameCount()),
+                Style = GODMODE.shader_params.red_juice_setting or 3
+            }
+
             return params
         end
     end

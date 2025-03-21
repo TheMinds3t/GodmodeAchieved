@@ -40,7 +40,7 @@ item.player_update = function(self, player)
 				end	
 			end
 
-			if GODMODE.room:GetType() == RoomType.ROOM_BARREN then 
+			if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BARREN then 
 				local carpets = Isaac.FindByType(EntityType.ENTITY_EFFECT,EffectVariant.ISAACS_CARPET,0)
 				if carpets ~= nil and #carpets > 0 then 
 					for _,carpet in ipairs(carpets) do
@@ -79,7 +79,7 @@ item.pickup_collide = function(self, pickup, ent2, entfirst)
 			pickup.Wait = 20
 		end
 	
-		if pickup.Variant == PickupVariant.PICKUP_BED and pickup.SpawnerVariant ~= 1 and GODMODE.room:GetType() == RoomType.ROOM_BARREN then 
+		if pickup.Variant == PickupVariant.PICKUP_BED and pickup.SpawnerVariant ~= 1 and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BARREN then 
 			pickup:GetSprite():ReplaceSpritesheet(0,"gfx/items/pick ups/isaacbed.png")
 			pickup:GetSprite():LoadGraphics()
 			item:spawn_fx((ent2.Position+pickup.Position)/2)

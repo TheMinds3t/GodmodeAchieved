@@ -183,7 +183,7 @@ monster.famil_post_render = function(self, fam, off)
     -- for i,vec in ipairs(eyeset) do 
     --     vec = Vector(vec.X * fam:GetSprite().Scale.X,vec.Y * fam:GetSprite().Scale.Y)
     --     local pos = Isaac.WorldToScreen(fam.Position + fam.SpriteOffset + vec:Rotated(fam:GetSprite().Rotation))
-    --     eye_sprite:SetFrame("Eye",math.floor((GODMODE.game:GetFrameCount() + i * 6) / 2) % eye_frames)
+    --     eye_sprite:SetFrame("Eye",math.floor(((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + i * 6) / 2) % eye_frames)
     --     eye_sprite:Render(pos)
     -- end
 
@@ -197,7 +197,7 @@ monster.famil_post_render = function(self, fam, off)
         eye_sprite:RenderLayer(1,pos)
     
         for i=1,num_eyes do 
-            local blinking = (GODMODE.game:GetFrameCount() + blink_time * i + i) % (num_eyes * blink_time / num_blinking)
+            local blinking = ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + blink_time * i + i) % (num_eyes * blink_time / num_blinking)
             
             if is_eye_closed(i, fam) then 
                 eye_sprite.Color = base_col

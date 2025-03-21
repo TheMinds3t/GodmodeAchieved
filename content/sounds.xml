@@ -1,41 +1,49 @@
 <sounds root="sfx/">
-	<sound name="sacred_appear">
+	<sound name="GODMODE.sacred_appear">
 		<sample weight="1" path="sacred_appear.wav" />
 	</sound>
-	<sound name="sacred_1">
+	<sound name="GODMODE.sacred_1">
 		<sample weight="1" path="sacred_1.wav" />
 	</sound>
-	<sound name="sacred_2">
+	<sound name="GODMODE.sacred_2">
 		<sample weight="1" path="sacred_2.wav" />
 	</sound>
-	<sound name="sacred_3">
+	<sound name="GODMODE.sacred_3">
 		<sample weight="1" path="sacred_1.wav" />
 	</sound>
-	<sound name="red_coin">
+	<sound name="GODMODE.red_coin">
 		<sample weight="1" path="pickups/red_coin.wav" />
 	</sound>
-	<sound name="godmode_ending">
+	<sound name="GODMODE.red_coin_complete">
+		<sample weight="1" path="pickups/red_coin_complete.wav" />
+	</sound>
+	<sound name="GODMODE.godmode_ending">
 		<sample weight="1" path="ending voiceover.wav" />
 	</sound>
-	<sound name="godmode_ending_joke">
-		<sample weight="1" path="ending voiceover2.wav" />
-	</sound>
-	<sound name="keepah_chirp">
+	<sound name="GODMODE.keepah_chirp">
 		<sample weight="1" path="keepah/keepah0.wav" />
 		<sample weight="1" path="keepah/keepah1.wav" />
 		<sample weight="1" path="keepah/keepah2.wav" />
 	</sound>
-	<sound name="keepah_panic">
+	<sound name="GODMODE.keepah_panic">
 		<sample weight="1" path="keepah/keepahpanic0.wav" />
 		<sample weight="1" path="keepah/keepahpanic1.wav" />
 		<sample weight="1" path="keepah/keepahpanic2.wav" />
 	</sound>
-	<sound name="regular_cough">
+	<sound name="GODMODE.regular_cough">
 		<sample weight="1" path="cough/cough1.wav" />
 		<sample weight="1" path="cough/cough2.wav" />
 		<sample weight="1" path="cough/cough3.wav" />
 	</sound>
+	<sound name="GODMODE.correction_bell">
+		<sample weight="1" path="correction bell.wav" />
+	</sound>
+	<sound name="GODMODE.child_blargh">
+		<sample weight="1" path="child_blargh_1.wav" />
+		<sample weight="1" path="child_blargh_2.wav" />
+	</sound>
 
+	
 	<!-- DSS integration! -->
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav"/>

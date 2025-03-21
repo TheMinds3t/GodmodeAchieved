@@ -217,4 +217,105 @@
             }
         ]]></fragment>
     </shader>
+    <shader name="GODMODE_KoolAid">
+        <parameters>
+            <param name="Intensity" type="float"/>
+            <param name="Time" type="float"/>
+        </parameters>
+        <vertex><![CDATA[
+            attribute vec3 Position;
+            attribute vec4 Color;
+            attribute vec2 TexCoord;
+            attribute vec4 RenderData;
+
+            attribute float Time;
+            attribute float Intensity;
+            attribute float Style;
+
+            varying vec4 Color0;
+            varying vec2 TexCoord0;
+            varying vec4 RenderDataOut;
+
+            varying float TimeOut;
+            varying float IntensityOut;
+            varying float StyleOut;
+
+            uniform mat4 Transform;
+            void main(void)
+            {
+                RenderDataOut = RenderData;
+                TimeOut = Time;             // Passing data to fragment shader
+                IntensityOut = Intensity;             // Passing data to fragment shader
+                StyleOut = Style;
+                Color0 = Color;
+
+                vec2 center = vec2(RenderData.x / 2.0, RenderData.y / 2.0);
+                vec2 coord = TexCoord;
+                float xScale = 1.0 + cos(Position.y+Time/34.0) * 0.1;
+                float xOff = sin(Position.x * 0.1 * Intensity + Time / 20.0 * xScale * TexCoord.x * Intensity) * 0.01*Intensity - 0.01;
+
+                if(Style == 1)
+                {
+                    coord.x += xOff - xOff / 2.0;
+                    coord.y += 0;
+                }
+
+                TexCoord0 = coord;
+                gl_Position = Transform * vec4(Position.xyz, 1.0);
+            }
+        ]]></vertex>
+        <fragment><![CDATA[
+            varying lowp vec4 Color0;
+            varying mediump vec2 TexCoord0;
+            varying lowp vec4 RenderDataOut;
+
+            varying lowp float TimeOut;
+            varying lowp float IntensityOut;
+            varying lowp float StyleOut;
+
+            uniform sampler2D Texture0;
+            void main(void)
+            {
+                vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
+
+                if(IntensityOut > 0.0 && StyleOut < 3)
+                {
+                    float avg = (Color.r + Color.g + Color.b) / 3.0;
+
+                    if(avg > 0.75 + (1 - IntensityOut) * 0.25)
+                    {
+                        Color.r = 1.0;
+                        Color.g = 1.0;
+                        Color.b = 1.0;
+                    }
+                    else if(avg > 0.25 - (1 - IntensityOut) * 0.25)
+                    {
+                        Color.r = Color.r + IntensityOut * IntensityOut * IntensityOut;
+                        
+                        if(Color.r > 1.0)
+                        {
+                            Color.r = 1.0;
+                        }
+
+                        Color.g = Color.g - IntensityOut * (0.9+cos(TexCoord0.x * 5.0+TimeOut/15.0)*0.5);
+                        Color.b = Color.b - IntensityOut * (0.9+sin(TexCoord0.y * 12.0+TimeOut/23.0)*0.5);
+                    }
+                    else if(avg > 0.2 - (1 - IntensityOut) * 0.2)
+                    {
+                        Color.r = 0.2;
+                        Color.g = 0.0;
+                        Color.b = 0.0;
+                    }
+                    else
+                    {
+                        Color.r = 0.0;
+                        Color.g = 0.0;
+                        Color.b = 0.0;
+                    }
+                }
+                
+                gl_FragColor = Color;
+            }
+        ]]></fragment>
+    </shader>
 </shaders>

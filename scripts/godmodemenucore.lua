@@ -284,7 +284,7 @@ function dssmenucore.init(DSSModName, MenuProvider)
             and not Input.IsButtonPressed(key % 32, controllerIndex)
     end
 
-    local inputButtonNames = {
+    dssmod.inputButtonNames = {
         [-1] = "none",
         [0] = "dpad left",
         [1] = "dpad right",
@@ -322,11 +322,11 @@ function dssmenucore.init(DSSModName, MenuProvider)
     }
 
     for k, v in pairs(Keyboard) do
-        if not inputButtonNames[v] then
+        if not dssmod.inputButtonNames[v] then
             local name = string.sub(k, 5)
             name = name:gsub("_", " ")
             name = name:lower()
-            inputButtonNames[v] = name
+            dssmod.inputButtonNames[v] = name
         end
     end
 
@@ -708,7 +708,7 @@ function dssmenucore.init(DSSModName, MenuProvider)
                 if base.keybinding then
                     setting.str = '[awaiting input]'
                 else
-                    setting.str = '[' .. inputButtonNames[base.setting] .. ']'
+                    setting.str = '[' .. tostring(dssmod.inputButtonNames[base.setting]) .. ']'
                 end
             end
 
@@ -2175,7 +2175,7 @@ function dssmenucore.init(DSSModName, MenuProvider)
             not game:GetStateFlag(GameStateFlag.STATE_BACKWARDS_PATH)
         if isCore and not isOpen and DeadSeaScrollsMenu.GetMenuHintSetting() == 1 and inFirstRoom then
             local keybind = DeadSeaScrollsMenu.GetMenuKeybindSetting()
-            local keybindText = string.upper(inputButtonNames[keybind])
+            local keybindText = string.upper(dssmod.inputButtonNames[keybind])
             local text = "Press [" .. keybindText .. "] to open Dead Sea Scrolls Menu"
             hintFont:DrawStringScaled(text, (Isaac.GetScreenWidth() / 2) - (hintFont:GetStringWidth(text) / 2),
                 Isaac.GetScreenHeight() - 38, 1, 1, KColor(1, 191 / 255, 0, 0.6), 0)

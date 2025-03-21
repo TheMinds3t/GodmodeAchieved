@@ -16,7 +16,7 @@ item.encyc_entry = {
 item.eval_cache = function(self, player,cache,data)
 	local flag = GODMODE.save_manager.get_player_data(player, "EdibleSoulApplied", "false") == "true"
 
-	if flag and GODMODE.game:GetFrameCount() > 1 then
+	if flag and (GODMODE.frame_count or GODMODE.game:GetFrameCount()) > 1 then
 		if cache == CacheFlag.CACHE_FLYING then
 			player.CanFly = true
 

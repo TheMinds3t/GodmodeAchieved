@@ -42,6 +42,7 @@
 		<Item Name="Feather Duster" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="boss">
 		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -51,7 +52,11 @@
 		<Item Name="Devil's Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Angel Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Fruit Salad" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
-		<Item Name="Hysteria" Weight="0.1" RemoveOn="0.05" DecreaseBy="0.01"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
 		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
@@ -119,6 +124,7 @@
 		<Item Name="Soft Serve" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
 		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="goldenChest">
 		<Item Name="Fruit Flies" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -130,10 +136,12 @@
 		<Item Name="A Second Thought" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hysteria" Weight="0.1" RemoveOn="0.05" DecreaseBy="0.1"/>
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="redChest">
 		<Item Name="Wings of Betrayal" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	<Pool Name="curse">
 		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -143,6 +151,7 @@
 		<Item Name="Papal Cross" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Odd Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	<Pool Name="greedTreasure">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -181,6 +190,7 @@
 		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Wings of Betrayal" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Forbidden Knowledge" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	
 	<Pool Name="greedDevil">
@@ -252,6 +262,7 @@
 		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 
 	<Pool Name="babyShop">
@@ -273,6 +284,7 @@
 		<Item Name="Forget Me Now" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Kidney Stone" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	<Pool Name="GODMODE_sugarPills">
 		<Item Name="Roid Rage" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -300,6 +312,7 @@
 		<Item Name="Fruit Flies" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="The Carrot" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
+	
 	<Pool Name="GODMODE_observatoryItems">
 		<Item Name="Foreign Treatment" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Odd Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>

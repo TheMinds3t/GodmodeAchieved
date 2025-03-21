@@ -40,7 +40,7 @@ end
 item.new_room = function(self)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player)
         local rng = RNG()
-        rng:SetSeed(GODMODE.room:GetDecorationSeed(),35)
+        rng:SetSeed((GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),35)
         local item = GODMODE.special_items:get_syringe_item(rng)
         local old_item = tonumber(GODMODE.save_manager.get_player_data(player,"CrimsonSol","-1"))
 

@@ -16,7 +16,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         if player:HasCollectible(CollectibleType.COLLECTIBLE_CAR_BATTERY) then dmg = 2 end
         player:TakeDamage(dmg, DamageFlag.DAMAGE_RED_HEARTS | DamageFlag.DAMAGE_INVINCIBLE | DamageFlag.DAMAGE_IV_BAG, EntityRef(player), 1)
 
-        if GODMODE.room:GetType() == RoomType.ROOM_ANGEL and player:GetBrokenHearts() > 0 then 
+        if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ANGEL and player:GetBrokenHearts() > 0 then 
             player:AddBrokenHearts(-3)
             GODMODE.game:BombExplosionEffects(player.Position,3.0)
             GODMODE.game:ShakeScreen(30)
@@ -31,7 +31,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 end
 
 item.new_room = function(self) 
-    if GODMODE.room:GetType() == RoomType.ROOM_ANGEL then 
+    if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ANGEL then 
         GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
             player:SetActiveCharge(6, GODMODE.util.get_active_slot(player, item.instance))
             Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BATTERY,0,player.Position-Vector(0,32),Vector.Zero,player)

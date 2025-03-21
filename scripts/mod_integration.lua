@@ -143,16 +143,198 @@ GODMODE.api.add_player_to_ui_blacklist = function(playertype, hidden)
     GODMODE.registry.hidden_heart_players[playertype] = hidden or not GODMODE.registry.hidden_heart_players[playertype]
 end
 
+if ModConfigMenu then -- stitch my DSS integration to my MCM configuration >:D but now both menus should work near-identically!!
+    local mod_name = "Godmode Achieved"
+    local bool_read = {
+        ["true"]="Enabled",
+        ["false"]="Disabled"
+    }
+    ModConfigMenu.RemoveCategory(mod_name)
+    ModConfigMenu.UpdateCategory(mod_name, {
+        Info = "Overhaul mod that adds more content in all angles, customizable here or press 'C' to access the Dead Sea Scrolls menu, integrated with Godmode!",
+    })
 
+    local cat_order = {
+        "alts",
+        "scaling",
+        "gameplay",
+        "unlocks",
+        "cosmetic",
+        "controls",
+        "credits",
+    }
 
+    local subcats = GODMODE.options.layout
 
+    local bool_text_sets = {
+        [GODMODE.options.bool_choices] = GODMODE.options.bool_choices,
+        [GODMODE.options.unlock_choices] = GODMODE.options.unlock_choices,
+        [GODMODE.options.scaling_choices] = GODMODE.options.scaling_choices,
+        [GODMODE.options.bypass_choices] = GODMODE.options.bypass_choices,
+    }
 
+    local multi_text_sets = {
+        [GODMODE.options.palace_clear_options] = GODMODE.options.palace_clear_options,
+        [GODMODE.options.fractal_display_choices] = GODMODE.options.fractal_display_choices,
+        [GODMODE.options.red_juice_choices] = GODMODE.options.red_juice_choices,
+    }
 
+    for ind, id in ipairs(cat_order) do 
+        local cat = subcats[id]
 
+        if cat then 
+            local cat_name = GODMODE.util.to_title_case(cat.title)
+            ModConfigMenu.AddTitle(mod_name, cat_name, cat_name)
+            -- ModConfigMenu.AddText("My Settings Page", "Tab 1", "My Text")
+            
+            for i, but in ipairs(cat.buttons) do 
+                if but.dss_button == true then --skip dss buttons (for obvious reasons)
+                elseif but.credits == true then --credits text
+                    -- ModConfigMenu.AddText(mod_name, cat_name, but.str)
 
+                    ModConfigMenu.AddSetting(
+                        mod_name,
+                        cat_name,
+                        {
+                            Type = ModConfigMenu.OptionType.NUMBER,
+                            CurrentSetting = function()
+                                return 1
+                            end,
+                            Minimum = but_min,
+                            Maximum = but_max,
+                            Display = function()
+                                return but.str
+                            end,
+                            OnChange = function(n)
+                            end,
+                            -- Text in the "Info" section will automatically word-wrap, unlike in the main section above
+                            Info = {}
+                        }
+                    )
+                elseif but.gap == true then 
+                    ModConfigMenu.AddSpace(mod_name, cat_name)
+                elseif but ~= GODMODE.options.back_option then -- skip adding the back button since the menu is a different layout
+                    local but_name = GODMODE.util.to_title_case(but.str)
+                    local but_desc = {}
 
+                    if but.tooltip then -- squish tooltip for DSS since DSS wordwraps it
+                        local cur_desc = ""
 
+                        for _,str in ipairs(but.tooltip.strset) do 
+                            cur_desc = cur_desc..str.." "
+                        end    
 
+                        if cur_desc ~= "" then 
+                            table.insert(but_desc, cur_desc) 
+                        end
+                    end
+
+                    if but.min and but.max and but.increment then -- numeric option
+                        local inc = but.increment
+                        local n_options = math.ceil((but.max - but.min) / inc)
+                        local but_min = 0
+                        local but_max = n_options
+
+                        ModConfigMenu.AddSetting(
+                            mod_name,
+                            cat_name,
+                            {
+                                Type = ModConfigMenu.OptionType.NUMBER,
+                                CurrentSetting = function()
+                                    return (but.load() - but.min) / inc
+                                end,
+                                Minimum = but_min,
+                                Maximum = but_max,
+                                Display = function()
+                                    return but_name.." | "..(but.pref or "").. but.load() ..(but.suf or "")
+                                end,
+                                OnChange = function(n)
+                                    but.store(but.min + n * inc)
+                                    GODMODE.save_manager.save()
+                                end,
+                                -- Text in the "Info" section will automatically word-wrap, unlike in the main section above
+                                Info = but_desc
+                            }
+                        )
+                    elseif bool_text_sets[but.choices] ~= nil then -- boolean option
+                        ModConfigMenu.AddSetting(
+                            mod_name,
+                            cat_name,
+                            {
+                                Type = ModConfigMenu.OptionType.BOOLEAN,
+                                CurrentSetting = function()
+                                return but.load() == GODMODE.options.str_bool_map[options.bool_map[but.load()]] -- default to true
+                                end,
+                                Display = function()
+                                return but_name.." | "..tostring(but.choices[but.load()])
+                                end,
+                                OnChange = function(b)
+                                but.store(GODMODE.options.str_bool_map[b])
+                                GODMODE.save_manager.save()
+                                end,
+                                Info = but_desc
+                            }
+                        )
+                    elseif multi_text_sets[but.choices] then -- multi-options
+                        ModConfigMenu.AddSetting(
+                            mod_name,
+                            cat_name,
+                            {
+                                Type = ModConfigMenu.OptionType.NUMBER,
+                                CurrentSetting = function()
+                                    return but.load()
+                                end,
+                                Minimum = 1,
+                                Maximum = #multi_text_sets[but.choices],
+                                Display = function()
+                                return but_name.." | "..tostring(but.choices[but.load()])
+                                end,
+                                OnChange = function(val)
+                                    but.store(val)
+                                    GODMODE.save_manager.save()
+                                end,
+                                Info = but_desc
+                            }
+                        )
+                    elseif but.keybind == true then 
+                        ModConfigMenu.AddSetting( -- thank you minimapi, this was painful to understand without example
+                            mod_name,
+                            cat_name,
+                            {
+                                Type = ModConfigMenu.OptionType.KEYBIND_KEYBOARD,
+                                CurrentSetting = function()
+                                    return but.load()
+                                end,
+                                Display = function()
+                                    local key = tostring(GODMODE.options.dssmod.inputButtonNames[but.load()])
+                                    if key == "nil" then key = "None" end 
+                                    return but_name .. " | " .. key
+                                end,
+                                OnChange = function(val)
+                                    if (val == Keyboard.KEY_ESCAPE or val == Keyboard.KEY_BACKSPACE) then
+                                        val = Keyboard.KEY_TAB
+                                    end
+
+                                    but.store(val)
+                                end,
+                                PopupGfx = ModConfigMenu.PopupGfx.WIDE_SMALL,
+                                PopupWidth = 200,
+                                Popup = function()
+                                    return "Waiting for input...$newline(Currently set to \'"
+                                        ..tostring(GODMODE.options.dssmod.inputButtonNames[but.load()])
+                                        .."\')$newline$newlineThe default option is Tab.$newline$newlineIf you want to rebind this key to Tab, you must go to DSS's input by pressing \'C\' while in a safe room. I am looking into a solution for this."
+                                end,
+                              Info = but_desc
+                            }
+                          )
+                    else
+                        GODMODE.log("unhandled option \'"..but_name.."\' from category \'"..cat_name.."\' when converting DSS option to ModConfigMenu option", true)
+                    end
+                end
+            end
+        end
+    end
+end
 
 
 
@@ -177,35 +359,39 @@ if EID then
 
     if EID.addCollectible then 
         for _,item in ipairs(GODMODE.items) do
-            if item.eid_description then
-                if item.trinket then
-                    EID:addTrinket(item.instance, item.eid_description)
-    
-                    if item.eid_transforms ~= nil then 
-                        EID:assignTransformation("trinket", item.instance, ""..item.eid_transforms)
+            if item.instance ~= nil then 
+                if item.eid_description then
+                    if item.trinket then
+                        EID:addTrinket(item.instance, item.eid_description)
+        
+                        if item.eid_transforms ~= nil then 
+                            EID:assignTransformation("trinket", item.instance, ""..item.eid_transforms)
+                        end
+                    else
+                        EID:addCollectible(item.instance, item.eid_description)
+        
+                        if item.eid_transforms ~= nil then 
+                            EID:assignTransformation("collectible", item.instance, item.eid_transforms)
+                        end
                     end
-                else
-                    EID:addCollectible(item.instance, item.eid_description)
-    
-                    if item.eid_transforms ~= nil then 
-                        EID:assignTransformation("collectible", item.instance, item.eid_transforms)
+                elseif item.items and item.transformation == true and item.eid_transform ~= nil then 
+                    for item2,_ in pairs(item.items) do 
+                        if item2 ~= GODMODE.registry.items.jack_of_all_trades then 
+                            EID:assignTransformation("collectible", item2, item.eid_transform)
+                        end
                     end
-                end
-            elseif item.items and item.transformation == true and item.eid_transform ~= nil then 
-                for item2,_ in pairs(item.items) do 
-                    if item2 ~= GODMODE.registry.items.jack_of_all_trades then 
-                        EID:assignTransformation("collectible", item2, item.eid_transform)
-                    end
-                end
+                end    
+            else 
+                GODMODE.log("invalid item found while trying to register for EID!")
             end
         end
     
         EID:addCollectible(GODMODE.registry.items.jack_of_all_trades, "Counts as one item towards all transformations")
-        EID:addCollectible(GODMODE.registry.items.questrock_1, "Part 1 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        EID:addCollectible(GODMODE.registry.items.questrock_2, "Part 2 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        EID:addCollectible(GODMODE.registry.items.questrock_3, "Part 3 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        EID:addCollectible(GODMODE.registry.items.questrock_4, "Part 4 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        EID:addCollectible(GODMODE.registry.items.blood_key, "Allows you to enter the Ivory Palace in Sheol")
+        -- EID:addCollectible(GODMODE.registry.items.questrock_1, "Part 1 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
+        -- EID:addCollectible(GODMODE.registry.items.questrock_2, "Part 2 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
+        -- EID:addCollectible(GODMODE.registry.items.questrock_3, "Part 3 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
+        -- EID:addCollectible(GODMODE.registry.items.questrock_4, "Part 4 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
+        EID:addCollectible(GODMODE.registry.items.blood_key, "Allows you to enter the Ivory Palace in Sheol/Cathedral")
         EID:assignTransformation("collectible", GODMODE.registry.items.jack_of_all_trades, GODMODE.util.eid_transforms.JACK_OF_ALL_TRADES)
         EID:addCollectible(GODMODE.registry.items.brass_cross, "↑ +2 Soul Hearts#↑ +25% chance to encounter a blessed floor")
 
@@ -306,7 +492,7 @@ if Encyclopedia then
         WikiDesc = {
             { -- Effects
                 {str = "Effects", fsize = 2, clr = 3, halign = 0},
-                {str = "Obtained by giving the Stifled Gatekeeper in Sheol an angel item. Allows for the player to reach the Ivory Palace, the final stage of Godmode."},
+                {str = "Obtained by giving the Stifled Gatekeeper in Sheol an item collected in an Angel room, or by giving the Stifled Gatekeeper in Cathedral an item collected in a Devil room. Allows for the player to reach the Ivory Palace, the final stage of Godmode."},
             },
         }
     },"items")
@@ -476,6 +662,23 @@ end
 
 -- STAGEAPI 
 function load_stageapi_integration()
+    StageAPI.GetChampionChance = function() -- replace to make StageAPI compatible with non-RGON setups! 
+        local chance = 0.05 --Base chance is 5%
+        if GODMODE.game:GetSeeds():HasSeedEffect(SeedEffect.SEED_ALL_CHAMPIONS) then
+            chance = 1.1
+        elseif GODMODE.level:GetStage() == LevelStage.STAGE7 then --The Void sets base chance to 75%
+            chance = 0.75
+        elseif StageAPI.AnyPlayerHasItem(CollectibleType.COLLECTIBLE_CHAMPION_BELT) then --Champion Belt sets base chance to 20%
+            chance = 0.2
+        end
+        -- local purpleHearts = PlayerManager.GetTotalTrinketMultiplier(TrinketType.TRINKET_PURPLE_HEART) -- it's literally this one line that breaks compatibility with non-RGON users
+        local purpleHearts = GODMODE.util.total_item_count(TrinketType.TRINKET_PURPLE_HEART,true) 
+        if purpleHearts > 0 then
+            chance = chance * purpleHearts * 2 --Purple Heart is a x2 mult per copy
+        end 
+        return chance
+    end
+
     GODMODE.stages = {}
     StageAPI.UnregisterCallbacks(GODMODE.mod_id)
 
@@ -1110,7 +1313,7 @@ function load_stageapi_integration()
         MMC.AddMusicCallback(GODMODE.mod_object, function()
             local bd_key = GODMODE.level:GetAbsoluteStage()..","..GODMODE.level:GetStageType()
 
-            if GODMODE.room:GetType() ~= RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
+            if (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
                 if GODMODE.save_manager.get_config(GODMODE.backdrop_config_toggles[bd_key],"false") == "true" and GODMODE.save_manager.get_config("CathedralTheme","false") == "true" then 
                     return GODMODE.registry.music.a_song_from_a_broken_soul
                 end

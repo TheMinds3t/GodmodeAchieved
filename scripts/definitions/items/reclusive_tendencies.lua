@@ -21,6 +21,8 @@ item.valid_spiders = {
     item.wing_spider
 }
 
+item.spider_spawn_interval = 8
+
 item.is_valid_spider = function(ent)
     for i=1,#item.valid_spiders do
         if item.valid_spiders[i][1] == ent.Type and (item.valid_spiders[i][2] == nil or item.valid_spiders[i][2] == ent.Variant) then
@@ -92,8 +94,64 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
+item.spawn_spider = function(self, player, data, throw_pos, dmg)
+    local spd = 5.0 + player:GetCollectibleRNG(item.instance):RandomFloat()
+    local ang = math.rad(player:GetCollectibleRNG(item.instance):RandomFloat() * 360)
+    local ent = Isaac.Spawn(GODMODE.registry.entities.winged_spider.type,GODMODE.registry.entities.winged_spider.variant,0,player.Position, Vector.Zero, player):ToNPC()
+    
+    GODMODE.get_ent_data(ent).throw_pos = throw_pos
+
+    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) or player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then 
+        local dmg_mod = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BFFS) + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_HIVE_MIND)
+        dmg = dmg * (1.0 + 0.25 * dmg_mod)
+        ent.Scale = 1.0 + 0.125 * dmg_mod
+    end
+
+    ent.CollisionDamage = dmg
+    ent.HitPoints = math.max(0.1,dmg * 0.5)
+    ent.MaxHitPoints = dmg
+    ent.SpawnerEntity = player
+
+    ent:AddCharmed(EntityRef(player), 90)
+    data.spiders = data.spiders or {}
+    table.insert(data.spiders, ent)
+    ent:Update()
+end
+
 item.player_update = function(self, player, data)
     if player:HasCollectible(item.instance) then
+        if player:IsFrame(item.spider_spawn_interval, 1) then
+            local pos = (player.Position + player:GetMovementVector()*16)
+            
+            local dmg = 0
+            data.hit_cache = data.hit_cache or {}
+
+            for ind,hit in ipairs(data.hit_cache) do 
+                pos = (pos + hit.pos) / 2
+
+                if hit.damage ~= nil then 
+                    dmg = dmg + hit.damage 
+                end 
+            end 
+
+            if dmg > 0 then 
+                if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and player:GetType() == GODMODE.registry.players.t_recluse then 
+                    dmg = dmg * 0.15
+                else
+                    dmg = dmg * 0.1
+                end
+
+                if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) or player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then 
+                    local dmg_mod = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BFFS) + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_HIVE_MIND)
+                    dmg = dmg * (1.0 + 0.25 * dmg_mod)
+                end
+
+                item.spawn_spider(self, player, data, pos, dmg)
+            end
+
+            data.hit_cache = nil
+            -- data.throw_pos = (player.Position + enthit.Position*2) / 3
+        end
 
         if data.spiders then
             for ind,spider in ipairs(data.spiders) do
@@ -110,47 +168,6 @@ item.player_update = function(self, player, data)
     end
 end
 
-
--- item.npc_collide = function(self,ent,ent2,entfirst)
---     local flag = false
-
---     if ent.Type == item.wing_spider[1] and ent.Variant == item.wing_spider[2] 
---     GODMODE.util.macro_on_players_that_have(item.instance, function(player)
---         local data = GODMODE.get_ent_data(player)
-
---         if data.spiders then
---             for _,spider in ipairs(data.spiders) do
---                 if GetPtrHash(spider) == GetPtrHash(ent) and ent:HasEntityFlags(EntityFlag.FLAG_CHARM) and not ent2:IsVulnerableEnemy() then
---                     flag = true
---                     break
---                 end
---             end
---         end
---     end)
-
---     if flag == true then return true end
--- end
-
--- item.tear_collide = function(self,tear,ent,entfirst)
---     local flag = false
---     GODMODE.util.macro_on_players_that_have(item.instance, function(player)
---         local data = GODMODE.get_ent_data(player)
-
---         if data.spiders then
---             for _,spider in ipairs(data.spiders) do
---                 if spider then 
---                     if GetPtrHash(spider) == GetPtrHash(ent) and ent:HasEntityFlags(EntityFlag.FLAG_CHARM) then
---                         flag = Isaac.CountEnemies() ~= GODMODE.util.count_enemies(nil,GODMODE.registry.entities.winged_spider.type,GODMODE.registry.entities.winged_spider.variant,0) + GODMODE.util.count_enemies(nil,EntityType.ENTITY_STRIDER,0,0)
---                         break
---                     end
---                 end
---             end
---         end
---     end)
-
---     if flag == true then return true end
--- end
-
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     if (enthit:IsVulnerableEnemy() or enthit:IsBoss()) and GODMODE.util.is_player_attack(entsrc) and not item.is_valid_spider(enthit) then
         GODMODE.util.macro_on_players_that_have(item.instance, function(player)
@@ -159,44 +176,17 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
                 if amount >= player.Damage * 0.25 and entsrc.Entity ~= nil and --damage size clause 
                     ((entsrc.Entity:ToTear() and entsrc.Entity:ToTear().Parent ~= nil and GetPtrHash(entsrc.Entity:ToTear().Parent) == GetPtrHash(player)) --tear proc clause
                         or GetPtrHash(entsrc.Entity) == GetPtrHash(player)) then --player proc clause
-                    
-                            -- GODMODE.log("SPIDER!",true)
-                    
-                    local spd = 5.0 + player:GetCollectibleRNG(item.instance):RandomFloat()
-                    local ang = math.rad(player:GetCollectibleRNG(item.instance):RandomFloat() * 360)
-                    local ent = Isaac.Spawn(GODMODE.registry.entities.winged_spider.type,GODMODE.registry.entities.winged_spider.variant,0,player.Position, Vector.Zero, player):ToNPC()
-                    
-                    local data = GODMODE.get_ent_data(ent)
-                    data.throw_pos = (player.Position + enthit.Position*2) / 3
-                    local dmg = amount
-                    
-                    if not player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then 
-                        dmg = dmg * 0.1
-                    else
-                        dmg = dmg * 0.15
-                    end
-
-                    if player:HasCollectible(CollectibleType.COLLECTIBLE_BFFS) or player:HasCollectible(CollectibleType.COLLECTIBLE_HIVE_MIND) then 
-                        local dmg_mod = player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BFFS) + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_HIVE_MIND)
-                        dmg = dmg * (1.0 + 0.25 * dmg_mod)
-                        ent.Scale = 1.0 + 0.125 * dmg_mod
-                    end
-
-                    ent.CollisionDamage = dmg
-                    ent.HitPoints = dmg
-                    ent.MaxHitPoints = dmg
-                    ent.SpawnerEntity = player
-
-                    ent:AddCharmed(EntityRef(player), 90)
                     data = GODMODE.get_ent_data(player)
-                    data.spiders = data.spiders or {}
-                    table.insert(data.spiders, ent)
-                    ent:Update()
+                    data.hit_cache = data.hit_cache or {}
+                    table.insert(data.hit_cache, 
+                    {
+                        damage = amount,
+                        pos = (player.Position + enthit.Position*2) / 3,
+                    })
                 end
             end
         end)
     end
 end
-
 
 return item

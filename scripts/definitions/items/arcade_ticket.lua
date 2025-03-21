@@ -12,7 +12,7 @@ item.encyc_entry = {
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-		if GODMODE.room:GetType() == RoomType.ROOM_ARCADE then
+		if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ARCADE then
 			local other = rng:RandomFloat()
 
 			if other <= 0.9 then

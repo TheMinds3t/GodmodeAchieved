@@ -868,7 +868,7 @@ end
 util.get_stage = function()
 	local stage = GODMODE.level:GetAbsoluteStage()
 	
-	if StageAPI and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
+	if StageAPI and StageAPI.GetCurrentStage and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
 		stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage or stage
 	end
 
@@ -920,8 +920,8 @@ end
 
 util.get_curse_list = function(blessings)
 	if blessings == nil then blessings = true end
-	if cache_curse_list == nil or cache_curse_list.timestamp ~= GODMODE.game:GetFrameCount() then 
-		cached_curse_list = {timestamp=GODMODE.game:GetFrameCount(),list={}}
+	if cache_curse_list == nil or cache_curse_list.timestamp ~= (GODMODE.frame_count or GODMODE.game:GetFrameCount()) then 
+		cached_curse_list = {timestamp=(GODMODE.frame_count or GODMODE.game:GetFrameCount()),list={}}
 
 		for curse=0, util.max_curse do 
 			if curse <= LevelCurse.NUM_CURSES then 
@@ -1413,11 +1413,17 @@ util.dehazard_room = function()
 end
 
 util.is_in_view = function(pos)
-	local render_off = GODMODE.room:GetRenderScrollOffset()
+	local render_off = (GODMODE.room_render_scroll or GODMODE.room:GetRenderScrollOffset())
 	local top_left = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()) - render_off
 	local bottom_right = (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()) - render_off
 
 	return pos.X > top_left.X and pos.Y > top_left.Y and pos.X < bottom_right.X and pos.Y < bottom_right.Y
+end
+
+util.to_title_case = function(string)
+	return string.gsub(string, "(%a)([%w_']*)", function( first, rest )
+		return first:upper()..rest:lower()
+	end)
 end
 
 return util

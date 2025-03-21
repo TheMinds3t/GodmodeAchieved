@@ -14,13 +14,13 @@ item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
 	data.apple_use_room = tonumber(GODMODE.save_manager.get_player_data(player, "AppleRoomSeed", "-1",false))
-	if data.apple_use_room > 0 and data.apple_use_room == GODMODE.room:GetDecorationSeed() and data.applied_apple ~= true then
+	if data.apple_use_room > 0 and data.apple_use_room == (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) and data.applied_apple ~= true then
 		data.applied_apple = true
 		-- player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 		-- player:EvaluateItems()
 	end
 
-	if data.apple_use_room == GODMODE.room:GetDecorationSeed() then
+	if data.apple_use_room == (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then
 		if cache == CacheFlag.CACHE_DAMAGE then
 			player.Damage = player.Damage * 1.2 + 1.0
 		end
@@ -29,9 +29,9 @@ end
 item.player_update = function(self, player, data)
 	if player and player:HasCollectible(item.instance) then
 
-		if data.apple_use_room == GODMODE.room:GetDecorationSeed() then
+		if data.apple_use_room == (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then
 			local total = GODMODE.util.total_item_count(item.instance)
-			if GODMODE.game:GetFrameCount() % 120 == 0 and total > 0 then
+			if (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 120 == 0 and total > 0 then
 				GODMODE.game:AddPixelation(total * 25)
 			end
 		end
@@ -43,7 +43,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
 		player:AddHearts(1)
 		GODMODE.sfx:Play(SoundEffect.SOUND_VAMP_GULP)
-		data.apple_use_room = GODMODE.room:GetDecorationSeed()
+		data.apple_use_room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
 		GODMODE.save_manager.set_player_data(player, "AppleRoomSeed", data.apple_use_room,true)
 		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
 		player:EvaluateItems()

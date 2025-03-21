@@ -165,7 +165,7 @@ monster.npc_kill = function(self,ent)
             ent2:Kill()
         end)
 
-        if GODMODE.room:GetType() == RoomType.ROOM_ERROR then 
+        if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ERROR then 
             local room = GODMODE.room
             Isaac.GridSpawn(GridEntityType.GRID_TRAPDOOR, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()), true)
     

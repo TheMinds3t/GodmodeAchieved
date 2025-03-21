@@ -145,5 +145,6 @@ table.insert(ret, include("scripts.definitions.entities.familiar.fruit_fly"))
 table.insert(ret, include("scripts.definitions.entities.familiar.deli_halo"))
 table.insert(ret, include("scripts.definitions.entities.familiar.deli_eye"))
 table.insert(ret, include("scripts.definitions.entities.familiar.vengeful_dagger"))
+table.insert(ret, include("scripts.definitions.entities.familiar.hellfiah"))
 
 return ret

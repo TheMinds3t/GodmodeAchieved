@@ -28,7 +28,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         if player:HasCollectible(CollectibleType.COLLECTIBLE_BINGE_EATER) then mult = 2.0 end
         GODMODE.save_manager.set_player_data(player,"Fruit"..sub,tonumber(GODMODE.save_manager.get_player_data(player,"Fruit"..sub,"0"))+stat_ups[sub].amt*mult,true)
         GODMODE.save_manager.set_player_data(player,"MaxFruit"..sub,tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..sub,"0"))+stat_ups[sub].amt*mult,true)
-        GODMODE.save_manager.set_player_data(player,"TimeStamp"..sub,GODMODE.game:GetFrameCount(),true)
+        GODMODE.save_manager.set_player_data(player,"TimeStamp"..sub,(GODMODE.frame_count or GODMODE.game:GetFrameCount()),true)
         player:AddCacheFlags(stat_ups[sub].flag)
         player:EvaluateItems()
 

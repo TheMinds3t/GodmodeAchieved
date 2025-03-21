@@ -28,7 +28,7 @@ end
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player)
 		local data = GODMODE.get_ent_data(player)
-		local entflag = GODMODE.is_at_palace and GODMODE.is_at_palace() and GODMODE.room:GetType() == RoomType.ROOM_BOSS and not entsrc.IsFriendly
+		local entflag = GODMODE.is_at_palace and GODMODE.is_at_palace() and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and not entsrc.IsFriendly
 		if GetPtrHash(player) == GetPtrHash(enthit) and (data.vessel_cooldown == nil or data.vessel_cooldown <= 0) and entflag then
 			data.vessel_cooldown = 30
 			GODMODE.game:BombExplosionEffects(player.Position, 100, TearFlags.TEAR_NORMAL, Color.Default, player, 1)

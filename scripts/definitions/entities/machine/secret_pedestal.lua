@@ -38,7 +38,7 @@ end
 monster.pickup_post_render = function(self, pickup, offset)
 	local data = GODMODE.get_ent_data(pickup)
 	local render_front = false 
-	local anim_item_time = GODMODE.game:GetFrameCount()*(1/7.0)+pickup.Position.Y+pickup.Position.X
+	local anim_item_time = (GODMODE.frame_count or GODMODE.game:GetFrameCount())*(1/7.0)+pickup.Position.Y+pickup.Position.X
 	local item_off_pos = Vector(0,-40+math.sin(anim_item_time*0.66+pickup.Position.Y)*2)
 	monster.secrets_desc_anim.Scale = Vector(1.0+math.cos(anim_item_time+pickup.Position.X)*0.01,1.0+math.sin(anim_item_time+pickup.Position.Y)*0.01)
 	

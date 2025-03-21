@@ -19,8 +19,8 @@ end
 
 item.player_update = function(self, player)
 	if player:HasCollectible(item.instance) then 
-		GODMODE.game.BlueWombParTime = GODMODE.game:GetFrameCount() + 300
-		GODMODE.game.BossRushParTime = GODMODE.game:GetFrameCount() + 300
+		GODMODE.game.BlueWombParTime = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) + 300
+		GODMODE.game.BossRushParTime = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) + 300
 	end
 end
 

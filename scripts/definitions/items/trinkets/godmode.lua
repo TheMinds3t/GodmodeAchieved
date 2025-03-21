@@ -33,7 +33,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
             -- if player:GetHearts() + player:GetSoulHearts() + player:GetBlackHearts() + player:GetRottenHearts() <= amount * 3 then 
 
             flag = false
-            GODMODE.get_ent_data(player).godmode_rewind = GODMODE.room:GetDecorationSeed()
+            GODMODE.get_ent_data(player).godmode_rewind = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
 
             if GODMODE.shader_params.godmode_trinket_time == 0 then 
                 GODMODE.shader_params.godmode_trinket_time = 35
@@ -63,7 +63,7 @@ item.player_update = function(self,player,data)
 
         local rewind_flag = data.godmode_rewind
         -- add broken + fx
-        if rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() ~= rewind_flag then 
+        if rewind_flag ~= nil and (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= rewind_flag then 
             player:GetSprite():Play("Appear",true)
             data.disable_time = 40
             player:AddBrokenHearts(1)
@@ -71,7 +71,7 @@ item.player_update = function(self,player,data)
         end
 
         -- trigger rewind
-        if GODMODE.shader_params.godmode_trinket_time > 32 and rewind_flag ~= nil and GODMODE.room:GetDecorationSeed() == rewind_flag then 
+        if GODMODE.shader_params.godmode_trinket_time > 32 and rewind_flag ~= nil and (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) == rewind_flag then 
             GODMODE.shader_params.godmode_trinket_time = 32
             GODMODE.godhooks.call_hook("pre_godmode_restart")
             -- Isaac.ExecuteCommand("rewind")

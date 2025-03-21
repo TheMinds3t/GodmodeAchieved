@@ -232,7 +232,7 @@ monster.pickup_init = function(self,pickup)
 	local mimic_dat = GODMODE.registry.mimic_chests[pickup.Variant]
     if GODMODE.save_manager.get_config("ChestInfestToggle","true") == "true" 
 		and mimic_dat and (mimic_dat.can_spawn == nil or mimic_dat.can_spawn(pickup) == true)
-		and pickup:GetDropRNG():RandomFloat() < tonumber(GODMODE.save_manager.get_config("ChestInfestChance","30.0"))/100.0 and GODMODE.achievements.is_achievement_unlocked("achievement_chest_infest") then 
+		and pickup:GetDropRNG():RandomFloat() < tonumber(GODMODE.save_manager.get_config("ChestInfestChance","30.0"))/100.0 and GODMODE.achievements.is_achievement_unlocked("achievement_chest_infest") and GODMODE.room:IsFirstVisit() and GODMODE.level.EnterDoor ~= -1 then 
         
 		local infestor = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreeTilePosition(GODMODE.room:GetRandomPosition(64.0),512.0), Vector.Zero,nil)
 		-- infestor:ClearEntityFlags(EntityFlag.FLAG_APPEAR)

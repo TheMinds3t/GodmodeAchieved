@@ -12,6 +12,8 @@ monster.variant = GODMODE.registry.entities.mega_worm.variant
 --     ent:GetSprite():LoadGraphics()
 -- end
 
+monster.summon_size_scale = 0.85
+
 monster.set_delirium_visuals = function(self,ent)
     for i=0,1 do 
         ent:GetSprite():ReplaceSpritesheet(i,"gfx/bosses/deliriumforms/worm_boss.png")
@@ -181,8 +183,10 @@ monster.npc_update = function(self, ent, data, sprite)
         local worm = Isaac.Spawn(EntityType.ENTITY_ROUND_WORM,0,0,ent.Position+head_offset(ent)*Vector(1,0),Vector.Zero,ent)
         worm:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
         worm:GetSprite():Play("DigIn",true)
-        worm.MaxHitPoints = 4.5
+        worm.MaxHitPoints = 4.5 / monster.summon_size_scale
         worm.HitPoints = worm.MaxHitPoints
+        worm = worm:ToNPC()
+        worm.Scale = monster.summon_size_scale
         data.summon_cache = (data.summon_cache or 0) + 1
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF02, 3, ent.Position + head_offset(ent)*Vector(1,0)+Vector(0,8), Vector.Zero, ent)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, ent.Position + head_offset(ent), Vector.Zero, ent)

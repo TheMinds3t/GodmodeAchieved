@@ -145,7 +145,7 @@ stage.check_beelzebub = function(self)
     end end)
 end
 stage.stage_update = function(self)
-    if GODMODE.game:GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
+    if (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 40 == 0 or stage.beelzebub_toggle == nil then 
         stage:check_beelzebub()
     end
 
@@ -173,7 +173,7 @@ end
 
 local fly_off = Vector(20,-28)
 stage.stage_render = function(self)
-    if GODMODE.game:GetFrameCount() % 40 == 0 or stage.beelzebub_toggle == nil then 
+    if (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 40 == 0 or stage.beelzebub_toggle == nil then 
         stage:check_beelzebub()
     end
     local room = GODMODE.room

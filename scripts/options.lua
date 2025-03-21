@@ -94,33 +94,71 @@ function menu_provider.SaveMenusPoppedUp(var)
     get_dss_data().MenusPoppedUp = var
 end
 
+--[[
+##################################################################################
+##################################################################################
+##################################################################################
+DSS ESSENTIALS END
+######################################################################################
+######################################################################################
+######################################################################################
+]]--
+
 -- This function returns a table that some useful functions and defaults are stored on
-local dssmod = dsscore.init("Dead Sea Scrolls (Godmode Achieved)", menu_provider)
-local gap = {
+options.dssmod = dsscore.init("Dead Sea Scrolls (Godmode Achieved)", menu_provider)
+
+-- search for base DSS buttons to flag for ModConfigMenu conversion
+for key,val in pairs(options.dssmod) do 
+    if key:find("Button",1,true) and type(options.dssmod[key]) == "table" then 
+        options.dssmod[key].dss_button = true
+    end
+end
+
+options.gap = {
     -- Creating gaps in your page can be done simply by inserting a blank button.
     -- The "nosel" tag will make it impossible to select, so it'll be skipped over when traversing the menu, while still rendering!
-    str = '',
-    fsize = 2,
-    nosel = true
+    str = '', fsize = 2, nosel = true, gap = true,
 }
 
-local bool_choices = {
+options.bool_choices = {
     'disabled',
     'enabled'
 }
-local bool_map = {
+
+options.scaling_choices = {
+    "stage",
+    "stats"
+}
+
+options.unlock_choices = {
+    'locked',
+    'unlocked'
+}
+
+options.bypass_choices = {
+    'bypassed', 
+    'standard'
+}
+
+options.palace_clear_options = {'0', '1', '2', '3', '4', '5+'}
+options.fractal_display_choices = {'disabled','freeform','stathud'}
+options.red_juice_choices = {'color+distort','color','distort','none'}
+
+options.bool_map = {
     [2] = "true",
     [1] = "false",
     ["enabled"] = "true",
     ["disabled"] = "false"
 }
 
-local str_bool_map = {
+options.str_bool_map = {
     ["true"] = 2,
     ["false"] = 1,
     [true] = 2,
     [false] = 1,
 }
+
+options.back_option = {str = 'back', action = 'back'}
 
 local default_reset = "reset data?"
 local next_reset = {
@@ -145,10 +183,10 @@ options.layout = {
             {str = 'resume game', action = 'resume'},
             {str = 'settings', dest = 'settings'},
             {str = "credits", dest="credits"},
-            dssmod.changelogsButton,
+            options.dssmod.changelogsButton,
         },
 
-        tooltip = dssmod.menuOpenToolTip
+        tooltip = options.dssmod.menuOpenToolTip
     },
     settings = {
         title = "settings",
@@ -159,11 +197,11 @@ options.layout = {
             {str = "unlocks", dest="unlocks"},
             {str = "cosmetic", dest="cosmetic"},
             {str = "controls", dest="controls"},
-            gap,
+            options.gap,
             {str = "wipe data", dest="reset"},
             {str = "godmode", dest="godmode"},
             {str = "credits", dest="credits"},
-            gap,
+            options.gap,
             {str = 'back', dest = 'main'},
         }
     },
@@ -187,19 +225,19 @@ options.layout = {
                 tooltip = {strset = {'chance that', 'godmode', 'stages', 'will occur'}}
             },
 
-            gap,
+            options.gap,
 
             --alt boss section
             -- {
             --     str = 'alt bosses',
-            --     choices = bool_choices, setting = 2,
+            --     choices = options.bool_choices, setting = 2,
             --     variable = 'GodmodeBossesEnabled',
 
             --     load = function()
-            --         return str_bool_map[GODMODE.save_manager.get_config("BossesEnabled","true")] or 2
+            --         return options.str_bool_map[GODMODE.save_manager.get_config("BossesEnabled","true")] or 2
             --     end,
             --     store = function(var)
-            --         GODMODE.save_manager.set_config("BossesEnabled",bool_map[var],true)
+            --         GODMODE.save_manager.set_config("BossesEnabled",options.bool_map[var],true)
             --     end,
 
             --     tooltip = {strset = {'can alt', 'bosses', 'spawn'}}
@@ -292,19 +330,19 @@ options.layout = {
                 tooltip = {strset = {'chance that', 'godmode', 'horsemen', 'will occur'}}
             },
 
-            -- gap,
+            -- options.gap,
 
             -- --alt enemy section
             -- {
             --     str = 'alt enemies',
-            --     choices = bool_choices, setting = 2,
+            --     choices = options.bool_choices, setting = 2,
             --     variable = 'GodmodeEnemyAlts',
 
             --     load = function()
-            --         return str_bool_map[GODMODE.save_manager.get_config("EnemyAlts","true")] or 2
+            --         return options.str_bool_map[GODMODE.save_manager.get_config("EnemyAlts","true")] or 2
             --     end,
             --     store = function(var)
-            --         GODMODE.save_manager.set_config("EnemyAlts",bool_map[var],true)
+            --         GODMODE.save_manager.set_config("EnemyAlts",options.bool_map[var],true)
             --     end,
 
             --     tooltip = {strset = {'can alt', 'enemies', 'spawn'}}
@@ -368,19 +406,19 @@ options.layout = {
                 tooltip = {strset = {'add max per', 'room for', 'alt enemy','spawns'}}
             },
 
-            -- gap,
+            -- options.gap,
 
             -- --alt pickup section
             -- {
             --     str = 'alt pickups',
-            --     choices = bool_choices, setting = 2,
+            --     choices = options.bool_choices, setting = 2,
             --     variable = 'GodmodePickupAlts',
 
             --     load = function()
-            --         return str_bool_map[GODMODE.save_manager.get_config("PickupAlts","true")] or 2
+            --         return options.str_bool_map[GODMODE.save_manager.get_config("PickupAlts","true")] or 2
             --     end,
             --     store = function(var)
-            --         GODMODE.save_manager.set_config("PickupAlts",bool_map[var],true)
+            --         GODMODE.save_manager.set_config("PickupAlts",options.bool_map[var],true)
             --     end,
 
             --     tooltip = {strset = {'can alt', 'pickups', 'spawn'}}
@@ -445,8 +483,8 @@ options.layout = {
             },
 
 
-            gap,
-            {str = 'back', action = 'back'},
+            options.gap,
+            options.back_option,
         }
     },
     scaling = {
@@ -455,7 +493,7 @@ options.layout = {
             --hard mode scaling
             {
                 str = 'scale factor',
-                choices = {"stage","stats"}, setting = 2,
+                choices = options.scaling_choices, setting = 2,
                 variable = 'GodmodeHMEnabled',
 
                 load = function()
@@ -479,17 +517,17 @@ options.layout = {
 
                 tooltip = {strset = {'does enemy', 'health scale', 'based on', 'stage depth', 'or stat score?','','(disable','below)'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'hard hp scaling',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeHMEnabled',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("HMEnabled","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("HMEnabled","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("HMEnabled",bool_map[var],true)
+                    GODMODE.save_manager.set_config("HMEnabled",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'does enemy', 'health scale', 'on hard?'}}
@@ -552,19 +590,19 @@ options.layout = {
 
                 tooltip = {strset = {'boss hp', 'scale cap','that is', 'present in', 'the void', '(applies in','miniboss and','boss rooms)'}}
             },
-            gap,
+            options.gap,
 
             --greedier mode scaling
             {
                 str = 'greedier hp scaling',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeGMEnabled',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("GMEnabled","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("GMEnabled","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("GMEnabled",bool_map[var],true)
+                    GODMODE.save_manager.set_config("GMEnabled",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'does enemy', 'health scale', 'in greedier?'}}
@@ -627,24 +665,24 @@ options.layout = {
 
                 tooltip = {strset = {'boss hp', 'scale cap','that is', 'present in', 'the shop'}}
             },
-            gap,
+            options.gap,
 
             --general scaling
             {
                 str = 'victory lap scaling',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeVLapEnabled',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("VLapEnabled","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("VLapEnabled","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("VLapEnabled",bool_map[var],true)
+                    GODMODE.save_manager.set_config("VLapEnabled",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'does enemy', 'health scale', 'with', 'victory laps', '(higher the', 'deeper you', 'are)'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'hp scale ceiling',
                 min = 0, max = 10000, increment = 50, pref="<= ", setting = 3000,
@@ -659,17 +697,17 @@ options.layout = {
 
                 tooltip = {strset = {'if enemy/boss','has more hp','than this,','don\'t scale hp'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'story boss hp buff',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeVanillaStoryHPBuff',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("VanillaStoryHPBuff","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("VanillaStoryHPBuff","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("VanillaStoryHPBuff",bool_map[var],true)
+                    GODMODE.save_manager.set_config("VanillaStoryHPBuff",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'do vanilla','story bosses','get similar,','scaling hp','buff to','godmode','story bosses?'}}
@@ -701,8 +739,8 @@ options.layout = {
                 tooltip = {strset = {'how much','extra health','can vanilla','story bosses', 'get?','(seperate','from hp','scaling)'}}
             },
 
-            gap,
-            {str = 'back', action = 'back'},
+            options.gap,
+            options.back_option,
         }
     },
     gameplay = {
@@ -711,48 +749,48 @@ options.layout = {
             --item functions
             {
                 str = 'planetarium items',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeMultiPlanetItems',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("MultiPlanetItems","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("MultiPlanetItems","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("MultiPlanetItems",bool_map[var],true)
+                    GODMODE.save_manager.set_config("MultiPlanetItems",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'can you take','more than one','planetarium','item','(or spawn lens','if only one','is present)'}}
             },
             {
                 str = 'both alt path items',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeBothRepPathItems',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("BothRepPathItems","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("BothRepPathItems","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("BothRepPathItems",bool_map[var],true)
+                    GODMODE.save_manager.set_config("BothRepPathItems",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'can you take','more than one','alt path','item'}}
             },
             {
                 str = 't. lost mom\'s wish',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeTaintedLostWish',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("TaintedLostWish","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("TaintedLostWish","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("TaintedLostWish",bool_map[var],true)
+                    GODMODE.save_manager.set_config("TaintedLostWish",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'does t. lost','start with','mom\'s wish'}}
             },
 
-            gap,
+            options.gap,
             --time functions
             {
                 str = 'boss rush time',
@@ -784,31 +822,31 @@ options.layout = {
             },
             {
                 str = 'blue womb rework',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeBlueWombRework',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("BlueWombRework","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("BlueWombRework","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("BlueWombRework",bool_map[var],true)
+                    GODMODE.save_manager.set_config("BlueWombRework",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'replace blue','womb chests','with 8','red keys'}}
             },
 
-            gap,
+            options.gap,
             --call of the void
             {
                 str = 'call of the void',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeCallOfTheVoid',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("CallOfTheVoid","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("CallOfTheVoid","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("CallOfTheVoid",bool_map[var],true)
+                    GODMODE.save_manager.set_config("CallOfTheVoid",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'in hard','spawns a','deity to','punish taking','too much time','on a stage'}}
@@ -871,7 +909,7 @@ options.layout = {
 
                 tooltip = {strset = {'how many','charges does','call of','the void','receive on','spawn?'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'faithless decay',
                 min = 1, max = 12, increment = 1, suf=' charges', setting = 2,
@@ -887,7 +925,7 @@ options.layout = {
                 tooltip = {strset = {'how many','faithless','hearts get','removed','when entering','a new stage?'}}
             },
 
-            gap,
+            options.gap,
             --door hazard
             {
                 str = 'door hazard chance',
@@ -905,7 +943,7 @@ options.layout = {
             },
             {
                 str = 'cotv door hazards',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeCOTVDoorHazardFX',
 
                 -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
@@ -924,26 +962,26 @@ options.layout = {
                 end,
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("COTVDoorHazardFX","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("COTVDoorHazardFX","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("COTVDoorHazardFX",bool_map[var],true)
+                    GODMODE.save_manager.set_config("COTVDoorHazardFX",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'when cotv','spawns, do','additional','cotv door','hazards spawn?'}}
             },
-            gap,
+            options.gap,
             -- correction room
             {
                 str = 'correction room',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeStatHelp',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("StatHelp","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("StatHelp","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("StatHelp",bool_map[var],true)
+                    GODMODE.save_manager.set_config("StatHelp",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'if you','are weak,','get access to','a special','room to','become','stronger'}}
@@ -978,7 +1016,7 @@ options.layout = {
 
                 tooltip = {strset = {'what %','of scaled','base stats to','receive help'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'toxic decay rate',
                 min = 10, max = 240, increment = 1, suf=' secs', setting = 120,
@@ -993,33 +1031,33 @@ options.layout = {
 
                 tooltip = {strset = {'how long','does it take','for t. recluse','to lose','toxic charge'}}
             },
-            gap,
+            options.gap,
             -- more options rework
             {
                 str = 'more options redo',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeMoreOptionsRework',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("MoreOptionsRework","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("MoreOptionsRework","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("MoreOptionsRework",bool_map[var],true)
+                    GODMODE.save_manager.set_config("MoreOptionsRework",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'reworked','version','allows you', 'to grab up to','1+count',"items per","room, shown"," by marks"}}
             },
-            gap,
+            options.gap,
             {
                 str = 'chest infestors',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeChestInfestToggle',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("ChestInfestToggle","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ChestInfestToggle","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("ChestInfestToggle",bool_map[var],true)
+                    GODMODE.save_manager.set_config("ChestInfestToggle",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'t. isaac unlock','-----------','enable chest','infestors,','if unlocked?'}}
@@ -1050,32 +1088,32 @@ options.layout = {
                 tooltip = {strset = {'t. isaac unlock','-----------','what chance','for','chest infestor','to spawn','per chest?'}}
             },
 
-            gap,
+            options.gap,
             {
                 str = 'safe boss rooms',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeDehazardBossRooms',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("DehazardBossRooms","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("DehazardBossRooms","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("DehazardBossRooms",bool_map[var],true)
+                    GODMODE.save_manager.set_config("DehazardBossRooms",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'do hazards','get cleared','after beating','a boss','or miniboss?'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'light item rooms',
-                choices = bool_choices, setting = 1,
+                choices = options.bool_choices, setting = 1,
                 variable = 'GodmodeLighterTreasure',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("LighterTreasure","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("LighterTreasure","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("LighterTreasure",bool_map[var],true)
+                    GODMODE.save_manager.set_config("LighterTreasure",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'only 1 item','per item room', 'or get','all items?','','(just makes','godmode','multi rooms','a choice)'}}
@@ -1083,20 +1121,20 @@ options.layout = {
             -- -- new autofire mechanic!
             -- {
             --     str = 'auto attack',
-            --     choices = bool_choices, setting = 2,
+            --     choices = options.bool_choices, setting = 2,
             --     variable = 'GodmodeAutoChargeAttack',
 
             --     load = function()
-            --         return str_bool_map[GODMODE.save_manager.get_config("AutoChargeAttack","true")] or 2
+            --         return options.str_bool_map[GODMODE.save_manager.get_config("AutoChargeAttack","true")] or 2
             --     end,
             --     store = function(var)
-            --         GODMODE.save_manager.set_config("AutoChargeAttack",bool_map[var],true)
+            --         GODMODE.save_manager.set_config("AutoChargeAttack",options.bool_map[var],true)
             --     end,
 
             --     tooltip = {strset = {'with charged','weapons, auto','use when full',' charge and ','enemies in','room > 0?', "(repentogon","needed)"}}
             -- },            
-            -- gap,
-            {str = 'back', action = 'back'},
+            -- options.gap,
+            options.back_option,
         }
     },
     unlocks = {
@@ -1104,7 +1142,7 @@ options.layout = {
         buttons = { -- auto populated below for items
             {
                 str = 'palace clears',
-                choices = {'0', '1', '2', '3', '4', '5+'}, setting = 1,
+                choices = options.palace_clear_options, setting = 1,
                 variable = 'GodmodePalaceKills',
                 
                 load = function()
@@ -1115,9 +1153,11 @@ options.layout = {
                     GODMODE.save_manager.set_persistant_data("PalaceComplete", tostring(var == 6))
                 end,
 
+                unlock_but = true,
+
                 tooltip = {strset = {'times the','fallen light', 'and the sign', 'have been', 'defeated', '(changes base', 'stats of', 'the sign)'}}
             },
-            gap,
+            options.gap,
         }
     },
     cosmetic = {
@@ -1125,133 +1165,133 @@ options.layout = {
         buttons = {
             {
                 str = 'sheol resprite',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeSheolResprite',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("SheolToPalace","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("SheolToPalace","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("SheolToPalace",bool_map[var],true)
+                    GODMODE.save_manager.set_config("SheolToPalace",options.bool_map[var],true)
                 end,
-
+                unlock_but = true,
                 tooltip = {strset = {'use og','godmode stage','aesthetics?','','sheol','=','palace (night)'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'cathedral resprite',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeCathedralResprite',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("CathedralToPalace","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("CathedralToPalace","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("CathedralToPalace",bool_map[var],true)
+                    GODMODE.save_manager.set_config("CathedralToPalace",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'use og','godmode stage','aesthetics?','','cathedral','=','palace (day)'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'shop theme',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeShopTheme',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("ShopTheme","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ShopTheme","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("ShopTheme",bool_map[var],true)
+                    GODMODE.save_manager.set_config("ShopTheme",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'use godmode','theme for','shops?'}}
             },
             {
                 str = 'cathedral theme',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeCathedralTheme',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("CathedralTheme","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("CathedralTheme","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("CathedralTheme",bool_map[var],true)
+                    GODMODE.save_manager.set_config("CathedralTheme",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'use godmode','theme for ','cathedral','when using', 'godmode','background?'}}
             },
-            -- gap,
+            -- options.gap,
             -- {
             --     str = 'dark room resprite',
-            --     choices = bool_choices, setting = 2,
+            --     choices = options.bool_choices, setting = 2,
             --     variable = 'GodmodeDarkRoomResprite',
 
             --     load = function()
-            --         return str_bool_map[GODMODE.save_manager.get_config("DarkRoomToFurnace","true")] or 2
+            --         return options.str_bool_map[GODMODE.save_manager.get_config("DarkRoomToFurnace","true")] or 2
             --     end,
             --     store = function(var)
-            --         GODMODE.save_manager.set_config("DarkRoomToFurnace",bool_map[var],true)
+            --         GODMODE.save_manager.set_config("DarkRoomToFurnace",options.bool_map[var],true)
             --     end,
 
             --     tooltip = {strset = {'use og','godmode stage','aesthetics?','','dark room','=','furnace'}}
             -- },
-            gap,
+            options.gap,
             {
                 str = 'chest resprite',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeChestResprite',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("ChestToSanctuary","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ChestToSanctuary","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("ChestToSanctuary",bool_map[var],true)
+                    GODMODE.save_manager.set_config("ChestToSanctuary",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'use og','godmode stage','aesthetics?','', 'chest','=','sanctuary'}}
             },
-            gap,
-            gap,
+            options.gap,
+            options.gap,
             {
                 str = 'void overlay',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeVoidOverlay',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("VoidOverlay","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("VoidOverlay","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("VoidOverlay",bool_map[var],true)
+                    GODMODE.save_manager.set_config("VoidOverlay",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'render','cosmetic','shadow around','the screen','in the void?'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'keepah',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeShopParrot',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("ShopParrot","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ShopParrot","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("ShopParrot",bool_map[var],true)
+                    GODMODE.save_manager.set_config("ShopParrot",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'spawn keepah','the shop','parrot in','every shop?'}}
             },
             {
                 str = 'mute keepah?',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeMuteShopParrot',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("MuteShopBird","false")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("MuteShopBird","false")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("MuteShopBird",bool_map[var],true)
+                    GODMODE.save_manager.set_config("MuteShopBird",options.bool_map[var],true)
                 end,
 
                 displayif = function(button, item, menuObj)
@@ -1268,34 +1308,34 @@ options.layout = {
 
                 tooltip = {strset = {'mute keepah?','','(he is sad but','understands)'}}
             },
-            gap,
+            options.gap,
             {
                 str = 'mod reqs prompt',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeReqsPrompt',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("ReqsPrompt","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ReqsPrompt","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("ReqsPrompt",bool_map[var],true)
+                    GODMODE.save_manager.set_config("ReqsPrompt",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'prompt you','the first run','each session','if you are','missing any','core mods?'}}
             },
 
-            gap,
+            options.gap,
             --cotv timer
             {
                 str = 'cotv timer',
-                choices = bool_choices, setting = 2,
+                choices = options.bool_choices, setting = 2,
                 variable = 'GodmodeCOTVDisplay',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("COTVDisplay","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("COTVDisplay","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("COTVDisplay",bool_map[var],true)
+                    GODMODE.save_manager.set_config("COTVDisplay",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'display a','timer to','indicate','how long','until cotv','spawns?'}}
@@ -1366,15 +1406,15 @@ options.layout = {
                 tooltip = {strset = {'the y','position','of the','cotv timer','display'}}
             },
 
-            gap,
+            options.gap,
             --fractal key chance
             {
                 str = 'fractal chance',
-                choices = {'disabled','freeform','stathud'}, setting = 3,
+                choices = options.fractal_display_choices, setting = 3,
                 variable = 'GodmodeFractalDisplay',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("FractalDisplay","1")] or 3
+                    return tonumber(GODMODE.save_manager.get_config("FractalDisplay","3")) or 3
                 end,
                 store = function(var)
                     GODMODE.save_manager.set_config("FractalDisplay",var,true)
@@ -1447,7 +1487,7 @@ options.layout = {
                 tooltip = {strset = {'the y','position','of the','fractal chance','display'}}
             },
 
-            gap,
+            options.gap,
             {
                 str = 't. xaphan trail',
                 min = 0, max = 50, increment = 1, suf=' shadows', setting = 6,
@@ -1463,18 +1503,37 @@ options.layout = {
                 tooltip = {strset = {'the length','of t. xaphan\'s','shadow trail'}}
             },
 
-            gap,
-            {str = 'back', action = 'back'},
+            options.gap,
+            {
+                str = 'red juice shader',
+                choices = options.red_juice_choices, setting = 1,
+                variable = 'GodmodeRedJuiceSetting',
+
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("RedJuiceSetting","1")) or 1
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("RedJuiceSetting",var,true)
+                end,
+                changefunc = function(button, item, menuObj)
+                    GODMODE.save_manager.set_config("RedJuiceSetting",""..button.setting,false)
+                end,
+
+                tooltip = {strset = {'change shader','settings','for the','red juice?'}}
+            },
+
+            options.gap,
+            options.back_option,
         }
     },
     controls = {
         title = "controls",
         buttons = {
-            dssmod.gamepadToggleButton,
-            dssmod.menuKeybindButton,
-            dssmod.paletteButton,
-            dssmod.menuHintButton,
-            dssmod.menuBuzzerButton,
+            options.dssmod.gamepadToggleButton,
+            options.dssmod.menuKeybindButton,
+            options.dssmod.paletteButton,
+            options.dssmod.menuHintButton,
+            options.dssmod.menuBuzzerButton,
             {
                 str = 'hud keybind',
 
@@ -1486,7 +1545,7 @@ options.layout = {
                 variable = "RedCoinCounterKey",
 
                 load = function()
-                    return tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB))
+                    return tonumber(GODMODE.save_manager.get_config("RedCoinCounterKey",Keyboard.KEY_TAB)) or -1
                 end,
                 store = function(var)
                     GODMODE.save_manager.set_config("RedCoinCounterKey",var,true)
@@ -1495,8 +1554,8 @@ options.layout = {
                 tooltip = {strset = {'keybind for','viewing godmode','hud above','players'}},
             },
 
-            gap,
-            {str = 'back', action = 'back'},
+            options.gap,
+            options.back_option,
         }
     },
     godmode = {
@@ -1511,19 +1570,19 @@ options.layout = {
         buttons = {
             {
                 str = 'godmode',
-                choices = bool_choices, setting = 1,
+                choices = options.bool_choices, setting = 1,
                 variable = 'GodmodeToggle',
 
                 load = function()
-                    return str_bool_map[GODMODE.save_manager.get_config("Godmode","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("Godmode","true")] or 2
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("Godmode",bool_map[var],true)
+                    GODMODE.save_manager.set_config("Godmode",options.bool_map[var],true)
                 end,
 
                 tooltip = {strset = {'it\'s a mod','for pro','i love god','i love','godmode','its nice mode'}}
             },
-            gap,
+            options.gap,
             {str = "back", dest="settings"},
         }
     },
@@ -1576,12 +1635,13 @@ options.layout = {
 
                 tooltip = { strset = { 'this will', 'set godmode', 'config to', 'default', 'values' } }
             },
-            gap,
-            {str = 'back', action = 'back'},
+            options.gap,
+            options.back_option,
         }
     },
-    credits = include("scripts.definitions.credits"),
+    credits = include("scripts.definitions.credits").factory(options.back_button),
 }
+
 
 -- populate unlocks view
 for key,val in pairs(GODMODE.achievements.item_map) do 
@@ -1592,7 +1652,7 @@ for key,val in pairs(GODMODE.achievements.item_map) do
 
         table.insert(options.layout.unlocks.buttons, {
             str = name,
-            choices = {'locked', 'unlocked'}, setting = str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false") == "true"],
+            choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false") == "true"],
             variable = 'GodmodeUnlock'..name,
 
             -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
@@ -1611,15 +1671,16 @@ for key,val in pairs(GODMODE.achievements.item_map) do
             end,
 
             load = function()
-                return str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false")] or 2
+                return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false")] or 2
             end,
             store = function(var)
-                GODMODE.save_manager.set_persistant_data("Unlock."..val,bool_map[var],true)
+                GODMODE.save_manager.set_persistant_data("Unlock."..val,options.bool_map[var],true)
             end,
 
-            tooltip = {strset = {'is',name,'unlocked?'}}
+            tooltip = {strset = {'is',name,'unlocked?'}},
+            unlock_but = true,
         })
-        table.insert(options.layout.unlocks.buttons, gap)
+        table.insert(options.layout.unlocks.buttons, options.gap)
     end
 end
 
@@ -1628,7 +1689,7 @@ local non_item_unlocks = {{"chest infestors","ChestInfest","achievement_chest_in
 for _,data in ipairs(non_item_unlocks) do 
     table.insert(options.layout.unlocks.buttons, {
         str = data[1],
-        choices = {'locked', 'unlocked'}, setting = str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false") == "true"],
+        choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false") == "true"],
         variable = 'GodmodeUnlock'..data[2],
 
         -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
@@ -1647,35 +1708,37 @@ for _,data in ipairs(non_item_unlocks) do
         end,
 
         load = function()
-            return str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false")] or 2
+            return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false")] or 2
         end,
         store = function(var)
-            GODMODE.save_manager.set_persistant_data("Unlock."..data[3],bool_map[var],true)
+            GODMODE.save_manager.set_persistant_data("Unlock."..data[3],options.bool_map[var],true)
         end,
 
+        unlock_but = true,
         tooltip = {strset = {'is',data[1],'unlocked?'}}
     })
-    table.insert(options.layout.unlocks.buttons, gap)
+    table.insert(options.layout.unlocks.buttons, options.gap)
 end
 
-table.insert(options.layout.unlocks.buttons, 1, gap)
-table.insert(options.layout.unlocks.buttons, 1, gap)
+table.insert(options.layout.unlocks.buttons, 1, options.gap)
+table.insert(options.layout.unlocks.buttons, 1, options.gap)
 table.insert(options.layout.unlocks.buttons, 1, {
     str = 'global bypass',
-    choices = {'bypassed', 'standard'}, setting = 2,
+    choices = options.bypass_choices, setting = 2,
     variable = 'GodmodeUnlocks',
 
     load = function()
-        return str_bool_map[GODMODE.save_manager.get_config("Unlocks","true")] or 2
+        return options.str_bool_map[GODMODE.save_manager.get_config("Unlocks","true")] or 2
     end,
     store = function(var)
-        GODMODE.save_manager.set_config("Unlocks",bool_map[var],true)
+        GODMODE.save_manager.set_config("Unlocks",options.bool_map[var],true)
     end,
 
+    unlock_but = true,
     tooltip = {strset = {'bypass','godmode','unlock','requirements,','unlocking','all secrets'}}
 })
 
-table.insert(options.layout.unlocks.buttons, {str="back",action="back"})
+table.insert(options.layout.unlocks.buttons, options.back_option)
 
 
 
@@ -1702,12 +1765,12 @@ DeadSeaScrollsMenu.AddMenu("Godmode Achieved", {
 
     -- This function runs every render frame while your menu is open, it handles everything!
     -- Drawing, inputs, etc.
-    Run = dssmod.runMenu,
+    Run = options.dssmod.runMenu,
     -- This function runs when the menu is opened, and generally initializes the menu.
-    Open = dssmod.openMenu,
+    Open = options.dssmod.openMenu,
     -- This function runs when the menu is closed, and generally handles storing of save data /
     -- general shut down.
-    Close = dssmod.closeMenu,
+    Close = options.dssmod.closeMenu,
     -- If UseSubMenu is set to true, when other mods with UseSubMenu set to false / nil are enabled,
     -- your menu will be hidden behind an "Other Mods" button.
     -- A good idea to use to help keep menus clean if you don't expect players to use your menu very

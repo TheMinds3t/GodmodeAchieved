@@ -86,6 +86,9 @@ reg.items = {
     fractal_key = Isaac.GetItemIdByName("Fractal Key"),
     fractal_key_inverse = Isaac.GetItemIdByName("Inverse Key"),
     eggnog = Isaac.GetItemIdByName("Cup O' Nog"),
+    key_ring = Isaac.GetItemIdByName("Dad's Key Ring"),
+    red_juice = Isaac.GetItemIdByName("Red Juice"),
+    hellfiah = Isaac.GetItemIdByName("Hellfiah Saus"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -95,10 +98,10 @@ reg.items = {
     deli_oblivion = Isaac.GetItemIdByName("Oblivion"),
     vengeful_dagger = Isaac.GetItemIdByName("Vengeful Dagger"),
     
-    questrock_1 = Isaac.GetItemIdByName("Rock Fragment"),
-    questrock_2 = Isaac.GetItemIdByName("Holy Stone"),
-    questrock_3 = Isaac.GetItemIdByName("Tablet Fragment"),
-    questrock_4 = Isaac.GetItemIdByName("Final Slate"),
+    -- questrock_1 = Isaac.GetItemIdByName("Rock Fragment"),
+    -- questrock_2 = Isaac.GetItemIdByName("Holy Stone"),
+    -- questrock_3 = Isaac.GetItemIdByName("Tablet Fragment"),
+    -- questrock_4 = Isaac.GetItemIdByName("Final Slate"),
     blood_key = Isaac.GetItemIdByName("Blood Key"),
     vessel_of_purity_1 = Isaac.GetItemIdByName("Vessel of Purity"),
     vessel_of_purity_2 = Isaac.GetItemIdByName("Cracked Vessel of Purity"),
@@ -184,6 +187,10 @@ reg.entities = {
     vengeful_dagger = {
         type = Isaac.GetEntityTypeByName("Vengeful Dagger"),
         variant = Isaac.GetEntityVariantByName("Vengeful Dagger"),
+    },
+    hellfiah_familiar = {
+        type = Isaac.GetEntityTypeByName("Hellfiah"),
+        variant = Isaac.GetEntityVariantByName("Hellfiah"),
     },
 
     opia_soul = {
@@ -900,17 +907,18 @@ reg.music = {
 }
 
 reg.sounds = {
-    sacred_1 = Isaac.GetSoundIdByName("sacred_1"),
-    sacred_2 = Isaac.GetSoundIdByName("sacred_2"),
-    sacred_3 = Isaac.GetSoundIdByName("sacred_3"),
-    sacred_appear = Isaac.GetSoundIdByName("sacred_appear"),
-    red_coin = Isaac.GetSoundIdByName("red_coin"),
-    red_coin_complete = Isaac.GetSoundIdByName("red_coin_complete"),
-    keepah = Isaac.GetSoundIdByName("keepah_chirp"),
-    keepah_panic = Isaac.GetSoundIdByName("keepah_panic"),
-    ending_voiceover = Isaac.GetSoundIdByName("godmode_ending"),
-    ending_voiceover_joke = Isaac.GetSoundIdByName("godmode_ending_joke"),
-    regular_cough = Isaac.GetSoundIdByName("regular_cough"),
+    sacred_1 = Isaac.GetSoundIdByName("GODMODE.sacred_1"),
+    sacred_2 = Isaac.GetSoundIdByName("GODMODE.sacred_2"),
+    sacred_3 = Isaac.GetSoundIdByName("GODMODE.sacred_3"),
+    sacred_appear = Isaac.GetSoundIdByName("GODMODE.sacred_appear"),
+    red_coin = Isaac.GetSoundIdByName("GODMODE.red_coin"),
+    red_coin_complete = Isaac.GetSoundIdByName("GODMODE.red_coin_complete"),
+    keepah = Isaac.GetSoundIdByName("GODMODE.keepah_chirp"),
+    keepah_panic = Isaac.GetSoundIdByName("GODMODE.keepah_panic"),
+    ending_voiceover = Isaac.GetSoundIdByName("GODMODE.godmode_ending"),
+    regular_cough = Isaac.GetSoundIdByName("GODMODE.regular_cough"),
+    correction_bell = Isaac.GetSoundIdByName("GODMODE.correction_bell"),
+    child_blargh = Isaac.GetSoundIdByName("GODMODE.child_blargh"),
 }
 
 reg.transformations = {

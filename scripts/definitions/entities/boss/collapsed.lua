@@ -257,6 +257,12 @@ monster.hand_attacks = {
     },
 }
 
+monster.is_phase_2_anim = function(sprite, playing)
+    local func = sprite.IsFinished 
+    if playing then func = sprite.IsPlaying end 
+    return func(sprite,"1Transition") or func(sprite,"2CryIn") or func(sprite,"2CryOut") or func(sprite,"2CryLoop") or func(sprite,"2Idle") or (playing and monster.is_phase_2_anim(sprite) or false)
+end
+
 monster.npc_update = function(self, ent, data, sprite)
     if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
     local player = ent:GetPlayerTarget()
@@ -280,7 +286,7 @@ monster.npc_update = function(self, ent, data, sprite)
             if data.phase2 == true then 
                 if sprite:IsFinished("1CryOut") or sprite:IsPlaying("1Idle") then 
                     sprite:Play("1Transition",true)
-                elseif sprite:IsFinished("1Transition") or sprite:IsFinished("2CryIn") or sprite:IsFinished("2CryOut") or sprite:IsFinished("2CryLoop") or sprite:IsFinished("2Idle") then 
+                elseif monster.is_phase_2_anim(sprite) then 
                     if sprite:IsFinished("2CryLoop") or sprite:IsFinished("2CryIn") then 
                         data.cry_time = data.cry_time - 1 
     
@@ -311,7 +317,7 @@ monster.npc_update = function(self, ent, data, sprite)
                         end
                     end
                 end
-            else
+            elseif not monster.is_phase_2_anim(sprite,true) then
                 if sprite:IsFinished("1CryIn") or sprite:IsFinished("1CryLoop") or sprite:IsFinished("1CryFlash") then 
                     sprite:Play("1CryLoop",true)
                 else
@@ -462,8 +468,10 @@ monster.npc_update = function(self, ent, data, sprite)
         ent.EntityCollisionClass = ent.SpriteOffset.Y <= -32 and EntityCollisionClass.ENTCOLL_NONE or EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
         if ent.Parent ~= nil then 
             local parent = ent.Parent:ToNPC()
+            local phase2_fight = monster.is_phase_2_anim(parent:GetSprite(),true)
             local targ = parent.Position + hand_anchors[ent.I1]
             local atk = ent.I1 == 1 and parent.I1 or parent.I2
+            
             data.atk = data.atk or 0
 
             if data.atk > 0 and monster.hand_attacks[data.atk] and monster.hand_attacks[data.atk].get_targ_pos then 
@@ -471,6 +479,10 @@ monster.npc_update = function(self, ent, data, sprite)
                 if new_targ then 
                     targ = new_targ
                 end
+            end
+
+            if phase2_fight and data.atk == 0 then 
+                targ = parent.Position + hand_anchors[ent.I1] * Vector(0.55,1)
             end
 
             local movement_vec = (targ - ent.Position)
@@ -487,17 +499,36 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.HitPoints = ent.MaxHitPoints
             end
 
-            if atk > 0 and data.atk == 0 then 
+
+            if atk > 0 and data.atk == 0 and not phase2_fight then 
                 monster.hand_attacks[atk].init(ent,data,sprite)
                 data.atk = atk
-            elseif data.atk > 0 and monster.hand_attacks[data.atk].is_done(ent,data,sprite) then 
+            elseif data.atk > 0 and (monster.hand_attacks[data.atk].is_done(ent,data,sprite) or phase2_fight) then 
                 data.atk = 0
             end
 
-            if (data.atk or 0) == 0 then 
+            if phase2_fight then
+                GODMODE.log(tostring(phase2_fight).." & "..tostring(data.atk).." & "..tostring(data.phase2_transition),true)
+
+                if not sprite:IsPlaying("HandTransition") and data.phase2_transition ~= true or data.phase2_transition == true and not (sprite:GetAnimation() == "HandTransition" or sprite:GetAnimation() == "Hand2") then 
+                    sprite:Play("HandTransition",true)
+                    data.phase2_transition = true 
+                    data.atk = 0
+                elseif sprite:IsFinished("HandTransition") and data.phase2_transition == true then 
+                    if not sprite:IsPlaying("Hand2") then 
+                        sprite:Play("Hand2",true)
+                    end
+                end 
+            elseif (data.atk or 0) == 0 then 
                 data.raised = false 
+                local anim = false 
+
                 if not sprite:IsPlaying("HandIdle") then 
                     sprite:Play("HandIdle",true)
+                    anim = true
+                end 
+
+                if anim then 
                     data.add_to_y_off = nil
 
                     if ent.I1 == 1 then 
@@ -505,7 +536,7 @@ monster.npc_update = function(self, ent, data, sprite)
                     else 
                         parent.I2 = 0
                     end
-                end 
+                end
             else 
                 if monster.hand_attacks[data.atk].update then 
                     monster.hand_attacks[data.atk].update(ent,data,sprite,atk)
@@ -630,12 +661,15 @@ monster.npc_update = function(self, ent, data, sprite)
 
         monster.fx(ent, ent.Position+RandomVector():Resized(ent:GetDropRNG():RandomFloat() * ent.Size * ent.Scale) * Vector(1,1.25))
 
+        if ent.Parent ~= nil and monster.is_phase_2_anim(ent.Parent:GetSprite(),true) then 
+            ent:Remove()
+        end
     end
 end
 
 monster.projectile_update = function(self, proj, data, sprite)
     if data.cotv_bullet == true then 
-        if proj.FrameCount > bullet_timeout_floor and not GODMODE.util.is_in_view(proj.Position) or proj.FrameCount > bullet_timeout_ceil then 
+        if proj.FrameCount > bullet_timeout_floor and not GODMODE.util.is_in_view(proj.Position) or proj.FrameCount > bullet_timeout_ceil and proj.ProjectileFlags & ProjectileFlags.FADEOUT ~= ProjectileFlags.FADEOUT then 
             proj.ProjectileFlags = proj.ProjectileFlags | ProjectileFlags.FADEOUT
         end
     end

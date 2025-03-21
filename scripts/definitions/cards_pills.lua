@@ -83,13 +83,13 @@ local pok_use_effect = function(card,player,flags)
     if echo_chamber == true then 
         local data = GODMODE.get_ent_data(player)
 
-        if (data.use_frame or -1) == GODMODE.game:GetFrameCount() then 
+        if (data.use_frame or -1) == (GODMODE.frame_count or GODMODE.game:GetFrameCount()) then 
             return
         elseif data.use_frame ~= nil then 
             data.use_frame = nil 
         end
 
-        data.use_frame = GODMODE.game:GetFrameCount()
+        data.use_frame = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
     end
 
     local level = GODMODE.level
@@ -133,7 +133,7 @@ local pok_use_effect = function(card,player,flags)
         player:AddCard(card)
 
         if player:HasTrinket(TrinketType.TRINKET_ENDLESS_NAMELESS) then 
-            GODMODE.get_ent_data(player).red_key_prevent_dupe = GODMODE.game:GetFrameCount()
+            GODMODE.get_ent_data(player).red_key_prevent_dupe = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
         end
     else
         if pok_transition[card] then 
@@ -187,7 +187,7 @@ cards_pills.card_actions = {
                         depth = depth - 1
                         for i=0, rooms.Size-1 do
                             local room = rooms:Get(i)
-                            if room.Data.Type == RoomType.ROOM_DEFAULT and room.DecorationSeed ~= GODMODE.room:GetDecorationSeed() then
+                            if room.Data.Type == RoomType.ROOM_DEFAULT and room.DecorationSeed ~= (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) then
                                 if GODMODE.util.random() < chance then
                                     GODMODE.save_manager.set_data("SOCSpawnSeed",room.DecorationSeed)
                                     break

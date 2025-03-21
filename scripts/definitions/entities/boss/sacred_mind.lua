@@ -64,7 +64,7 @@ end
 --add unique boss music for the fight!
 local music_flag = false
 monster.npc_init = function(self, ent)
-    if GODMODE.room:GetType() == RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then 
+    if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then 
         music_flag = true
         ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
         ent:GetSprite():Play("Appear", true)
@@ -87,7 +87,7 @@ end
 
 if MMC then 
     MMC.AddMusicCallback(GODMODE.mod_object, function()
-        if GODMODE.room:GetType() == RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
+        if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
             if GODMODE.util.count_enemies(nil,monster.type,monster.variant,nil) > 0 then 
                 return boss_music
             end

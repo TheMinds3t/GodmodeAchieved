@@ -91,7 +91,7 @@ monster.player_update = function(self, player, data)
         if sub > 0 then 
             local amt = tonumber(GODMODE.save_manager.get_player_data(player,"Fruit"..sub,"0"))
             local max_amt = tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..sub,"0"))
-            local perc = (GODMODE.game:GetFrameCount() - tonumber(GODMODE.save_manager.get_player_data(player,"TimeStamp"..sub,"0"))) / duration
+            local perc = ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) - tonumber(GODMODE.save_manager.get_player_data(player,"TimeStamp"..sub,"0"))) / duration
             
             if perc < 1.0 and max_amt > 0 then 
                 flags = flags | stat_ups[sub].flag
@@ -126,7 +126,7 @@ monster.player_collide = function(self, player,ent,entfirst)
     
             GODMODE.save_manager.set_player_data(player,"Fruit"..ent.SubType,tonumber(GODMODE.save_manager.get_player_data(player,"Fruit"..ent.SubType,"0"))+stat_ups[ent.SubType].amt*mult,true)
             GODMODE.save_manager.set_player_data(player,"MaxFruit"..ent.SubType,tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..ent.SubType,"0"))+stat_ups[ent.SubType].amt*mult,true)
-            GODMODE.save_manager.set_player_data(player,"TimeStamp"..ent.SubType,GODMODE.game:GetFrameCount(),true)
+            GODMODE.save_manager.set_player_data(player,"TimeStamp"..ent.SubType,(GODMODE.frame_count or GODMODE.game:GetFrameCount()),true)
             GODMODE.sfx:Play(SoundEffect.SOUND_VAMP_GULP)
 
         end

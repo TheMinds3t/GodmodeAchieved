@@ -4,7 +4,7 @@ local godhook = {}
 
 --connects functions from files to a singular string to function dictionary
 local reset_hooks = function() 
-    godhook.hook = {monsters={},monster_keys={},bypass_monster_keys={},items={},item_keys={},hooks_added={}}
+    godhook.hook = {monsters={},monster_keys={},bypass_monster_keys={},items={},item_keys={},bypass_item_keys={},hooks_added={}}
     godhook.effect_data_list = {}
     collectgarbage("collect")
 end
@@ -446,6 +446,15 @@ godhook.functions.player_update = function(self,player)
                 func(self,player,data)
             end
         end
+
+        if godhook.hook.bypass_item_keys["player_update"] then
+            for ind=1, #godhook.hook.bypass_item_keys["player_update"] do
+                local func = godhook.hook.bypass_item_keys["player_update"][ind]
+                if func then
+                    func(self,player,data)
+                end
+            end
+        end    
     end
 end
 godhook.functions.player_render = function(self,player,offset)
@@ -1133,10 +1142,15 @@ godhook.add_hook = function(funcname,object,hook)
             table.insert(godhook.hook.monster_keys[funcname],object.type..","..object.variant)    
         end
     else
-        godhook.hook.items[funcname] = godhook.hook.items[funcname] or {} 
-        godhook.hook.items[funcname][object.instance] = object[funcname]
-        godhook.hook.item_keys[funcname] = godhook.hook.item_keys[funcname] or {}
-        table.insert(godhook.hook.item_keys[funcname],object.instance)
+        if object.bypass_hooks ~= nil and object.bypass_hooks[funcname] then 
+            godhook.hook.bypass_item_keys[funcname] = godhook.hook.bypass_item_keys[funcname] or {} 
+            table.insert(godhook.hook.bypass_item_keys[funcname],object[funcname])
+        else 
+            godhook.hook.items[funcname] = godhook.hook.items[funcname] or {} 
+            godhook.hook.items[funcname][object.instance] = object[funcname]
+            godhook.hook.item_keys[funcname] = godhook.hook.item_keys[funcname] or {}
+            table.insert(godhook.hook.item_keys[funcname],object.instance)
+        end
     end
 
     if godhook.hook.hooks_added[funcname] == nil then
@@ -1397,6 +1411,8 @@ function godhook.register_items_and_ents()
 end
 
 -- nice alt version of calling the hook so that each entry can get a hand in modifying what it has, rather than getting overwritten by a later entry.
+-- you can return a number (base + offset) to offset the returned value in each hook. 
+-- you can also return a userdata to either/both scale and/or offset the returned value.
 function godhook.additive_call_hook(hook,base,...)
     call_id = GODMODE.mod_id.."_"..hook
     -- Isaac.RunCallback(call_id,...)
@@ -1404,9 +1420,23 @@ function godhook.additive_call_hook(hook,base,...)
     local callbacks = Isaac.GetCallbacks(call_id)
 
     for _, callback in ipairs(callbacks) do
-        local ret = callback.Function(callback.Mod,hookRet,...)
+        local ret = callback.Function(callback.Mod,base,...)
         if ret ~= nil then
-            hookRet = hookRet + ret
+            if type(ret) == "userdata" then 
+                if ret.scale then 
+                        hookRet = hookRet * ret.scale
+                end
+                
+                if ret.value then 
+                    hookRet = hookRet + (ret.value - base)
+                end 
+
+                if not ret.scale and not ret.value then
+                    GODMODE.log("[ERROR] Missing \'scale\' and/or \'value\' data in userdata returned value for hook \'"..hook.."\' from mod \'"..callback.Mod.."\'. Consider returning a numeric value instead?")
+                end 
+            else
+                hookRet = hookRet + (ret - base)
+            end
         end
     end
 

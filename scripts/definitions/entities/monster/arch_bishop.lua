@@ -7,7 +7,7 @@ monster.npc_init = function(self, ent, data)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local killed = GODMODE.save_manager.get_data("DemonPriestKill","false")
 
-	if killed == "true" and GODMODE.room:GetType() == RoomType.ROOM_CURSE and (ent.SubType == 1 or GODMODE.util.is_delirium()) then
+	if killed == "true" and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE and (ent.SubType == 1 or GODMODE.util.is_delirium()) then
 		data.unmasked = true
 		monster.npc_kill(self,ent)
 		Isaac.Spawn(monster.type,monster.variant,2,ent.Position,Vector.Zero,ent)
@@ -169,7 +169,7 @@ monster.npc_kill = function(self, ent)
 	end
 
 	if flag then
-		if GODMODE.save_manager.get_data("DemonPriestKill","false") ~= "true" and ent.SubType == 1 and GODMODE.room:GetType() == RoomType.ROOM_CURSE or ent.SubType ~= 1 or GODMODE.room:GetType() ~= RoomType.ROOM_CURSE then
+		if GODMODE.save_manager.get_data("DemonPriestKill","false") ~= "true" and ent.SubType == 1 and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE or ent.SubType ~= 1 or (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_CURSE then
 			if not ent:HasEntityFlags(EntityFlag.FLAG_ICE) then 
 
 				for i=0,count do
@@ -192,7 +192,7 @@ monster.npc_kill = function(self, ent)
 		end
 
 		-- demon priest rewards
-		if data.unmasked == true and GODMODE.room:GetType() == RoomType.ROOM_CURSE then
+		if data.unmasked == true and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE then
 			local rand_vel = function()
 				return Vector(-4+ent:GetDropRNG():RandomFloat()*8,-4+ent:GetDropRNG():RandomFloat()*8)
 			end

@@ -80,14 +80,17 @@
 	<passive id="94" description="Hot! Hot! Hot" gfx="hot_potato.png" tags="offensive" name="Hot Potato" quality = "3" />
 	<passive id="95" cache="firedelay damage shotspeed speed luck" description="All stats up" gfx="cake_slice.png" hearts="4" soulhearts="2" tags="offensive food" name="Birthday Slice" quality = "2" customtags="cake" />
 	<passive id="96" escription="Join the party" gfx="party_hat.png" tags="quest" name="Party Hat" quality = "0" />
-	<passive id="97" cache="luck" description="Nice and Hearty" gfx="eggnog.png" hearts="6" maxhearts="2" tags="offensive food" name="Cup O' Nog" quality = "2" customtags="holiday" />
+	<passive id="97" cache="luck damage" description="Nice and Hearty" gfx="eggnog.png" hearts="6" maxhearts="4" tags="offensive food" name="Cup O' Nog" quality = "2" customtags="holiday" />
+	<passive id="98" description="Which one again?" gfx="key_ring.png" tags="nochallenge" name="Dad's Key Ring" quality = "2" customtags="dad" />
+	<active id="100" cache="luck speed" chargetype="timed" maxcharges="20" description="The cool-aid" gfx="hellfiah.png" name="Red Juice" tags="" quality = "1" />
+	<familiar id="101" devilprice="2" description="What a dumpster fire" gfx="hellfiah_sauce.png" name="Hellfiah Saus" tags="familiar offensive baby monstermanual" quality = "3" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />
 	<passive achievement="GODMODE_FL_TXaphan" id="83" description="Go out in your own style" gfx="fatal_attraction.png" name="Fatal Attraction" tags="offensive summonable" devilprice="1" blackhearts="2" hearts="-6" quality = "3" />
 	<passive achievement="GODMODE_FL_TElohim" id="84" cache="damage" description="May your power last a thousand lifetimes" gfx="divine_wrath.png" name="Divine Wrath" tags="offensive" quality = "4" />
 	<passive achievement="GODMODE_FL_TDeli" id="85" cache="firedelay" description="Easily overwhelmed" gfx="hysteria.png" name="Hysteria" tags="offensive tearsup summonable" quality = "3" />
-	<passive achievement="GODMODE_FL_TGehazi" id="86" cache="" description="All the eye can see is yours" gfx="greedy_glance.png" name="Greedy Glance" tags="" quality = "2" />
+	<passive achievement="GODMODE_FL_TGehazi" id="86" description="All the eye can see is yours" gfx="greedy_glance.png" name="Greedy Glance" tags="" quality = "2" />
 
 	<!-- TAINTED VANILLA FL UNLOCKS -->
 	<active achievement="GODMODE_FL_TCain" id="97" chargetype="timed" maxcharges="25" description="Life unlocked" gfx="fractal_key.png" name="Fractal Key" tags="" quality = "4" />
@@ -101,6 +104,7 @@
 	<active id="91" cache="damage shotspeed range firedelay" passivecache="true" chargetype="timed" maxcharges="75" description="Reassociate" gfx="deli_delusion.png" name="Delusion" tags="noeden hidden" hidden="true" quality = "1" />
 	<active id="92" cache="damage shotspeed range firedelay" passivecache="true" chargetype="timed" maxcharges="75" description="Dissociate" gfx="deli_oblivion.png" name="Oblivion" tags="noeden hidden" hidden="true" quality = "1" />
 	<active id="93" cache="familiar" chargetype="timed" maxcharges="80" description="Everlasting Wrath" gfx="vengeful_dagger.png" name="Vengeful Dagger" tags="noeden hidden" hidden="true" quality = "2" />
+	<!-- <active id="99" chargetype="timed" maxcharges="60" description="Hone your understanding" gfx="purity_vessel_empty.png" name="Reflect" tags="noeden hidden" hidden="true" quality = "1" /> -->
 
 	<!-- QUEST ITEMS -->
 	<!-- 
