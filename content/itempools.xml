@@ -73,6 +73,7 @@
 		<Item Name="Fallen Guardian" Weight="2" RemoveOn="0.1" DecreaseBy="2"/>
 		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Hellfiah Saus" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="angel">
 		<Item Name="Divine Approval" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -262,11 +263,13 @@
 		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Hellfiah Saus" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 
 	<Pool Name="babyShop">
 		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Hellfiah Saus" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 

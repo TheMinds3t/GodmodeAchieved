@@ -1426,4 +1426,8 @@ util.to_title_case = function(string)
 	end)
 end
 
+util.can_spawn_correction = function()
+	return GODMODE.level:GetStage() < LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 and not GODMODE.level:IsAscent()
+end
+
 return util

@@ -19,8 +19,19 @@ end
 
 item.player_update = function(self, player)
 	if player:HasCollectible(item.instance) then 
-		GODMODE.game.BlueWombParTime = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) + 300
-		GODMODE.game.BossRushParTime = (GODMODE.frame_count or GODMODE.game:GetFrameCount()) + 300
+		GODMODE.game.BlueWombParTime = 24 * 60 * 60 * 30 -- 1 day should do it 
+		GODMODE.game.BossRushParTime = 24 * 60 * 60 * 30 
+	end
+end
+
+item.room_rewards = function(self)
+	if GODMODE.room:GetType() == RoomType.ROOM_BOSS and (
+		GODMODE.level:GetStage() == LevelStage.STAGE4_2 or GODMODE.level:GetStage() == LevelStage.STAGE3_2
+	) and GODMODE.level:GetStageType() < StageType.STAGETYPE_GREEDMODE then 
+		GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+			player:UseActiveItem(CollectibleType.COLLECTIBLE_DADS_KEY,false)
+			GODMODE.log("Second Thought failsafe activated, opening boss door")
+		end)
 	end
 end
 

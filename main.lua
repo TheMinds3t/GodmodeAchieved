@@ -1194,11 +1194,11 @@ else
             end
         end
 
-        if ((correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") or GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) > 0) 
+        if GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) == 0 and (correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") 
             and GODMODE.save_manager.get_data("CorrectionPortalSpawned","true") == "false" 
-            and GODMODE.level:GetStage() < LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 and not GODMODE.level:IsAscent() then 
+            and GODMODE.util.can_spawn_correction() then 
 
-            GODMODE.log("GOTO CORRECTION",true)
+            GODMODE.log("GOTO CORRECTION")
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
                 GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex((GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(-102,64))), Vector.Zero, nil)
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","true")
