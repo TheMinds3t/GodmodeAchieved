@@ -112,6 +112,7 @@
 		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hysteria" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Fractal Key" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	<Pool Name="library">
 		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -153,6 +154,7 @@
 		<Item Name="Odd Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 	<Pool Name="greedTreasure">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -319,5 +321,6 @@
 	<Pool Name="GODMODE_observatoryItems">
 		<Item Name="Foreign Treatment" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Odd Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 	</Pool>
 </ItemPools>

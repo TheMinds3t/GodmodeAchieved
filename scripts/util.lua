@@ -281,7 +281,7 @@ util.does_player_have = function(item, is_trinket, check_sub)
 	for i=1,GODMODE.game:GetNumPlayers() do
 		local player = Isaac.GetPlayer(i-1)
 		if player and not is_trinket and (player:HasCollectible(item) or check_sub == true and player:GetSubPlayer() and player:GetSubPlayer():HasCollectible(item)) 
-			or is_trinket and (player:HasTrinket(item) or check_sub == true and player:GetSubPlayer() and player:GetSubPlayer():HasCollectible(item)) then
+			or is_trinket and ((player:HasTrinket(item) or player:GetEffects():HasTrinketEffect(item)) or check_sub == true and player:GetSubPlayer() and player:GetSubPlayer():HasCollectible(item)) then
 			table.insert(ret, player)
 		end
 	end
@@ -291,9 +291,9 @@ end
 
 util.macro_on_players_that_have = function(item, funct, pred)
 	if pred == true then --default trinket predicate
-		pred = function(player) return player:GetTrinketMultiplier(item) end 
+		pred = function(player) return player:GetTrinketMultiplier(item) + player:GetEffects():GetTrinketEffectNum(item) end 
 	elseif pred == nil then --default collectible predicate
-		pred = function(player) return player:GetCollectibleNum(item) end 
+		pred = function(player) return player:GetCollectibleNum(item) + player:GetEffects():GetCollectibleEffectNum(item) end 
 	end
 	
 	if type(pred) == "function" then 
@@ -495,9 +495,9 @@ util.total_item_count = function(item, trinket)
 	if players ~= nil then
 		for i,player in ipairs(players) do
 			if trinket then 
-				ret = ret + player:GetTrinketMultiplier(item)
+				ret = ret + player:GetTrinketMultiplier(item) + player:GetEffects():GetTrinketEffectNum(item)
 			else
-				ret = ret + player:GetCollectibleNum(item)
+				ret = ret + player:GetCollectibleNum(item) + player:GetEffects():GetCollectibleEffectNum(item)
 			end
 		end
 	end
@@ -1020,7 +1020,7 @@ util.modify_stat = function(player, cache, amt, mult, tear_capped)
 	if mult then 
 		if cache == CacheFlag.CACHE_DAMAGE then 
 			player.Damage = player.Damage * amt
-		elseif cache == CacheFlag.CACHE_FIREDELAY then 
+		elseif cache == CacheFlag.CACHE_FIREDELAY then
 			local tears = 30 / (player.MaxFireDelay + 1)
 			player.MaxFireDelay = util.add_tears(player,player.MaxFireDelay,(tears*amt) - tears,not tear_capped)
 		elseif cache == CacheFlag.CACHE_LUCK then 
@@ -1137,7 +1137,8 @@ util.add_faithless = function(player,amt)
     -- end
 	local max_hits = 12 + (player:GetPlayerType() == PlayerType.PLAYER_MAGDALENE and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and 6 or 0)
 	
-    GODMODE.save_manager.set_player_data(player,"FaithlessHearts",math.max(0,math.min(max_hits,tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))+amt)),true)
+    GODMODE.save_manager.set_player_data(player,"FaithlessHearts",math.max(0,math.min(max_hits,tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))+amt)))
+	GODMODE.save_manager.save()
 end
 
 util.get_faithless = function(player)
@@ -1428,6 +1429,10 @@ end
 
 util.can_spawn_correction = function()
 	return GODMODE.level:GetStage() < LevelStage.STAGE4_1 and GODMODE.level:GetStage() > LevelStage.STAGE1_1 and not GODMODE.level:IsAscent()
+end
+
+util.get_persistent_flags = function()
+	return EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_NO_STATUS_EFFECTS | EntityFlag.FLAG_DONT_OVERWRITE | EntityFlag.FLAG_NO_QUERY
 end
 
 return util

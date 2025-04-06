@@ -89,6 +89,7 @@ reg.items = {
     key_ring = Isaac.GetItemIdByName("Dad's Key Ring"),
     red_juice = Isaac.GetItemIdByName("Red Juice"),
     hellfiah = Isaac.GetItemIdByName("Hellfiah Saus"),
+    fallen_skull = Isaac.GetItemIdByName("Fallen Skull"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -813,6 +814,11 @@ reg.entities = {
     },
 }
 
+-- make sure all entities have a subtype entry
+for id,ent in pairs(reg.entities) do 
+    reg.entities[id].subtype = reg.entities[id].subtype or 0
+end
+
 reg.blessings = {
     faith = Isaac.GetCurseIdByName("Blessing of Faith!"),
     charity = Isaac.GetCurseIdByName("Blessing of Charity!"),
@@ -982,6 +988,25 @@ reg.mimic_chests = {
     attack=function(ent,data,sprite) 
         data:fire_ring(ent,4,7+(GODMODE.game.Difficulty % 2) * 3,ent:GetDropRNG():RandomFloat() * 18.0,1.6,ProjectileFlags.DECELERATE | ProjectileFlags.RED_CREEP)
     end},
+}
+
+reg.t_deli_heart_variants = {
+    [PickupVariant.PICKUP_HEART] = true,
+}
+
+reg.t_deli_delirious_heart_rates = {
+    [HeartSubType.HEART_FULL] = 0.1,
+    [HeartSubType.HEART_HALF] = 0.05,
+    [HeartSubType.HEART_SOUL] = 0.25,
+    [HeartSubType.HEART_ETERNAL] = 0.0,
+    [HeartSubType.HEART_DOUBLEPACK] = 0.2,
+    [HeartSubType.HEART_BLACK] = 0.5,
+    [HeartSubType.HEART_GOLDEN] = 0.0,
+    [HeartSubType.HEART_HALF_SOUL] = 0.125,
+    [HeartSubType.HEART_SCARED] = 0.1,
+    [HeartSubType.HEART_BLENDED] = 0.175,
+    [HeartSubType.HEART_BONE] = 0.0,
+    [HeartSubType.HEART_ROTTEN] = 0.025,
 }
 
 if GODMODE.validate_rgon() then 

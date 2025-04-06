@@ -630,6 +630,16 @@ godhook.functions.pickup_update = function(self, ent)
         end    
     end
 
+    if godhook.hook.bypass_monster_keys["pickup_update"] then
+        for ind=1, #godhook.hook.bypass_monster_keys["pickup_update"] do
+            local ret = godhook.hook.bypass_monster_keys["pickup_update"][ind](self,ent,data,sprite)
+
+            if ret ~= nil then
+                return ret
+            end
+        end
+    end
+
     if godhook.hook.items["pickup_update"] then
         for ind=1, #godhook.hook.item_keys["pickup_update"] do
             local func = godhook.hook.items["pickup_update"][godhook.hook.item_keys["pickup_update"][ind]]

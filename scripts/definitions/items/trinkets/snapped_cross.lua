@@ -10,7 +10,7 @@ item.encyc_entry = {
 }
 
 item.player_update = function(self,player,data)
-	if player:HasTrinket(item.instance) then
+	if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then
         if not player:HasCollectible(GODMODE.registry.items.crossbones) then
             data.crossbones = math.max(0, (data.crossbones or 0) - 1)
 

@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="7/24/2024 11:59:25 PM" Version="250" Fps="40"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="4/3/2025 7:16:57 PM" Version="251" Fps="40"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\skeletal_angel_fira_0.png" Id="0"/>

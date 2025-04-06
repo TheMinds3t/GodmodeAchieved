@@ -10,7 +10,7 @@ item.encyc_entry = {
 }
 
 item.player_update = function(self,player,data)
-	if player:HasTrinket(item.instance) then
+	if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then
         data.bombshell = math.max(0, (data.bombshell or 0) - 1)
 
         if data.bombshell > 0 and data.bombshell % 10 == 0 then
@@ -29,10 +29,10 @@ end
 item.bomb_init = function(self, bomb)
     if bomb.SpawnerEntity ~= nil and bomb.SpawnerEntity.Type == EntityType.ENTITY_PLAYER then
         local player = bomb.SpawnerEntity:ToPlayer()
-        if player:HasTrinket(item.instance) then
-            GODMODE.get_ent_data(player).bombshell = 150*player:GetTrinketMultiplier(item.instance)
+        if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then
+            GODMODE.get_ent_data(player).bombshell = 150*(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance))
             local cloud = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SMOKE_CLOUD, 0, bomb.Position, Vector.Zero, bomb.SpawnerEntity)
-            cloud:ToEffect():SetTimeout(150*player:GetTrinketMultiplier(item.instance))
+            cloud:ToEffect():SetTimeout(150*(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance)))
         end
     end
 end

@@ -10,6 +10,7 @@ pools.pool_list = {
     ["observatory_items"] = { --item pool
         GODMODE.registry.items.foreign_treatment,
         GODMODE.registry.items.odd_dice,
+        GODMODE.registry.items.fallen_skull,
     },
     ["observatory_tarots"] = {
         Card.CARD_REVERSE_FOOL,

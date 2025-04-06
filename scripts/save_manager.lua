@@ -15,7 +15,9 @@ save_manager.save = function()
 end
  
 save_manager.has_loaded = false
-save_manager.allow_persistent_load = false
+
+-- for RGON loading/saving in menus, enable to allow persistent entities to be scanned disable to prevent it
+save_manager.allow_persistent_load = true
 
 save_manager.load = function()
     if Isaac.HasModData(GODMODE.mod_object) and Isaac.LoadModData(GODMODE.mod_object):len() > 0 then
@@ -42,6 +44,7 @@ save_manager.load = function()
         --     if data ~= nil and data.persistent_data ~= nil then ent:Remove() end 
         -- end
 
+        GODMODE.log("pre-check persistent count: "..#save_manager.god_data.dynamic.persistent_entities,true)
         --position each persistent godmode entity to the right spots
         if #save_manager.god_data.dynamic.persistent_entities > 0 and save_manager.allow_persistent_load == true then 
     
@@ -74,9 +77,10 @@ save_manager.load = function()
             for ind,ent in pairs(Isaac.GetRoomEntities()) do 
                 if ent ~= nil then 
                     if existing[ent.InitSeed] then 
-                        GODMODE.log("found duplicate seed \'"..ent.InitSeed.."\', be aware",true)
+                        GODMODE.log("found duplicate seed \'"..ent.InitSeed.."\' for "..ent.Type..","..ent.Variant..","..ent.SubType..", be aware",true)
                     else
                         existing[ent.InitSeed] = ent
+                        GODMODE.log("found seed for "..ent.Type..","..ent.Variant..","..ent.SubType.." \'"..ent.InitSeed.."\', be aware",true)
                     end
                 end
             end
@@ -91,12 +95,12 @@ save_manager.load = function()
                 local subtype = ent.subtype
 
                 if new[seed] == true then 
-                    GODMODE.log("Found duplicate persistent entry for seed \'"..seed.."\', removing duplicate")
+                    GODMODE.log("Found duplicate persistent entry for seed \'"..seed.."\', removing duplicate", true)
                     table.remove(save_manager.god_data.dynamic.persistent_entities,index)
                 else
                     local persistent_ent = existing[seed]--GODMODE.util.get_entity_by_seed(seed)--GODMODE.game:Spawn(type,variant,Vector(ent.x,ent.y),Vector.Zero,GODMODE.util.get_entity_by_seed(spawner_seed),subtype,seed)
                     if persistent_ent ~= nil then 
-                        GODMODE.log("Persistence Loading Step 2: Found Entity "..type..","..variant..","..subtype.." (seed="..seed.."!")
+                        GODMODE.log("Persistence Loading Step 2: Found Entity "..type..","..variant..","..subtype.." (seed="..seed.."!", true)
                         -- data.persistent_id = id
                         GODMODE.set_ent_data(persistent_ent, data)
                         persistent_ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
@@ -108,11 +112,10 @@ save_manager.load = function()
                         -- persistent_ent:Update()
                         total = total + 1    
                     else 
-                        GODMODE.log("Unable to find entity with seed \'"..seed.."\', creating entity")
+                        GODMODE.log("Unable to find entity with seed \'"..seed.."\', creating entity", true)
                         local new_ent = GODMODE.game:Spawn(type, variant, Vector(ent.x, ent.y), Vector.Zero, existing[spawner_seed], subtype, seed)
                         GODMODE.set_ent_data(new_ent,data)
                         new_ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-                        new_ent:AddEntityFlags(EntityFlag.FLAG_PERSISTENT)
                         new[seed] = true
     
                         total = total + 1
@@ -123,7 +126,11 @@ save_manager.load = function()
             -- save_manager.god_data.dynamic.persistent_entities = {}
             GODMODE.save_manager_lock = false
             -- save_manager.god_data.dynamic.persistent_entities = {}
-            GODMODE.log("Found "..total.." persistent entities!")
+            GODMODE.log("Found "..total.." persistent entities!", true)
+        elseif save_manager.allow_persistent_load == true then 
+            GODMODE.log("No persistent entity data found for the current run..",true)
+        else 
+            GODMODE.log("Persistent loading is disabled currently.",true)
         end
     else
         save_manager.god_data = {persistant={},dynamic={persistent_entities={}},config={}}
@@ -246,7 +253,8 @@ save_manager.add_persistent_entity_data = function(entity)
             y = entity.Position.Y,
         })
 
-        GODMODE.log("Persistence Saving: Saved Entity type="..entity.Type..",var="..entity.Variant..",sub="..entity.SubType..",seed="..entity.InitSeed, true)
+        GODMODE.log("Persistence Saving: Saved Entity type="..entity.Type..",var="..entity.Variant..",sub="..entity.SubType
+                ..",roomseed="..tostring(data.persistent_data and data.persistent_data.room or nil)..",seed="..entity.InitSeed, true)
     end
 end
 

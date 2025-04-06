@@ -144,7 +144,7 @@ monster.npc_update = function(self, ent, data, sprite)
             data.init_pos = nil
         else 
             GODMODE.sfx:Play(SoundEffect.SOUND_CHILD_ANGRY_ROAR,Options.SFXVolume*2.5)
-            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
+            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ALL
             ent.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_GROUND
         end
     end
@@ -209,6 +209,12 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         (entsrc.Type == monster.type and entsrc.Variant == monster.variant) then 
             -- (entsrc.Entity and entsrc.Entity.Parent and entsrc.Entity.Parent.Type == monster.type and entsrc.Entity.Parent.Variant == monster.variant)) then
         return false
+    end
+end
+
+monster.npc_collide = function(self, ent, ent2, entfirst)
+    if ent2.Type == EntityType.ENTITY_ROUND_WORM then 
+        return true 
     end
 end
 

@@ -19,10 +19,10 @@ if GODMODE.validate_rgon() then
         "keepah_mode", false, AutocompleteType.NONE)
     Console.RegisterCommand("birthday_mode",
         "Toggles the Birthday Mode for this gameplay session (all boss items are Birthday Slice).",
-        "keepah_mode", false, AutocompleteType.NONE)
+        "birthday_mode", false, AutocompleteType.NONE)
     Console.RegisterCommand("gm_config_preset",
         "Allows you to view, load and save config presets.",
-        "keepah_mode", false, AutocompleteType.NONE)
+        "gm_config_preset", false, AutocompleteType.NONE)
     ret.player_type_to_name = {}
 
     ret.gather_player_name_list = function()
@@ -104,7 +104,6 @@ if GODMODE.validate_rgon() then
         GODMODE.save_manager.allow_persistent_load = false
         GODMODE.save_manager.load()
         GODMODE.achievements.sync_repentogon_with_godmode()
-        GODMODE.save_manager.allow_persistent_load = nil
         -- GODMODE.save_manager.save()
     end
 

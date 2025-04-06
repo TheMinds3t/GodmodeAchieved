@@ -16,16 +16,16 @@ local buff_amounts = {0.2,0.1,0.1,3,0.1}
 item.eval_cache = function(self, player,cache,data)
     if GODMODE.save_manager.get_config("CallOfTheVoid","true") == "false" then 
         if cache == CacheFlag.CACHE_DAMAGE then
-            player.Damage = player.Damage + 0.5*player:GetTrinketMultiplier(item.instance)
+            player.Damage = player.Damage + 0.5*(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance))
         end
 
         if cache == CacheFlag.CACHE_LUCK then 
-            player.Luck = player.Luck + 0.5*player:GetTrinketMultiplier(item.instance)
+            player.Luck = player.Luck + 0.5*(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance))
         end
     else 
         for _,buff in ipairs(buffs) do 
             if cache == buff then 
-                local amt = tonumber(GODMODE.save_manager.get_player_data(player,"MoodRing"..buff,"0"))*(1+math.max(0,player:GetTrinketMultiplier(item.instance)-1))
+                local amt = tonumber(GODMODE.save_manager.get_player_data(player,"MoodRing"..buff,"0"))*(1+math.max(0,(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance))-1))
                 if buff == CacheFlag.CACHE_FIREDELAY then 
                     player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,amt)
                 elseif buff == CacheFlag.CACHE_DAMAGE then

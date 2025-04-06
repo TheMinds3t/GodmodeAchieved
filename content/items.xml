@@ -73,9 +73,9 @@
 	<passive id="79" cache="speed" description="Cleaning services" gfx="feather_duster.png" tags="summonable" name="Feather Duster" quality = "1" />
 	<passive id="80" description="Healthy snack" gfx="fruit_salad.png" tags="food offensive" name="Fruit Salad" quality = "2" maxhearts="2" hearts="4" soulhearts="2" />
 	<active id="81" maxcharges="6" description="You feel stronger" gfx="dragon_fruit.png" name="Dragon Fruit" tags="food offensive" soulhearts="0" quality = "3" />
-	<active id="87" maxcharges="3" description="Reroll your destiny?" gfx="odd_dice.png" name="Odd Dice" tags="" soulhearts="0" quality = "2" />
+	<active id="87" maxcharges="3" description="Reroll your destiny?" gfx="odd_dice.png" name="Odd Dice" tags="" soulhearts="0" quality = "2" customtags="observatory" />
 	<active id="88" maxcharges="6" description="Reroll your options" gfx="gold_dice.png" name="Cash Dice" tags="" soulhearts="0" quality = "2" />
-	<passive id="89" description="Experimental outcomes" gfx="otherworldly_treatment.png" tags="syringe summonable" name="Foreign Treatment" quality = "2" />
+	<passive id="89" description="Experimental outcomes" gfx="otherworldly_treatment.png" tags="syringe summonable" name="Foreign Treatment" quality = "2" customtags="observatory" />
 	<passive id="90" description="Fragile treatment" gfx="crimson_syringe.png" tags="syringe" name="Crimson Solution" quality = "2"  customtags="revive" />
 	<passive id="94" description="Hot! Hot! Hot" gfx="hot_potato.png" tags="offensive" name="Hot Potato" quality = "3" />
 	<passive id="95" cache="firedelay damage shotspeed speed luck" description="All stats up" gfx="cake_slice.png" hearts="4" soulhearts="2" tags="offensive food" name="Birthday Slice" quality = "2" customtags="cake" />
@@ -84,6 +84,7 @@
 	<passive id="98" description="Which one again?" gfx="key_ring.png" tags="nochallenge" name="Dad's Key Ring" quality = "2" customtags="dad" />
 	<active id="100" cache="luck speed" chargetype="timed" maxcharges="20" description="The cool-aid" gfx="hellfiah.png" name="Red Juice" tags="" quality = "1" />
 	<familiar id="101" devilprice="2" description="What a dumpster fire" gfx="hellfiah_sauce.png" name="Hellfiah Saus" tags="familiar offensive baby monstermanual" quality = "3" />
+	<passive id="102" cache="damage luck firedelay speed" description="10 Years! Strength in Frailty and Discovery" gfx="fallen_skull.png" tags="nochallenge nokeeper offensive quest" name="Fallen Skull" quality = "4" customtags="op anniversary observatory" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />
@@ -136,9 +137,9 @@
 	<trinket description="Wealth oF NuL;L" gfx="glitch_penny.png" name="Glitched Penny" />
 
 	<!-- OBSERVATORY -->
-	<trinket cache="damage speed" description="Powered by curse" gfx="observatory/pendant.png" name="Cursed Pendant" />
-	<trinket cache="damage speed firedelay shotspeed speed luck" description="The void grows stronger" gfx="observatory/moonrock.png" name="Shattered Moonrock" />
-	<trinket description="Curse of immunity?" gfx="observatory/nazar.png" name="Cracked Nazar" />
-	<trinket description="Blessing of immunity" gfx="observatory/white_candle.png" name="White Candle" />
-	<trinket description="Calling the void" gfx="observatory/bone_feather.png" name="Bone Feather" />
+	<trinket cache="damage speed" description="Powered by curse" gfx="observatory/pendant.png" name="Cursed Pendant" customtags="observatory" />
+	<trinket cache="damage speed firedelay shotspeed speed luck" description="The void grows stronger" gfx="observatory/moonrock.png" name="Shattered Moonrock" customtags="observatory" />
+	<trinket description="Curse of immunity?" gfx="observatory/nazar.png" name="Cracked Nazar" customtags="observatory" />
+	<trinket description="Blessing of immunity" gfx="observatory/white_candle.png" name="White Candle" customtags="observatory" />
+	<trinket description="Calling the void" gfx="observatory/bone_feather.png" name="Bone Feather" customtags="observatory" />
 </items>

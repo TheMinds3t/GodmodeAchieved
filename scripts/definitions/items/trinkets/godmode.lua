@@ -20,7 +20,7 @@ end
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     local flag = true
     local player = enthit:ToPlayer()
-    if player and amount > 0 and player:HasTrinket(item.instance) and (flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES 
+    if player and amount > 0 and (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) and (flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES 
                     and flags & DamageFlag.DAMAGE_INVINCIBLE ~= DamageFlag.DAMAGE_INVINCIBLE
                     and flags & DamageFlag.DAMAGE_IV_BAG ~= DamageFlag.DAMAGE_IV_BAG
                     and entsrc.Type ~= EntityType.ENTITY_SLOT
@@ -55,8 +55,7 @@ end
 -- local used = false
 
 item.player_update = function(self,player,data)
-    
-    if player:HasTrinket(item.instance) then 
+    if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then 
         if player:HasTrinket(item.instance, true) then 
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
         end
@@ -81,17 +80,20 @@ item.player_update = function(self,player,data)
             -- player:UseActiveItem(CollectibleType.COLLECTIBLE_GLOWING_HOUR_GLASS, UseFlag.USE_NOANIM)
         end
 
-        if GODMODE.shader_params.godmode_trinket_time == 0 and player:GetBrokenHearts() == 12 then 
+        if GODMODE.shader_params.godmode_trinket_time == 0 and (GODMODE.util.get_faithless(player) + player:GetBrokenHearts()) >= 12 then 
             player:Kill()
         end 
     
         if (data.disable_time or 0) > 0 then 
+            if player.ControlsEnabled == true then 
+                GODMODE.godhooks.call_hook("post_godmode_restart")
+            end
+
             player.ControlsEnabled = false 
             data.disable_time = math.max(0,data.disable_time - 1)
 
             if data.disable_time == 0 then 
                 player.ControlsEnabled = true
-                GODMODE.godhooks.call_hook("post_godmode_restart")
             end
         end
     end

@@ -761,7 +761,7 @@
     </entity>
     <entity anm2path="grid/mask_statue.anm2" baseHP="10000" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="24" friction="1" id="700" name="Masked Angel Statue" numGridCollisionPoints="20" shadowSize="0" stageHP="0" variant="219" gridCollision="none" shutdoors="false">
     </entity>
-    <entity anm2path="famil_parrot.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Keepah (Shop Parrot)" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="220" gridCollision="walls" shutdoors="false">
+    <entity anm2path="famil_parrot.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Keepah (Shop Parrot)" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="220" gridCollision="walls" shutdoors="false">
     </entity>
     <entity anm2path="grid_stone_beggar_timer.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="16" friction="1" id="700" name="Stone Beggar" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="221" gridCollision="walls" portrait="75" subtype="0" shutdoors="true">
     </entity>

@@ -11,7 +11,7 @@ item.encyc_entry = {
 
 item.new_level = function(self)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        for l=1,5+2*player:GetTrinketMultiplier(item.instance) do 
+        for l=1,5+2*(player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance)) do 
             Isaac.Spawn(GODMODE.registry.entities.fruit.type,GODMODE.registry.entities.fruit.variant,0,player.Position,RandomVector()*(player:GetCollectibleRNG(item.instance):RandomFloat()*4.0+1.5),nil)
         end
     end, true)

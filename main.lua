@@ -194,10 +194,12 @@ else
         --     GODMODE.util.init_rand()
         -- end
 
+        GODMODE.mod_object:init_save_state()
+
         -- GODMODE.save_manager.save()
         GODMODE.playing_ending = nil 
         GODMODE.shader_params.ending_shader = nil
-        GODMODE.save_manager.allow_persistent_load = true
+        
         GODMODE.godhooks.call_hook("game_start",continued)
         -- GODMODE.push_items_monsters("game_start", function(item,continued) return #GODMODE.util.does_player_have(item.instance) > 0 end, function(monster,continued) return GODMODE.util.count_enemies(nil, monster.type, monster.variant) > 0 end, continued)
         GODMODE.cotv_timer_st_cache = nil
@@ -220,6 +222,7 @@ else
 
     function GODMODE.mod_object:game_end(won)
         GODMODE.playing_ending = nil 
+        GODMODE.save_manager.inited = nil
     end 
 
     function GODMODE.mod_object:game_exit(should_save)
@@ -240,7 +243,9 @@ else
         end
 
         GODMODE.save_manager.has_loaded = false
+        -- for RGON loading/saving in menus, enable to allow persistent entities to be scanned disable to prevent it
         GODMODE.save_manager.allow_persistent_load = false
+        GODMODE.save_manager.inited = nil
 
         MusicManager():Enable()
         GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover)
@@ -924,6 +929,8 @@ else
                 end
 
                 if not data.persistent_data then
+                    GODMODE.room = Game():GetRoom()
+                    GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
                     data.persistent_data = saved_data or {
                         room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),
                         in_room = true,
@@ -932,23 +939,22 @@ else
                 end
 
                 if data.persistent_state == GODMODE.persistent_state.single_room then
-                    if ent:IsFrame(10,1) and GODMODE.level:GetStage() ~= data.persistent_data.floor then 
+                    if GODMODE.level:GetStage() ~= data.persistent_data.floor then 
                         ent:Remove()
                     end
                     
                     if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.persistent_data.room then
-
                         data.persistent_data.in_room = false
                         ent.Visible = false
                         -- ent.Position = Vector(-1000,-1000)
                         ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
                         ent.GridCollisionClass = EntityGridCollisionClass.GRIDCOLL_NONE
-                        ent:AddEntityFlags(EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_FRIENDLY)
+                        ent:AddEntityFlags(GODMODE.util.get_persistent_flags())
                     else
                         if data.persistent_data.position_x and data.persistent_data.position_y and data.persistent_data.in_room == false then
                             ent.GridCollisionClass = data.persistent_data.grid_coll_class or ent.GridCollisionClass
                             ent.EntityCollisionClass = data.persistent_data.ent_coll_class or ent.EntityCollisionClass
-                            ent:ClearEntityFlags(EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_FRIENDLY)
+                            ent:ClearEntityFlags(GODMODE.util.get_persistent_flags())
                             ent.Position.X = data.persistent_data.position_x or ent.Position.X
                             ent.Position.Y = data.persistent_data.position_y or ent.Position.Y
                             ent.Visible = true
@@ -979,7 +985,7 @@ else
                         end
                     end
 
-                    if ent:IsFrame(15,1) and data.persistent_data.floor ~= GODMODE.level:GetStage() then
+                    if data.persistent_data.floor ~= GODMODE.level:GetStage() then
                         if data.persistent_state == GODMODE.persistent_state.between_floors then
                             data.persistent_data.floor = GODMODE.level:GetStage()
                         else
@@ -1027,6 +1033,7 @@ else
 
     function GODMODE.mod_object:new_level()
         GODMODE.level = GODMODE.game:GetLevel()
+        GODMODE.mod_object:init_save_state()
         GODMODE.room_override.wipe_overrides()
 
         if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then
@@ -1116,10 +1123,8 @@ else
                 -- end
             end
 
-            GODMODE.save_manager.save_override = false 
             GODMODE.godhooks.call_hook("first_level")
             -- GODMODE.push_items_monsters("first_level", true, function(monster) return true end, nil)
-            GODMODE.save_manager.save_override = true 
             GODMODE.save_manager.clear_key("ObservatoryGridIdx")
             GODMODE.save_manager.clear_key("GildedChance")
             GODMODE.cached_observatory_ids = nil
@@ -1194,7 +1199,8 @@ else
             end
         end
 
-        if GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) == 0 and (correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") 
+        if GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) == 0 and GODMODE.util.total_item_count(GODMODE.registry.items.fallen_skull) == 0
+            and (correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") 
             and GODMODE.save_manager.get_data("CorrectionPortalSpawned","true") == "false" 
             and GODMODE.util.can_spawn_correction() then 
 
@@ -1208,6 +1214,48 @@ else
 
     local door_hazards = {"Webbed","Void","Spiked","Wired","Spooked","WiredGood"}
     local door_hazards_good = {["WiredGood"] = true}
+    
+    function GODMODE.mod_object:init_save_state(self) 
+        if GODMODE.save_manager.inited ~= true then 
+            -- if not GODMODE.save_manager.has_loaded then 
+            if not GODMODE.util.is_start_of_run() then
+                GODMODE.save_manager_lock = true
+                -- for RGON loading/saving in menus, enable to allow persistent entities to be scanned disable to prevent it
+                GODMODE.save_manager.allow_persistent_load = true 
+
+                if GODMODE.save_manager.allow_persistent_load then 
+                    GODMODE.save_manager.load()
+                    GODMODE.save_manager.wipe_persistent_entities()    
+                    GODMODE.save_manager_lock = false
+                end
+            else
+                GODMODE.save_manager.wipe()
+                GODMODE.save_manager.wipe_persistent_entities()
+            end
+
+            GODMODE.util.init_rand()
+            -- GODMODE.save_manager.save()
+
+            GODMODE.save_manager.set_data("PlayerCount","0",true)
+
+            GODMODE.util.macro_on_players(function(player)
+                GODMODE.mod_object:register_player(player)
+
+                local data = GODMODE.get_ent_data(player)
+                data.red_coin_count = tonumber(GODMODE.save_manager.get_player_data(player, "RedCoinCount", "0"))
+
+                if data.red_coin_count > 0 then
+                    data.red_coin_display = 100
+                end
+            end)
+
+            GODMODE.game.BlueWombParTime = tonumber(GODMODE.save_manager.get_config("HushTimeMins","35"))*60*30
+            GODMODE.game.BossRushParTime = tonumber(GODMODE.save_manager.get_config("BRTimeMins","20"))*60*30    
+            -- end
+
+            GODMODE.save_manager.inited = true
+        end
+    end
 
     function GODMODE.mod_object:new_room()
         GODMODE.room = GODMODE.game:GetRoom()
@@ -1217,32 +1265,7 @@ else
         GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
         GODMODE.room_type = (GODMODE.room_type or GODMODE.room:GetType())
         
-        if not GODMODE.save_manager.has_loaded then 
-            if not GODMODE.util.is_start_of_run() then
-                GODMODE.save_manager_lock = true
-                GODMODE.save_manager.load()
-                GODMODE.save_manager.wipe_persistent_entities()
-                GODMODE.save_manager_lock = false
-            else
-                GODMODE.save_manager.wipe()
-                GODMODE.save_manager.wipe_persistent_entities()
-            end
-    
-            GODMODE.util.init_rand()
-            -- GODMODE.save_manager.save()
-
-            GODMODE.util.macro_on_players(function(player)
-                local data = GODMODE.get_ent_data(player)
-                data.red_coin_count = tonumber(GODMODE.save_manager.get_player_data(player, "RedCoinCount", "0"))
-    
-                if data.red_coin_count > 0 then
-                    data.red_coin_display = 100
-                end
-            end)
-    
-            GODMODE.game.BlueWombParTime = tonumber(GODMODE.save_manager.get_config("HushTimeMins","35"))*60*30
-            GODMODE.game.BossRushParTime = tonumber(GODMODE.save_manager.get_config("BRTimeMins","20"))*60*30    
-        end
+        GODMODE.mod_object:init_save_state()
 
         local room = GODMODE.room
         local level = GODMODE.level
@@ -1255,8 +1278,6 @@ else
                 local old = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats",""..score))
                 GODMODE.save_manager.set_player_data(player,"BaseStats",(old + score) / 2)
             end
-
-            GODMODE.mod_object:register_player(player)
         end)
 
         if GODMODE.util.is_correction() then 
@@ -1373,6 +1394,24 @@ else
                 pickup:GetSprite():ReplaceSpritesheet(5,"gfx/grid/options_altar_"..pickup.OptionsPickupIndex..".png")
                 pickup:GetSprite():LoadGraphics()
             end)
+        end
+
+        -- shop fog
+        if room:GetType() == RoomType.ROOM_SHOP then 
+            if GODMODE.save_manager.get_config("ShopFog","true") == "true" then 
+                local poses = {
+                    {pos=(GODMODE.room_center or GODMODE.room:GetCenterPos()),vel=RandomVector()*0.05},
+                    {pos=(GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
+                    {pos=(GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
+                }
+        
+                for _,pos in ipairs(poses) do
+                    local fog = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.MIST, 0, pos.pos, pos.vel, nil)
+                    fog:Update()
+                    fog:Update()
+                    fog:Update()
+                end	
+            end
         end
 
         local enter_door = level.EnterDoor
@@ -2017,14 +2056,17 @@ else
             -- GODMODE.log("existing?"..tostring(existing_index)..", start?"..tostring(GODMODE.util.is_start_of_run()),true)
             GODMODE.save_manager.set_data("PlayerCount", cur + 1)
             GODMODE.save_manager.set_data("Player"..(cur+1),player.InitSeed)
-            GODMODE.save_manager.set_data("Player"..player.InitSeed,(cur+1),true)    
+            GODMODE.save_manager.set_data("Player"..player.InitSeed,(cur+1),true)
+            GODMODE.log("registered player "..(cur + 1).." with InitSeed \'"..player.InitSeed.."\' as "..player:GetName(),true)
         elseif existing_index then 
             GODMODE.save_manager.set_data("PlayerCount", cur + 1)
         end
+
+        GODMODE.save_manager.save()
     end
 
     function GODMODE.mod_object:player_init(player)
-        GODMODE.mod_object:register_player(player)
+        
     end
 
     function GODMODE.mod_object:player_update(player)
@@ -2064,7 +2106,6 @@ else
             player.ControlsEnabled = true
         end
 
-
         if tonumber(GODMODE.save_manager.get_player_data(player,"ControllerID","-1")) ~= player.ControllerIndex then 
             GODMODE.save_manager.set_player_data(player,"ControllerID",player.ControllerIndex)
         end
@@ -2074,7 +2115,7 @@ else
         local max_hits = 12 + (player:GetPlayerType() == PlayerType.PLAYER_MAGDALENE and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) and 6 or 0)
 
         if not player:IsCoopGhost() then 
-            if faithless >= max_hits then 
+            if faithless + player:GetBrokenHearts() >= max_hits then 
                 player:Kill()
                 GODMODE.util.add_faithless(player,-1)
             end
@@ -2093,8 +2134,6 @@ else
                 end
             end    
         end
-
-
 
         if data then
             if (data.opportunity_cost or 0) > 0 then 
@@ -2180,10 +2219,15 @@ else
         end
     
         if player_data then 
-            if player.FrameCount < 3 then --start of run stuff
-                if GODMODE.save_manager.get_player_data(player, "Init", "false") == "false" and GODMODE.level.EnterDoor == -1 then
+            if player.FrameCount == 0 then --start of run stuff
+                local key = "Player"..player.InitSeed.."Inited"
+
+                if GODMODE.save_manager.get_data(key, "false") == "false" and GODMODE.level.EnterDoor == -1 then
                     if player_data and player_data.init then
                         player_data:init(player)
+                        GODMODE.log("Initing player \'"..key.."\'!",true)
+                        GODMODE.save_manager.set_data(key, "true", true)
+                        GODMODE.save_manager.save()
                     end
                     
                     if Isaac.GetChallenge() == GODMODE.registry.challenges.sugar_rush then 
@@ -2191,8 +2235,7 @@ else
                             player:AddCollectible(GODMODE.registry.items.sugar)
                         end
                     end
-        
-                    GODMODE.save_manager.set_player_data(player, "Init", "true", true)
+
                 end    
             end
 
@@ -2240,6 +2283,11 @@ else
                 if hits > max_hits then 
                 end
             end
+        end
+
+        if GODMODE.save_manager.get_config("Godmode","false") == "true" and player:GetTrinketMultiplier(GODMODE.registry.trinkets.godmode) == 0 then 
+            player:GetEffects():RemoveTrinketEffect(GODMODE.registry.trinkets.godmode)
+            player:GetEffects():AddTrinketEffect(GODMODE.registry.trinkets.godmode,false)
         end
     end
 

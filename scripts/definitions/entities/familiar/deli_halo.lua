@@ -234,7 +234,6 @@ monster.tear_update = function(self, tear, data)
 end
 
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown) 
-
     if enthit:ToPlayer() then 
         local player = enthit:ToPlayer()
 
@@ -274,20 +273,23 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 end
 
 monster.pickup_init = function(self,pickup)
-    if pickup.Variant == PickupVariant.PICKUP_HEART and pickup.SubType == HeartSubType.HEART_SOUL then 
-        local birthright_mod = 0
-        local need = false 
+    if GODMODE.registry.t_deli_heart_variants[pickup.Variant] == true and GODMODE.registry.t_deli_delirious_heart_rates[pickup.SubType] ~= nil then 
+        local chance = GODMODE.registry.t_deli_delirious_heart_rates[pickup.SubType]
+        local birthright_mod = 1
+        local t_deli = false 
+        GODMODE.log("chance = "..chance,true)
 
-        GODMODE.util.macro_on_players(function(player) if player:GetPlayerType() == GODMODE.registry.players.t_deli and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then 
-            birthright_mod = birthright_mod + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BIRTHRIGHT) * 0.2
-
-            if tonumber(GODMODE.save_manager.get_player_data(player,"EyesOpen",num_eyes)) < num_eyes and need == false then 
-                need = true 
-                birthright_mod = 0.1
-            end
+        GODMODE.util.macro_on_players(function(player) 
+            if player:GetPlayerType() == GODMODE.registry.players.t_deli then 
+                t_deli = true 
+                birthright_mod = birthright_mod + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BIRTHRIGHT) * 0.25
         end end)
 
-        if pickup:GetDropRNG():RandomFloat() < birthright_mod then 
+        if t_deli == false then 
+            chance = 0 
+        end
+
+        if pickup:GetDropRNG():RandomFloat() < chance * birthright_mod then 
             GODMODE.get_ent_data(pickup).delirious_heart = true 
             pickup:GetSprite():Load("gfx/pickup_deli_heart.anm2",true)
             pickup:GetSprite():Play("Appear",true)
@@ -297,7 +299,7 @@ end
 
 monster.pickup_collide = function(self,pickup,ent2,entfirst)
     if GODMODE.get_ent_data(pickup).delirious_heart == true and 
-        pickup.Variant == PickupVariant.PICKUP_HEART and pickup.SubType == HeartSubType.HEART_SOUL and 
+        GODMODE.registry.t_deli_heart_variants[pickup.Variant] == true and GODMODE.registry.t_deli_delirious_heart_rates[pickup.SubType] ~= nil and 
         ent2:ToPlayer() and 
         pickup:GetSprite():IsPlaying("Idle") then 
 
@@ -310,12 +312,24 @@ monster.pickup_collide = function(self,pickup,ent2,entfirst)
             pickup:GetSprite():Play("Collect",true)
             return true
         else
-            return false
+            return nil
         end
     end
 end
 
-monster.bypass_hooks = {["pickup_init"] = true, ["pickup_collide"] = true}
+monster.pickup_update = function(self, pickup, data, sprite)
+    if data.delirious_heart == true then 
+        if sprite:IsPlaying("Collect") then 
+            pickup.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+        end
+        
+        if sprite:IsFinished("Collect") then 
+            pickup:Remove()
+        end
+    end
+end
+
+monster.bypass_hooks = {["pickup_init"] = true, ["pickup_collide"] = true, ["pickup_update"] = true}
 
 
 return monster

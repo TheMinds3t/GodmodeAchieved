@@ -26,7 +26,7 @@ monster.pickup_update = function(self, ent, data, sprite)
     -- ent.V1 = ent.V1 or ent.Position
     ent.Position = GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(ent.Position))
 
-    ent.Velocity = Vector(0,0)
+    ent.Velocity = ent.Velocity * 0.1
 end
 
 -- monster.new_room = function(self)
@@ -40,7 +40,6 @@ end
 monster.pickup_init = function(self,ent)
     if GODMODE.util.is_in_quest() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
     ent:GetSprite():Play("Appear",true)
-
 end
 
 monster.player_collide = function(self, player,ent,entfirst)

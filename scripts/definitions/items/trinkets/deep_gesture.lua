@@ -20,7 +20,7 @@ item.pickup_init = function(self, pickup)
 end
 
 item.player_update = function(self,player)
-	if player:HasTrinket(item.instance) and player:IsExtraAnimationFinished() and not GODMODE.room:IsClear() then
+	if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) and player:IsExtraAnimationFinished() and not GODMODE.room:IsClear() then
         local slots = {ActiveSlot.SLOT_PRIMARY, ActiveSlot.SLOT_SECONDARY, ActiveSlot.SLOT_POCKET, ActiveSlot.SLOT_POCKET2}
         for _,slot in ipairs(slots) do 
             local item_id = player:GetActiveItem(slot)

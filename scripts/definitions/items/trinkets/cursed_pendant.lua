@@ -11,7 +11,7 @@ item.encyc_entry = {
 }
 
 item.eval_cache = function(self, player,cache,data)
-    if not player:HasTrinket(item.instance) then return end
+    if not (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then return end
 
     if cache == CacheFlag.CACHE_DAMAGE then 
         player.Damage = player.Damage * 1.1

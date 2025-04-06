@@ -14,7 +14,7 @@ item.new_room = function(self)
 end
 
 item.new_level = function(self)
-    if GODMODE.util.total_item_count(item.instance,true) > 0 and GODMODE.util.can_spawn_correction() then 
+    if (GODMODE.util.total_item_count(item.instance,true) + GODMODE.util.total_item_count(GODMODE.registry.items.fallen_skull)) > 0 and GODMODE.util.can_spawn_correction() then 
         local portal = Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
         GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex((GODMODE.room_center or GODMODE.room:GetCenterPos()) + Vector(-102,64))), Vector.Zero, nil)    
         portal:ClearEntityFlags(EntityFlag.FLAG_APPEAR)

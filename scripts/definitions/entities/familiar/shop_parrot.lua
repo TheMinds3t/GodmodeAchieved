@@ -7,27 +7,16 @@ local donate_buy_cooldown = 30
 local max_volume_range = 320 --silent
 local min_volume_range = 80 --loudest
 
-local is_not_shop = function()
-	return (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_SHOP
+local is_shop = function()
+	return (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP
 end
 
 monster.npc_init = function(self,ent,data,sprite)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
-	ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 end
 
 monster.npc_update = function(self, ent, data, sprite)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end	
-
-	if ent.FrameCount == 1 then 
-		if is_not_shop() or data.replace_sprite == true then 
-			ent:GetSprite():ReplaceSpritesheet(0,"gfx/familiars/shopbird"..(ent.InitSeed % 3)..".png")
-			ent:GetSprite():LoadGraphics()
-		elseif GODMODE.birthday_mode == true then 
-			ent:GetSprite():ReplaceSpritesheet(0,"gfx/familiars/shopbird_birthday.png")
-			ent:GetSprite():LoadGraphics()
-		end	
-	end
 
 	local player = ent:GetPlayerTarget()
 	local appear_flag = not (sprite:IsPlaying("Appear") or sprite:IsPlaying("Appear2")) and data.real_time > 2
@@ -40,27 +29,34 @@ monster.npc_update = function(self, ent, data, sprite)
 	ent.Velocity = ent.Velocity * 0.8
 
 	if appear_flag then
-		local target_pos = player.Position + Vector(1,0):Rotated((ent.InitSeed + ent.FrameCount * (2 + (ent.InitSeed % 20) / 20)) % 360):Resized((ent.InitSeed / 250.0) % 60 + ent.Size * 2)
+		local target_pos = player.Position + Vector(1,0)
+			:Rotated((ent.InitSeed + ent.FrameCount * (2 + (ent.InitSeed % 20) / 20)) % 360)
+			:Resized((ent.InitSeed / 250.0) % 60 + ent.Size * 2)
 
 		if data.run_from ~= nil then
 			if data.run_from:IsDead() or not data.run_from:IsVisible() then
 				data.run_from = nil
+				GODMODE.log("run from is gone!",true)
 			else
 				target_pos = data.run_from.Position
+				local room_state = ent.Position - target_pos
+				local dist = (ent.Position - target_pos):Length()
 
-				if (ent.Position - target_pos):Length() < ent.Size*16 or is_not_shop() then
-					ent.Velocity = ent.Velocity + (is_not_shop() and (target_pos - ent.Position) or (ent.Position - target_pos)) / 80.0
-				end	
+				-- too close to enemy for keepah
+				if dist < ent.Size*16 and is_shop() then
+					if is_shop() then 
+						ent.Velocity = ent.Velocity + room_state:Resized(math.min(room_state:Length(),35)) / 80.0
+					end
+				elseif not is_shop() then 
+					room_state = target_pos - ent.Position 
+					ent.Velocity = ent.Velocity + room_state:Resized(math.min(room_state:Length(),35)) / 20.0
+				end
 	
 				if sprite:IsEventTriggered("Flap") then
-					ent.Velocity = ent.Velocity + (ent.Position - target_pos+Vector(ent:GetDropRNG():RandomInt(math.floor(ent.Size*16))-math.floor(ent.Size*8),ent:GetDropRNG():RandomInt(math.floor(ent.Size*16))-math.floor(ent.Size*8))) / 48.0
-
-					if string.match(sprite:GetAnimation(),"Sweat") and is_not_shop() then 
-						local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_RED, 0, ent.Position, Vector(0,0), ent)
-						creep:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-						creep.CollisionDamage = GODMODE.level:GetAbsoluteStage() / 4.0 + 5.0
-						creep:ToEffect().Timeout = 20
-					end
+					ent.Velocity = ent.Velocity + (room_state
+					+Vector(
+						ent:GetDropRNG():RandomInt(math.floor(ent.Size*16))-math.floor(ent.Size*8),
+						ent:GetDropRNG():RandomInt(math.floor(ent.Size*16))-math.floor(ent.Size*8))) / 48.0
 				end	
 			end
 		else
@@ -112,13 +108,15 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	if sprite:IsFinished("Idle") or sprite:IsFinished("Talk") or sprite:IsFinished("IdleSweat") or sprite:IsFinished("TalkSweat") and appear_flag then
 		for _,ent2 in ipairs(Isaac.GetRoomEntities()) do
-			if ent2:IsVulnerableEnemy() and not 
-					(ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or 
-					ent:HasEntityFlags(EntityFlag.FLAG_CHARM) or 
-					ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL)) then
+			if GODMODE.util.is_valid_enemy(ent2,true) and not 
+					(ent2:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) or 
+					ent2:HasEntityFlags(EntityFlag.FLAG_CHARM) or 
+					ent2:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL)) and not (ent2.Type == monster.type and ent2.Variant == monster.variant) then
 				if data.run_from == nil then
 					data.run_from = ent2
+					GODMODE.log("set run from!",true)
 				elseif (data.run_from.Position - ent.Position):Length() > (ent2.Position - ent.Position):Length() then
+					GODMODE.log("set run from!!",true)
 					data.run_from = ent2
 				end
 			end
@@ -142,7 +140,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		elseif data.run_from ~= nil and ent:GetDropRNG():RandomInt(3) >= 5 - data.talk_chance then
 			data.talk_sprite = "BubbleFear"..ent:GetDropRNG():RandomInt(2)
 			
-			if is_not_shop() then 
+			if not is_shop() then 
 				data.talk_sprite = "BubbleFear3"
 			end
 
@@ -190,56 +188,57 @@ monster.npc_post_render = function(self, ent, offset)
 	end
 end
 
-local config_parrot = function(parrot, appear2)
+local config_parrot = function(parrot, appear2, alt_sprite)
+	if alt_sprite then 
+		parrot:GetSprite():ReplaceSpritesheet(0,alt_sprite)
+		parrot:GetSprite():LoadGraphics()
+	end
+	
+	parrot.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
 	parrot.FlipX = parrot.Position.X - Isaac.GetPlayer().Position.X < 0
+	parrot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 
 	if appear2 then
-		parrot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-		if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP then 
+		if is_shop() then 
 			parrot:GetSprite():Play("Appear2",true)
 		else 
 			parrot:GetSprite():Play("Idle",true)
 		end
 	else
+		parrot:GetSprite():Play("Appear",true)
 		local data = GODMODE.get_ent_data(parrot)
 		data.bubble = Sprite()
 		data.bubble:Load("gfx/famil_parrot.anm2", true)
 		data.talk_sprite = "BubbleAppear"
+
+		if alt_sprite then 
+			data.bubble:ReplaceSpritesheet(0,alt_sprite)
+			data.bubble:LoadGraphics()
+		end
+
 		data.bubble:Play(data.talk_sprite,true)
 	end
 end
 
 monster.new_room = function(self)
-	if true then --(GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP then
-		if GODMODE.save_manager.get_config("ShopParrot","true") == "true" then 
-			local kc_count = GODMODE.util.total_item_count(GODMODE.registry.trinkets.keepah_card, true)
-			local count = ((GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP and 1 --shop count
-							or GODMODE.keepah_mode == true and GODMODE.level:GetAbsoluteStage() or 0) --april fools count
-							+ kc_count * 2 --keepah card count
+	GODMODE.room = Game():GetRoom()
+	GODMODE.room_type = GODMODE.room:GetType()
 
-			for i=1,count do 
-				local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
-				config_parrot(parrot, not GODMODE.room:IsFirstVisit() or is_not_shop())	
-
-				if not is_not_shop() and i > 1 then 
-					GODMODE.get_ent_data(parrot).replace_sprite = true
-				end
-			end
-		end
-
-		if GODMODE.save_manager.get_config("ShopFog","true") == "true" and not is_not_shop() then 
-			local poses = {
-				{pos=(GODMODE.room_center or GODMODE.room:GetCenterPos()),vel=RandomVector()*0.05},
-				{pos=(GODMODE.room_top_left or GODMODE.room:GetTopLeftPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*0.05+Vector(0.05,0)},
-				{pos=(GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()),vel=Vector(math.abs(RandomVector().X),math.abs(RandomVector().Y)*0.25)*-0.05-Vector(0.05,0)}
-			}
+	local kc_count = GODMODE.util.total_item_count(GODMODE.registry.trinkets.keepah_card, true)
+	local count = (GODMODE.keepah_mode == true and GODMODE.level:GetAbsoluteStage() or 0) --april fools count
+					+ math.min(2,kc_count * 2) + kc_count --keepah card count
 	
-			for _,pos in ipairs(poses) do
-				local fog = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.MIST, 0, pos.pos, pos.vel, nil)
-				fog:Update()
-				fog:Update()
-				fog:Update()
-			end	
+	-- keepah card
+	for i=1,count do 
+		local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
+		config_parrot(parrot, not GODMODE.room:IsFirstVisit(), "gfx/familiars/shopbird"..(parrot.InitSeed % 3)..".png")	
+	end
+
+	-- keepah!
+	if is_shop() then
+		if GODMODE.save_manager.get_config("ShopParrot","true") == "true" then 
+			local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
+			config_parrot(parrot, GODMODE.room:IsFirstVisit(), (GODMODE.birthday_mode == true and "gfx/familiars/shopbird_birthday.png" or "gfx/familiars/shopbird.png"))
 		end
 	end
 end
@@ -259,6 +258,15 @@ monster.player_collide = function(self, player,ent,entfirst,data)
 
 			data.parrot_talk = player.FrameCount + donate_buy_cooldown
 		end	
+	end
+end
+
+monster.npc_collide = function(self, ent, ent2, entfirst)
+	if ent.Type == monster.type and ent.Variant == monster.variant then 
+		if GODMODE.util.is_valid_enemy(ent2, true) and ent:IsFrame(4,1) then 
+			ent2:TakeDamage((GODMODE.level:GetAbsoluteStage() / 4.0 + 5.0) / 5.0, 0, EntityRef(Isaac.GetPlayer()), 0)
+		end
+		return false 
 	end
 end
 
