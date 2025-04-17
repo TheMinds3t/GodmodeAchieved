@@ -1123,6 +1123,18 @@ else
                 -- end
             end
 
+            
+            -- to make a more consistent method for accessing Ivory Palace, added the leviathan and seraphim items to items to check for 
+            GODMODE.util.macro_on_players(function(player) 
+                for _, item in ipairs(GODMODE.special_items.angel_list) do 
+                    GODMODE.save_manager.add_player_list_data(player, "AngelCollected", item.ID)
+                end
+
+                for _, item in ipairs(GODMODE.special_items.devil_list) do 
+                    GODMODE.save_manager.add_player_list_data(player, "DevilCollected", item.ID)
+                end
+            end)
+
             GODMODE.godhooks.call_hook("first_level")
             -- GODMODE.push_items_monsters("first_level", true, function(monster) return true end, nil)
             GODMODE.save_manager.clear_key("ObservatoryGridIdx")
@@ -1202,7 +1214,8 @@ else
         if GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather,true) == 0 and GODMODE.util.total_item_count(GODMODE.registry.items.fallen_skull) == 0
             and (correction == true and GODMODE.save_manager.get_data("CorrectionNeeded","false") == "true") 
             and GODMODE.save_manager.get_data("CorrectionPortalSpawned","true") == "false" 
-            and GODMODE.util.can_spawn_correction() then 
+            and GODMODE.util.can_spawn_correction()
+            and GODMODE.game.Difficulty < Difficulty.DIFFICULTY_GREED then 
 
             GODMODE.log("GOTO CORRECTION")
             Isaac.Spawn(GODMODE.registry.entities.correction_portal.type, GODMODE.registry.entities.correction_portal.variant, 1, 
@@ -1212,8 +1225,6 @@ else
         end
     end
 
-    local door_hazards = {"Webbed","Void","Spiked","Wired","Spooked","WiredGood"}
-    local door_hazards_good = {["WiredGood"] = true}
     
     function GODMODE.mod_object:init_save_state(self) 
         if GODMODE.save_manager.inited ~= true then 
@@ -1256,6 +1267,9 @@ else
             GODMODE.save_manager.inited = true
         end
     end
+    
+    local door_hazards = {"Webbed","Void","Spiked","Wired","Spooked","WiredGood"}
+    local door_hazards_good = {["WiredGood"] = true}
 
     function GODMODE.mod_object:new_room()
         GODMODE.room = GODMODE.game:GetRoom()
@@ -1716,6 +1730,7 @@ else
             local portal = Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()+Vector(-64,0)),Vector.Zero,nil)
             portal:Update()
         end
+        
         local room_data = GODMODE.level:GetCurrentRoomDesc()
 
         -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
@@ -2285,10 +2300,10 @@ else
             end
         end
 
-        if GODMODE.save_manager.get_config("Godmode","false") == "true" and player:GetTrinketMultiplier(GODMODE.registry.trinkets.godmode) == 0 then 
-            player:GetEffects():RemoveTrinketEffect(GODMODE.registry.trinkets.godmode)
-            player:GetEffects():AddTrinketEffect(GODMODE.registry.trinkets.godmode,false)
-        end
+        -- if GODMODE.save_manager.get_config("Godmode","false") == "true" and player:GetTrinketMultiplier(GODMODE.registry.trinkets.godmode) == 0 then 
+        --     player:GetEffects():RemoveTrinketEffect(GODMODE.registry.trinkets.godmode)
+        --     player:GetEffects():AddTrinketEffect(GODMODE.registry.trinkets.godmode,false)
+        -- end
     end
 
     function GODMODE.mod_object:eval_cache(player, cache)

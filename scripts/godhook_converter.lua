@@ -1019,7 +1019,7 @@ godhook.functions.tear_update = function(self, tear)
         for ind=1, #godhook.hook.item_keys["tear_update"] do
             local func = godhook.hook.items["tear_update"][godhook.hook.item_keys["tear_update"][ind]]
             if func then
-                func(self,tear,data)
+                func(self,tear,data,tear:GetSprite())
             end
         end
     end
@@ -1028,7 +1028,7 @@ godhook.functions.tear_update = function(self, tear)
         for ind=1, #godhook.hook.monster_keys["tear_update"] do
             local func = godhook.hook.monsters["tear_update"][godhook.hook.monster_keys["tear_update"][ind]]
             if func then
-                func(self,tear,data)
+                func(self,tear,data,tear:GetSprite())
             end
         end
     end

@@ -300,7 +300,7 @@
                         Color.g = Color.g - IntensityOut * (0.9+cos(TexCoord0.x * 5.0+TimeOut/15.0)*0.5);
                         Color.b = Color.b - IntensityOut * (0.9+sin(TexCoord0.y * 12.0+TimeOut/23.0)*0.5);
                     }
-                    else if(avg > 0.2 - (1 - IntensityOut) * 0.2)
+                    else if(avg > 0.1 - (1 - IntensityOut) * 0.1)
                     {
                         Color.r = 0.2;
                         Color.g = 0.0;

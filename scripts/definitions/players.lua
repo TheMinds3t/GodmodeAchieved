@@ -1189,11 +1189,87 @@ players[GODMODE.registry.players.the_sign] = {
 
 }
 
+players[GODMODE.registry.players.t_sign] = {
+    eid_birthright = "↑ If your tear is not fully charged it cannot hurt you#Your tear now is constantly propelled towards you", --red_health = true, soul_health = true,
+    pocket_item = GODMODE.registry.items.reflect,
+    init = function(self, player)
+        -- player:TryRemoveNullCostume(GODMODE.registry.costumes.the_sign_wings)
+        -- player:AddNullCostume(GODMODE.registry.costumes.the_sign_wings)
+        player:AddCollectible(GODMODE.registry.items.vessel_of_purity_1)
+        player:AddCollectible(GODMODE.registry.items.reflect)
+        player:AddSoulHearts(-6)
+    end,
+    stats = {
+        [CacheFlag.CACHE_DAMAGE] = function(self, player)
+            local old = player.Damage
+            player.Damage = player.Damage * 0.66 + old * 0.34
+        end,
+        [CacheFlag.CACHE_SPEED] = function(self, player)
+            player.MoveSpeed = player.MoveSpeed - 0.15
+        end,
+        [CacheFlag.CACHE_SHOTSPEED] = function(self, player)
+            player.ShotSpeed = math.max(player.ShotSpeed,1.25)
+        end,
+        [CacheFlag.CACHE_FIREDELAY] = function(self, player)
+            player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.25)
+            player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.5,true)
+        end,
+        [CacheFlag.CACHE_FLYING] = function(self, player)
+            player.CanFly = true
+        end,
+        [CacheFlag.CACHE_TEARFLAG] = function(self, player)
+            player.TearFlags = player.TearFlags | TearFlags.TEAR_SPECTRAL | TearFlags.TEAR_LUDOVICO
+        end,
+        [CacheFlag.CACHE_RANGE] = function(self, player)
+            local mod = player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) and 0.75 or 1
+            player.TearRange = player.TearRange * mod + GODMODE.util.grid_size * 0.75
+        end,
+    },
+    update = function(self, player, data)
+        if player:IsFrame(2,1) then 
+            local fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.HAEMO_TRAIL, 0, player.Position+Vector(1,0)
+                :Resized(player:GetDropRNG():RandomFloat()*player.Size*2)
+                :Rotated(player:GetDropRNG():RandomFloat()*360) + Vector(0,-28), Vector.Zero, nil):ToEffect()
+            fx:SetTimeout(10)
+            fx.LifeSpan = 20
+            fx.Scale = player:GetDropRNG():RandomFloat() * 0.5 + 1.0
+            fx:SetColor(Color(0,0,0,1),999,1,false,false)
+            fx.DepthOffset = -100    
+        end
+    end,
+    encyclopedia_entry = {{ -- Start Data
+        {str = "Start Data", fsize = 2, clr = 3, halign = 0},
+        {str = "Stats:"},
+        {str = "- HP: 1 Soul Heart to 3 Soul Hearts and 1 Eternal Heart"},
+        {str = "- Speed: 0.75 (x0.75 multiplier)"},
+        {str = "- Tear Rate: 3.48"},
+        {str = "- Damage: 2.83 to 3.25"},
+        {str = "- Range: 7.31"},
+        {str = "- Shot Speed: 0.75"},
+        {str = "- Luck: 0.00"},
+    },
+    { -- Notes
+        {str = "Notes", fsize = 2, clr = 3, halign = 0},
+        {str = "The stats of The Sign depend on how many times you have defeated The Fallen Light's final phase."},
+        {str = "The Sign fires tears backwards, but movement influences the speed of your tears drastically."},
+    },
+    { -- Birthright
+        {str = "Birthright", fsize = 2, clr = 3, halign = 0},
+        {str = "Removes all Broken Hearts, and removes the speed multiplier."},
+    }},
+    encyclopedia_details = {
+        name = "The Sign",
+        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmname = "The Sign",
+        description = "The shackled",
+    }
+}
+
 players[PlayerType.PLAYER_THELOST_B] = {
     red_health = false, soul_health = true,
     init = function(self, player)
         if player.SubType == PlayerType.PLAYER_THELOST_B and GODMODE.save_manager.get_config("TaintedLostWish","true") == "true" then
-            player:AddCollectible(GODMODE.registry.items.moms_wish,1,true,ActiveSlot.SLOT_POCKET)
+            player:SetPocketActiveItem(GODMODE.registry.items.moms_wish,ActiveSlot.SLOT_POCKET,true)
         end
     end,
 }

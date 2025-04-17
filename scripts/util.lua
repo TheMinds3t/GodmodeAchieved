@@ -1435,4 +1435,8 @@ util.get_persistent_flags = function()
 	return EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_NO_STATUS_EFFECTS | EntityFlag.FLAG_DONT_OVERWRITE | EntityFlag.FLAG_NO_QUERY
 end
 
+util.shuffle_list = function(list, rng)
+	return table.sort(list, function(val) return rng:RandomInt(#list) + 1 end)
+end
+
 return util

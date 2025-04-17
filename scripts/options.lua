@@ -1574,7 +1574,7 @@ options.layout = {
                 variable = 'GodmodeToggle',
 
                 load = function()
-                    return options.str_bool_map[GODMODE.save_manager.get_config("Godmode","true")] or 2
+                    return options.str_bool_map[GODMODE.save_manager.get_config("Godmode","false")] or 2
                 end,
                 store = function(var)
                     GODMODE.save_manager.set_config("Godmode",options.bool_map[var],true)

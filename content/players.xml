@@ -53,6 +53,12 @@
           bSkinParent="Elohim"
           skinColor="-1" pocketActive="38" 
           birthright="Wrath = deeper strength" achievement="GODMODE_TElohim" />
+      <player name="The Tainted Sign" skin="thesign_tainted/thesign.png" hp="2" black="0" armor="0" broken="0" bombs="0" coins="0" keys="1"
+          nameimage="names/thesign.png" 
+          portrait="tainted_sign.png" 
+          bSkinParent="The Sign"
+          skinColor="1" costumeSuffix="shadow" pocketActive="38" 
+          birthright="Harness energy" healthtype="1" hidden="true" achievement="GODMODE_TSign" />
 
           <!--leprosy? items="525"-->
       <player name="Tainted Gehazi" skin="gehazi_tainted/gideon.png" hp="0" black="6" bombs="0" coins="10"

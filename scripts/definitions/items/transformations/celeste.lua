@@ -53,6 +53,7 @@ transform.first_level = function(self)
 			for item,_ in pairs(transform.items) do 
 				if item ~= GODMODE.registry.items.jack_of_all_trades then 
 					player:AddCollectible(item)
+					player:AddCostume(Isaac.GetItemConfig():GetCollectible(item),false)
 				end
 			end
 

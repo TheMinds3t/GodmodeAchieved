@@ -111,27 +111,30 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
 			end
 		else
 			local pool = "AngelCollected"
+			local player_items = {}
 
 			if ent.SubType == 1 then 
 				pool = "DevilCollected"
 			end
 
-			local get_items = function()  
-				return GODMODE.save_manager.get_player_list_data(player,pool,false,function(val) return tonumber(val) end)
+			local get_items = function()
+				return GODMODE.save_manager.get_player_list_data(player,"ItemsCollected",false,function(val) return tonumber(val) end)
 			end
-			local angel_items = get_items()
-			GODMODE.log(tostring(#angel_items).." available items for gatekeeper ",false)
 
-			if #angel_items > 0 then
-				local ind = ent:GetDropRNG():RandomInt(#angel_items)+1
-				local item = angel_items[ind]
+			player_items = get_items()
+
+			GODMODE.log(tostring(#player_items).." available items for gatekeeper ",true)
+
+			if #player_items > 0 then
+				local ind = ent:GetDropRNG():RandomInt(#player_items)+1
+				local item = player_items[ind]
 				local quest = true 
-				local depth = #angel_items
+				local depth = #player_items
 	
-				while quest == true and #angel_items > 0 and depth > 0 do 
+				while quest == true and #player_items > 0 and depth > 0 do 
 					while item == 0 do
-						ind = ent:GetDropRNG():RandomInt(#angel_items)+1
-						item = angel_items[ind]
+						ind = ent:GetDropRNG():RandomInt(#player_items)+1
+						item = player_items[ind]
 					end	
 	
 					local config = Isaac.GetItemConfig():GetCollectible(item)
@@ -139,8 +142,7 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
 					if config:IsCollectible() and config.Tags & ItemConfig.TAG_QUEST ~= ItemConfig.TAG_QUEST and player:HasCollectible(item) then 
 						quest = false
 					else 
-						GODMODE.save_manager.remove_player_list_data(player,pool,item,true)
-						angel_items = get_items()
+						table.remove(player_items, ind)
 						depth = depth - 1
 						item = 0
 					end

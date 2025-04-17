@@ -105,7 +105,7 @@
 	<active id="91" cache="damage shotspeed range firedelay" passivecache="true" chargetype="timed" maxcharges="75" description="Reassociate" gfx="deli_delusion.png" name="Delusion" tags="noeden hidden" hidden="true" quality = "1" />
 	<active id="92" cache="damage shotspeed range firedelay" passivecache="true" chargetype="timed" maxcharges="75" description="Dissociate" gfx="deli_oblivion.png" name="Oblivion" tags="noeden hidden" hidden="true" quality = "1" />
 	<active id="93" cache="familiar" chargetype="timed" maxcharges="80" description="Everlasting Wrath" gfx="vengeful_dagger.png" name="Vengeful Dagger" tags="noeden hidden" hidden="true" quality = "2" />
-	<!-- <active id="99" chargetype="timed" maxcharges="60" description="Hone your understanding" gfx="purity_vessel_empty.png" name="Reflect" tags="noeden hidden" hidden="true" quality = "1" /> -->
+	<active id="103" cache="weapon shotspeed" passivecache="true" chargetype="timed" maxcharges="60" description="Hone your understanding" gfx="purity_vessel_empty.png" name="Reflect" tags="noeden hidden" hidden="true" quality = "1" />
 
 	<!-- QUEST ITEMS -->
 	<!-- 

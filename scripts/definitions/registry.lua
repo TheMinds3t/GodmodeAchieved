@@ -98,6 +98,7 @@ reg.items = {
     deli_delusion = Isaac.GetItemIdByName("Delusion"),
     deli_oblivion = Isaac.GetItemIdByName("Oblivion"),
     vengeful_dagger = Isaac.GetItemIdByName("Vengeful Dagger"),
+    reflect = Isaac.GetItemIdByName("Reflect"),
     
     -- questrock_1 = Isaac.GetItemIdByName("Rock Fragment"),
     -- questrock_2 = Isaac.GetItemIdByName("Holy Stone"),
@@ -889,6 +890,7 @@ reg.players = {
     gehazi = Isaac.GetPlayerTypeByName("Gehazi",false),
     t_gehazi = Isaac.GetPlayerTypeByName("Tainted Gehazi",true),
     the_sign = Isaac.GetPlayerTypeByName("The Sign",false),   
+    t_sign = Isaac.GetPlayerTypeByName("The Tainted Sign",true),   
 }
 
 -- used to hide godmode heart ui 

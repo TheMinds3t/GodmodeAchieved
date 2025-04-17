@@ -7,6 +7,8 @@ ret.fill_item_lists = function(self)
 	self.bob_list = {}
 	self.syringe_list = {}
 	self.cache_list = {}
+	self.angel_list = {}
+	self.devil_list = {}
 
 	for i=1,CollectibleType.NUM_COLLECTIBLES do
 		local config = Isaac.GetItemConfig():GetCollectible(i)
@@ -32,6 +34,14 @@ ret.fill_item_lists = function(self)
 						table.insert(self.cache_list[flag], config)
 					end
 				end	
+			end
+
+			if config.Tags & ItemConfig.TAG_ANGEL == ItemConfig.TAG_ANGEL then
+				table.insert(self.angel_list, config)
+			end
+
+			if config.Tags & ItemConfig.TAG_DEVIL == ItemConfig.TAG_DEVIL then
+				table.insert(self.devil_list, config)
 			end
 
 			self.quality_lists[config.Quality] = self.quality_lists[config.Quality] or {}

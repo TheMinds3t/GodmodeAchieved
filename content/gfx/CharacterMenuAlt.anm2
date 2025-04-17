@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="3/14/2024 7:15:24 PM" Version="39" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="4/10/2025 1:08:05 AM" Version="40" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="charactermenugod.png" Id="0"/>
@@ -288,7 +288,7 @@
 			<NullAnimations/>
 			<Triggers/>
 		</Animation>
-		<Animation Name="The Sign" FrameNum="1" Loop="false">
+		<Animation Name="The Tainted Sign" FrameNum="1" Loop="false">
 			<RootAnimation>
 				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 			</RootAnimation>
