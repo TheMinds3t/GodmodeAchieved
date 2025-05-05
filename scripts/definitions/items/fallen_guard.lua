@@ -12,7 +12,7 @@ item.encyc_entry = {
 
 item.eval_cache = function(self,player,cache)
   if cache == CacheFlag.CACHE_FAMILIARS then 
-    player:CheckFamiliar(GODMODE.registry.entities.fallen_guard_familiar.variant, player:GetCollectibleNum(item.instance), player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
+    player:CheckFamiliar(GODMODE.registry.entities.fallen_guard_familiar.variant, (player:GetCollectibleNum(item.instance)+player:GetEffects():GetCollectibleEffectNum(item.instance)), player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
   end
 end
 

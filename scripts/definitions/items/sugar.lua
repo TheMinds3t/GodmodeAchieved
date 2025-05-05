@@ -39,6 +39,16 @@ item.eval_cache = function(self, player,cache,data)
     end
 end
 
+item.first_level = function(self)
+    if Isaac.GetChallenge() == GODMODE.registry.challenges.sugar_rush then 
+        GODMODE.util.macro_on_players(function(player) 
+            for i=1,4 do 
+                player:AddCollectible(GODMODE.registry.items.sugar)
+            end            
+        end)
+    end
+end
+
 item.pickup_init = function(self, pickup)
     local data = GODMODE.get_ent_data(pickup)
     if (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) and (data and data.sugar_reroll_attempt ~= true) then

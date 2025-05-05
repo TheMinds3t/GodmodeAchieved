@@ -47,7 +47,7 @@ local blink_time = 6
 local num_blinking = 3
 
 local deli_tear_rotate_ang = 360/100
-local max_immune_frames = 15
+local max_immune_frames = 25
 
 local is_eye_closed = function(eye, fam)
     return tonumber(GODMODE.save_manager.get_player_data(fam.Player,"EyesOpen",num_eyes)) < eye
@@ -143,12 +143,12 @@ monster.familiar_collide = function(self, fam, ent, entfirst)
             ent.Velocity = (ent.Position - fam.Player.Position):Resized(ent:ToProjectile() and bounce_strength_proj or bounce_strength)
 
             if fam.Hearts <= 0 then 
-                local amt = math.ceil(ent.CollisionDamage * 1.5)
+                local amt = math.min(4,math.ceil(ent.CollisionDamage * 1.5))
                 fam.State = math.min(max_bounce_anim,fam.State + bounce_anim_length * amt)
 
                 if fam.Coins <= 0 then 
                     GODMODE.save_manager.set_player_data(fam.Player,"EyesOpen", math.max((eyes == 1 and 0 or 1),eyes - amt), true)
-                    fam.Coins = 5
+                    fam.Coins = math.max(10,math.floor(10 * ent.CollisionDamage))
                 end
 
                 GODMODE.sfx:Play(SoundEffect.SOUND_MEATY_DEATHS,Options.SFXVolume*1.5+0.75)
@@ -248,7 +248,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
                 if eyes > 0 then 
                     -- GODMODE.log("hi3",true)
-                    local amt = math.max(1,math.ceil(amount * 1.5) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BIRTHRIGHT))
+                    local amt = math.min(6,math.max(1,math.ceil(amount * 1.5) - player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BIRTHRIGHT)))
                     eyes = eyes - amt
                     GODMODE.save_manager.set_player_data(player,"EyesOpen",eyes,true)
                     data.t_deli_immune = amount * 30

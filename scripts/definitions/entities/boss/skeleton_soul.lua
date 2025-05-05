@@ -57,6 +57,7 @@ monster.spawn_flat_tear = function(self, ent, ang, speed, height, curve)
     
     return tear
 end
+
 monster.npc_init = function(self, ent)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
 		ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)

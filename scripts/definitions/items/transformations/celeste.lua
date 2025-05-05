@@ -61,6 +61,8 @@ transform.first_level = function(self)
 			GODMODE.save_manager.set_player_data(player, "Celeste","true")
 			GODMODE.get_ent_data(player).transform_cooldown = GODMODE.get_ent_data(player).transform_cooldown or {}
 			GODMODE.get_ent_data(player).transform_cooldown["Celeste"] = 10
+			player:TryRemoveNullCostume(transform.costume)
+			player:AddNullCostume(transform.costume)
 		else
 			GODMODE.save_manager.set_player_data(player, "CelesteItems","0")
 			GODMODE.save_manager.set_player_data(player, "Celeste","false",true)
@@ -73,7 +75,7 @@ transform.transform_update = function(self, player)
 	local floor = 5
 
 	if GODMODE.util.add_tears(player, player.MaxFireDelay,0.0) > 15 then 
-		floor = 3
+		floor = 4
 	end
 
 	local frame = math.max(floor,math.floor(player.MaxFireDelay*1.1))

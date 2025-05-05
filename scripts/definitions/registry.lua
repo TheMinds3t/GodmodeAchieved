@@ -854,6 +854,7 @@ reg.costumes = {
     t_deli_eyes = Isaac.GetCostumeIdByPath("gfx/costumes/t_deli_eyes.anm2"),
     
     the_sign_wings = Isaac.GetCostumeIdByPath("gfx/costumes/sign_wings.anm2"),
+    t_sign_body = Isaac.GetCostumeIdByPath("gfx/costumes/sign_body_t.anm2"),
     
     edible_soul = Isaac.GetCostumeIdByPath("gfx/costumes/edible_soul_bodiless.anm2"),
     maxs_head = {

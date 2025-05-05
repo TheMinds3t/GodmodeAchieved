@@ -40,20 +40,18 @@ item.eval_cache = function(self, player,cache,data)
 	local faithless = GODMODE.util.get_faithless(player)
 	local broken = player:GetBrokenHearts()
 	local col_num = player:GetCollectibleNum(item.instance)
-	local fx_scale = (math.min(0.5,col_num) + 0.5 * col_num) * (faithless + broken)
+	local fx_scale = (math.min(0.5,col_num) + 0.5 * col_num) * (faithless + broken * 1.5)
 
 	if cache == CacheFlag.CACHE_LUCK then
 		player.Luck = player.Luck + fx_scale
 	end
 
 	if cache == CacheFlag.CACHE_DAMAGE then
-		player.Damage = player.Damage * 0.85
-		player.Damage = player.Damage * (1 + fx_scale * 0.15)
+		player.Damage = (player.Damage * 0.85) * (1 + fx_scale * 0.15)
 	end
 
 	if cache == CacheFlag.CACHE_SPEED then
-		player.MoveSpeed = player.MoveSpeed * 0.85
-		player.MoveSpeed = player.MoveSpeed + fx_scale * 0.05
+		player.MoveSpeed = (player.MoveSpeed * 0.85) + fx_scale * 0.05
 	end
 
 	if cache == CacheFlag.CACHE_FIREDELAY then

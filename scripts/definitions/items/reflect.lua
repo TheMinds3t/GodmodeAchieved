@@ -33,7 +33,7 @@ item.fire_speed = 6.25
 item.shotspeed_debuff_cap = 0.8
 item.shotspeed_debuff_time = 200
 
-item.default_charge = 1
+item.default_charge = 0
 
 item.fire_stats = {
     [-1] = false,
@@ -104,6 +104,10 @@ item.eval_cache = function(self, player,cache,data)
             player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE,false)
         end
     end
+
+    if cache == CacheFlag.CACHE_TEARCOLOR then 
+        -- somehow
+    end
 end
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
@@ -121,7 +125,7 @@ item.set_charge = function(sprite, tear, charge)
     GODMODE.save_manager.set_ent_data(tear,"Charge", math.min(3,math.max(-1,charge)))
     sprite:Load(item.tear_charge_sprites[math.min(3,charge)], true)
     local size = math.max(1,math.min(13, math.floor(tear.Scale*5)))
-    tear:GetSprite():Play("RegularTear"..size,true)
+    tear:GetSprite():Play("RegularTear"..size,false)
 end
 
 item.tear_init = function(self, tear)
@@ -129,8 +133,12 @@ item.tear_init = function(self, tear)
 
     if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO ~= 0 then 
         item.discharge_tear(player, tear, false)
-        item.set_charge(tear:GetSprite(), tear, -1)
+        item.set_charge(tear:GetSprite(), tear, item.room_clear() and -1 or item.default_charge)
     end
+end
+
+item.room_clear = function()
+    return Isaac.CountEnemies() + Isaac.CountBosses() == 0
 end
 
 item.discharge_tear = function(player, tear, explode, reduce, fx, explode_src)
@@ -189,6 +197,16 @@ item.tear_update = function(self, tear, data, sprite)
         local charge = tonumber(GODMODE.save_manager.get_ent_data(tear,"Charge",item.default_charge))
         local stats = item.fire_stats[charge]
         data.reflect_time = math.max(0,(data.reflect_time or 0) - 1)
+
+
+        if tear:IsFrame(5,1) then 
+            if (data.room_clear_dearm or false) == false and item.room_clear() == true then 
+                item.discharge_tear(player,tear,false,false,true,player)
+                item.set_charge(sprite,tear,0)
+            end
+            
+            data.room_clear_dearm = item.room_clear()
+        end
         
         if data.reflect_time <= 0 then -- as long as reflection isn't happening
             local dir = (player.Position - tear.Position)
@@ -266,6 +284,7 @@ item.tear_collide = function(self, tear, ent, entfirst)
         if time == 0 and charge == 3 then 
             item.discharge_tear(player,tear,true,true)
             GODMODE.save_manager.set_player_data(player,"ReflectActiveTime",40)
+            item.set_charge(tear:GetSprite(), tear, 1)
         end
     end
 end
@@ -274,6 +293,7 @@ item.player_update = function(self, player, data, sprite)
     if player:HasCollectible(item.instance) then 
         local time = tonumber(GODMODE.save_manager.get_player_data(player,"ReflectActiveTime","0"))
         
+        -- make immune to damage while room is empty
         if Isaac.CountBosses() + Isaac.CountEnemies() == 0 then 
             time = math.max(2,time)
         end

@@ -13,7 +13,7 @@ item.encyc_entry = {
 
 item.eval_cache = function(self,player,cache)
   if cache == CacheFlag.CACHE_FAMILIARS then 
-    player:CheckFamiliar(GODMODE.registry.entities.fruit_fly.variant, player:GetCollectibleNum(item.instance)*3, player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
+    player:CheckFamiliar(GODMODE.registry.entities.fruit_fly.variant, (player:GetCollectibleNum(item.instance)+player:GetEffects():GetCollectibleEffectNum(item.instance))*3, player:GetCollectibleRNG(item.instance), Isaac.GetItemConfig():GetCollectible(item.instance))
   end
 end
 

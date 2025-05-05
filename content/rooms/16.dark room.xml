@@ -1503,19 +1503,13 @@
 		<door exists="True" x="6" y="-1"/>
 		<door exists="True" x="6" y="7"/>
 		<door exists="True" x="13" y="3"/>
-		<spawn x="0" y="0">
-			<entity type="700" variant="32" subtype="0" weight="1.0"/>
-		</spawn>
-		<spawn x="12" y="0">
+		<spawn x="1" y="1">
 			<entity type="700" variant="32" subtype="0" weight="1.0"/>
 		</spawn>
 		<spawn x="6" y="3">
 			<entity type="71" variant="1" subtype="0" weight="1.0"/>
 		</spawn>
-		<spawn x="0" y="6">
-			<entity type="700" variant="32" subtype="0" weight="1.0"/>
-		</spawn>
-		<spawn x="12" y="6">
+		<spawn x="11" y="5">
 			<entity type="700" variant="32" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>

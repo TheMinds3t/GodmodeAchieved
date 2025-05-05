@@ -961,7 +961,6 @@ players[GODMODE.registry.players.t_deli] = {
     pocket_valid = {[GODMODE.registry.items.deli_oblivion] = true, [GODMODE.registry.items.deli_delusion] = true}, --allows for more than 1 pocket active
     update = function(self, player, data)
         data.trisagion_time = (data.trisagion_time or 0) + 1   
-        -- GODMODE.tainted_deli = true 
         local eyes = tonumber(GODMODE.save_manager.get_player_data(player,"EyesOpen","16"))
         local hidden = eyes == 0 or GODMODE.save_manager.get_player_data(player,"RingHidden","false") == "true"
 
@@ -1198,11 +1197,14 @@ players[GODMODE.registry.players.t_sign] = {
         player:AddCollectible(GODMODE.registry.items.vessel_of_purity_1)
         player:AddCollectible(GODMODE.registry.items.reflect)
         player:AddSoulHearts(-6)
+        
+        player:TryRemoveNullCostume(GODMODE.registry.costumes.t_sign_body)
+        player:AddNullCostume(GODMODE.registry.costumes.t_sign_body)
     end,
     stats = {
         [CacheFlag.CACHE_DAMAGE] = function(self, player)
             local old = player.Damage
-            player.Damage = player.Damage * 0.66 + old * 0.34
+            player.Damage = player.Damage * 0.33 + old * 0.66
         end,
         [CacheFlag.CACHE_SPEED] = function(self, player)
             player.MoveSpeed = player.MoveSpeed - 0.15

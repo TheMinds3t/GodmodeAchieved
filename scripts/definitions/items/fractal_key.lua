@@ -85,7 +85,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
             player:RemoveCollectible(item.instance, true, slot)
             player:AddCollectible(GODMODE.registry.items.fractal_key_inverse,0,true,slot)
             -- GODMODE.room:MamaMegaExplosion(player.Position)
-            GODMODE.game:BombExplosionEffects(player.Position, player.Damage * 2 + 50)
+            GODMODE.game:BombExplosionEffects(player.Position, player.Damage * 2 + 50, TearFlags.TEAR_NORMAL, Color.Default, nil, 1, true, false, DamageFlag.DAMAGE_NO_PENALTIES)
         -- GODMODE.game:BombExplosionEffects(player.Position, player.Damage * 2 + 20, 10.0)
         else 
             player:AddBrokenHearts(1)
@@ -95,8 +95,6 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
         return true
     end
 end
-
-local pos = GODMODE.util.get_center_of_screen() * Vector(tonumber(GODMODE.save_manager.get_config("FractalDisplayX","0.05")),tonumber(GODMODE.save_manager.get_config("FractalDisplayY","0.9"))) * 2
 
 item.post_render = function(self,player,index)
     local chance = GODMODE.paused and 1 or tonumber(GODMODE.save_manager.get_data("GildedChance","0.0"))

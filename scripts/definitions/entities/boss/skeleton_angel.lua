@@ -28,6 +28,7 @@ local crack_patterns = {
 		Vector(1,0):Rotated(45+270),
 	}
 }
+
 local crack_size = 512
 local min_crack_size = {96,144,120}
 local crack_rotation_speed = {5.0,3.0,3.25}
@@ -152,7 +153,7 @@ monster.npc_init = function(self, ent, data)
 end
 
 monster.do_unlocks = function(self, ent, data)
-	if GODMODE.validate_rgon() then 
+	if GODMODE.validate_rgon() and Isaac.ClearBossHazards ~= nil then 
 		Isaac.ClearBossHazards(true)
 	end
 

@@ -1100,7 +1100,6 @@ else
         end
 
         if GODMODE.util.is_start_of_run() then 
-            GODMODE.tainted_deli = false 
             GODMODE.save_manager.has_loaded = false 
 
             if not StageAPI then 
@@ -2245,11 +2244,7 @@ else
                         GODMODE.save_manager.save()
                     end
                     
-                    if Isaac.GetChallenge() == GODMODE.registry.challenges.sugar_rush then 
-                        for i=1,4 do 
-                            player:AddCollectible(GODMODE.registry.items.sugar)
-                        end
-                    end
+
 
                 end    
             end
@@ -2295,6 +2290,7 @@ else
 
                     hits = GODMODE.util.get_player_hits(player)
                 end
+                
                 if hits > max_hits then 
                 end
             end

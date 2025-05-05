@@ -281,7 +281,8 @@ monster.npc_update = function(self, ent, data, sprite)
         targ = (ti * 0.5 + (GODMODE.room_center or GODMODE.room:GetCenterPos()) * 5) / 5.5
     end
 
-    ent.Velocity = ent.Velocity * 0.9 + (targ - ent.Position):Resized(spd)
+    local targ = (targ - ent.Position)
+    ent.Velocity = ent.Velocity * 0.5 + targ:Resized(targ:Length() * spd)
 
     if sprite:IsPlaying("Idle") and ent:IsFrame(30,1) and ent:GetDropRNG():RandomFloat() < ent.I1 * 0.2 then
         local atk = monster.choose_atk(ent,data)

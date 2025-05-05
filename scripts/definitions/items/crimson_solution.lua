@@ -22,7 +22,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         local player = enthit:ToPlayer()
         local data = GODMODE.get_ent_data(player)
 
-        if (player:HasCollectible(item.instance) and GODMODE.util.get_player_hits(player) <= amount and player:GetExtraLives() == 0) or (data.crimson_cooldown or 0) > 0 then
+        if (player:HasCollectible(item.instance) and GODMODE.util.get_player_hits(player) <= amount and player:GetExtraLives() == 1) or (data.crimson_cooldown or 0) > 0 then
             if data.crimson_cooldown == nil or data.crimson_cooldown <= 0 then 
                 data.crimson_cooldown = amount * 60
                 GODMODE.sfx:Play(SoundEffect.SOUND_GLASS_BREAK, Options.SFXVolume*2.5)

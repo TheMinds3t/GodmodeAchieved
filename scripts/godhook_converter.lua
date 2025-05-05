@@ -1427,7 +1427,7 @@ function godhook.additive_call_hook(hook,base,...)
     call_id = GODMODE.mod_id.."_"..hook
     -- Isaac.RunCallback(call_id,...)
     local hookRet = base
-    local callbacks = Isaac.GetCallbacks(call_id)
+    local callbacks = Isaac.GetCallbacks(call_id, true)
 
     for _, callback in ipairs(callbacks) do
         local ret = callback.Function(callback.Mod,base,...)
@@ -1457,7 +1457,7 @@ function godhook.call_hook(hook,...)
     call_id = GODMODE.mod_id.."_"..hook
     -- Isaac.RunCallback(call_id,...)
     local hookRet = nil
-    local callbacks = Isaac.GetCallbacks(call_id)
+    local callbacks = Isaac.GetCallbacks(call_id, true)
 
     for _, callback in ipairs(callbacks) do
         local ret = callback.Function(callback.Mod,...)
@@ -1475,7 +1475,7 @@ function godhook.call_hook_param(hook,param,...)
     call_id = GODMODE.mod_id.."_"..hook
     -- Isaac.RunCallback(call_id,...)
     local hookRet = nil
-    local callbacks = Isaac.GetCallbacks(call_id)
+    local callbacks = Isaac.GetCallbacks(call_id, true)
 
     for _, callback in ipairs(callbacks) do
         local ret = callback.Function(callback.Mod,...)

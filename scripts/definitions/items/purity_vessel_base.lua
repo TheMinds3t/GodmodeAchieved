@@ -27,13 +27,21 @@ end
 
 item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	local entflag = GODMODE.is_at_palace and GODMODE.is_at_palace() and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS and not entsrc.IsFriendly
+	
 	GODMODE.util.macro_on_players_that_have(item.instance, function(player)
 		local data = GODMODE.get_ent_data(player)
-		if GetPtrHash(player) == GetPtrHash(enthit) and (data.vessel_cooldown == nil or data.vessel_cooldown <= 0) and entflag then
+		local t_sign_flag = player:GetPlayerType() == GODMODE.registry.players.t_sign and flags & DamageFlag.DAMAGE_NO_PENALTIES ~= DamageFlag.DAMAGE_NO_PENALTIES
+		if GetPtrHash(player) == GetPtrHash(enthit) and (data.vessel_cooldown == nil or data.vessel_cooldown <= 0) and (entflag or t_sign_flag) then
 			data.vessel_cooldown = 30
 			GODMODE.game:BombExplosionEffects(player.Position, 100, TearFlags.TEAR_NORMAL, Color.Default, player, 1)
 			-- GODMODE.game:ShakeScreen(20)
 			player:RemoveCollectible(item.instance)
+
+			if t_sign_flag then 
+				player:AddBrokenHearts(2)
+				GODMODE.util.add_faithless(player, 2)
+			end
+
 			if item.next_instance then
 				player:AddCollectible(item.next_instance,0,false)
 			end

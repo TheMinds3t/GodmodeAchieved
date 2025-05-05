@@ -32,7 +32,7 @@ item.player_update = function(self, player)
 	local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
 	GODMODE.save_manager.set_data("RedJuiceDistort", math.max(0,distort-1/decay_time/max_stacks))
 
-	if player:IsFrame(5,1) and player:HasCollectible(item.instance) then 
+	if player:IsFrame(5,1) and (player:HasCollectible(item.instance) or distort > 0) then 
 		player:AddCacheFlags(CacheFlag.CACHE_LUCK | CacheFlag.CACHE_SPEED)
 		player:EvaluateItems()
 
