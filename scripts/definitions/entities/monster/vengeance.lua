@@ -165,7 +165,7 @@ monster.npc_update = function(self, ent, data, sprite)
             if pathfinding ~= nil then 
                 ent.Velocity = ent.Velocity * 0.75 + pathfinding 
             elseif player ~= nil then 
-                ent.Pathfinder:FindGridPath(target_pos,0.8 * (ent.I1 * 0.1 + 0.9),0,true)
+                ent.Pathfinder:FindGridPath(target_pos,0.9 * (ent.I1 * 0.1 + 0.9),0,true)
             end    
         else
             ent.Velocity = ent.Velocity * 0.85

@@ -85,7 +85,7 @@ monster.npc_update = function(self, ent, data, sprite)
         ent:ClearEntityFlags(EntityFlag.FLAG_NO_TARGET) 
     end
 
-    if GODMODE.room:IsClear() then 
+    if GODMODE.room:IsClear() and ent.SubType == 0 then 
         ent:Kill()
     end
 
@@ -110,7 +110,8 @@ monster.npc_update = function(self, ent, data, sprite)
             calc_targ_pos(data,player,ent)
         end
     else
-        if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) then ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR) sprite:Play("Appear",true) calc_targ_pos(data,player,ent) end 
+        if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) and ent.SubType == 0 then ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR) sprite:Play("Appear",true) calc_targ_pos(data,player,ent) end 
+        
         data.target_found = data.target_found or 0
         if data.target_found > 20 then 
             calc_targ_pos(data,player,ent)

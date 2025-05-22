@@ -760,6 +760,11 @@ util.deep_copy = function(object)
 end
 
 util.is_valid_enemy = function(ent, coll_damage_override, dead_override)
+
+	if GODMODE.validate_rgon() then -- TODO: Check champion flag in XML
+
+	end
+
 	return ent.MaxHitPoints > 0 and (coll_damage_override == true or ent.CollisionDamage > 0) 
 		and not (ent:HasEntityFlags(EntityFlag.FLAG_CHARM) or ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY))
 		-- and ent:CanShutDoors()
@@ -1191,7 +1196,7 @@ util.get_heart_pos_for = function(player,h_ind)
 		-- h_ind = 12 - h_ind
 	end
 
-	if slot > 4 or slot < 1 then GODMODE.log("trying to render heart ui for slot "..slot..", which is invalid",true) return nil end
+	if slot > 4 or slot < 1 then GODMODE.log("[ERROR] trying to render heart ui for slot "..slot..", which is invalid (slot 1 to 4 is valid)",true) return nil end
 	local base_pos = heart_start[slot]
 
 	return base_pos + Vector(heart_size.X * (h_ind % width), heart_size.Y * math.floor(h_ind / width)) * invert + hud_off_vec * Options.HUDOffset * hud_mult[slot]

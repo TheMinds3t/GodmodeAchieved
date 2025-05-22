@@ -901,6 +901,11 @@ reg.hidden_heart_players = {
     [PlayerType.PLAYER_THEFORGOTTEN_B] = true,
 }
 
+reg.t_sign_familiar_tears = {
+    [FamiliarVariant.INCUBUS] = true,
+    [FamiliarVariant.TWISTED_BABY] = true,
+}
+
 reg.music = {
     a_blackened_light = Isaac.GetMusicIdByName("GODMODE A Blackened Light"),
     experiencing_revelation = Isaac.GetMusicIdByName("GODMODE Experiencing Revelation"),

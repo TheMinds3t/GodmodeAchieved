@@ -44,7 +44,7 @@
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Bathemo.png" ID="234" Name="Bathemo" Variant="131" Subtype="1" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Furnace Knight.png" ID="700" Name="Furnace Knight" Variant="126" Subtype="1" Boss="1" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Pooglobin.png" ID="24" Name="Pooglobin" Variant="700" Subtype="0" Boss="0" />
-	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/WingedSpider.png" ID="700" Name="Winged Spider" Variant="38" Subtype="0" Boss="0" />	
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/WingedSpider.png" ID="700" Name="Winged Spider" Variant="38" Subtype="1" Boss="0" />	
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Ludomini.png" ID="700" Name="Ludomini" Variant="40" Subtype="0" Boss="0" />	
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/ratty.png" ID="700" Name="Ratty" Variant="41" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Infested MemBrain.png" ID="700" Name="Infested MemBrain" Variant="42" Subtype="0" Boss="0" />

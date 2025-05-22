@@ -355,6 +355,8 @@ if EID then
         EID:createTransformation(GODMODE.util.eid_transforms.CYBORG, "Cyborg!")
         EID:createTransformation(GODMODE.util.eid_transforms.CULTIST, "Cultist!")
         EID:createTransformation(GODMODE.util.eid_transforms.JACK_OF_ALL_TRADES, "ANYTHING!!!!!!")
+    else 
+        GODMODE.log("[Error] EID is missing 'addIcon', so not adding Godmode EID icons. Non-fatal but concerning")
     end
 
     if EID.addCollectible then 
@@ -382,15 +384,11 @@ if EID then
                     end
                 end    
             else 
-                GODMODE.log("invalid item found while trying to register for EID!")
+                GODMODE.log("[Error] invalid item object found while trying to register for EID, skipping!")
             end
         end
     
         EID:addCollectible(GODMODE.registry.items.jack_of_all_trades, "Counts as one item towards all transformations")
-        -- EID:addCollectible(GODMODE.registry.items.questrock_1, "Part 1 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        -- EID:addCollectible(GODMODE.registry.items.questrock_2, "Part 2 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        -- EID:addCollectible(GODMODE.registry.items.questrock_3, "Part 3 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
-        -- EID:addCollectible(GODMODE.registry.items.questrock_4, "Part 4 of 4, allows access to the Gatekeeper in Sheol#!!!!!!!!!NOTE!!!!!!!!! NOT CURRENTLY IMPLEMENTED!")
         EID:addCollectible(GODMODE.registry.items.blood_key, "Allows you to enter the Ivory Palace in Sheol/Cathedral")
         EID:assignTransformation("collectible", GODMODE.registry.items.jack_of_all_trades, GODMODE.util.eid_transforms.JACK_OF_ALL_TRADES)
         EID:addCollectible(GODMODE.registry.items.brass_cross, "↑ +2 Soul Hearts#↑ +25% chance to encounter a blessed floor")
@@ -399,7 +397,9 @@ if EID then
             EID:addCollectible(CollectibleType.COLLECTIBLE_MORE_OPTIONS, "↑ Treasure rooms have more items# Each item is sequentially assigned a group, 1 to (1+More Options Quantity), indicated on the item pedestal# You can only pick one item from each group")    
         end
         
-        EID.descriptions["en_us"].collectibles[CollectibleType.COLLECTIBLE_BLACK_CANDLE][3] = EID.descriptions["en_us"].collectibles[CollectibleType.COLLECTIBLE_BLACK_CANDLE][3].."#↓ Prevents Blessings"
+        EID.descriptions["en_us"].collectibles[CollectibleType.COLLECTIBLE_BLACK_CANDLE][3] = EID.descriptions["en_us"].collectibles[CollectibleType.COLLECTIBLE_BLACK_CANDLE][3].."#↓ Prevents Godmode Blessings"
+    else 
+        GODMODE.log("[Error] EID is missing 'addCollectible', so not adding Godmode item info. Non-fatal but concerning")
     end
 
     if EID.addBirthright then
@@ -410,6 +410,8 @@ if EID then
         end
 
         GODMODE.log("Loaded Godmode External Items Description Integration!")
+    else 
+        GODMODE.log("[Error] EID is missing 'addBirthright', so not adding Godmode birthright info. Non-fatal but concerning")
     end
 end
 
@@ -968,14 +970,17 @@ function load_stageapi_integration()
             for _,stage in pairs(GODMODE.stages) do
                 GODMODE.log("Testing "..(stage.api_id or "NIL"),true)
 
-                GODMODE.save_manager.set_data("StageReseed"..GODMODE.level:GetStage(),"true",true)
+                GODMODE.save_manager.set_data("StageReseed"..GODMODE.level:GetStage(),"true")
 
                 if stage.secret_next and stage.api_id == currentStage.Name and secretExit then 
+                    GODMODE.save_manager.save()
                     return stage:secret_next(stage.stage)
                 elseif stage.next and stage.api_id == currentStage.Name then
+                    GODMODE.save_manager.save()
                     return stage:next(stage.stage)
                 end
             end
+
         end
     end)
 

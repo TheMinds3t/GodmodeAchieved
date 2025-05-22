@@ -235,12 +235,11 @@ players[GODMODE.registry.players.t_xaphan] = {
         end
     },
     shadow_frequency = 3, --special to t-xaphan rendering
-    max_shadow = tonumber(GODMODE.save_manager.get_config("TXaphanTrail","4")),
     shadow_life = 100,
     update = function(self, player, data)
         if player:IsFrame(self.shadow_frequency,1) and player.Velocity:Length() > player.MoveSpeed then 
             data.xaphan_trail = data.xaphan_trail or {}
-            local max_flag = #(data.xaphan_trail or {}) < self.max_shadow
+            local max_flag = #(data.xaphan_trail or {}) < tonumber(GODMODE.save_manager.get_config("TXaphanTrail","4"))
 
             if #data.xaphan_trail > 0 then
                 local max_trail = nil
@@ -1195,7 +1194,7 @@ players[GODMODE.registry.players.t_sign] = {
         -- player:TryRemoveNullCostume(GODMODE.registry.costumes.the_sign_wings)
         -- player:AddNullCostume(GODMODE.registry.costumes.the_sign_wings)
         player:AddCollectible(GODMODE.registry.items.vessel_of_purity_1)
-        player:AddCollectible(GODMODE.registry.items.reflect)
+        -- player:AddCollectible(GODMODE.registry.items.reflect)
         player:AddSoulHearts(-6)
         
         player:TryRemoveNullCostume(GODMODE.registry.costumes.t_sign_body)

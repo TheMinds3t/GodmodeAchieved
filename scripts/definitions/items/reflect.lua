@@ -8,7 +8,7 @@ item.encyc_entry = {
 		{str = "While held, Isaac's tears become a glass ball that always tries to impact Isaac."},
 		{str = "When used, gain a short window where all projectiles get deflected from you. If your own tear touches Isaac while this effect is active, the tear then increases in charge."},
 		{str = "When the tear increases in charge, a small AOE attack gets released around the tear and it gets harder to control the tear. If the tear is at its max charge stage, next time it contacts the player or enemy it will explode dealing clamp(10,Damage * 5,100) + 20 damage, release flames, and go back to the uncharged state."},
-		{str = "If the tear is charged at all, purple flames will be shot out of the tear dealing (1.0 + Damage / StageDepth / 13) / 2.0 based on what direction Isaac is shooting."},
+		{str = "If the tear is charged at all, purple flames will be shot out of the tear dealing (1.0 + Damage / StageDepth / 13 capped at 0.3) / 2.0 based on what direction Isaac is shooting."},
 		{str = "If the tear is charged at all, touching the tear without Reflect active will damage Isaac and discharge the tear, releasing the corresponding AOE attack. If Isaac touches the tear while Reflect is active, deals no damage and cycles the charge state like normal (if max charge, releases a safe player explosion at the tear's position)"},
 	},
 }
@@ -128,8 +128,12 @@ item.set_charge = function(sprite, tear, charge)
     tear:GetSprite():Play("RegularTear"..size,false)
 end
 
+item.familiar_control_flag = function(self, fam)
+    return fam and (GODMODE.registry.t_sign_familiar_tears[fam.Variant] == true) and fam.Player
+end
+
 item.tear_init = function(self, tear)
-    local player = tear.Parent and tear.Parent:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer()
+    local player = tear.Parent and tear.Parent:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToFamiliar() and item.familiar_control_flag(self, tear.SpawnerEntity:ToFamiliar())
 
     if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO ~= 0 then 
         item.discharge_tear(player, tear, false)
@@ -150,7 +154,7 @@ item.discharge_tear = function(player, tear, explode, reduce, fx, explode_src)
             -- damage range: 30-120
             -- formula: clamp(10,Damage * 5,100) + 20
             if Isaac.CountBosses() + Isaac.CountEnemies() > 0 then 
-                GODMODE.game:BombExplosionEffects(tear.Position,math.min(math.max(100,player.Damage * 5),10) + 20,TearFlags.TEAR_NORMAL, Color.Default, explode_src)
+                GODMODE.game:BombExplosionEffects(tear.Position,math.min(math.max(100,player.Damage * 5),10) + 20,player.TearFlags, Color.Default, explode_src)
             else 
                 Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BOMB_EXPLOSION,0,tear.Position,Vector.Zero,nil):ClearEntityFlags(EntityFlag.FLAG_APPEAR)
                 Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BOMB_EXPLOSION,0,tear.Position,Vector.Zero,nil):ClearEntityFlags(EntityFlag.FLAG_APPEAR)
@@ -187,19 +191,20 @@ item.shoot_fire = function(player, tear, ang, spd, lifemod)
     local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLUE_FLAME, 0, tear.Position, dir, player):ToEffect()
     effect:SetTimeout(math.floor(item.fire_lifebase * (lifemod or 1)))
     effect:SetColor(item.fire_col, 999, 1, false, true)
-    effect.CollisionDamage = (1.0 + player.Damage * GODMODE.level:GetAbsoluteStage() / 13.0) / 2.0
+    effect.CollisionDamage = (1.0 + math.min(0.33,player.Damage * GODMODE.level:GetAbsoluteStage() / 13.0)) / 2.0
 end
 
 item.tear_update = function(self, tear, data, sprite)
-    local player = tear.Parent and tear.Parent:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer()
+    local player = tear.Parent and tear.Parent:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToFamiliar() and item.familiar_control_flag(self, tear.SpawnerEntity:ToFamiliar())
 
     if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO ~= 0 then 
         local charge = tonumber(GODMODE.save_manager.get_ent_data(tear,"Charge",item.default_charge))
         local stats = item.fire_stats[charge]
         data.reflect_time = math.max(0,(data.reflect_time or 0) - 1)
 
-
         if tear:IsFrame(5,1) then 
+            item.set_charge(sprite,tear,charge)
+
             if (data.room_clear_dearm or false) == false and item.room_clear() == true then 
                 item.discharge_tear(player,tear,false,false,true,player)
                 item.set_charge(sprite,tear,0)
@@ -218,13 +223,7 @@ item.tear_update = function(self, tear, data, sprite)
             data.targ_dir = data.targ_dir:Resized(math.min(item.tear_max_speed,data.targ_dir:Length() / data.reflect_strength))
         elseif data.reflect_time > (item.tear_reflect_time - 2 + (1 - math.max(charge,1)) * 2) then
             local perc = data.reflect_time / item.tear_reflect_time
-            if false then --player:GetFireDirection() ~= Direction.NONE then 
-                data.targ_dir = Vector(0,item.tear_reflect_speed):Rotated(player:GetFireDirection()*90)
-            else 
-                data.targ_dir = tear.Position - player.Position
-            end
-
-            data.targ_dir = data.targ_dir:Resized(item.tear_reflect_speed * perc * (1.0 - (1 - math.max(charge,1)) * 0.6))
+            data.targ_dir = (tear.Position - player.Position):Resized(item.tear_reflect_speed * perc * (1.0 - (1 - math.max(charge,1)) * 0.6))
         end
 
         data.targ_dir = data.targ_dir:Resized(data.targ_dir:Length()*0.9)
@@ -255,11 +254,14 @@ item.tear_update = function(self, tear, data, sprite)
             local time = tonumber(GODMODE.save_manager.get_player_data(player,"ReflectActiveTime","0"))
             
             if time <= 0 and data.reflect_time <= 0 and charge > 0 then 
-                player:TakeDamage(1,0,EntityRef(player),20)
-                item.discharge_tear(player, tear, true, true)
+                if player.ControlsEnabled == true then 
+                    player:TakeDamage(1,DamageFlag.DAMAGE_FIRE,EntityRef(player),20)
+                end
+
+                item.discharge_tear(player, tear, player.ControlsEnabled, true, player:HasInvincibility(DamageFlag.DAMAGE_EXPLOSION) and player or nil)
             else
                 if charge >= 3 then 
-                    item.discharge_tear(player,tear,true,true,true,player)
+                    item.discharge_tear(player,tear,player.ControlsEnabled,true,true,player)
                     charge = -1
                 else 
                     item.discharge_tear(player,tear,false,false,true,player)
