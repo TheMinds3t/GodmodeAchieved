@@ -73,6 +73,21 @@ if GODMODE.validate_rgon() then
             GODMODE.log("Loaded Fallen Light/The Sign Completion mark sprite!")
         end
 
+        -- draw unlock conditions (to make RGON text not show for non-RGON users)
+        if GODMODE.sprites.unlock_sprite == nil then
+            GODMODE.sprites.unlock_sprite = Sprite()
+            GODMODE.sprites.unlock_sprite:Load("gfx/ui/main menu/unlock_overlay.anm2", true)
+            GODMODE.log("Loaded Unlock condition overlay sprite!")
+        end
+
+        local data = Isaac.GetPersistentGameData()
+
+        if not pause_menu and XMLData.GetEntryById(XMLNode.PLAYER, playertype).achievement ~= nil and GODMODE.achievements.char_map[playertype] ~= nil then 
+            GODMODE.sprites.unlock_sprite:SetFrame(player_name,1)
+            local render_pos = pos + Vector(160,122) 
+            GODMODE.sprites.unlock_sprite:Render(render_pos)
+        end
+
         -- render sign level
         if not pause_menu and playertype == GODMODE.registry.players.the_sign and MenuManager.GetActiveMenu() == MainMenuType.CHARACTER then 
             local kills = tonumber(GODMODE.save_manager.get_persistant_data("PalaceKills","0",true))

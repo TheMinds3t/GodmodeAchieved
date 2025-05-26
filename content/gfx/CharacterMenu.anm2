@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="5/22/2024 11:50:28 PM" Version="37" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="5/24/2025 2:51:16 PM" Version="38" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="charactermenugod.png" Id="0"/>
@@ -26,7 +26,7 @@
 		<Events/>
 	</Content>
 	<Animations DefaultAnimation="Recluse">
-		<Animation Name="Recluse" FrameNum="1" Loop="false">
+		<Animation Name="Recluse" FrameNum="2" Loop="false">
 			<RootAnimation>
 				<Frame XPosition="0" YPosition="0" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 			</RootAnimation>
@@ -67,6 +67,7 @@
 				<LayerAnimation LayerId="13" Visible="true"/>
 				<LayerAnimation LayerId="14" Visible="true"/>
 				<LayerAnimation LayerId="15" Visible="true">
+					<Frame XPosition="242" YPosition="184" XPivot="107" YPivot="28" XCrop="285" YCrop="320" Width="219" Height="59" XScale="100" YScale="100" Delay="1" Visible="false" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 					<Frame XPosition="242" YPosition="184" XPivot="107" YPivot="28" XCrop="285" YCrop="320" Width="219" Height="59" XScale="100" YScale="100" Delay="1" Visible="true" RedTint="255" GreenTint="255" BlueTint="255" AlphaTint="255" RedOffset="0" GreenOffset="0" BlueOffset="0" Rotation="0" Interpolated="false"/>
 				</LayerAnimation>
 			</LayerAnimations>

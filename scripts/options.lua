@@ -1642,18 +1642,55 @@ options.layout = {
     credits = include("scripts.definitions.credits").factory(options.back_button),
 }
 
+options.populate_options = function()
+    -- populate unlocks view
+    for key,val in pairs(GODMODE.achievements.item_map) do 
+        local config = Isaac.GetItemConfig():GetCollectible(key)
 
--- populate unlocks view
-for key,val in pairs(GODMODE.achievements.item_map) do 
-    local config = Isaac.GetItemConfig():GetCollectible(key)
+        if config and config:IsCollectible() and not config.Hidden then
+            local name = config.Name:lower()
 
-    if config and config:IsCollectible() and not config.Hidden then
-        local name = config.Name:lower()
+            table.insert(options.layout.unlocks.buttons, {
+                str = name,
+                choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false") == "true"],
+                variable = 'GodmodeUnlock'..name,
 
+                -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
+                -- It passes in all the same args as "func"
+                -- In this example, this button will be hidden if the "slider option" button above is set to its maximum value.
+                displayif = function(button, item, menuObj)
+                    if item and item.buttons then
+                        for _, btn in ipairs(item.buttons) do
+                            if btn.str == 'global bypass' and btn.setting == 1 then
+                                return false
+                            end
+                        end
+                    end
+
+                    return true
+                end,
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_persistant_data("Unlock."..val,options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'is',name,'unlocked?'}},
+                unlock_but = true,
+            })
+            table.insert(options.layout.unlocks.buttons, options.gap)
+        end
+    end
+
+    local non_item_unlocks = {{"chest infestors","ChestInfest","achievement_chest_infest"},{"sugar pills","SugarPills","achievement_sugar_pills"}}
+
+    for _,data in ipairs(non_item_unlocks) do 
         table.insert(options.layout.unlocks.buttons, {
-            str = name,
-            choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false") == "true"],
-            variable = 'GodmodeUnlock'..name,
+            str = data[1],
+            choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false") == "true"],
+            variable = 'GodmodeUnlock'..data[2],
 
             -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
             -- It passes in all the same args as "func"
@@ -1671,114 +1708,78 @@ for key,val in pairs(GODMODE.achievements.item_map) do
             end,
 
             load = function()
-                return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false")] or 2
+                return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false")] or 2
             end,
             store = function(var)
-                GODMODE.save_manager.set_persistant_data("Unlock."..val,options.bool_map[var],true)
+                GODMODE.save_manager.set_persistant_data("Unlock."..data[3],options.bool_map[var],true)
             end,
 
-            tooltip = {strset = {'is',name,'unlocked?'}},
             unlock_but = true,
+            tooltip = {strset = {'is',data[1],'unlocked?'}}
         })
         table.insert(options.layout.unlocks.buttons, options.gap)
     end
-end
 
-local non_item_unlocks = {{"chest infestors","ChestInfest","achievement_chest_infest"},{"sugar pills","SugarPills","achievement_sugar_pills"}}
-
-for _,data in ipairs(non_item_unlocks) do 
-    table.insert(options.layout.unlocks.buttons, {
-        str = data[1],
-        choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false") == "true"],
-        variable = 'GodmodeUnlock'..data[2],
-
-        -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
-        -- It passes in all the same args as "func"
-        -- In this example, this button will be hidden if the "slider option" button above is set to its maximum value.
-        displayif = function(button, item, menuObj)
-            if item and item.buttons then
-                for _, btn in ipairs(item.buttons) do
-                    if btn.str == 'global bypass' and btn.setting == 1 then
-                        return false
-                    end
-                end
-            end
-
-            return true
-        end,
+    table.insert(options.layout.unlocks.buttons, 1, options.gap)
+    table.insert(options.layout.unlocks.buttons, 1, options.gap)
+    table.insert(options.layout.unlocks.buttons, 1, {
+        str = 'global bypass',
+        choices = options.bypass_choices, setting = 2,
+        variable = 'GodmodeUnlocks',
 
         load = function()
-            return options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..data[3],"false")] or 2
+            return options.str_bool_map[GODMODE.save_manager.get_config("Unlocks","true")] or 2
         end,
         store = function(var)
-            GODMODE.save_manager.set_persistant_data("Unlock."..data[3],options.bool_map[var],true)
+            GODMODE.save_manager.set_config("Unlocks",options.bool_map[var],true)
         end,
 
         unlock_but = true,
-        tooltip = {strset = {'is',data[1],'unlocked?'}}
+        tooltip = {strset = {'bypass','godmode','unlock','requirements,','unlocking','all secrets'}}
     })
-    table.insert(options.layout.unlocks.buttons, options.gap)
+
+    table.insert(options.layout.unlocks.buttons, options.back_option)
+
+
+
+    options.layout_key = {
+        Item = options.layout.main, -- This is the initial item of the menu, generally you want to set it to your main item
+        Main = 'main', -- The main item of the menu is the item that gets opened first when opening your mod's menu.
+
+        -- These are default state variables for the menu; they're important to have in here, but you don't need to change them at all.
+        Idle = false,
+        MaskAlpha = 1,
+        Settings = {},
+        SettingsChanged = false,
+        Path = {},
+    }
+
+
+    DeadSeaScrollsMenu.AddMenu("Godmode Achieved", {
+        -- The Run, Close, and Open functions define the core loop of your menu. Once your menu is
+        -- opened, all the work is shifted off to your mod running these functions, so each mod can have
+        -- its own independently functioning menu. The `init` function returns a table with defaults
+        -- defined for each function, as "runMenu", "openMenu", and "closeMenu". Using these defaults
+        -- will get you the same menu you see in Bertran and most other mods that use DSS. But, if you
+        -- did want a completely custom menu, this would be the way to do it!
+
+        -- This function runs every render frame while your menu is open, it handles everything!
+        -- Drawing, inputs, etc.
+        Run = options.dssmod.runMenu,
+        -- This function runs when the menu is opened, and generally initializes the menu.
+        Open = options.dssmod.openMenu,
+        -- This function runs when the menu is closed, and generally handles storing of save data /
+        -- general shut down.
+        Close = options.dssmod.closeMenu,
+        -- If UseSubMenu is set to true, when other mods with UseSubMenu set to false / nil are enabled,
+        -- your menu will be hidden behind an "Other Mods" button.
+        -- A good idea to use to help keep menus clean if you don't expect players to use your menu very
+        -- often!
+        UseSubMenu = false,
+        Directory = options.layout,
+        DirectoryKey = options.layout_key
+    })
 end
-
-table.insert(options.layout.unlocks.buttons, 1, options.gap)
-table.insert(options.layout.unlocks.buttons, 1, options.gap)
-table.insert(options.layout.unlocks.buttons, 1, {
-    str = 'global bypass',
-    choices = options.bypass_choices, setting = 2,
-    variable = 'GodmodeUnlocks',
-
-    load = function()
-        return options.str_bool_map[GODMODE.save_manager.get_config("Unlocks","true")] or 2
-    end,
-    store = function(var)
-        GODMODE.save_manager.set_config("Unlocks",options.bool_map[var],true)
-    end,
-
-    unlock_but = true,
-    tooltip = {strset = {'bypass','godmode','unlock','requirements,','unlocking','all secrets'}}
-})
-
-table.insert(options.layout.unlocks.buttons, options.back_option)
-
-
-
-options.layout_key = {
-    Item = options.layout.main, -- This is the initial item of the menu, generally you want to set it to your main item
-    Main = 'main', -- The main item of the menu is the item that gets opened first when opening your mod's menu.
-
-    -- These are default state variables for the menu; they're important to have in here, but you don't need to change them at all.
-    Idle = false,
-    MaskAlpha = 1,
-    Settings = {},
-    SettingsChanged = false,
-    Path = {},
-}
-
-
-DeadSeaScrollsMenu.AddMenu("Godmode Achieved", {
-    -- The Run, Close, and Open functions define the core loop of your menu. Once your menu is
-    -- opened, all the work is shifted off to your mod running these functions, so each mod can have
-    -- its own independently functioning menu. The `init` function returns a table with defaults
-    -- defined for each function, as "runMenu", "openMenu", and "closeMenu". Using these defaults
-    -- will get you the same menu you see in Bertran and most other mods that use DSS. But, if you
-    -- did want a completely custom menu, this would be the way to do it!
-
-    -- This function runs every render frame while your menu is open, it handles everything!
-    -- Drawing, inputs, etc.
-    Run = options.dssmod.runMenu,
-    -- This function runs when the menu is opened, and generally initializes the menu.
-    Open = options.dssmod.openMenu,
-    -- This function runs when the menu is closed, and generally handles storing of save data /
-    -- general shut down.
-    Close = options.dssmod.closeMenu,
-    -- If UseSubMenu is set to true, when other mods with UseSubMenu set to false / nil are enabled,
-    -- your menu will be hidden behind an "Other Mods" button.
-    -- A good idea to use to help keep menus clean if you don't expect players to use your menu very
-    -- often!
-    UseSubMenu = false,
-    Directory = options.layout,
-    DirectoryKey = options.layout_key
-})
 
 
 return options

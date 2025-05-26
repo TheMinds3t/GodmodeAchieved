@@ -1073,6 +1073,7 @@ if GODMODE.validate_rgon() then
         t_deli = Isaac.GetAchievementIdByName("GODMODE_TDeli"),
         t_elohim = Isaac.GetAchievementIdByName("GODMODE_TElohim"),
         t_gehazi = Isaac.GetAchievementIdByName("GODMODE_TGehazi"),
+        t_sign = Isaac.GetAchievementIdByName("GODMODE_TSign"),
 
         -- regular char unlocks
         the_sign = Isaac.GetAchievementIdByName("GODMODE_TheSign"),

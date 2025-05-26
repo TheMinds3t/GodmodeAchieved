@@ -420,6 +420,9 @@ if GODMODE.validate_rgon() then
         [GODMODE.registry.players.t_elohim] = GODMODE.registry.achievements.t_elohim,
         [GODMODE.registry.players.elohim] = GODMODE.registry.achievements.t_elohim,
         [GODMODE.registry.players.t_gehazi] = GODMODE.registry.achievements.t_gehazi,
+        [GODMODE.registry.players.gehazi] = GODMODE.registry.achievements.t_gehazi,
+        [GODMODE.registry.players.t_sign] = GODMODE.registry.achievements.t_sign,
+        [GODMODE.registry.players.the_sign] = GODMODE.registry.achievements.t_sign,
     }
 
     ret.sync_repentogon_with_godmode = function()
