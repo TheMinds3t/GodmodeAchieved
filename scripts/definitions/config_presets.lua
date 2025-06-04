@@ -122,6 +122,7 @@ con_pre.gen_vanilla_presets = function()
         ["LighterTreasure"] = "false"
     }
 end
+
 local format_preset_name = function(name,custom)
     return string.lower((custom and "custom_" or "")..name)
 end

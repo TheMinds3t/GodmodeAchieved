@@ -876,7 +876,7 @@ reg.challenges = {
     out_of_time = Isaac.GetChallengeIdByName("[GOD] Out Of Time"),
     sugar_rush = Isaac.GetChallengeIdByName("[GOD] Sugar Rush!"),
     the_galactic_approach = Isaac.GetChallengeIdByName("[GOD] The Galactic Approach"),
-    dystopia = Isaac.GetChallengeIdByName("[GOD] Dystopia"),
+    t_sign_preview = Isaac.GetChallengeIdByName("[GOD] Tainted Sign Preview!"),
 }
 
 reg.players = {

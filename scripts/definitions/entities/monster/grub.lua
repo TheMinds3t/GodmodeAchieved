@@ -32,7 +32,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
     if data.attack_time <= 0 and GODMODE.room:CheckLine(ent.Position, player.Position, 1) == true and not sprite:IsPlaying("Attack") then
         sprite:Play("Attack",true)
-        data.attack_time = 30
+        data.attack_time = 30 + math.ceil(ent:GetDropRNG():RandomFloat() * 20)
     end
 
     ent.Velocity = ent.Velocity * 0.4 + ti:Resized(math.max(0.3,math.min(ti:Length()/104.0,1.5)))*spd
@@ -40,11 +40,15 @@ monster.npc_update = function(self, ent, data, sprite)
     if sprite:IsEventTriggered("Fire") then
         ent:ToNPC():PlaySound(SoundEffect.SOUND_CHILD_HAPPY_ROAR_SHORT, 1.0, 1, false, 0.4 + ent:GetDropRNG():RandomFloat() * 0.2)
         for i=0, 2 do
-            local spd = 3.0
+            local spd = 8.0
             local ang = player.Position - ent.Position
             local f = math.rad(ang:GetAngleDegrees() - 27 + i * 27)
             ang = Vector(math.cos(f)*spd,math.sin(f)*spd)
-            Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position + ang,ang*spd,ent)
+            local proj = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position + ang,ang,ent)
+            proj = proj:ToProjectile()
+            proj.ProjectileFlags = proj.ProjectileFlags | ProjectileFlags.CHANGE_VELOCITY_AFTER_TIMEOUT
+            proj.ChangeTimeout = 9
+            proj.ChangeVelocity = spd * 0.75
         end
     end
 

@@ -86,49 +86,70 @@ else
     end
 
     GODMODE.mod_object.load_core = function(self)
-        GODMODE.util = include("scripts.util")
+        local sm_flag = true 
 
-        GODMODE.godhooks = include("scripts.godhook_converter")
-        GODMODE.items = include("scripts.definitions.itemlist")
-        GODMODE.monsters = include("scripts.definitions.monsterlist")
-        GODMODE.godhooks.register_items_and_ents()
-        
-        GODMODE.alt_entries = include("scripts.definitions.alt_entries")
-        GODMODE.players = include("scripts.definitions.players")
-        GODMODE.armor_blacklist = include("scripts.definitions.armor_blacklist")
-        GODMODE.room_override = include("scripts.room_override")
-        GODMODE.roomgen = include("scripts.roomgen")
-        GODMODE.loaded_rooms = include("scripts.definitions.roomlist")
-        GODMODE.bosses = include("scripts.definitions.bosslist")
-        GODMODE.cards_pills = include("scripts.definitions.cards_pills")
-        GODMODE.d10 = include("scripts.definitions.d10")
-        GODMODE.itempools = include("scripts.definitions.itempools")
-        GODMODE.achievements = include("scripts.definitions.achievements")
-        GODMODE.menu = include("scripts.godmodemenucore")
-        GODMODE.options = include("scripts.options") -- DSS
-        GODMODE.repentogon = include("scripts.definitions.repentogon")
-        GODMODE.special_items = include("scripts.definitions.special_items")
-        GODMODE.special_items:fill_item_lists()
-        GODMODE.registry = include("scripts.definitions.registry")
-        GODMODE.config_presets = include("scripts.definitions.config_presets")
-        GODMODE.config_presets.gen_vanilla_presets()
-        GODMODE.date_events = include("scripts.definitions.date_events")
-        GODMODE.date_events.get_active_events(true)
-        
-        GODMODE.shader_params = GODMODE.shader_params or {}
-        GODMODE.shader_params.godmode_trinket_time = 0
-        GODMODE.shader_params.divine_wrath_time = 0
+        if GODMODE.save_manager == nil then 
+            GODMODE.log("[ERROR] Save manager does not exist, attempting to load...")
 
-        if GODMODE.preloads then 
-            for _,func in ipairs(preloads) do 
-                func()
+            GODMODE.save_manager = require("scripts.save_manager")
+            sm_flag = false
+            if GODMODE.save_manager:init() then 
+                sm_flag = true 
+                GODMODE.log("[ERROR] success loading save manager!")
+            end  -- attempt to force-generate these functions first
+        end
+
+        if sm_flag == true then 
+            GODMODE.util = include("scripts.util")
+
+            GODMODE.godhooks = include("scripts.godhook_converter")
+            GODMODE.items = include("scripts.definitions.itemlist")
+            GODMODE.monsters = include("scripts.definitions.monsterlist")
+            GODMODE.godhooks.register_items_and_ents()
+            
+            GODMODE.alt_entries = include("scripts.definitions.alt_entries")
+            GODMODE.players = include("scripts.definitions.players")
+            GODMODE.armor_blacklist = include("scripts.definitions.armor_blacklist")
+            GODMODE.room_override = include("scripts.room_override")
+            GODMODE.roomgen = include("scripts.roomgen")
+            GODMODE.loaded_rooms = include("scripts.definitions.roomlist")
+            GODMODE.bosses = include("scripts.definitions.bosslist")
+            GODMODE.cards_pills = include("scripts.definitions.cards_pills")
+            GODMODE.d10 = include("scripts.definitions.d10")
+            GODMODE.itempools = include("scripts.definitions.itempools")
+            GODMODE.achievements = include("scripts.definitions.achievements")
+            GODMODE.menu = include("scripts.godmodemenucore")
+            GODMODE.options = include("scripts.options") -- DSS
+            GODMODE.repentogon = include("scripts.definitions.repentogon")
+            GODMODE.special_items = include("scripts.definitions.special_items")
+            GODMODE.special_items:fill_item_lists()
+            GODMODE.registry = include("scripts.definitions.registry")
+            GODMODE.config_presets = include("scripts.definitions.config_presets")
+            GODMODE.config_presets.gen_vanilla_presets()
+            GODMODE.date_events = include("scripts.definitions.date_events")
+            GODMODE.date_events.get_active_events(true)
+            
+            GODMODE.shader_params = GODMODE.shader_params or {}
+            GODMODE.shader_params.godmode_trinket_time = 0
+            GODMODE.shader_params.divine_wrath_time = 0
+
+            if GODMODE.preloads then 
+                for _,func in ipairs(preloads) do 
+                    func()
+                end
             end
+
+            GODMODE.options.populate_options()
+        else 
+            GODMODE.log("[ERROR] Save manager does not exist, this means Godmode cannot function as intended. Aborting core loading sequence...", true)
+            return false
         end
     end
 
     GODMODE.save_manager = require("scripts.save_manager")
+    -- if not GODMODE.mod_object:load_core() then return end -- stop execution if the save manager doesn't exist
     GODMODE.mod_object:load_core()
-    include("scripts.mod_integration") --EID, ModConfig, StageAPI, Encyclopedia, Enhanced Boss Bars, MiniMapAPI, Soundtrack Menu, Mod Music Callback (MMC), Preappearance, 
+    include("scripts.mod_integration") --EID, ModConfig, StageAPI, Encyclopedia, Enhanced Boss Bars, MiniMapAPI, Soundtrack Menu, Mod Music Callback (MMC), Preappearance,
 
     GODMODE.persistent_state = {
         none = 0,
@@ -1132,6 +1153,7 @@ else
                 for _, item in ipairs(GODMODE.special_items.devil_list) do 
                     GODMODE.save_manager.add_player_list_data(player, "DevilCollected", item.ID)
                 end
+
             end)
 
             GODMODE.godhooks.call_hook("first_level")
@@ -1139,6 +1161,8 @@ else
             GODMODE.save_manager.clear_key("ObservatoryGridIdx")
             GODMODE.save_manager.clear_key("GildedChance")
             GODMODE.cached_observatory_ids = nil
+
+
         end
 
         if GODMODE.level:GetStage() == LevelStage.STAGE4_3 and GODMODE.save_manager.get_config("BlueWombRework","true",true) == "true" then
@@ -1715,8 +1739,8 @@ else
 
         if #sugar_pill_entries > 0 then 
             for _,entry in ipairs(sugar_pill_entries) do 
-                if entry and entry.player then 
-                    entry.player:GetEffects():RemoveCollectibleEffect(entry.coll)
+                if entry and entry.player and entry.coll then 
+                    entry.player:GetEffects():RemoveCollectibleEffect(entry.coll, 1)
                 end
             end
         end
@@ -2080,11 +2104,15 @@ else
     end
 
     function GODMODE.mod_object:player_init(player)
-        
+
     end
 
     function GODMODE.mod_object:player_update(player)
         local data = GODMODE.get_ent_data(player)
+
+        if GODMODE.game.Challenge == GODMODE.registry.challenges.t_sign_preview and player:GetPlayerType() ~= GODMODE.registry.players.t_sign then 
+            player:ChangePlayerType(GODMODE.registry.players.t_sign)
+        end
 
         --little code experiment i had going on
         if GODMODE.validate_rgon() and GODMODE.save_manager.get_config("AutoChargeAttack","false") == "true" and false then  

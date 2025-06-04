@@ -82,7 +82,7 @@ if GODMODE.validate_rgon() then
 
         local data = Isaac.GetPersistentGameData()
 
-        if not pause_menu and XMLData.GetEntryById(XMLNode.PLAYER, playertype).achievement ~= nil and GODMODE.achievements.char_map[playertype] ~= nil then 
+        if not pause_menu and XMLData.GetEntryById(XMLNode.PLAYER, playertype).achievement ~= nil and GODMODE.achievements.char_map[playertype] ~= nil and not data:Unlocked(GODMODE.achievements.char_map[playertype]) then 
             GODMODE.sprites.unlock_sprite:SetFrame(player_name,1)
             local render_pos = pos + Vector(160,122) 
             GODMODE.sprites.unlock_sprite:Render(render_pos)

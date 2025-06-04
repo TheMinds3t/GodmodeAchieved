@@ -1652,7 +1652,7 @@ options.populate_options = function()
 
             table.insert(options.layout.unlocks.buttons, {
                 str = name,
-                choices = options.unlock_choices, setting = options.str_bool_map[GODMODE.save_manager.get_persistant_data("Unlock."..val,"false") == "true"],
+                choices = options.unlock_choices, setting = options.str_bool_map[false],
                 variable = 'GodmodeUnlock'..name,
 
                 -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
