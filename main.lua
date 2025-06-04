@@ -239,6 +239,21 @@ else
             TheFuture.ModdedTaintedCharacterDialogue["Tainted Elohim"] = {"DONT HURT ME PLEASE!","I see your eyes, I'll just let you through"}
             TheFuture.ModdedCharacterDialogue["The Sign"] = {"your future is bleak, dang...","enjoy it while it lasts..."}
         end
+
+        -- notify player of date related events
+        local d_events = GODMODE.date_events.active_events
+
+        if d_events and #d_events > 0 then 
+            for i=1,#d_events do 
+                local event = d_events[i]
+
+                if event and event.name and event.date and event.date.month and event.date.day then 
+                    GODMODE.util.schedule_function(function()
+                        GODMODE.game:GetHUD():ShowFortuneText(" ("..event.date.month.."."..event.date.day..") "..event.name.."! ")
+                    end, -10 + 40 * i)
+                end
+            end
+        end       
     end
 
     function GODMODE.mod_object:game_end(won)
@@ -2104,7 +2119,7 @@ else
     end
 
     function GODMODE.mod_object:player_init(player)
-
+ 
     end
 
     function GODMODE.mod_object:player_update(player)
