@@ -124,6 +124,7 @@ else
             GODMODE.special_items = include("scripts.definitions.special_items")
             GODMODE.special_items:fill_item_lists()
             GODMODE.registry = include("scripts.definitions.registry")
+            GODMODE.api = include("scripts.mod_api")
             GODMODE.config_presets = include("scripts.definitions.config_presets")
             GODMODE.config_presets.gen_vanilla_presets()
             GODMODE.date_events = include("scripts.definitions.date_events")
@@ -334,6 +335,7 @@ else
 
             if GODMODE.cur_splash:IsEventTriggered("LuciferTransition") then --palace!
                 Isaac.ExecuteCommand("cstage IvoryPalace")
+                GODMODE.generate_ivory_map()
             end
             
             if GODMODE.cur_splash:IsEventTriggered("Start") then 
@@ -1409,15 +1411,10 @@ else
                     GODMODE.set_palace_stage(GODMODE.get_palace_stage())                        
 
                     GODMODE.util.macro_on_grid(GridEntityType.GRID_DOOR,-1,function(grident,ind,pos) 
-
-                        if grident:ToDoor().TargetRoomType ~= RoomType.ROOM_DEFAULT then 
+                        if grident:ToDoor().TargetRoomType ~= RoomType.ROOM_DEFAULT and grident:ToDoor().TargetRoomType ~= RoomType.ROOM_NULL then 
                             GODMODE.room:RemoveGridEntity(ind,0,true)
                             grident:Update()    
                         end
-                    end)
-                else
-                    GODMODE.util.macro_on_players(function(player) 
-                        player.Position = room:GetCenterPos() + Vector(-24,160)
                     end)
                 end
             elseif room:GetType() ~= RoomType.ROOM_SECRET and room:IsFirstVisit() then 
@@ -1431,9 +1428,10 @@ else
                         indicator:GetSprite().Rotation = angle + 90
                     end
                 end
-            elseif room:GetType() == RoomType.ROOM_SECRET and GODMODE.util.count_enemies(nil,GODMODE.registry.entities.masked_angel_statue.type,GODMODE.registry.entities.masked_angel_statue.variant,nil) == 0 and room:IsFirstVisit() then 
-                local statue = Isaac.Spawn(GODMODE.registry.entities.masked_angel_statue.type,GODMODE.registry.entities.masked_angel_statue.variant,1,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil)
-                statue:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+            -- elseif room:GetType() == RoomType.ROOM_SECRET and GODMODE.util.count_enemies(nil,GODMODE.registry.entities.masked_angel_statue.type,GODMODE.registry.entities.masked_angel_statue.variant,nil) == 0 and room:IsFirstVisit() then 
+            --     local statue = Isaac.Spawn(GODMODE.registry.entities.masked_angel_statue.type,GODMODE.registry.entities.masked_angel_statue.variant,1,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil)
+            --     statue:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+            -- With the new custom layout THIS WILL NEVER BE A PROBLEM AGAIN \o/
             end
         end
         
@@ -1578,43 +1576,7 @@ else
                 local cur_rewards = tonumber(GODMODE.save_manager.get_data("ObservatoryRewards","0"))
 
                 if GODMODE.room:IsFirstVisit() then 
-                    local index = -1
-                    GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,nil,nil,function(pickup) 
-                        local rng = pickup:GetDropRNG()
-                        local outcome = rng:RandomFloat()
-                        local reward = {}
-
-                        if pickup:ToPickup().Price > 0 then 
-                            if outcome <= 0.125 then 
-                                local item = GODMODE.itempools.get_from_pool("observatory_souls",rng,false)
-                                reward = {pickup.Type,PickupVariant.PICKUP_TAROTCARD,item}
-                            elseif outcome <= 0.25 then 
-                                local item = GODMODE.itempools.get_from_pool("observatory_tarots",rng,false)
-                                reward = {pickup.Type,PickupVariant.PICKUP_TAROTCARD,item}
-                            else 
-                                local item = GODMODE.itempools.get_from_pool("observatory",rng,false)
-                                reward = {pickup.Type,PickupVariant.PICKUP_TRINKET,item}
-                            end
-                        elseif pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and not GODMODE.itempools.is_in_pool("observatory_items",subtype) then 
-                            if outcome <= 0.5 then 
-                                local item = GODMODE.itempools.get_from_pool("observatory",rng,false)
-                                reward = {pickup.Type,PickupVariant.PICKUP_TRINKET,item}
-                            else 
-                                local item = GODMODE.itempools.get_from_pool("observatory_items",rng,false)
-                                reward = {pickup.Type,pickup.Variant,item}
-                            end
-                        end
-
-                        if #reward > 0 then 
-                            pickup:ToPickup():Morph(reward[1],reward[2],reward[3])
-                        end
-    
-                        if GODMODE.itempools.is_in_pool("observatory",pickup.SubType) or GODMODE.itempools.is_in_pool("observatory_items",pickup.SubType)
-                        or GODMODE.itempools.is_in_pool("observatory_tarots",pickup.SubType) or GODMODE.itempools.is_in_pool("observatory_souls",pickup.SubType) then 
-                            index = (index == -1 and GODMODE.util.get_options_index(pickup) or index)
-                            pickup:ToPickup().OptionsPickupIndex = index
-                        end
-                    end)    
+                    GODMODE.api.create_observatory_loot()
                 end
 
                 -- -- populate with trinket choices
@@ -1747,18 +1709,18 @@ else
             end
         end
 
-        local sugar_pill_entries = GODMODE.save_manager.get_list_data("TempRoomColls",false,function(entry) 
-            local args = GODMODE.util.string_split(entry,",")
-            return {player=GODMODE.util.get_player_by_seed(tonumber(args[1])),coll=tonumber(args[2])} 
-        end)
+        -- local sugar_pill_entries = GODMODE.save_manager.get_list_data("TempRoomColls",false,function(entry) 
+        --     local args = GODMODE.util.string_split(entry,",")
+        --     return {player=GODMODE.util.get_player_by_seed(tonumber(args[1])),coll=tonumber(args[2])} 
+        -- end)
 
-        if #sugar_pill_entries > 0 then 
-            for _,entry in ipairs(sugar_pill_entries) do 
-                if entry and entry.player and entry.coll then 
-                    entry.player:GetEffects():RemoveCollectibleEffect(entry.coll, 1)
-                end
-            end
-        end
+        -- if #sugar_pill_entries > 0 then 
+        --     for _,entry in ipairs(sugar_pill_entries) do 
+        --         if entry and entry.player and entry.coll then 
+        --             entry.player:GetEffects():RemoveCollectibleEffect(entry.coll, 1)
+        --         end
+        --     end
+        -- end
     end
 
     function GODMODE.mod_object:room_rewards(rng, pos)
@@ -2150,6 +2112,8 @@ else
                 data.prev_weapon_charge = weapon:GetCharge()
             end
         end
+
+        GODMODE.save_manager.set_player_data(player,"LastPillCol",player:GetPill(0))
         
         if GODMODE.birthday_mode and player:GetCollectibleNum(GODMODE.registry.items.party_hat) == 0 then 
             player:AddCollectible(GODMODE.registry.items.party_hat)
@@ -2860,11 +2824,16 @@ else
         return false
     end
 
-    GODMODE.get_observatory_ids = function()
+    function GODMODE.get_observatory_ids()
         if GODMODE.cached_observatory_ids == nil then 
             local ret = {}
             GODMODE.save_manager.get_list_data("ObservatoryGridIdx",nil,function(val) 
-                ret[tonumber(val)] = true
+                if val and tonumber(val) ~= nil then 
+                    ret[tonumber(val)] = true
+                else 
+                    GODMODE.log("[ERROR] invalid value inside of \'ObservatoryGridIdx\', value is \'"..tostring(val).."\'")
+                end
+
                 return {}
             end)
             

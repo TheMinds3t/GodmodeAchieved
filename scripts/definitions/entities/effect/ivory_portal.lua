@@ -5,7 +5,7 @@ monster.variant = GODMODE.registry.entities.ivory_portal.variant
 
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
-        if GODMODE.is_at_palace and (not GODMODE.is_at_palace() or (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ERROR) and ent.SubType == 0 
+        if ent.SubType == 0 
             or ent.SubType == 1 and GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather, true) > 0 then 
             data.persistent_state = GODMODE.persistent_state.single_room
         end
@@ -63,14 +63,13 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
                 end
             elseif StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then  
                 if GODMODE.is_at_palace and GODMODE.is_at_palace() == true then
-                    GODMODE.log("palace!",true)
                     local rt = (GODMODE.room_type or GODMODE.room:GetType())
 
                     if rt == RoomType.ROOM_ERROR then --teleport to previous room
-                        GODMODE.log("palace error!",true)
+                        GODMODE.log("escape palace error!")
                         GODMODE.game:StartRoomTransition(GODMODE.level:GetPreviousRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
                     else -- teleport to FL fight
-                        GODMODE.log("palace boss!",true)
+                        GODMODE.log("enter palace boss!")
                         Isaac.ExecuteCommand("croom 1000 IvoryPalace-General")
                         StageAPI.PlayBossAnimation(StageAPI.GetBossData("IvoryPalace_Angelusossa"))
                         local pos = (GODMODE.room_center or GODMODE.room:GetCenterPos())+Vector(0,96)

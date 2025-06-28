@@ -351,18 +351,15 @@
         <bestiary transform="0,3,1" anim="Hop" />
         <gibs amount="5" blood="1" bone="0" eye="1" gut="0" large="0"/>
     </entity>
-    <entity anm2path="26_parabit.anm2" baseHP="3" tags="" boss="0" champion="0" collisionDamage="1" collisionMass="10" collisionRadius="12" friction="1" id="58" name="Para-Bit" numGridCollisionPoints="12" shadowSize="15" stageHP="1" variant="10" subtype="700" portrait="29">
+    <entity anm2path="26_parabit.anm2" baseHP="3" tags="" boss="0" champion="0" collisionDamage="1" collisionMass="10" collisionRadius="12" friction="1" id="58" name="Para-Bit" numGridCollisionPoints="12" shadowSize="0" stageHP="1" variant="10" subtype="700" portrait="29">
         <bestiary transform="0,0,1" anim="Walk" />
         <gibs amount="3" blood="1" bone="0" eye="1" gut="0" large="0"/>
     </entity>
-
-
     <entity anm2path="33_devil_lock.anm2" baseHP="1" boss="0" champion="0" collisionDamage="0" collisionMass="100" collisionRadius="13" friction="1" id="202" name="Devil Lock" numGridCollisionPoints="0" shadowSize="24" stageHP="0" variant="700" shutdoors="false" portrait="37" tags="noreroll">
 		<bestiary transform="0,0,1" anim="Appear" />
         <gibs amount="6" blood="0" bone="0" eye="0" gut="0" large="0" rock="1" dust="1" />
 		<preload-snd id="262" /> <!-- stoneshoot -->
     </entity>
-
     <entity anm2path="37_gatekeeper.anm2" baseHP="50" shieldStrength="20" boss="0" champion="0" collisionDamage="0" collisionMass="20" collisionRadius="13" friction="1" id="700" name="Stifled Gatekeeper" numGridCollisionPoints="12" shadowSize="14" stageHP="0" variant="37" subtype="0" portrait="41" shutdoors="false">
 		<bestiary transform="0,0,1" anim="MoveV" overlay="Idle" />
         <gibs amount="12" blood="1" bone="1" eye="0" gut="1" large="1" />
@@ -581,23 +578,23 @@
         <preload-snd id="119"/>
     </entity>
 
-    <entity anm2path="121_the_ritual.anm2" baseHP="1400" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="The Ritual" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="121" portrait="57" gridCollision="walls">
+    <entity anm2path="121_the_ritual.anm2" baseHP="1000" shieldStrength="40" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="The Ritual" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="121" portrait="57" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle3" />
     </entity>
     <entity anm2path="121_candle.anm2" baseHP="0" tags="nodelirium noreroll" boss="0" champion="0" collisionDamage="1" collisionMass="16" collisionRadius="8" friction="1" id="700" name="The Ritual's Candle" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="121" subtype="1" portrait="58" gridCollision="walls">
     </entity>
     
-    <entity anm2path="122_the_sacred_soul.anm2" baseHP="2300" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Soul" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="122" portrait="59" gridCollision="walls">
+    <entity anm2path="122_the_sacred_soul.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Soul" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="122" portrait="59" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
-    <entity anm2path="123_the_sacred_mind.anm2" baseHP="2300" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Mind" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="123" portrait="60" gridCollision="walls">
+    <entity anm2path="123_the_sacred_mind.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Mind" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="123" portrait="60" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
-    <entity anm2path="124_the_sacred_body.anm2" baseHP="2300" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Body" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="124" portrait="61" gridCollision="walls">
+    <entity anm2path="124_the_sacred_body.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="The Sacred Body" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="124" portrait="61" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle" />
     </entity>
 
-    <entity anm2path="125_souleater.anm2" baseHP="2000" shieldStrength="30" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="Souleater" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="125" portrait="62" gridCollision="walls">
+    <entity anm2path="125_souleater.anm2" baseHP="2500" shieldStrength="40" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="Souleater" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="125" portrait="62" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Idle" />
         <gibs amount="20" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
@@ -611,7 +608,7 @@
         <bestiary transform="0,0,1" anim="Idle" />
         <gibs amount="16" blood="1" bone="0" eye="1" gut="1" large="0"/>
     </entity>
-    <entity anm2path="127_grand_marshall_new.anm2" baseHP="2000" shieldStrength="30" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="The Grand Marshall" numGridCollisionPoints="12" shadowSize="32" stageHP="0" variant="127" portrait="64" gridCollision="walls">
+    <entity anm2path="127_grand_marshall_new.anm2" baseHP="2500" shieldStrength="100" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="The Grand Marshall" numGridCollisionPoints="12" shadowSize="32" stageHP="0" variant="127" portrait="64" gridCollision="walls">
         <bestiary transform="0,0,1" anim="Attack1" />
         <gibs amount="50" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
@@ -673,6 +670,10 @@
     </entity>
     <entity anm2path="effect_aztec_shield.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="16" friction="1" id="1000" name="Aztec Shield" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="704" subtype="1" gridCollision="none"  shutdoors="false">
     </entity>
+    <entity anm2path="effect_tear_gas.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="0" friction="1" id="1000" name="Tear Gas Can" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="706" subtype="0" shutdoors="false">
+    </entity>
+    <entity anm2path="effect_tear_gas.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="0" friction="1" id="1000" name="Tear Gas Cloud" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="706" subtype="1" gridCollision="none" shutdoors="false">
+    </entity>
 
     <!-- MACHINES -->
     <entity anm2path="mach_unlock_pedestal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="4" collisionRadius="12" friction="1" id="5" name="[GODMODE] Unlock Pedestal" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="703" shutdoors="false">
@@ -710,6 +711,9 @@
     </entity>
     <entity anm2path="effect_soft_serve_puddle.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="15" friction="1" id="1000" name="Soft Serve Puddle (Dark Brown)" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="700" subtype="5" gridCollision="none"  shutdoors="false">
     </entity>
+    <entity anm2path="effect_soft_serve_puddle.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="15" friction="1" id="1000" name="Player Trail FX" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="701" subtype="0" gridCollision="none" shutdoors="false">
+    </entity>
+
     <entity anm2path="effect_soft_serve_puddle.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="15" friction="1" id="1000" name="Player Trail FX" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="701" subtype="0" gridCollision="none" shutdoors="false">
     </entity>
 
@@ -763,6 +767,11 @@
     </entity>
     <entity anm2path="grid/fake_god.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="30" friction="1" id="700" name="Fake God" numGridCollisionPoints="20" shadowSize="0" stageHP="0" variant="218" subtype="1" gridCollision="none" shutdoors="false">
     </entity>
+    <entity anm2path="grid/luc/boss_lock.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="64" friction="1" id="700" name="Fallen Light Lock" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="218" subtype="2" gridCollision="none" shutdoors="false">
+    </entity>
+    <entity anm2path="grid/luc/lock_torch.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="18" friction="1" id="700" name="Ivory Torch" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="218" subtype="3" shutdoors="false">
+    </entity>
+
     <entity anm2path="grid/mask_statue.anm2" baseHP="10000" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="24" friction="1" id="700" name="Masked Angel Statue" numGridCollisionPoints="20" shadowSize="0" stageHP="0" variant="219" gridCollision="none" shutdoors="false">
     </entity>
     <entity anm2path="famil_parrot.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Keepah (Shop Parrot)" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="220" gridCollision="walls" shutdoors="false">
@@ -775,8 +784,9 @@
     </entity>    
     <entity anm2path="grid_stone_beggar_coin.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="9999" collisionRadius="16" friction="1" id="700" name="Stone Beggar (Coin)" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="221" gridCollision="walls" portrait="75" subtype="3" shutdoors="true">
     </entity>    
-    <entity anm2path="grid/luc/palace_mural.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="5" name="Lucifer's Palace Mural" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="705" gridCollision="none" shutdoors="false">
+    <entity anm2path="grid/luc/palace_mural.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="5" name="Lucifer's Palace Mural" numGridCollisionPoints="0" shadowSize="12" stageHP="0" variant="710" gridCollision="none" shutdoors="false">
     </entity>
+
     <entity anm2path="grid_lucifer_portal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Ivory Portal" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="223" gridCollision="none" shutdoors="false">
     </entity>
     <entity anm2path="grid_correction_portal.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="12" friction="1" id="700" name="Correction Portal" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="223" subtype="1" gridCollision="none" shutdoors="false">

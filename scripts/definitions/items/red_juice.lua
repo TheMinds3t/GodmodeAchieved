@@ -16,7 +16,6 @@ local decay_time = 30.0 * 30.0
 local max_stacks = 20
 
 item.eval_cache = function(self, player,cache,data)
-    local num = player:GetCollectibleNum(item.instance)
 	local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
 
     if cache == CacheFlag.CACHE_LUCK then 
@@ -62,6 +61,13 @@ end
 item.room_rewards = function(self)
 	local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
 	GODMODE.save_manager.set_data("RedJuiceDistort", math.min(1,distort-1.0 / max_stacks), true)
+
+	GODMODE.util.macro_on_players(function(player) 
+		local luck = tonumber(GODMODE.save_manager.get_player_data(player, "RedJuiceLuck", "0"))
+		GODMODE.save_manager.set_player_data(player,"RedJuiceLuck",math.max(luck-1, 0))
+		player:AddCacheFlags(CacheFlag.CACHE_LUCK | CacheFlag.CACHE_SPEED)
+		player:EvaluateItems()
+	end)
 end
 
 item.bypass_hooks = {["player_update"] = true}

@@ -11,7 +11,7 @@ cards_pills.cards = {
     soc = Isaac.GetCardIdByName("Stream of Consciousness"),
 }
 cards_pills.pills = {
-    
+    opiate = Isaac.GetPillEffectByName("Opipill"),
 }
 
 local pok_transition = {
@@ -235,6 +235,42 @@ cards_pills.card_actions = {
     },
 }
 
+cards_pills.pill_actions = {
+    [cards_pills.pills.opiate] = function(pill, player, flags, horsepill)
+        player:GetEffects():AddCollectibleEffect(GODMODE.registry.items.sugar, true)
+        player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_SPEED | CacheFlag.CACHE_FIREDELAY)
+        player:EvaluateItems()
+
+        local creep = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.PLAYER_CREEP_WHITE, 0,player.Position,Vector.Zero,player):ToEffect()
+        creep:SetTimeout(140-player:GetPillRNG(pill):RandomInt(40))
+        creep.Scale = 1.5-player:GetPillRNG(pill):RandomFloat()*0.25
+        creep:Update()
+
+        for i=1, 16 do 
+            local fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.TOOTH_PARTICLE, 0,player.Position,RandomVector():Resized((player:GetPillRNG(pill):RandomFloat() * 2 - 1) * 12),player):ToEffect()
+            fx:SetTimeout(140-player:GetPillRNG(pill):RandomInt(40))
+            fx.Scale = 2.5-player:GetPillRNG(pill):RandomFloat()*0.4
+            fx:SetColor(Color(1,1,1,1,1,1,1), 999, 1, false, false)
+            fx:Update()
+
+            if i % 4 == 0 then 
+                fx = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BIG_ATTRACT, 0,player.Position,Vector.Zero,player):ToEffect()
+                fx:SetTimeout(5 + i * 5)
+                fx:Update()
+            end
+        end
+
+        GODMODE.sfx:Play(SoundEffect.SOUND_MAGGOT_BURST_OUT)
+        GODMODE.sfx:Play(SoundEffect.SOUND_CHILD_HAPPY_ROAR_SHORT)
+
+        if horsepill then 
+            player:UseActiveItem(CollectibleType.COLLECTIBLE_WAVY_CAP, false, true, true, false)
+        end
+
+        return true
+    end
+}
+
 cards_pills.choose_card = function(rng, card, playing, runes, only_runes)
     for ref_card,actions in pairs(cards_pills.card_actions) do 
         local flag = false 
@@ -259,7 +295,18 @@ cards_pills.use_card = function(card, player, flags)
     end
 end
 
-cards_pills.use_pill = function(pill, player, flags)
+cards_pills.use_pill = function(pill, player, flags, color) --color is RGON specific
+    local fx = cards_pills.pill_actions[pill]
+
+    if fx ~= nil then 
+        -- if GODMODE.validate_rgon() then 
+            -- fx(pill, player, flags, color & PillColor.PILL_GIANT_FLAG > 0)
+        -- else
+            local col = tonumber(GODMODE.save_manager.get_player_data(player,"LastPillCol","0"))
+            fx(pill, player, flags, col > 0 and col & PillColor.PILL_GIANT_FLAG > 0)
+        -- end
+    end
+
     local sugar_uses = tonumber(GODMODE.save_manager.get_player_data(player,"SugarPillRolls","0"))
 
     if sugar_uses > 0 then 
@@ -275,7 +322,7 @@ cards_pills.use_pill = function(pill, player, flags)
 
         if red_perc < 1 then player:AddHearts(1) else player:AddSoulHearts(1) end
         GODMODE.save_manager.set_player_data(player, "SugarPillRolls", math.max(sugar_uses - 1,0), true)
-        GODMODE.log("added \'"..sel_item.."\' due to Sugar Pills!")
+        GODMODE.log("added \'"..config.Name.."\' due to Sugar Pills!", true)
     end
 end
 

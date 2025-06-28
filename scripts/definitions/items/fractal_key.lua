@@ -60,10 +60,12 @@ item.pickup_update = function(self, pickup, data, sprite)
                     end
                 end
             else
-                local chance = tonumber(GODMODE.save_manager.get_data("GildedChance","0.0"))
+                local chance = GODMODE.util.get_gilded_convert_chance(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")))
+                -- GODMODE.log("chance="..chance,true)
                 
                 if pickup:GetDropRNG():RandomFloat() <= chance and item.disable_convert ~= true then 
                     pickup:Morph(pickup.Type,pickup.Variant,convert_sub,true,false,false)
+                    GODMODE.save_manager.set_data("GildedChance", math.min(1,math.max(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")) - 0.01,0)),true)
                 end
 
                 pickup.Touched = true

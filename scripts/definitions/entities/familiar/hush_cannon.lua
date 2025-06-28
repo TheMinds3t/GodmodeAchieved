@@ -13,10 +13,11 @@ monster.familiar_update = function(self, fam, data)
             fam.Velocity = Vector(0,0)
             fam.SpriteOffset = Vector(0,-28)
 
-            if fam.FrameCount % 18 == 0 then
-                player:AnimateCollectible(GODMODE.registry.items.anguish_jar)
+            if data.animated ~= true or player:IsExtraAnimationFinished() then 
+                data.animated = true 
+                player:AnimateCollectible(GODMODE.registry.items.anguish_jar,"LiftItem")
+                player.FireDelay = player.MaxFireDelay
             end
-            player.FireDelay = player.MaxFireDelay
         else
             local v = player:GetShootingJoystick()--Vector(math.sin(math.rad(d)), math.cos(math.rad(d)))
             fam.Velocity = fam.Velocity * 0.75 + v * 3
@@ -52,6 +53,7 @@ monster.familiar_update = function(self, fam, data)
 
         if fam:GetSprite():IsEventTriggered("End") then
             fam:Remove()
+            player:AnimateCollectible(GODMODE.registry.items.anguish_jar,"HideItem")
         end
 
         if fam:GetSprite():IsPlaying("Down") and fam:IsFrame(2,1) then

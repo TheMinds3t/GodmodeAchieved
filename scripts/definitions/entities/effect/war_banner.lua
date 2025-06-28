@@ -35,7 +35,6 @@ monster.npc_update = function(self, ent, data, sprite)
     if ent.FrameCount == 1 or sprite:IsPlaying(monster.anims[anim].."Appear") then
         ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
         sprite:Play(monster.anims[anim].."Appear", false)
-        ent:AddEntityFlags(EntityFlag.FLAG_NO_DAMAGE_BLINK | EntityFlag.FLAG_NO_TARGET | EntityFlag.FLAG_NO_STATUS_EFFECTS )
     end
 
     data.start_pos = data.start_pos or ent.Position
@@ -47,7 +46,7 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 
     data.bff_flag = data.bff_flag or false
-    if ent:IsFrame(30,1) and ent.SpawnerEntity ~= nil and ent.SpawnerEntity:ToPlayer() then 
+    if ent:IsFrame(30,2) and ent.SpawnerEntity ~= nil and ent.SpawnerEntity:ToPlayer() then 
         data.bff_flag = ent.SpawnerEntity:ToPlayer():HasCollectible(CollectibleType.COLLECTIBLE_BFFS)
     end 
 
@@ -67,7 +66,6 @@ monster.npc_update = function(self, ent, data, sprite)
     data.target_size = data.target_size or ent.Size
     ent.Scale = (ent.Scale * 29 + data.target_scale) / 30.0
     ent.Size = (ent.Size * 29 + data.target_size) / 30.0
-
 
     if ent.SubType > 0 then 
         ent.DepthOffset = -100
@@ -98,6 +96,10 @@ monster.npc_update = function(self, ent, data, sprite)
                 end
             end
         end
+    end
+
+    if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
+        ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
     end
 end
 

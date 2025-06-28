@@ -1,147 +1,5 @@
 -- this file both adds a small API to easily reference and integrate godmode with other mods that choose to add official support
 
-GODMODE.api = {}
-
--- adds a new stat to the stat score system for Correction Rooms. 
--- stat_name: string stat identifier
--- stat_max: float maximum stat value
--- stat_calc_func: function to get the current stat value (this value is automatically clamped to stat_max if it is higher than it)
-GODMODE.api.add_stat_to_score = function(stat_name, stat_max, stat_calc_func)
-    GODMODE.util.stat_dist[stat_name] = stat_max or 0
-    -- this requires patching into the correction shrine code if you want to add another "buffable" stat inside the correction room.
-    GODMODE.util.stat_buff[stat_name] = false
-    GODMODE.util.stat_scale[stat_name] = stat_calc_func or function(player) return 0 end
-end
-
--- adds a new tearflag to the tearflag stat score. 
--- tearflag: custom TearFlag
--- add_val: function. Check for and return the statscore modifier for your custom tearflag. The max value for the tearflag stat score is 12, so keep that in mind.
--- examples of basegame values:
---[[
-	TearFlags.TEAR_SPECTRAL = 0.3,
-	TearFlags.TEAR_PIERCING = 0.4,
-	TearFlags.TEAR_HOMING = 0.5,
-	TearFlags.TEAR_SLOW = 0.1,
-]] 
-GODMODE.api.add_tearflag_to_statscore = function(tearflag, add_val)
-    GODMODE.util.tearflag_mods[tearflag] = add_val or function(player) return 0 end
-end
-
--- adds a new transformation to the transformation stat score. 
--- transform: string. transformation name
--- add_val: function. Check for and return the statscore modifier for your custom transformation. The max value for the transformation stat score is 12, so keep that in mind.
--- examples of basegame values:
---[[
-	PlayerForm.PLAYERFORM_GUPPY = 2.5,
-	PlayerForm.PLAYERFORM_LORD_OF_THE_FLIES = 2.0,
-	PlayerForm.PLAYERFORM_MUSHROOM = 0.1,
-	PlayerForm.PLAYERFORM_ANGEL = 0.75,
-]] 
-GODMODE.api.add_transform_to_statscore = function(transform, add_val)
-    GODMODE.util.transform_mods[transform] = add_val or function(player) return 0 end
-end
-
--- sets the faithless heart and damage charges for Call of the Void. Damage charges are gained from the door hazard, faithless hearts are gained from passing the time limit.
--- faithless: int. The number of faithless heart charges active
--- damaging: int. The number of damaging charges active
-GODMODE.api.set_cotv_charges = function(faithless, damaging)
-    GODMODE.save_manager.set_data("VoidBHProj",faithless)
-    GODMODE.save_manager.set_data("VoidDMProj",damaging,true)
-end
-
--- gets the current number of charges active for Call of the Void, with the faithless parameter dictating whether you're getting the faithless heart charges or the damaging charges.
--- faithless: boolean. True to get the # of faithless charges, false to get the # of damaging charges
-GODMODE.api.get_cotv_charges = function(faithless)
-    faithless = faithless == nil and true or faithless 
-    return faithless and tonumber(GODMODE.save_manager.get_data("VoidBHProj","0")) or tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))
-end
-
--- registers a custom file to the godmode godhook system.
--- file: include() file. This should return an object with the godmode functions, ideally just copy paste an existing item and use that for a reference.
--- note that for entities and items you need specific variables in your returned userdata:
--- entities: type (int), variant (int)
--- items: instance (int)
--- these should just be set to Isaac.GetXByName() or your existing registry 
-GODMODE.api.add_to_godhooks = function(file)
-    GODMODE.godhooks.register_object(file)
-end
-
--- creates a new observatory in the stage.
--- returns the RoomDescriptor if the room was generated succesfully, false if it was not.
-GODMODE.api.generate_observatory = function()
-    local ret = GODMODE.gen_observatory_in_stage(false)
-
-    if ret ~= false then 
-        GODMODE.cached_observatory_ids = nil 
-        GODMODE.observatory_door_cache = nil    
-    end
-
-    return ret
-end
-
--- sets whether the specified room should render as an observatory.
--- safegrididx: int. This should just be the roomdescriptor's SafeGridIndex. Defaults to the current room's safe grid index.
--- observatory: boolean. True to set the specified room to render observatory fx, false to clear/not set it to render the observatory fx. Defaults to true.
-GODMODE.api.set_observatory = function(safegrididx, observatory)
-    safegrididx = safegrididx == nil and GODMODE.level:GetCurrentRoomDesc().SafeGridIndex or safegrididx
-    observatory = observatory == nil and true or observatory 
-
-    if observatory then 
-        GODMODE.save_manager.add_list_data("ObservatoryGridIdx",safegrididx,true)
-    else
-        GODMODE.save_manager.remove_list_data("ObservatoryGridIdx",safegrididx,true)
-    end
-    
-    GODMODE.cached_observatory_ids = nil 
-    GODMODE.observatory_door_cache = nil
-end
-
--- adds a new pickup variant that chest infestors are allowed to manifest from.
--- pickup_variant: int. This should be a valid pickup variant "5.pickup_variant"
--- mimic_data: userdata. This holds all of the metadata for the chest infestor's manifestation of the pickup. An example is included for the default value.
-GODMODE.api.add_chest_infest_variant = function(pickup_variant, mimic_data)
-    assert(GODMODE.registry.mimic_chests[pickup_variant] == nil,GODMODE.log("[ERROR] Existing Chest Infestor pickup_variant \'"..pickup_variant.."\', cannot register. Please choose a new variant, or remove the old one before calling this function."))
-
-    GODMODE.registry.mimic_chests[pickup_variant] = mimic_data or --example
-    {
-        -- chest position offset from the null position of the chest infestor (use if your chest is not positioned correctly)
-        null_pos_off=Vector(0,-2),
-        -- eye position offset from the opened chest (use if the eyes are not placed in the opened chest correctly)
-        eye_pos_off=Vector(0,-2),
-        -- all fields below the offsets "null_pos_off" and "eye_pos_off" are optional 
-
-        -- should unlock chest on attack?
-        unlock=true,
-        -- should unlock chest on kill?
-        death_unlock = false,
-
-        -- called when the "PreAttack" animation event is triggered. Mostly useful for SFX, as this is the telegraph for the attack. "ent" is the chest infestor
-        -- preattack=function(ent,data,sprite) end,
-
-        -- called when the "Attack" animation event is triggered, main attack here. "ent" is the chest infestor, if unlock=true then the chest opens here via chest infestor 
-        -- attack=function(ent,data,sprite) 
-                -- data.fire_ring = function(self,ent,count,spd,ang_offset,scale,flags)
-                -- data.launch_ring = function(self,ent,count,spd,ang_offset,scale,flags)
-                -- data.launch_bullet = function(self,ent,pos,scale,flags)
-                -- data.fire_bullet = function(self,ent,ang,spd,scale,flags)
-        --
-        --     data:fire_ring(ent,10,7.5+(GODMODE.game.Difficulty % 2) * 2,ent:GetDropRNG():RandomFloat() * 36.0,1.25,ProjectileFlags.DECELERATE)
-        -- end, 
-
-        -- -- called each tick when the chest is infested. "ent" is the chest infestor
-        -- atk_update = function(ent,data,sprite) end,
-        
-        -- -- called to add additional checks when trying to spawn a chest infestor for this pickup variant.
-        -- can_spawn = function(pickup) return true end
-    }
-end
-
--- registers a playertype to hide Godmode heart UI for. In vanilla, just PLAYER_THEFORGOTTEN_B, PLAYER_THELOST, and PLAYER_THELOST_B
--- playertype: PlayerType. the numeric playertype for the player in question.
--- hidden: boolean. Whether to hide the UI or not, if not specified this function toggles the current state of the playertype.
-GODMODE.api.add_player_to_ui_blacklist = function(playertype, hidden)
-    GODMODE.registry.hidden_heart_players[playertype] = hidden or not GODMODE.registry.hidden_heart_players[playertype]
-end
 
 if ModConfigMenu then -- stitch my DSS integration to my MCM configuration >:D but now both menus should work near-identically!!
     local mod_name = "Godmode Achieved"
@@ -948,7 +806,6 @@ function load_stageapi_integration()
         return tonumber(GODMODE.save_manager.get_data("Deterioration","1"))
     end
 
-
     StageAPI.AddCallback(GODMODE.mod_id, "PRE_CHANGE_ROOM_GFX", 2, function(currentRoom)
         if GODMODE.is_at_palace and GODMODE.is_at_palace() then
             local ind = tonumber(GODMODE.save_manager.get_data("Deterioration","1"))
@@ -1041,10 +898,413 @@ function load_stageapi_integration()
     GODMODE.palace_transition = Sprite()
     GODMODE.palace_transition:Load("gfx/anim_lucifertransition.anm2", true)
 
+    -- the actual teleport is done in a POST_UPDATE in main with this palace_transition object
     GODMODE.transition_to_palace = function()
         GODMODE.palace_transition:Play("Scene", true) 
         GODMODE.cur_splash = GODMODE.palace_transition
         GODMODE.cur_splash_pos = GODMODE.util.get_center_of_screen()
+    end
+
+
+    -- FOUND A BUG! The LTL L room is pivoted on 1,0 instead of 0,0, so the map icon needs to be moved for that room shape by Vector(1,0)
+    ---@param roomData LevelMap.RoomData
+    function StageAPI.LevelMap:AddRoomToMinimap(roomData)
+        if MinimapAPI and roomData.X and roomData.Y then
+            local levelRoom = self:GetRoom(roomData)
+            if levelRoom then
+                local dim = self.OverlapDimension or self.Dimension
+                local t = {
+                    Shape = levelRoom.Shape,
+                    PermanentIcons = {MinimapAPI:GetRoomTypeIconID(levelRoom.RoomType)},
+                    LockedIcons = {MinimapAPI:GetUnknownRoomTypeIconID(levelRoom.RoomType)},
+                    ItemIcons = {},
+                    VisitedIcons = {},
+                    Position = Vector(roomData.X, roomData.Y) + (MinimapAPI.RoomShapeGridPivots[levelRoom.Shape] or Vector.Zero),
+                    AdjacentDisplayFlags = MinimapAPI.RoomTypeDisplayFlagsAdjacent[levelRoom.RoomType] or 5,
+                    -- StageAPI custom room types can be strings, which MinimapAPI doesn't support
+                    Type = type(levelRoom.RoomType) == "number" and levelRoom.RoomType or RoomType.ROOM_DEFAULT,
+                    Dimension = dim,
+                    ID = roomData.MapID
+                }
+                if t.Type == RoomType.ROOM_SECRET or t.Type == RoomType.ROOM_SUPERSECRET then
+                    t.Hidden = 1
+                elseif t.Type == RoomType.ROOM_ULTRASECRET then
+                    t.Hidden = 2
+                end
+
+                MinimapAPI:AddRoom(t)
+            end
+        end
+    end
+
+    -- necessary data structure to proof different room shapes
+    local roomshape_to_neighbor_check = {
+        [RoomShape.ROOMSHAPE_1x1] = {name="1x1",x=1,y=1},
+        [RoomShape.ROOMSHAPE_1x2] = {name="1x2",x=1,y=2},
+        [RoomShape.ROOMSHAPE_2x1] = {name="2x1",x=2,y=1},
+        [RoomShape.ROOMSHAPE_2x2] = {name="2x2",x=2,y=2},
+        [RoomShape.ROOMSHAPE_IH] =  {name="IH",x=1,y=1,noneighbor={{x=0,y=1},{x=0,y=-1}} }, --specify missing neighbors required
+        [RoomShape.ROOMSHAPE_IV] =  {name="IV",x=1,y=1,noneighbor={{x=1,y=0},{x=-1,y=0}} },
+        [RoomShape.ROOMSHAPE_IIH] = {name="IIH",y=2,x=1,noneighbor={{x=0,y=1},{x=0,y=-1},{x=1,y=1},{x=1,y=-1}} },
+        [RoomShape.ROOMSHAPE_IIV] = {name="IIV",x=1,y=2,noneighbor={{x=1,y=0},{x=-1,y=0},{x=1,y=1},{x=-1,y=1}} },
+        [RoomShape.ROOMSHAPE_LTL] = {name="LTL",x=2,y=2,skip={x=0,y=0}},
+        [RoomShape.ROOMSHAPE_LTR] = {name="LTR",x=2,y=2,skip={x=1,y=0}},
+        [RoomShape.ROOMSHAPE_LBL] = {name="LBL",x=2,y=2,skip={x=0,y=1}},
+        [RoomShape.ROOMSHAPE_LBR] = {name="LBR",x=2,y=2,skip={x=1,y=1}},
+    }
+
+    local doorpos_to_neighbor_check = {
+        [DoorSlot.LEFT0] = {x=-1,y=0},
+        [DoorSlot.LEFT1] = {x=-1,y=1},
+        [DoorSlot.RIGHT0] = {x=1,y=0},
+        [DoorSlot.RIGHT1] = {x=1,y=1},
+        [DoorSlot.UP0] = {x=0,y=-1},
+        [DoorSlot.UP1] = {x=1,y=-1},
+        [DoorSlot.DOWN0] = {x=0,y=1},
+        [DoorSlot.DOWN1] = {x=1,y=1},
+    }
+
+    -- generate a partially randomized custom layout floor! 
+    -- only needs the above data structure, and then the following adjustments to your room file:
+    -- The map room needs to have a group entity per special room group. If no group entities are found, no randomization will occur.
+    -- Each room layout must include a group entity per room group it is a part of. This is so that a room can be in two groups, if desired.
+    GODMODE.generate_ivory_map = function()
+        GODMODE.ivory_level_roomlist = GODMODE.ivory_level_roomlist or StageAPI.RoomsList("GODMODEIvoryLevelMap")
+        GODMODE.ivory_level_rooms = include("resources.rooms.luc.ivory_rooms")
+
+        local level_map = GODMODE.generate_semi_randomized_floor(GODMODE.ivory_level_roomlist, GODMODE.ivory_level_rooms)
+    end
+
+    --[[ ================================================================================================================================================================== ]]--
+    --[[ @author MINDS3T ]]--
+    --[[ ================================================================================================================================================================== ]]--
+    --[[ WHAT YOU NEED: ]]--
+    --[[ ================================================================================================================================================================== ]]--
+    --[[ - luaroom file with each room layout in a randomized group having a StageAPI group metadata entity (199.0.X), where X is the group ID (middle click in BR)         ]]--
+    --[[ - A map layout, akin to Ivory Palace, Curse of the Everchanger or FF's Gauntlet, as a room layout in the luaroom file.                                             ]]--
+    --[[ - In this map layout, to indicate a random group create the same StageAPI group metadata entities that were placed in the room layouts.                            ]]--
+    --[[ - Place a StageAPI boss indicator metadata entity on top of the groups in the map room layout to indicate you want rooms removed from the pool as they're placed.  ]]--
+    --[[ - Refer to "resources/rooms/luc/ivory_rooms.lua" for an example of proper implementation.                                                                          ]]--
+    --[[ ================================================================================================================================================================== ]]--
+    --[[ @param max_tries_per_tile: int (default 33)                                                                                                                        ]]--
+    --[[ @param rooms_list: StageAPI.RoomsList                                                                                                                              ]]--
+    --[[ @param rooms: include("luaroom file")                                                                                                                              ]]--
+    --[[ ================================================================================================================================================================== ]]--
+    --[[ feel free to re-use this code or parts of it, even rename it, just keep this @ in the comments <3 this took me WAY too long to lay out lmao                        ]]--
+    --[[ ================================================================================================================================================================== ]]--
+    GODMODE.generate_semi_randomized_floor = function(rooms_list, rooms, max_tries_per_tile)
+        max_tries_per_tile = max_tries_per_tile or 33
+        rooms_list = rooms_list or StageAPI.RoomsLists["GODMODEIvoryLevelMap"] or StageAPI.RoomsList("GODMODEIvoryLevelMap")
+        rooms = rooms or include("resources.rooms.luc.ivory_rooms")
+
+        -- empty the RoomsList
+        rooms_list.All = {}
+        rooms_list.ByShape = {}
+        rooms_list.Shapes = {}
+        rooms_list.NotSimplifiedFiles = {}
+
+        -- then re-add the rooms list so that the random rooms can be re-randomized
+        rooms_list:AddRooms(rooms)
+
+        StageAPI.StageRNG:SetSeed(StageAPI.Seeds:GetStageSeed(GODMODE.level:GetStage()), 32)
+        local rand = StageAPI.StageRNG 
+
+        -- I use the literal group entity from stageapi to determine what groups are going to be randomly generated, and also to assign rooms to specific groups
+        local room_groups = {}
+
+        local get_group_for = function(type) 
+            if room_groups[type] == nil then 
+                GODMODE.log("Registering group \'"..type.."\'",true) 
+            end
+
+            room_groups[type] = room_groups[type] or {}
+            return room_groups[type]
+        end
+
+        -- index rooms so that bigger rooms can generate correctly when placed randomly 
+        for ind,room in ipairs(rooms_list.All) do 
+            -- scan room layouts for door restraints and group declarations
+            local no_door_list = {} 
+            local groups_from_room = {}
+            -- look for Boss Indicator entities to indicate if room pools should deplete
+            local perishable_markers = {}
+
+            for _,meta in ipairs(room.Entities) do 
+                -- collect invalid doors
+                if meta.Slot ~= nil and meta.Exists == false then 
+                    no_door_list[#door_list + 1] = meta.Slot
+                    GODMODE.log("Collected non-door \'"..meta.Slot.."\' for room \'"..room.Variant.."\'!",true)
+                end
+
+                -- this is indicating a random group for the map
+                if meta.Type == 199 and meta.Variant == 0 then 
+                    table.insert(groups_from_room, {type=meta.SubType,pos=Vector(meta.GridX,meta.GridY)})
+                    GODMODE.log("Collected group \'"..meta.SubType.."\' for room \'"..room.Variant.."\'!",true)
+                end
+
+                -- this indicates a perishable group (pull rooms as they are placed)
+                if meta.Type == 199 and meta.Variant == 30 then 
+                    table.insert(perishable_markers, {pos=Vector(meta.GridX,meta.GridY)})
+                end
+            end
+
+            -- check each boss indicator for groups on top of it to mark them perishable
+            for _,meta in ipairs(perishable_markers) do 
+                for _,group in ipairs(groups_from_room) do 
+                    if group.pos.X == meta.GridX and group.pos.Y == meta.GridY then 
+                        get_group_for(group.type).perishable = true 
+                    end
+                end
+            end
+
+            -- register this room layout to all groups found in the file
+            for _,group_id in ipairs(groups_from_room) do 
+                local cur_group = get_group_for(group_id.type)
+                table.insert(cur_group, room)
+
+                cur_group.list_of_variants = cur_group.list_of_variants or {}
+                local room_shape_data = roomshape_to_neighbor_check[room.Shape] or {x = 1, y = 1}
+
+                for i=1,room_shape_data.x * room_shape_data.y do 
+                    table.insert(cur_group.list_of_variants,room.Variant)
+                end
+
+                -- store the room
+                cur_group[room.Variant] = {room=room,doors=no_door_list} 
+                cur_group.max_var = math.max(cur_group.max_var or room.Variant, room.Variant)
+                cur_group.min_var = math.min(cur_group.min_var or room.Variant, room.Variant)
+                cur_group.max_weight = math.max(cur_group.max_weight or room.Weight, room.Weight)
+                cur_group.min_weight = math.min(cur_group.min_weight or room.Weight, room.Weight)
+                cur_group.total_weight = (cur_group.total_weight or 0) + room.Weight
+            end
+        end
+
+        -- rooms from the map layout in the luarooms file 
+        local map_rooms = {}
+        -- get the bounds of the grid positions
+        local min_x, min_y, max_x, max_y = 99, 99, -1, -1
+
+        local floorPlan = rooms_list.All[1]
+        if not floorPlan then 
+            GODMODE.log("Floor plan is invalid, try reloading!", true)
+            return 
+        end
+
+        -- scrape valid, replaceable rooms from the map
+        for ind,ent in pairs(floorPlan.Entities) do 
+            --pulled from stageapi to check for room entities
+            local metadata = StageAPI.IsMetadataEntity(ent.Type, ent.Variant) 
+            --StageAPI indicates room IDs with subtype increments of 4.
+            local group_id = math.floor(ent.SubType / 4)
+            
+            --check if the group of the room tile matches the room groups discovered so far, if so track it
+            if metadata and metadata.Name == "Room" and room_groups[group_id] ~= nil then
+                local x, y = ent.GridX, ent.GridY 
+                map_rooms[x] = map_rooms[x] or {}
+                map_rooms[x][y] = ent
+                ent.group_id = group_id
+                -- GODMODE.log("added room entity at \'"..x..","..y.."\'!",true)
+
+                min_x = math.min(x,min_x)
+                min_y = math.min(y,min_y)
+                max_x = math.max(x,max_x)
+                max_y = math.max(y,max_y)
+            end
+        end
+
+        -- looks at neighboring tiles to make sure the room shape can fit in the live randomized map_room grid
+        local check_room_size_at = function(shape, tile_x, tile_y, door_blacklist)
+            local size = roomshape_to_neighbor_check[shape]
+            if not size then 
+                GODMODE.log("   -> UNIMPLEMENTED SHAPE \'"..tostring(shape).."\', discarding...",true)
+                return false, {x=0,y=0}
+            end
+
+            local cur_group_id = map_rooms[tile_x][tile_y].group_id
+            local valid = true 
+            GODMODE.log("   -> \'"..size.name.."\' shape is sized at \'"..size.x.."x"..size.y.."\' for \'"..(tile_x)..","..(tile_y).."\'. Third arg = "..tostring(size.skip and (size.skip.x..","..size.skip.y) or "NA"),true)
+
+            for x_off=0, size.x-1 do 
+                for y_off=0, size.y-1 do 
+                    local x_neighbor, y_neighbor = tile_x+x_off, tile_y+y_off
+                    GODMODE.log("   -> is \'"..(x_neighbor)..","..(y_neighbor).."\' invalid?",true)
+
+                    -- this is for L-room checks
+                    if size.skip == nil or (size.skip ~= nil and not (size.skip.x == x_off and size.skip.y == y_off)) then 
+                        -- if the room space is missing, then invalidate the room shape at this position 
+                        if not map_rooms[x_neighbor] then 
+                            GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no row",true)
+                            valid=false 
+                        elseif (map_rooms[x_neighbor] and not map_rooms[x_neighbor][y_neighbor]) then 
+                            GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no col",true)
+                            valid = false 
+                        elseif map_rooms[x_neighbor][y_neighbor].disable_for_neighbor_check == true then 
+                            GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! already disabled",true)
+                            valid = false 
+                        else
+                            local neighbor_group_id = map_rooms[x_neighbor][y_neighbor].group_id
+                            
+                            if cur_group_id ~= neighbor_group_id and room_groups[neighbor_group_id] then
+                                GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! different neighbor group (mine is "..cur_group_id..", not "..neighbor_group_id..")",true)
+                                valid = false 
+                            else
+                                GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} no...",true)
+                            end
+                        end
+
+                        if valid == false then break end 
+                    else 
+                        GODMODE.log("    -> {"..(x_neighbor)..","..(y_neighbor).."} no, this is the skipped spot for the L room...",true)
+                    end
+                end
+
+                if valid == false then break end 
+            end
+
+            -- check for the thin rooms to make sure they don't block a face of a room
+            if valid and size.noneighbor ~= nil then
+                GODMODE.log("   -> checking neighbor requirements for \'"..size.name.."\' shape...",true)
+
+                for _,check in ipairs(size.noneighbor) do 
+                    GODMODE.log("    -> is \'"..(tile_x-min_x+1).."+"..check.x..","..(tile_y-min_y+1).."+"..check.y.."\' empty?",true)
+                    if map_rooms[tile_x+check.x] and map_rooms[tile_x+check.x][tile_y+check.y] then 
+                        GODMODE.log("     -> NO, invalidating..",true)
+                        valid = false 
+                        break
+                    else 
+                        GODMODE.log("     -> YES, continuing..",true)
+                    end
+                end
+            end
+
+            -- if there are doors that are disabled for this room, make sure it can still fit 
+            if door_blacklist then 
+                for _,slot in ipairs(door_blacklist) do 
+                    if slot and doorpos_to_neighbor_check[slot] then 
+                        local off = doorpos_to_neighbor_check[slot] 
+
+                        GODMODE.log("     -> is door slot "..slot.." offset safe?",true)
+
+                        if map_rooms[tile_x+off.x][tile_y+off.y] ~= nil then 
+                            GODMODE.log("      -> no!",true)
+                            valid = false 
+                        else 
+                            GODMODE.log("      -> yes...",true)
+                        end
+                    end
+                end
+            end
+
+            return valid, size
+        end 
+
+        -- fix LTL rooms not placed correctly on the minimap
+        local minimapi_pivot_fix = {}
+
+        -- MEAT AND BONES: now that the rooms have been indexed, we go through the defined groups and re-assign their subtype to a matching room variant for that group!
+        -- start from the bottom right and work towards the top left, that way making big rooms is less consequential 
+        for x=max_x, min_x, -1 do 
+            for y=max_y, min_y, -1 do 
+                -- GODMODE.log("checking room at \'"..x..","..y.."\'..",true)
+                if map_rooms[x] then 
+                    local room = map_rooms[x][y] 
+
+                    if room then 
+                        local group_id = math.floor(room.SubType / 4)
+                        local cur_group = room_groups[group_id]
+   
+                        if cur_group then 
+                            -- GODMODE.log("->valid room at \'"..x..","..y.."\'..",true)
+                            local selected_room = nil 
+
+                            -- try up to 33 different rooms before leaving it at the default of 1
+                            local max_depth = max_tries_per_tile
+
+                            while max_depth > 0 do 
+                                -- get the pool of rooms for this map entry 
+                                selected_room = cur_group.list_of_variants[rand:RandomInt(#cur_group.list_of_variants) + 1]
+                                GODMODE.log("choosing a room (IDs between "..cur_group.min_var.."-"..cur_group.max_var..") for group "..group_id.."!",true)
+                                local room_shape = cur_group[selected_room].room.Shape
+
+                                -- if the room is valid 
+                                if cur_group[selected_room] and cur_group[selected_room].room then 
+                                    GODMODE.log("  ->checking room \'"..selected_room.."\', size \'"..room_shape.."\', for \'"..(x)..","..(y).."\'?",true)
+                                    local place_valid, check_grid = check_room_size_at(room_shape, x, y, cur_group[selected_room].doors)
+                                    
+                                    -- if the placement is valid for the selected room shape, then update the overlapping rooms for the room shape to say they are reserved.
+                                    if place_valid then 
+                                        GODMODE.log("   ->valid placement of \'"..selected_room.."\', size \'"..check_grid.x.."x"..check_grid.y.."\', for \'"..(x)..","..(y).."\'!",true)
+                                        
+                                        -- convert all spaces that match 
+                                        for grid_x_off=check_grid.x-1,0,-1  do 
+                                            for grid_y_off=check_grid.y-1,0,-1  do 
+                                                -- this is for L-room checks 
+                                                -- GODMODE.log("     checking "..grid_x_off.."&"..grid_y_off,true)
+                                                if check_grid.skip == nil -- no L, or L and not the empty spot
+                                                    or (check_grid.skip and not (check_grid.skip.x == grid_x_off and check_grid.skip.y == grid_y_off)) then 
+                                                    local final_x, final_y = x + grid_x_off, y + grid_y_off
+
+                                                    local sel_room_ent = map_rooms[final_x][final_y]
+
+                                                    if sel_room_ent then 
+                                                        sel_room_ent.SubType = selected_room * 4
+                                                        GODMODE.log("----->placed room \'"..selected_room.."\' , size \'"..room_shape.."\', at \'"..(x).."+"..grid_x_off.." ("..final_x.."),"..(y).."+"..grid_y_off.." ("..final_y..")\'!",true)
+                                                            
+                                                        -- if there was a boss indicator on top of this group then remove the rooms from the pool as they place
+                                                        if cur_group.perishable then  
+                                                            GODMODE.log("----->group is perishable, removing \'"..selected_room.."\' from pool!",true)
+                                                            table.remove(cur_group.list_of_variants, selected_room)
+                                                            cur_group[selected_room] = nil
+                                                        end
+
+                                                        -- if this is a larger room we need to reserve these seats, so to speak
+                                                        if check_grid.x > 1 or check_grid.y > 1 then 
+                                                            sel_room_ent.disable_for_neighbor_check = true
+                                                            GODMODE.log("------> (marked the room as reserved due to size of current layout)",true)
+                                                        end
+                                                    end
+                                                end
+                                            end
+                                        end
+
+                                        -- MinimapAPI pivots specifically this room type around 1,0 instead of 0,0 :L
+                                        if MinimapAPI and MinimapAPI.RoomShapeGridPivots[room_shape] ~= Vector.Zero then 
+                                            GODMODE.log("----------> (added the room to the list of LTL rooms for MinimapAPI fix)",true)
+                                            table.insert(minimapi_pivot_fix, {x=final_x,y=final_y,shape=room_shape})
+                                        end
+                                        
+                                        break
+                                    end
+                                end
+
+                                max_depth = max_depth - 1
+                            end
+
+                            if max_depth == 0 then 
+                                GODMODE.log("set \'"..(x)..","..(y).."\' to default room of "..cur_group.min_var..".")
+                                map_rooms[x][y].SubType = cur_group.min_var * 4 -- if failed to find a successful room, use the first room ID indexed for the group
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        -- finally, take the frankenstein'ed roomslist and give it to StageAPI >:D
+        GODMODE.ivory_map = StageAPI.CreateMapFromRoomsList(rooms_list, nil, {NoChampions = false})
+        StageAPI.InitCustomLevel(GODMODE.ivory_map, true)
+        GODMODE.save_manager.set_data("PalaceMinibossKills", 0, true)
+
+        -- if MinimapAPI then 
+        --     for _,room in ipairs(minimapi_pivot_fix) do 
+        --         local minimap_room = MinimapAPI:GetRoomAtPosition(Vector(room.x,room.y))
+        --         if minimap_room then 
+        --             minimap_room.DisplayPosition = minimap_room.DisplayPosition + MinimapAPI.RoomShapeGridPivots[room.shape]
+        --         end
+        --     end
+        -- end
+
+        return GODMODE.ivory_map
     end
 
     GODMODE.try_switch_stage = function()
@@ -1313,25 +1573,7 @@ function load_stageapi_integration()
         -- end)    
     end
 
-    -- mod music callback
-    if MMC then 
-        MMC.AddMusicCallback(GODMODE.mod_object, function()
-            local bd_key = GODMODE.level:GetAbsoluteStage()..","..GODMODE.level:GetStageType()
 
-            if (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
-                if GODMODE.save_manager.get_config(GODMODE.backdrop_config_toggles[bd_key],"false") == "true" and GODMODE.save_manager.get_config("CathedralTheme","false") == "true" then 
-                    return GODMODE.registry.music.a_song_from_a_broken_soul
-                end
-            end
-        end, Music.MUSIC_CATHEDRAL)
-
-        MMC.AddMusicCallback(GODMODE.mod_object, function()
-            if GODMODE.save_manager.get_config("ShopTheme","true") == "true" then 
-                return GODMODE.registry.music.persuasions
-            end
-            
-        end, Music.MUSIC_SHOP_ROOM)
-    end
 
     -- GODMODE.ObservatoryDoor = StageAPI.CustomDoor("ObservatoryDoor", "gfx/grid/observatory_door.anm2", nil, nil, nil, nil, true)
 
@@ -1354,6 +1596,28 @@ if not StageAPI then
 elseif StageAPI and StageAPI.Loaded then
     load_stageapi_integration()
 end
+
+
+-- mod music callback
+if MMC then 
+    MMC.AddMusicCallback(GODMODE.mod_object, function()
+        local bd_key = GODMODE.level:GetAbsoluteStage()..","..GODMODE.level:GetStageType()
+
+        if (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:GetStageType() == StageType.STAGETYPE_WOTL then
+            if GODMODE.save_manager.get_config(GODMODE.backdrop_config_toggles[bd_key],"false") == "true" and GODMODE.save_manager.get_config("CathedralTheme","false") == "true" then 
+                return GODMODE.registry.music.a_song_from_a_broken_soul
+            end
+        end
+    end, Music.MUSIC_CATHEDRAL)
+
+    MMC.AddMusicCallback(GODMODE.mod_object, function()
+        if GODMODE.save_manager.get_config("ShopTheme","true") == "true" then 
+            return GODMODE.registry.music.persuasions
+        end
+        
+    end, Music.MUSIC_SHOP_ROOM)
+end
+
 
 if MinimapAPI then 
     GODMODE.sprites.minimapapi_sprite = Sprite()

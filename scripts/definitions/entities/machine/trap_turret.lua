@@ -5,8 +5,6 @@ monster.type = GODMODE.registry.entities.stone_beggar.type
 monster.variant = GODMODE.registry.entities.stone_beggar.variant
 
 monster.npc_update = function(self, ent, data, sprite)
-	local player = ent:GetPlayerTarget()
-
 	if data.cooldown == nil then 
 		if ent.SubType == 0 then
 			sprite:Play("Idle", true)
@@ -24,7 +22,8 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 
 	data.cooldown = data.cooldown - 1
-	ent.Velocity = ent.Velocity * 0.7
+	local targ = GODMODE.room:GetGridPosition(GODMODE.room:GetGridIndex(ent.Position))
+	ent.Velocity = (targ - ent.Position) / 2.0
 	
 	if ent.SubType ~= 0 and not data.exploding then
 	    sprite:SetFrame("Idle", 4-data.numleft)
@@ -44,7 +43,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		if sprite:IsPlaying("Explode") then 
 			ent:PlaySound(SoundEffect.SOUND_MONSTER_GRUNT_4, Options.SFXVolume * 1.3+0.5, 1, false, 0.7)
 		else 
-			ent:PlaySound(SoundEffect.SOUND_STONESHOOT, Options.SFXVolume * 1.3+0.5, 1, false, 1.0 + (sprite:GetFrame() / 30)*0.04)
+			ent:PlaySound(SoundEffect.SOUND_STONESHOOT, Options.SFXVolume * 1.3+0.5, 1, false, 1.05 + (sprite:GetFrame() / 30)*0.025)
 		end
 	end
 

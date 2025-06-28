@@ -24,6 +24,7 @@
 		<Item Name="Fruit Flies" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hot Potato" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="shop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -43,6 +44,7 @@
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="boss">
 		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -127,6 +129,7 @@
 		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="goldenChest">
 		<Item Name="Fruit Flies" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -174,6 +177,7 @@
 		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hot Potato" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="greedShop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -186,6 +190,21 @@
 		<Item Name="Cloth on a String" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+
+		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="The Carrot" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Nosebleed" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Soul Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Devil's Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Angel Food" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Fruit Salad" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
+		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="greedCurse">

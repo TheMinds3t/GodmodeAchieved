@@ -79,6 +79,9 @@
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Silver Scale.png" ID="700" Name="Silver Scale" Variant="217" Subtype="1" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Elohim Throne.png" ID="700" Name="Elohim's Throne" Variant="218" Subtype="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/fake god.png" ID="700" Name="Fake God Statue" Variant="218" Subtype="1" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/FL Gate.png" ID="700" Name="Fallen Light Lock" Variant="218" Subtype="2" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Lock Torch.png" ID="700" Name="Lock Torch" Variant="218" Subtype="3" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Palace Mural.png" ID="5" Name="Palace Mural" Variant="710" Subtype="0" Boss="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Secret Light.png" ID="5" Name="Secret Light" Variant="700" Subtype="0" Boss="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Red Coin.png" ID="5" Name="Red Coin" Variant="701" Subtype="0" Boss="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Heart Container.png" ID="5" Name="Heart Container (Pickup)" Variant="702" Subtype="0" Boss="0" />

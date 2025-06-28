@@ -85,6 +85,7 @@
 	<active id="100" cache="luck speed" chargetype="timed" maxcharges="20" description="The cool-aid" gfx="hellfiah.png" name="Red Juice" tags="" quality = "1" />
 	<familiar id="101" devilprice="2" description="What a dumpster fire" gfx="hellfiah_sauce.png" name="Hellfiah Saus" tags="familiar offensive baby monstermanual" quality = "3" />
 	<passive id="102" cache="damage luck firedelay speed" description="10 Years! Strength in Frailty and Discovery" gfx="fallen_skull.png" tags="nochallenge nokeeper offensive quest" name="Fallen Skull" quality = "4" customtags="op anniversary observatory" />
+	<active id="103" maxcharges="4" description="Cry harder" gfx="tear_gas.png" name="Tear Gas" tags="tearsup" quality = "2" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />

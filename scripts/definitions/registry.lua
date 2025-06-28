@@ -90,6 +90,7 @@ reg.items = {
     red_juice = Isaac.GetItemIdByName("Red Juice"),
     hellfiah = Isaac.GetItemIdByName("Hellfiah Saus"),
     fallen_skull = Isaac.GetItemIdByName("Fallen Skull"),
+    tear_gas = Isaac.GetItemIdByName("Tear Gas"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -670,6 +671,16 @@ reg.entities = {
         type = Isaac.GetEntityTypeByName("Soft Serve Spawner"),
         variant = Isaac.GetEntityVariantByName("Soft Serve Spawner")
     },
+    tear_gas_can = {
+        type = Isaac.GetEntityTypeByName("Tear Gas Can"),
+        variant = Isaac.GetEntityVariantByName("Tear Gas Can"),
+        subtype = 0
+    },
+    tear_gas_cloud = {
+        type = Isaac.GetEntityTypeByName("Tear Gas Cloud"),
+        variant = Isaac.GetEntityVariantByName("Tear Gas Cloud"),
+        subtype = 1
+    },
     player_trail_fx = {
         type = Isaac.GetEntityTypeByName("Player Trail FX"),
         variant = Isaac.GetEntityVariantByName("Player Trail FX")
@@ -734,6 +745,22 @@ reg.entities = {
     elohims_throne = {
         type = Isaac.GetEntityTypeByName("Elohim's Throne"),
         variant = Isaac.GetEntityVariantByName("Elohim's Throne"),
+        subtype = 0,
+    },
+    fake_god = {
+        type = Isaac.GetEntityTypeByName("Fake God"),
+        variant = Isaac.GetEntityVariantByName("Fake God"),
+        subtype = 1,
+    },
+    fallen_light_lock = {
+        type = Isaac.GetEntityTypeByName("Fallen Light Lock"),
+        variant = Isaac.GetEntityVariantByName("Fallen Light Lock"),
+        subtype = 2,
+    },
+    ivory_torch = {
+        type = Isaac.GetEntityTypeByName("Ivory Torch"),
+        variant = Isaac.GetEntityVariantByName("Ivory Torch"),
+        subtype = 3,
     },
     masked_angel_statue = {
         type = Isaac.GetEntityTypeByName("Masked Angel Statue"),

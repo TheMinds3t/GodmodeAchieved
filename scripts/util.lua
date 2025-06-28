@@ -1444,4 +1444,49 @@ util.shuffle_list = function(list, rng)
 	return table.sort(list, function(val) return rng:RandomInt(#list) + 1 end)
 end
 
+util.get_gilded_convert_chance = function(chance)
+    local ret_chance = 0
+	
+	while chance > 0.1 do 
+		ret_chance = ret_chance + 0.1
+		chance = chance * 0.85 - 0.1
+	end
+
+	if chance > 0 then 
+		ret_chance = ret_chance + chance
+	end
+
+	return ret_chance
+end
+
+-- util.create_normalized_room_list = function(roomlist)
+-- 	if roomlist == nil then return end 
+-- 	local ret = {}
+
+-- 	local min, max = 9999, -9999
+
+-- 	for _,room in pairs(roomlist.All) do 
+-- 		if room.Weight and room.Weight > 0 then 
+-- 			if room.Weight > max then max = room.Weight end 
+-- 			if room.Weight < min then min = room.Weight end 
+-- 		end
+-- 	end
+
+-- 	local scalar = 1--max / min
+-- 	GODMODE.log("minimum Weight is "..min..", maximum Weight is "..max..", scalar is "..scalar, true)
+
+-- 	for _,room in ipairs(roomlist.All) do 
+-- 		if room.Weight and room.Weight > 0 then 
+-- 			local entries = room.Weight * scalar 
+
+-- 			while entries > 0 do 
+-- 				entries = entries - 1 
+-- 				table.insert(ret, room)
+-- 			end
+-- 		end
+-- 	end
+	
+-- 	return {min_weight = min, max_weight = max, weight_scalar = scalar, rooms = ret, roomlist = roomlist}
+-- end	
+
 return util

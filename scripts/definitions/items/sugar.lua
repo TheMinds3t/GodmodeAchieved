@@ -16,7 +16,8 @@ item.encyc_entry = {
 }
 
 item.eval_cache = function(self, player,cache,data)
-    if not player:HasCollectible(item.instance) then return end
+    local num = player:GetCollectibleNum(item.instance) + player:GetEffects():GetCollectibleEffectNum(item.instance) * 2
+    if num < 1 then return end
     local binge_mod = (player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BINGE_EATER) * 0.25) + 1
 
     if cache == CacheFlag.CACHE_SPEED then
@@ -28,14 +29,15 @@ item.eval_cache = function(self, player,cache,data)
             GODMODE.save_manager.set_player_data(player, "SugarRerollCount", data.sugar_reroll_count,true)
         end
 
-        player.MoveSpeed = player.MoveSpeed + 0.125 * (player:GetCollectibleNum(item.instance)) * binge_mod
+        player.MoveSpeed = player.MoveSpeed + 0.125 * (num) * binge_mod
     end
+
     if cache == CacheFlag.CACHE_DAMAGE then
-        player.Damage = player.Damage * (1 + (0.05 * math.min(player:GetCollectibleNum(item.instance),5) + 0.1 * math.max(0,player:GetCollectibleNum(item.instance)-3))*binge_mod)
+        player.Damage = player.Damage * (1 + (0.05 * math.min(num,5) + 0.1 * math.max(0,num-3))*binge_mod)
     end
+
     if cache == CacheFlag.CACHE_FIREDELAY then
-        player.MaxFireDelay = player.MaxFireDelay / (1 + (0.1 * math.min(player:GetCollectibleNum(item.instance)-1,5) + 0.05 * math.max(0,player:GetCollectibleNum(item.instance)-5))*binge_mod)
-        -- GODMODE.util.modify_stat(player, cache, 1 + (0.1 * math.min(player:GetCollectibleNum(item.instance)-1,5) + 0.05 * math.max(0,player:GetCollectibleNum(item.instance)-5))*binge_mod, true, false)
+        player.MaxFireDelay = player.MaxFireDelay / (1 + (0.1 * math.min(num-1,5) + 0.05 * math.max(0,num-5))*binge_mod)
     end
 end
 

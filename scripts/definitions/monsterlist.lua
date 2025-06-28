@@ -107,6 +107,7 @@ table.insert(ret, include("scripts.definitions.entities.effect.player_trail"))
 table.insert(ret, include("scripts.definitions.entities.effect.observatory_fx"))
 table.insert(ret, include("scripts.definitions.entities.effect.correction_fx"))
 table.insert(ret, include("scripts.definitions.entities.effect.fallen_light_bone"))
+table.insert(ret, include("scripts.definitions.entities.effect.tear_gas"))
 
 table.insert(ret, include("scripts.definitions.entities.pickup.secret_light"))
 table.insert(ret, include("scripts.definitions.entities.pickup.red_coin"))

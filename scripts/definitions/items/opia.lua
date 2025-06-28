@@ -29,20 +29,25 @@ item.reset_opia = function(self,fx)
     end)    
 end
 
+
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
+        player:StopExtraAnimation()
         local data = GODMODE.get_ent_data(player)
+        local state = tonumber(GODMODE.save_manager.get_player_data(player, "OpiaState", "0"))
 
-        if tonumber(GODMODE.save_manager.get_player_data(player,"OpiaState","0")) > 0 then
+        if state == 1 then 
+            player:StopExtraAnimation()
+            player:AnimateTrinket(TrinketType.TRINKET_YOUR_SOUL,"HideItem")
             item:reset_opia()
         end
-        GODMODE.save_manager.set_player_data(player, "OpiaState", 1,true)
+
+        GODMODE.save_manager.set_player_data(player, "OpiaState", state == 1 and 0 or 1, true)
         data.opia_animate = 1
 
-        return true
+        return {Discharge=false,Remove=false,ShowAnim=false}
     end
 end
-
 
 item.new_room = function(self)
     item:reset_opia()
@@ -57,8 +62,7 @@ item.player_update = function(self, player,data)
             GODMODE.save_manager.set_player_data(player, "OpiaState", 0)
         elseif state == 1 then -- using opia
             if data.opia_animate == 0 then
-                player:AnimateTrinket(TrinketType.TRINKET_YOUR_SOUL)
-                data.opia_animate = 30
+                player:AnimateTrinket(TrinketType.TRINKET_YOUR_SOUL,"LiftItem")
             end
 
             data.opia_animate = math.max(-1,(data.opia_animate or 0) - 1)
@@ -74,6 +78,8 @@ item.player_update = function(self, player,data)
                 tear.CollisionDamage = 3
                 data.opia_tear = tear
                 GODMODE.save_manager.set_player_data(player, "OpiaState", 2)
+                player:AnimateTrinket(TrinketType.TRINKET_YOUR_SOUL,"HideItem")
+                player:DischargeActiveItem(GODMODE.util.get_active_slot(player, item.instance))
             end
         elseif state == 2 and data.opia_tear ~= nil then -- opia tear launching
             -- data.opia_tear:GetSprite().Rotation = data.opia_tear.Velocity:GetAngleDegrees()+90
@@ -113,7 +119,6 @@ item.player_update = function(self, player,data)
 end
 
 item.tear_collide = function(self,tear,ent,entfirst)
-
     local flag = false
     GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
         local data = GODMODE.get_ent_data(player)
