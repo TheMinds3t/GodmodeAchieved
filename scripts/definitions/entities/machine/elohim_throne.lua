@@ -9,7 +9,7 @@ monster.data_init = function(self, ent,data)
 	end
 
 	data.enter_room = function(ent)
-		if not GODMODE.api.is_in_observatory() then ent:Remove() end 
+		if not GODMODE.api.is_observatory() then ent:Remove() end 
 	end
 end
 
