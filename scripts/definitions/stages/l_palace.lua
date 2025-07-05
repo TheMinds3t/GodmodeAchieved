@@ -15,7 +15,7 @@ local default_graphics = {
     boss_spot = "gfx/ui/stage/"..stage_prefix.."player_spot.png",
 
     backdrop_gfx = {
-        Walls = {"1","2","3"},
+        Walls = {"1"},--,"2","3"},
         NFloors = {"nfloor"},
         LFloors = {"lfloor"},
         Corners = {"corner"}

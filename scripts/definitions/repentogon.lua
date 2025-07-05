@@ -94,7 +94,7 @@ if GODMODE.validate_rgon() then
 
             if kills > 0 then 
                 GODMODE.sprites.mm_addon_sprite:SetFrame("SignStrength",math.min(5,kills))
-                local render_pos = GODMODE.util.get_center_of_screen() - Vector(-1,46)
+                local render_pos = GODMODE.util.get_center_of_screen() + Vector(1,-48)
                 ret.sign_stren_opac = math.min((ret.sign_stren_opac or 0) + 1 / ret.sign_strength_opac_time, 1)
                 GODMODE.sprites.mm_addon_sprite.Color = Color(1,1,1,ret.sign_stren_opac or 0,0,0,0)
                 GODMODE.sprites.mm_addon_sprite:Render(render_pos)

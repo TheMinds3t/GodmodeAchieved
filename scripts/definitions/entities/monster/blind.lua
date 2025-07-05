@@ -18,6 +18,7 @@ monster.spawn_tear = function(self, ent, ang, speed, curve)
     tear.Height = tear.Height - 20
     --tear.Position = tear.Position + off
 end
+
 monster.npc_update = function(self, ent, data, sprite)
     if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
     local player = ent:GetPlayerTarget()
@@ -65,11 +66,17 @@ monster.npc_update = function(self, ent, data, sprite)
                 monster.spawn_tear(self,ent,f,spd,2.5)
             end
         else
-            local spd = 2.5
+            local spd = 6 + (GODMODE.game.Difficulty % 2) * 2.0
             local ang = player.Position - ent.Position
             local f = math.rad(ang:GetAngleDegrees())
             ang = Vector(math.cos(f)*spd,math.sin(f)*spd)
-            Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position + ang,ang*spd,ent)
+            local tear = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position,ang,ent)
+            tear = tear:ToProjectile()
+            tear.ChangeVelocity = spd * 0.9
+            tear.ProjectileFlags = tear.ProjectileFlags | ProjectileFlags.CHANGE_VELOCITY_AFTER_TIMEOUT
+            tear.ChangeTimeout = 9
+            tear.Height = tear.Height - 10
+            tear.FallingAccel = tear.FallingAccel * 2.0
         end
     end
 

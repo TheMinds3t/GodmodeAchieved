@@ -532,6 +532,16 @@ else
         ["Delirious_Open"] = 8,
     }
 
+    local render_ss_bar = function(pos,perc,anim,arrow_anim,arrow_off)
+        GODMODE.sprites.correct_meter_sprite:SetFrame(anim,1)
+        GODMODE.sprites.correct_meter_sprite:Render(pos+Vector(0,28-perc), Vector.Zero, Vector(0,28-perc))
+
+        if arrow_anim and arrow_off then 
+            GODMODE.sprites.correct_meter_sprite:SetFrame(arrow_anim,1)
+            GODMODE.sprites.correct_meter_sprite:Render(pos+Vector(0,28-perc)+arrow_off)
+        end
+    end
+
     function GODMODE.mod_object:base_player_hud(player)
         local data = GODMODE.get_ent_data(player)
 
@@ -545,6 +555,44 @@ else
             GODMODE.sprites.heart_ui_sprite = Sprite()
             GODMODE.sprites.heart_ui_sprite:Load("gfx/ui/ui_godmode_hearts.anm2", true)
         end
+
+        if GODMODE.sprites.correct_meter_sprite == nil then
+            GODMODE.sprites.correct_meter_sprite = Sprite()
+            GODMODE.sprites.correct_meter_sprite:Load("gfx/ui/ui_statscore.anm2", true)
+        end
+
+
+        local ss_thres = tonumber(GODMODE.save_manager.get_player_data(player,"ScaledStatThres","-1"))
+
+        if ss_thres ~= -1 and data and (data.red_coin_display or 0) > 0 then
+            local opacity = math.min(1.0, data.red_coin_display / 50.0)
+            GODMODE.sprites.correct_meter_sprite.Color = Color(1,1,1,opacity)
+ 
+            --GODMODE.util.get_hud_corner_pos(GODMODE.util.get_player_index(player))
+            local correct_score_pos = Isaac.WorldToScreen(player.Position) + Vector(-26,-14)
+            local score = GODMODE.util.get_stat_score(player).score
+            local max_score = GODMODE.util.get_max_stat_score()
+            local perc_cur = (score / max_score * 28)
+            local perc_thres = (ss_thres / max_score * 28)
+
+            GODMODE.sprites.correct_meter_sprite:SetFrame("BarBase",1)
+            GODMODE.sprites.correct_meter_sprite:Render(correct_score_pos, Vector.Zero)
+
+            if not GODMODE.util.can_spawn_correction() then 
+                    render_ss_bar(correct_score_pos-Vector(0,5),perc_cur,"PlayerScoreBar")
+            else
+                if perc_cur > perc_thres then 
+                    render_ss_bar(correct_score_pos-Vector(0,5),perc_cur,"PlayerScoreBar","ArrowGood",Vector(-6,-13))
+                    render_ss_bar(correct_score_pos-Vector(0,5),perc_thres,"ScaledScoreBar","ArrowBad",Vector(4,-13))
+                else
+                    render_ss_bar(correct_score_pos-Vector(0,5),perc_thres,"ScaledScoreBar","ArrowBad",Vector(4,-13))
+                    render_ss_bar(correct_score_pos-Vector(0,5),perc_cur,"PlayerScoreBar","ArrowGood",Vector(-6,-13))
+                end
+            end
+
+            -- Isaac.RenderScaledText("SS: ("..score.." / "..max_score..")\nSS Correct Thres: (<= "..ss_thres..")",correct_score_pos.X,correct_score_pos.Y + 20,1,1,1,1,1,1)
+        end
+        
 
         -- --render broken heart sprite
         local broken = tonumber(GODMODE.save_manager.get_player_data(player,"FaithlessHearts","0"))
@@ -621,16 +669,16 @@ else
                 data.red_coin_display = math.min(50,data.red_coin_display + 5)
             end
 
+            if GODMODE.sprites.red_coin_sprite == nil then
+                GODMODE.sprites.red_coin_sprite = Sprite()
+                GODMODE.sprites.red_coin_sprite:Load("gfx/pickup_redcoin.anm2", true)
+            end
+
             if data.red_coin_display > 0 then
                 local opacity = math.min(1.0, data.red_coin_display / 50.0)
+                GODMODE.sprites.red_coin_sprite.Color = Color(1,1,1,opacity)
                 pos = Isaac.WorldToScreen(player.Position + Vector(-32,16))
 
-                if GODMODE.sprites.red_coin_sprite == nil then
-                    GODMODE.sprites.red_coin_sprite = Sprite()
-                    GODMODE.sprites.red_coin_sprite:Load("gfx/pickup_redcoin.anm2", true)
-                end
-
-                GODMODE.sprites.red_coin_sprite.Color = Color(1,1,1,opacity)
                 GODMODE.sprites.red_coin_sprite:Play("HudClasp",true)
                 GODMODE.sprites.red_coin_sprite:Render(pos,Vector.Zero,Vector.Zero)
                 GODMODE.sprites.red_coin_sprite:Play("Hud",true)
@@ -1012,7 +1060,7 @@ else
                             local dir = GODMODE.room:GetDoor(door_pos).Direction
                             if door_pos_mods[dir] ~= nil then 
                                 if door_pos ~= -1 then
-                                    ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room:GetBottomRightPos()) * door_pos_mods[dir]
+                                    ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room and GODMODE.room:GetBottomRightPos() ) * (door_pos_mods[dir or 1] or Vector(1,1))
                                     data.persistent_data.room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
                                 end
                             else
@@ -1235,6 +1283,7 @@ else
                 local scale = GODMODE.util.get_stat_scale()
                 local stat_thres = base * scale + 0.1
                 local stats = GODMODE.util.get_stat_score(player)
+                GODMODE.save_manager.set_player_data(player,"ScaledStatThres", stat_thres)
                 -- GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
 
                 if stats.score < stat_thres then 

@@ -61,5 +61,5 @@
     <challenge name = "[GOD] The Galactic Approach" roomfilter = "4" canshoot="false" adddamage="10" endstage = "8" difficulty="0" unlockachievement="GODMODE_CelestialApproach" />
     <challenge name = "[GOD] Out Of Time" roomfilter = "4" getcurse="2" startingitems="237,82,216" maxhp="-6" cursefilter="29" endstage = "6" difficulty="0" unlockachievement="GODMODE_OutOfTime" />
     <!-- <challenge name = "[GOD] Tainted Sign Preview!" roomfilter = "2,4" achievements="GODMODE_TheSignComplete" lockeddesc="THE SIGN IS WEAK :(" playertype="The Sign" cursefilter="31" endstage = "1" difficulty="1" unlockachievement="GODMODE_TSign" /> -->
-    <challenge name = "[GOD] Tainted Sign Preview!" roomfilter = "2,4" playertype="The Sign" endstage = "6" difficulty="1" />
+    <challenge name = "[GOD] Tainted Sign Preview!" roomfilter = "" playertype="The Sign" endstage = "6" difficulty="1" />
 </challenges>

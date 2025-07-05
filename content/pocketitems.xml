@@ -12,4 +12,5 @@
     
 	<!-- Pills -->
 	<pilleffect name="Opipill" class="1+" mimiccharge="4" />
+	<pilleffect name="Gild Pill" class="1+" mimiccharge="12" />
 </pocketitems>

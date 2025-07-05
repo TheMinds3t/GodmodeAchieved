@@ -312,7 +312,9 @@ end
 util.macro_on_players = function(funct)
 	for i=1,GODMODE.game:GetNumPlayers() do
 		local player = Isaac.GetPlayer(i-1)
-		funct(player)
+		if funct(player) == true then -- added a break clause
+			break 
+		end
 	end
 end
 
@@ -659,7 +661,7 @@ end
 
 util.string_starts = function(str,start)
 	return string.sub(str,1,string.len(start))==start
- end
+end
 
 util.is_start_of_run = function()
 	return GODMODE.game.TimeCounter < 2
@@ -1368,10 +1370,10 @@ util.hazard_grid_types = {
 }
 
 util.hazard_ent_types = {
-	[EntityType.ENTITY_CONSTANT_STONE_SHOOTER] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
-	[EntityType.ENTITY_STONEHEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
-	[EntityType.ENTITY_BRIMSTONE_HEAD] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
-	[EntityType.ENTITY_QUAKE_GRIMACE] = function(ent) ent:GetSprite():Play("CloseEyes",true) end,
+	[EntityType.ENTITY_CONSTANT_STONE_SHOOTER] = function(ent) ent:Die() end,
+	[EntityType.ENTITY_STONEHEAD] = function(ent) ent:Die() end,
+	[EntityType.ENTITY_BRIMSTONE_HEAD] = function(ent) ent:Die() end,
+	[EntityType.ENTITY_QUAKE_GRIMACE] = function(ent) ent:Die() end,
 	[EntityType.ENTITY_SPIKEBALL] = function(ent) ent:Die() end,
 	[EntityType.ENTITY_BALL_AND_CHAIN] = function(ent) ent:Remove() end,
 	[EntityType.ENTITY_FIREPLACE] = function(ent) 

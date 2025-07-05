@@ -1,6 +1,6 @@
 local item = {}
 item.instance = GODMODE.registry.items.red_juice
-item.eid_description = "#↑+1 Luck↑+0.05 Speed#↓ Warps vision slightly#Effect stacks 20 times#Decays over time and on room clear"
+item.eid_description = "#↑+1 Luck↑+0.05 Speed#↓ Warps vision slightly#Effect stacks 20 times#Decays on room clear"
 item.encyc_entry = {
 	{ -- Effects
 		{str = "Effects", fsize = 2, clr = 3, halign = 0},
@@ -8,7 +8,7 @@ item.encyc_entry = {
 		{str = "- +1 Luck"},
 		{str = "- +0.05 Speed"},
 		{str = "- Slightly distorts vision, akin to Wavy Cap."},
-		{str = "These effects can be stacked up to 20 times to increase the potency of the item. The potency decays at a rate of 1 use every 30 seconds, and decays by 1 use every room clear."},
+		{str = "These effects can be stacked up to 20 times to increase the potency of the item. The potency decays by 1 use every room clear."},
 	},
 }
 

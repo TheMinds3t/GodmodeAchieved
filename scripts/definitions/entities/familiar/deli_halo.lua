@@ -272,17 +272,19 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     end
 end
 
+-- create delirious hearts
 monster.pickup_init = function(self,pickup)
     if GODMODE.registry.t_deli_heart_variants[pickup.Variant] == true and GODMODE.registry.t_deli_delirious_heart_rates[pickup.SubType] ~= nil then 
         local chance = GODMODE.registry.t_deli_delirious_heart_rates[pickup.SubType]
         local birthright_mod = 1
         local t_deli = false 
-        GODMODE.log("chance = "..chance,true)
+        -- GODMODE.log("chance = "..chance,true)
 
         GODMODE.util.macro_on_players(function(player) 
             if player:GetPlayerType() == GODMODE.registry.players.t_deli then 
                 t_deli = true 
                 birthright_mod = birthright_mod + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BIRTHRIGHT) * 0.25
+                return true
         end end)
 
         if t_deli == false then 

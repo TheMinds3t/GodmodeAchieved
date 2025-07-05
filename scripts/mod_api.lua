@@ -102,7 +102,7 @@ end
 -- safegrididx: int. This should just be the roomdescriptor's SafeGridIndex. Defaults to the current room's safe grid index.
 god_api.is_observatory = function(safegrididx)
     safegrididx = safegrididx == nil and GODMODE.level:GetCurrentRoomDesc().SafeGridIndex or safegrididx
-    return GODMODE.save_manager.list_contains("ObservatoryGridIdx",nil,function(ele) return tonumber(ele) == roomdesc.SafeGridIndex end)
+    return GODMODE.save_manager.list_contains("ObservatoryGridIdx",nil,function(ele) return roomdesc and tonumber(ele) == roomdesc.SafeGridIndex end)
 end
 
 -- blanket converts all collectibles and shop items into items from the varying Observatory pools when called. This is called on the first entry of a vanilla Observatory.
