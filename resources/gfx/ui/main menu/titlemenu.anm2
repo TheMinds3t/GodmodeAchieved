@@ -1,10 +1,10 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="5/15/2025 12:40:05 AM" Version="89" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="7/15/2025 4:10:39 PM" Version="90" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="titlemenu.png" Id="0"/>
 			<Spritesheet Path="splashes.png" Id="1"/>
-			<Spritesheet Path="..\..\..\..\resources\gfx\ui\main menu\titlestream.png" Id="2"/>
+			<Spritesheet Path="titlestream.png" Id="2"/>
 			<Spritesheet Path="logo_glow.png" Id="3"/>
 			<Spritesheet Path="titlestream_back.png" Id="4"/>
 			<Spritesheet Path="fly.png" Id="5"/>

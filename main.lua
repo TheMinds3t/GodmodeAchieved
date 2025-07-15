@@ -1,3 +1,13 @@
+-- Mod developed by @MINDS3T
+-- For interacting with Godmode before it initializes, execute the following code snippet:
+--[[
+    GODMODE = GODMODE or {}
+    GODMODE.preloads = GODMODE.preloads or {}
+    table.insert(GODMODE.preloads, function() 
+        GODMODE.log("hi!!",true)
+        -- your code here
+    end)
+]]--
 
 GODMODE = GODMODE or {}
 GODMODE.rgon_version = "1.0.11b"
@@ -34,7 +44,7 @@ else
     GODMODE.mod_object = RegisterMod(GODMODE.mod_id, 1)
     GODMODE.repentance = true --unleashed had same modid
     GODMODE.godmode_ent_type = 700
-    GODMODE.registry = include("scripts.definitions.registry")
+    GODMODE.registry = include("godmode.scripts.definitions.registry")
     GODMODE.console_logging = true --enables/disables log outputting to console for messages that do
     GODMODE.debug_logging = true --enables/disables log outputting to log.txt for messages that do
     
@@ -91,7 +101,7 @@ else
         if GODMODE.save_manager == nil then 
             GODMODE.log("[ERROR] Save manager does not exist, attempting to load...")
 
-            GODMODE.save_manager = require("scripts.save_manager")
+            GODMODE.save_manager = require("godmode.scripts.save_manager")
             sm_flag = false
             if GODMODE.save_manager:init() then 
                 sm_flag = true 
@@ -100,35 +110,36 @@ else
         end
 
         if sm_flag == true then 
-            GODMODE.util = include("scripts.util")
+            GODMODE.util = include("godmode.scripts.util")
 
-            GODMODE.godhooks = include("scripts.godhook_converter")
-            GODMODE.items = include("scripts.definitions.itemlist")
-            GODMODE.monsters = include("scripts.definitions.monsterlist")
+            GODMODE.godhooks = include("godmode.scripts.godhook_converter")
+            GODMODE.items = include("godmode.scripts.definitions.itemlist")
+            GODMODE.monsters = include("godmode.scripts.definitions.monsterlist")
             GODMODE.godhooks.register_items_and_ents()
             
-            GODMODE.alt_entries = include("scripts.definitions.alt_entries")
-            GODMODE.players = include("scripts.definitions.players")
-            GODMODE.armor_blacklist = include("scripts.definitions.armor_blacklist")
-            GODMODE.room_override = include("scripts.room_override")
-            GODMODE.roomgen = include("scripts.roomgen")
-            GODMODE.loaded_rooms = include("scripts.definitions.roomlist")
-            GODMODE.bosses = include("scripts.definitions.bosslist")
-            GODMODE.cards_pills = include("scripts.definitions.cards_pills")
-            GODMODE.d10 = include("scripts.definitions.d10")
-            GODMODE.itempools = include("scripts.definitions.itempools")
-            GODMODE.achievements = include("scripts.definitions.achievements")
-            GODMODE.menu = include("scripts.godmodemenucore")
-            GODMODE.options = include("scripts.options") -- DSS
-            GODMODE.repentogon = include("scripts.definitions.repentogon")
-            GODMODE.special_items = include("scripts.definitions.special_items")
+            GODMODE.alt_entries = include("godmode.scripts.definitions.alt_entries")
+            GODMODE.players = include("godmode.scripts.definitions.players")
+            GODMODE.armor_blacklist = include("godmode.scripts.definitions.armor_blacklist")
+            GODMODE.room_override = include("godmode.scripts.room_override")
+            GODMODE.roomgen = include("godmode.scripts.roomgen")
+            GODMODE.loaded_rooms = include("godmode.scripts.definitions.roomlist")
+            GODMODE.bosses = include("godmode.scripts.definitions.bosslist")
+            GODMODE.cards_pills = include("godmode.scripts.definitions.cards_pills")
+            GODMODE.d10 = include("godmode.scripts.definitions.d10")
+            GODMODE.itempools = include("godmode.scripts.definitions.itempools")
+            GODMODE.achievements = include("godmode.scripts.definitions.achievements")
+            GODMODE.menu = include("godmode.scripts.godmodemenucore")
+            GODMODE.options = include("godmode.scripts.options") -- DSS
+            GODMODE.repentogon = include("godmode.scripts.definitions.repentogon")
+            GODMODE.special_items = include("godmode.scripts.definitions.special_items")
             GODMODE.special_items:fill_item_lists()
-            GODMODE.registry = include("scripts.definitions.registry")
-            GODMODE.api = include("scripts.mod_api")
-            GODMODE.config_presets = include("scripts.definitions.config_presets")
+            GODMODE.registry = include("godmode.scripts.definitions.registry")
+            GODMODE.api = include("godmode.scripts.mod_api")
+            GODMODE.config_presets = include("godmode.scripts.definitions.config_presets")
             GODMODE.config_presets.gen_vanilla_presets()
-            GODMODE.date_events = include("scripts.definitions.date_events")
+            GODMODE.date_events = include("godmode.scripts.definitions.date_events")
             GODMODE.date_events.get_active_events(true)
+            GODMODE.tutorials = include("godmode.scripts.definitions.tutorials")
             
             GODMODE.shader_params = GODMODE.shader_params or {}
             GODMODE.shader_params.godmode_trinket_time = 0
@@ -147,10 +158,10 @@ else
         end
     end
 
-    GODMODE.save_manager = require("scripts.save_manager")
+    GODMODE.save_manager = require("godmode.scripts.save_manager")
     -- if not GODMODE.mod_object:load_core() then return end -- stop execution if the save manager doesn't exist
     GODMODE.mod_object:load_core()
-    include("scripts.mod_integration") --EID, ModConfig, StageAPI, Encyclopedia, Enhanced Boss Bars, MiniMapAPI, Soundtrack Menu, Mod Music Callback (MMC), Preappearance,
+    include("godmode.scripts.mod_integration") --EID, ModConfig, StageAPI, Encyclopedia, Enhanced Boss Bars, MiniMapAPI, Soundtrack Menu, Mod Music Callback (MMC), Preappearance,
 
     GODMODE.persistent_state = {
         none = 0,
@@ -189,7 +200,7 @@ else
                 end)
                 
                 local ending = Sprite()
-                ending:Load("gfx/cutscenes/ending.anm2", true)
+                ending:Load("godmode/gfx/cutscenes/ending.anm2", true)
                 ending.PlaybackSpeed = 0.666
                 GODMODE.cur_splash = ending 
                 GODMODE.playing_ending = Isaac.GetPlayer().InitSeed 
@@ -328,7 +339,7 @@ else
         if GODMODE.cur_splash ~= nil then
             GODMODE.cur_splash:Play("Scene", false)
 
-            if GODMODE.playing_ending == Isaac.GetPlayer().InitSeed and Input.IsButtonPressed(Keyboard.KEY_SPACE,Isaac.GetPlayer().ControllerIndex) then 
+            if GODMODE.playing_ending == Isaac.GetPlayer().InitSeed and Input.IsButtonPressed(Keyboard.KEY_ENTER,Isaac.GetPlayer().ControllerIndex) then 
                 GODMODE.game:FinishChallenge()
                 GODMODE.playing_ending = nil
             end
@@ -522,6 +533,8 @@ else
                 fx.DepthOffset = -100    
             end
         end
+
+        GODMODE.tutorials.update()
     end
 
     local heart_ui_anim_size = {
@@ -547,18 +560,18 @@ else
 
         if GODMODE.sprites.temp_bh_sprite == nil then
             GODMODE.sprites.temp_bh_sprite = Sprite()
-            GODMODE.sprites.temp_bh_sprite:Load("gfx/grid/fatal_attraction.anm2", true)
+            GODMODE.sprites.temp_bh_sprite:Load("godmode/gfx/grid/fatal_attraction.anm2", true)
             GODMODE.sprites.temp_bh_sprite:Play("BrokenHud",true)
         end
 
         if GODMODE.sprites.heart_ui_sprite == nil then
             GODMODE.sprites.heart_ui_sprite = Sprite()
-            GODMODE.sprites.heart_ui_sprite:Load("gfx/ui/ui_godmode_hearts.anm2", true)
+            GODMODE.sprites.heart_ui_sprite:Load("godmode/gfx/ui/ui_godmode_hearts.anm2", true)
         end
 
         if GODMODE.sprites.correct_meter_sprite == nil then
             GODMODE.sprites.correct_meter_sprite = Sprite()
-            GODMODE.sprites.correct_meter_sprite:Load("gfx/ui/ui_statscore.anm2", true)
+            GODMODE.sprites.correct_meter_sprite:Load("godmode/gfx/ui/ui_statscore.anm2", true)
         end
 
 
@@ -671,7 +684,7 @@ else
 
             if GODMODE.sprites.red_coin_sprite == nil then
                 GODMODE.sprites.red_coin_sprite = Sprite()
-                GODMODE.sprites.red_coin_sprite:Load("gfx/pickup_redcoin.anm2", true)
+                GODMODE.sprites.red_coin_sprite:Load("godmode/gfx/pickup_redcoin.anm2", true)
             end
 
             if data.red_coin_display > 0 then
@@ -745,7 +758,7 @@ else
         if GODMODE.level:GetStage() == LevelStage.STAGE7 and GODMODE.save_manager.get_config("VoidOverlay","true") == "true" then
             if GODMODE.sprites.void_sprite == nil then
                 GODMODE.sprites.void_sprite = Sprite()
-                GODMODE.sprites.void_sprite:Load("gfx/backdrop/voidoverlay.anm2", true)
+                GODMODE.sprites.void_sprite:Load("godmode/gfx/backdrop/voidoverlay.anm2", true)
                 GODMODE.log("Loaded Void overlay!")
             end
             GODMODE.sprites.void_sprite:Render(GODMODE.room:GetRenderSurfaceTopLeft(), Vector(0,0), Vector(0,0))
@@ -754,13 +767,13 @@ else
 
         if GODMODE.sprites.vs_sprite == nil then
             GODMODE.sprites.vs_sprite = Sprite()
-            GODMODE.sprites.vs_sprite:Load("gfx/ui/boss/god_versusscreen.anm2", true)
+            GODMODE.sprites.vs_sprite:Load("godmode/gfx/ui/boss/god_versusscreen.anm2", true)
             GODMODE.log("Loaded Godmode Vs. overlay!")
         end
 
         if GODMODE.sprites.cotv_timer_sprite == nil then 
             GODMODE.sprites.cotv_timer_sprite = Sprite()
-            GODMODE.sprites.cotv_timer_sprite:Load("gfx/ui/ui_cotv.anm2", true)
+            GODMODE.sprites.cotv_timer_sprite:Load("godmode/gfx/ui/ui_cotv.anm2", true)
             GODMODE.log("Loaded Godmode COTV timer!")
         elseif GODMODE.save_manager.get_config("COTVDisplay","true") == "true" then 
             local anim_type = "Timer"
@@ -874,6 +887,8 @@ else
             GODMODE.mod_object:base_player_hud(player)
             GODMODE.godhooks.call_hook("render_player_ui",player,GODMODE.util.get_player_index(player))
         end)
+
+        GODMODE.tutorials.render()
     end
 
     function GODMODE.mod_object:npc_hit( dmg_target , dmg_amount, dmg_flag, dmg_dealer, dmg_frames)
@@ -1108,13 +1123,13 @@ else
 
     local keys = {
         Card.CARD_CRACKED_KEY,
-        GODMODE.cards_pills.cards.pok_2,
-        GODMODE.cards_pills.cards.pok_3,
-        GODMODE.cards_pills.cards.pok_4,
-        GODMODE.cards_pills.cards.pok_5,
-        GODMODE.cards_pills.cards.pok_6,
-        GODMODE.cards_pills.cards.pok_7,
-        GODMODE.cards_pills.cards.pok_8
+        GODMODE.registry.cards.pok_2,
+        GODMODE.registry.cards.pok_3,
+        GODMODE.registry.cards.pok_4,
+        GODMODE.registry.cards.pok_5,
+        GODMODE.registry.cards.pok_6,
+        GODMODE.registry.cards.pok_7,
+        GODMODE.registry.cards.pok_8
     }
 
     function GODMODE.mod_object:new_level()
@@ -1255,7 +1270,7 @@ else
             player:EvaluateItems()
 
             for i=0,4 do 
-                if player:GetCard(i) == GODMODE.cards_pills.cards.soc then 
+                if player:GetCard(i) == GODMODE.registry.cards.soc then 
                     player:SetCard(i,Card.CARD_NULL)
                 end
             end
@@ -1699,7 +1714,7 @@ else
         end
 
         if room:GetDecorationSeed() == tonumber(GODMODE.save_manager.get_data("SOCSpawnSeed","-1")) then 
-            Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,GODMODE.cards_pills.cards.soc,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil)
+            Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_TAROTCARD,GODMODE.registry.cards.soc,room:FindFreePickupSpawnPosition(room:GetCenterPos()),Vector.Zero,nil)
             GODMODE.save_manager.set_data("SOCSpawnSeed","-1")
         end
 
@@ -1742,7 +1757,7 @@ else
                     local door = room:GetDoor(slot)
 
                     if door ~= nil and door:GetSprite():GetFilename() == "gfx/grid/Door_Mines.anm2" then 
-                        door:GetSprite():Load("gfx/grid/Door_Downpour.anm2",true)
+                        door:GetSprite():Load("godmode/gfx/grid/Door_Downpour.anm2",true)
                         door:SetLocked(true)
                         break 
                     end
@@ -1752,7 +1767,7 @@ else
                     local grident = room:GetGridEntityFromPos(room:GetCenterPos())
 
                     if grident then 
-                        grident:GetSprite():Load("gfx/grid/trapdoor_downpour.anm2",true)                
+                        grident:GetSprite():Load("godmode/gfx/grid/trapdoor_downpour.anm2",true)                
                     end
                 end
             end
@@ -1826,7 +1841,7 @@ else
                     local door = room:GetDoor(slot)
 
                     if door ~= nil and door:GetSprite():GetFilename() == "gfx/grid/Door_Mines.anm2" then 
-                        door:GetSprite():Load("gfx/grid/Door_Downpour.anm2",true)
+                        door:GetSprite():Load("godmode/gfx/grid/Door_Downpour.anm2",true)
                         door:SetLocked(true)
                         break 
                     end
@@ -2379,7 +2394,7 @@ else
             end
         end
 
-        if GODMODE.validate_rgon() and player:HasPlayerForm(PlayerForm.PLAYERFORM_LORD_OF_THE_FLIES) or player:HasPlayerForm(PlayerForm.PLAYERFORM_SPIDERBABY) then 
+        if GODMODE.validate_rgon() and (player:HasPlayerForm(PlayerForm.PLAYERFORM_LORD_OF_THE_FLIES) or player:HasPlayerForm(PlayerForm.PLAYERFORM_SPIDERBABY)) then 
             Isaac.GetPersistentGameData():TryUnlock(GODMODE.registry.achievements.recluse)
         end
     end
@@ -2495,8 +2510,8 @@ else
             if entfirst == false and (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_CURSE and pickup.Variant == PickupVariant.PICKUP_TAROTCARD and GODMODE.cards_pills.is_red_key(pickup.SubType) then 
                 local sub = pickup.SubType 
 
-                if sub > GODMODE.cards_pills.cards.pok_8 and sub <= GODMODE.cards_pills.cards.pok_2 or sub == Card.CARD_CRACKED_KEY then 
-                    local off = math.abs(GODMODE.cards_pills.cards.pok_2 - sub) + 2
+                if sub > GODMODE.registry.cards.pok_8 and sub <= GODMODE.registry.cards.pok_2 or sub == Card.CARD_CRACKED_KEY then 
+                    local off = math.abs(GODMODE.registry.cards.pok_2 - sub) + 2
                     if sub == Card.CARD_CRACKED_KEY then off = 1 end
                     local cur_count = GODMODE.cards_pills.get_red_key_count(player)
                     off = off + cur_count
@@ -2787,13 +2802,13 @@ else
     GODMODE.paint_observatory_door = function(door)
         if door:GetSprite():GetFilename() ~= GODMODE.observatory_door_file then 
             -- door.ExtraSprite = Sprite()
-            -- door.ExtraSprite:Load("gfx/grid/observatory_flames.anm2",true)
+            -- door.ExtraSprite:Load("godmode/gfx/grid/observatory_flames.anm2",true)
             -- door.ExtraVisible = true
             local sprite = door:GetSprite()
             sprite:Load(GODMODE.observatory_door_file,true)
 
             local doorfx = Isaac.Spawn(GODMODE.registry.entities.observatory_fx.type,GODMODE.registry.entities.observatory_fx.variant,8,GODMODE.room:GetDoorSlotPosition(door.Slot),Vector.Zero,nil)
-            doorfx:GetSprite():Load("gfx/grid/observatory_flames.anm2",true)
+            doorfx:GetSprite():Load("godmode/gfx/grid/observatory_flames.anm2",true)
             doorfx:GetSprite().Rotation = door.Slot % 4 * 90-90
 
             if GODMODE.room:IsClear() then 
@@ -2846,7 +2861,7 @@ else
                     door:GetSprite():Load(door_spot:GetSprite():GetFilename(),true)
                 else 
                     local doorfx = Isaac.Spawn(GODMODE.registry.entities.observatory_fx.type,GODMODE.registry.entities.observatory_fx.variant,8,room:GetDoorSlotPosition(i),Vector.Zero,nil)
-                    doorfx:GetSprite():Load("gfx/grid/observatory_flames.anm2",true)
+                    doorfx:GetSprite():Load("godmode/gfx/grid/observatory_flames.anm2",true)
                     doorfx:GetSprite().Rotation = i % 4 * 90-90
                 end
             end

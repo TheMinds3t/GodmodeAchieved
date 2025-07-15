@@ -4,7 +4,7 @@
 		<Spritesheets>
 			<Spritesheet Path="titlemenu.png" Id="0"/>
 			<Spritesheet Path="splashes.png" Id="1"/>
-			<Spritesheet Path="..\..\..\..\resources\gfx\ui\main menu\titlestream.png" Id="2"/>
+			<Spritesheet Path="..\..\..\..\resources\godmode\gfx\ui\main menu\titlestream.png" Id="2"/>
 			<Spritesheet Path="logo_glow.png" Id="3"/>
 			<Spritesheet Path="titlestream_back.png" Id="4"/>
 			<Spritesheet Path="fly.png" Id="5"/>
