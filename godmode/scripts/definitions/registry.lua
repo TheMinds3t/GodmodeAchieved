@@ -91,6 +91,7 @@ reg.items = {
     hellfiah = Isaac.GetItemIdByName("Hellfiah Saus"),
     fallen_skull = Isaac.GetItemIdByName("Fallen Skull"),
     tear_gas = Isaac.GetItemIdByName("Tear Gas"),
+    three_leaf_clover = Isaac.GetItemIdByName("Three Leaf Clover"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),

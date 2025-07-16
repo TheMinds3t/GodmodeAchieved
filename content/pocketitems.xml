@@ -12,5 +12,8 @@
     
 	<!-- Pills -->
 	<pilleffect name="Opipill" class="1+" mimiccharge="4" />
-	<pilleffect name="Gild Pill" class="1+" mimiccharge="12" />
+	<pilleffect name="Gild Pilled!" class="1+" mimiccharge="8" />
+	<pilleffect name="Multivitamin!" class="0+" mimiccharge="6" />
+	<pilleffect name="Something's Changed!" class="1+" mimiccharge="6" />
+	<pilleffect name="The Void is Calling" class="2-" mimiccharge="4" />
 </pocketitems>

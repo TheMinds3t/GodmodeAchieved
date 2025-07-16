@@ -158,7 +158,54 @@ tutorials.list = {
 
             true,
         }
-    }
+    },
+    ["RedCoinMeter"] = {
+        lock_doors = false, lock_controls = true,
+        validate_args = function(args) return args[1] and args[1]:ToPlayer() ~= nil end,
+        get_pos = function(args) return args[1] end,
+        timeline = {
+            function(self,args)
+                local player = args[1]
+                tutorials.set_arrow(self.get_pos(args),200,true,0.66,Vector(0,6))
+                tutorials.set_spotlight(self.get_pos(args),true,0.5,0.75,Vector(0,0))
+                tutorials.spotlight.real_opacity = 0.0
+                tutorials.spotlight.real_scale = 4.0
+                GODMODE.get_ent_data(player).red_coin_display = 10000
+                tutorials.create_text(player, "You might wonder what this meter is below you!", 1)
+            end,
+
+            function(self,args)
+                local player = args[1]
+                tutorials.set_arrow(self.get_pos(args),200,true,0.66,Vector(0,8))
+                tutorials.set_spotlight(self.get_pos(args),true,0.5,0.75,Vector(0,0))
+                GODMODE.get_ent_data(player).red_coin_display = 10000
+                tutorials.create_text(player, "That's okay, I would too tbh. It's a Red Coin meter!", 1)
+            end,
+
+            function(self,args)
+                local player = args[1]
+                tutorials.set_arrow(self.get_pos(args),200,true,0.66,Vector(0,9))
+                tutorials.set_spotlight(self.get_pos(args),true,0.5,0.7,Vector(0,0))
+                GODMODE.get_ent_data(player).red_coin_display = 10000
+                tutorials.create_text(player, "If you manage to find 5 Red Coins, you'll be rewarded!", 1)
+            end,
+
+            function(self,args)
+                local player = args[1]
+                tutorials.set_arrow(self.get_pos(args),66,true,0.75,Vector(0,12))
+                tutorials.set_spotlight(self.get_pos(args),true,0.66,0.7,Vector(-0,0))
+                GODMODE.get_ent_data(player).red_coin_display = 10000
+                tutorials.create_text(player, "It'll show up any time you collect a Red Coin as well to remind you.", 1)
+            end,
+
+            function(self,args)
+                args[1]:AnimateHappy()
+                GODMODE.util.schedule_function(function() tutorials.waiting_for_input = 1 end, 30)
+            end,
+
+            true,
+        }
+    },
 }
 
 -- how fast to update the position of the spotlight graphic in world coordinates
@@ -330,7 +377,7 @@ tutorials.update = function()
         local skip_button = Input.IsButtonPressed (tonumber(GODMODE.save_manager.get_config("TutorialSkipKey",Keyboard.KEY_ENTER)) or Keyboard.KEY_ENTER, Isaac.GetPlayer().ControllerIndex)
         
         -- add the ability to speed through if undesired
-        if skip_button == true and tutorials.waiting_for_input < skip_to_next_step_time - min_min_skip_time then 
+        if skip_button == true and (tutorials.waiting_for_input or skip_to_next_step_time) < skip_to_next_step_time - min_min_skip_time then 
             tutorials.min_skip_time = math.max(min_min_skip_time, tutorials.min_skip_time - 1/3)
         else
             tutorials.min_skip_time = min_time_for_skip
@@ -351,7 +398,7 @@ tutorials.update = function()
 
         if timeline_action == true then -- signal the end 
             if store_type == 1 then -- once per file 
-                GODMODE.save_manager.set_persistent_data("Tutorial"..cur_entry.id,1,true)
+                GODMODE.save_manager.set_persistant_data("Tutorial"..cur_entry.id,1,true)
             elseif store_type == 2 then -- once per session
                 GODMODE.tutorials.session_cache = GODMODE.tutorials.session_cache or {}
                 GODMODE.tutorials.session_cache[cur_entry.id] = true 

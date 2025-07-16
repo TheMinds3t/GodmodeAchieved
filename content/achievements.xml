@@ -1,4 +1,4 @@
-<achievements gfxroot="gfx/achievements/">
+<achievements gfxroot="godmode/gfx/achievements/">
 	<!-- regular char unlocks -->
 	<achievement name="GODMODE_Recluse" text='You unlocked "Recluse"' gfx="achievement_recluse.png" />
 	<achievement name="GODMODE_Elohim" text='You unlocked "Elohim"' gfx="achievement_elohim.png" />

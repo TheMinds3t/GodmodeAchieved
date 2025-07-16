@@ -42,7 +42,9 @@
 		<sample weight="1" path="child_blargh_1.wav" />
 		<sample weight="1" path="child_blargh_2.wav" />
 	</sound>
-
+	<sound name="GODMODE.tutorial_text">
+		<sample weight="1" path="tutorial_text.wav" />
+	</sound>
 	
 	<!-- DSS integration! -->
     <sound name="deadseascrolls_pop">

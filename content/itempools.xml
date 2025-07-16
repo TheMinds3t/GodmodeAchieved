@@ -14,6 +14,7 @@
 		<Item Name="Crown of Gold" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gangrene" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Book of Saints" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Soft Serve" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -61,6 +62,7 @@
 		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
 		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="devil">
 		<Item Name="Tramp of Babylon" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -115,6 +117,7 @@
 		<Item Name="Hysteria" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Fractal Key" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="library">
 		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -137,6 +140,7 @@
 		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="A Second Thought" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hysteria" Weight="0.1" RemoveOn="0.05" DecreaseBy="0.1"/>
@@ -172,6 +176,7 @@
 		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gangrene" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Soft Serve" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="War Banner" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -205,6 +210,7 @@
 		<Item Name="Hysteria" Weight="0.2" RemoveOn="0.05" DecreaseBy="0.2"/>
 		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="greedCurse">
@@ -248,6 +254,7 @@
 		<Item Name="Jack-of-all-Trades" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Nirvana" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
 		<Item Name="Fatal Attraction" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="rottenBeggar">
@@ -258,6 +265,7 @@
 		<Item Name="Feather Duster" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Arcade Ticket" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Fruit Salad" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>

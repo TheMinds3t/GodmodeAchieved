@@ -1,4 +1,4 @@
-<items gfxroot="gfx/items/" version="1" deathanm2="gfx/itemportraits.anm2">
+<items gfxroot="godmode/gfx/items/" version="1" deathanm2="gfx/itemportraits.anm2">
 	<passive achievement="GODMODE_FL_XXX" id="0" cache="damage speed" devilprice="2" broken="2" description="I can't feel anything!" gfx="collectibles_morphine.png" name="Morphine" tags="nokeeper syringe offensive summonable" quality = "3" />
 	<!-- ↓ For animating the above ↑  -->
 	<passive id="0" description="You shouldn't have this..." gfx="collectibles_morphine_used.png" name="Morphine Used" quality = "0" hidden="true" />
@@ -86,6 +86,7 @@
 	<familiar id="101" devilprice="2" description="What a dumpster fire" gfx="hellfiah_sauce.png" name="Hellfiah Saus" tags="familiar offensive baby monstermanual" quality = "3" />
 	<passive id="102" cache="damage luck firedelay speed" description="10 Years! Strength in Frailty and Discovery" gfx="fallen_skull.png" tags="nochallenge nokeeper offensive quest" name="Fallen Skull" quality = "4" customtags="op anniversary observatory" />
 	<active id="103" maxcharges="4" description="Cry harder" gfx="tear_gas.png" name="Tear Gas" tags="tearsup" quality = "2" />
+	<passive id="104" cache="luck" description="Lucky?" gfx="collectibles_clover2.png" name="Three Leaf Clover" quality = "1" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />

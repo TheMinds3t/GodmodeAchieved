@@ -304,7 +304,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
             return false 
         end
 
-        GODMODE.log("flags = "..flags,true)
+        -- GODMODE.log("flags = "..flags,true)
 
         if ((enthit:GetSprite():IsPlaying("DigIn") or enthit:GetSprite():IsPlaying("DigOut") or enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0) then
             return false 
