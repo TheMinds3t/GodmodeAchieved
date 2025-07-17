@@ -5,7 +5,7 @@ monster.variant = Isaac.GetEntityVariantByName(monster.name)
 
 monster.set_delirium_visuals = function(self,ent)
     for i=0,3 do 
-        ent:GetSprite():ReplaceSpritesheet(i,"gfx/bosses/deliriumforms/ludomaw_new.png")
+        ent:GetSprite():ReplaceSpritesheet(i,"godmode/gfx/bosses/deliriumforms/ludomaw_new.png")
     end
     ent:GetSprite():LoadGraphics()
 end

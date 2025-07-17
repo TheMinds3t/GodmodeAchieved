@@ -19,13 +19,13 @@ item.eval_cache = function(self, player,cache)
 			player.CanFly = true     
 		end
 
-		player:AddNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/luc_wings.anm2"))
+		player:AddNullCostume(Isaac.GetCostumeIdByPath("godmode/gfx/costumes/luc_wings.anm2"))
 
 		if cache == CacheFlag.CACHE_DAMAGE then
 			player.Damage = player.Damage + 2.5
 		end
 	else
-		player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath("gfx/costumes/luc_wings.anm2"))
+		player:TryRemoveNullCostume(Isaac.GetCostumeIdByPath("godmode/gfx/costumes/luc_wings.anm2"))
 	end
 end
 

@@ -74,7 +74,7 @@ monster.bullet = function(ent,pos,ang,speed,flags,mod_func)
     proj = proj:ToProjectile()
     
     proj.ProjectileFlags = proj.ProjectileFlags | flags | ProjectileFlags.NO_WALL_COLLIDE
-    proj:GetSprite():ReplaceSpritesheet(0,"gfx/alt_bulletatlas_2.png")
+    proj:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/alt_bulletatlas_2.png")
     proj:GetSprite():LoadGraphics()
     proj.Scale = 1.5
     proj.SplatColor = Color(0,0,0,1)

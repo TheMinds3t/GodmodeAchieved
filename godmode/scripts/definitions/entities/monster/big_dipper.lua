@@ -81,7 +81,7 @@ monster.npc_kill = function(self, ent)
             local ent2 = nil
             if i < 2 then 
     			ent2 = Isaac.Spawn(EntityType.ENTITY_SQUIRT,0,0,ent.Position,Vector(-3+ent:GetDropRNG():RandomFloat()*6,-3+ent:GetDropRNG():RandomFloat()*6),ent)
-                ent2:GetSprite():ReplaceSpritesheet(0,"gfx/monsters/brownie_squirt.png")
+                ent2:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/monsters/brownie_squirt.png")
                 ent2:GetSprite():LoadGraphics()
                 GODMODE.get_ent_data(ent2).brownie = true
             else

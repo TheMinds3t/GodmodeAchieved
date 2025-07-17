@@ -8,8 +8,8 @@ local base_color = Color(0,0,0,0)
 local trail_merge_speed = 70
 
 local xaphan_layers = {
-    [4] = "gfx/costumes/xaphan_head_tainted.png",
-    [1] = "gfx/costumes/xaphan_body_tainted.png",
+    [4] = "godmode/gfx/costumes/xaphan_head_tainted.png",
+    [1] = "godmode/gfx/costumes/xaphan_body_tainted.png",
 }
 
 monster.effect_update = function(self, ent, data, sprite)
@@ -40,8 +40,8 @@ monster.effect_update = function(self, ent, data, sprite)
     if data.effect_init == false then 
         ent:GetSprite():Load(spawner:GetSprite():GetFilename(),true)
         if xaphan_flag then 
-            ent:GetSprite():ReplaceSpritesheet(1,"gfx/characters/xaphan_tainted/xaphan_grey.png")
-            ent:GetSprite():ReplaceSpritesheet(4,"gfx/characters/xaphan_tainted/xaphan_grey.png")
+            ent:GetSprite():ReplaceSpritesheet(1,"godmode/gfx/characters/xaphan_tainted/xaphan_grey.png")
+            ent:GetSprite():ReplaceSpritesheet(4,"godmode/gfx/characters/xaphan_tainted/xaphan_grey.png")
             ent:GetSprite():LoadGraphics()
         end
         data.effect_init = true

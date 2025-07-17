@@ -35,7 +35,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 params.GridCollision = false
                 local proj = ent:FireBossProjectiles(1,ent.Position+RandomVector():Resized(24-ent:GetDropRNG():RandomFloat()*8),0.25,params)
                 proj.Height = proj.Height - 20
-                proj:GetSprite():ReplaceSpritesheet(0,"gfx/alt_bulletatlas.png")
+                proj:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/alt_bulletatlas.png")
                 proj:GetSprite():LoadGraphics()
                 proj:GetSprite():Play("RegularTear6",true)
                 -- t.Color = Color(0.3,0.4,0.1,1.0,50/255,50/255,50/255)
@@ -56,7 +56,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 params.GridCollision = false
                 local proj = ent:FireBossProjectiles(1,ent.Position+RandomVector():Resized(24-ent:GetDropRNG():RandomFloat()*8),0.25,params)
                 proj.Height = proj.Height - 20
-                proj:GetSprite():ReplaceSpritesheet(0,"gfx/alt_bulletatlas.png")
+                proj:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/alt_bulletatlas.png")
                 proj:GetSprite():LoadGraphics()
                 proj:GetSprite():Play("RegularTear6",true)
                 proj.Velocity = proj.Velocity * 0.5 + (player.Position-ent.Position):Resized(math.min(10,math.max(4,(player.Position-ent.Position):Length()/20.0)))
@@ -80,7 +80,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 local proj = ent:FireBossProjectiles(1,ent.Position+RandomVector():Resized(24-ent:GetDropRNG():RandomFloat()*8),0.25,params)
                 proj.Height = proj.Height - 20
                 proj.Velocity = -ent.Velocity:Rotated(-60+ent:GetDropRNG():RandomFloat()*120) * 0.25
-                proj:GetSprite():ReplaceSpritesheet(0,"gfx/alt_bulletatlas.png")
+                proj:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/alt_bulletatlas.png")
                 proj:GetSprite():LoadGraphics()
                 proj:GetSprite():Play("RegularTear6",true)    
                 proj:Update()

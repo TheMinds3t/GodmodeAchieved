@@ -19,8 +19,8 @@ stage.boss_room_path = "resources/rooms/intestines/it_breathes_fight.lua"
 stage.bosses = {
 	{
         Name="ItBreathes",
-        Bossname = "gfx/ui/boss/bossname_it_breathes.png",
-        Portrait = "gfx/ui/boss/portrait_it_breathes.png",
+        Bossname = "godmode/gfx/ui/boss/bossname_it_breathes.png",
+        Portrait = "godmode/gfx/ui/boss/portrait_it_breathes.png",
         Weight = 1.0,
         Horseman = false,
         Rooms = nil,

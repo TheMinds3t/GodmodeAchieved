@@ -16,7 +16,7 @@ monster.data_init = function(self, params)
 end
 monster.set_delirium_visuals = function(self,ent)
     for i=0,4 do 
-        ent:GetSprite():ReplaceSpritesheet(i,"gfx/bosses/deliriumforms/souleater2.png")
+        ent:GetSprite():ReplaceSpritesheet(i,"godmode/gfx/bosses/deliriumforms/souleater2.png")
     end
     ent:GetSprite():LoadGraphics()
 end

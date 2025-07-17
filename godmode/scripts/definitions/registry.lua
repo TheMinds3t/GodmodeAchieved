@@ -863,40 +863,40 @@ reg.blessing_keys = {
 }
 
 reg.costumes = {
-    arac_head = Isaac.GetCostumeIdByPath("gfx/costumes/arac_head.anm2"),
-    t_arac_head = Isaac.GetCostumeIdByPath("gfx/costumes/tainted_arac_head.anm2"),
-    xaphan_head = Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_head.anm2"),
-    t_xaphan_head = Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_head_tainted.anm2"),
-    t_xaphan_eyes_0 = Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_eyes_0.anm2"),
+    arac_head = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/arac_head.anm2"),
+    t_arac_head = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/tainted_arac_head.anm2"),
+    xaphan_head = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_head.anm2"),
+    t_xaphan_head = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_head_tainted.anm2"),
+    t_xaphan_eyes_0 = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_eyes_0.anm2"),
     t_xaphan_eyes = {
-        Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_eyes_0.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_eyes_1.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_eyes_2.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_eyes_3.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_eyes_0.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_eyes_1.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_eyes_2.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_eyes_3.anm2"),
     },
     
-    t_xaphan_body = Isaac.GetCostumeIdByPath("gfx/costumes/xaphan_body_tainted.anm2"),
-    elohim_beard = Isaac.GetCostumeIdByPath("gfx/costumes/elohim_beard.anm2"),
-    t_elohim_beard = Isaac.GetCostumeIdByPath("gfx/costumes/tainted_elohim_beard.anm2"),
-    t_gehazi_eyes = Isaac.GetCostumeIdByPath("gfx/costumes/t_gehazi_eyes.anm2"),
-    t_deli_eyes = Isaac.GetCostumeIdByPath("gfx/costumes/t_deli_eyes.anm2"),
+    t_xaphan_body = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/xaphan_body_tainted.anm2"),
+    elohim_beard = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/elohim_beard.anm2"),
+    t_elohim_beard = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/tainted_elohim_beard.anm2"),
+    t_gehazi_eyes = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/t_gehazi_eyes.anm2"),
+    t_deli_eyes = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/t_deli_eyes.anm2"),
     
-    the_sign_wings = Isaac.GetCostumeIdByPath("gfx/costumes/sign_wings.anm2"),
-    t_sign_body = Isaac.GetCostumeIdByPath("gfx/costumes/sign_body_t.anm2"),
+    the_sign_wings = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/sign_wings.anm2"),
+    t_sign_body = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/sign_body_t.anm2"),
     
-    edible_soul = Isaac.GetCostumeIdByPath("gfx/costumes/edible_soul_bodiless.anm2"),
+    edible_soul = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/edible_soul_bodiless.anm2"),
     maxs_head = {
-        Isaac.GetCostumeIdByPath("gfx/costumes/maxs_head_1.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/maxs_head_2.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/maxs_head_3.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/maxs_head_4.anm2"),
-        Isaac.GetCostumeIdByPath("gfx/costumes/maxs_head_5.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/maxs_head_1.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/maxs_head_2.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/maxs_head_3.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/maxs_head_4.anm2"),
+        Isaac.GetCostumeIdByPath("godmode/gfx/costumes/maxs_head_5.anm2"),
     },
-    wings_of_betrayal = Isaac.GetCostumeIdByPath("gfx/costumes/luc_wings.anm2"),
+    wings_of_betrayal = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/luc_wings.anm2"),
 
-    celeste = Isaac.GetCostumeIdByPath("gfx/costumes/celeste.anm2"),
-    celeste_guppy = Isaac.GetCostumeIdByPath("gfx/costumes/celeste_guppy.anm2"),
-    cyborg = Isaac.GetCostumeIdByPath("gfx/costumes/cyborg.anm2"),
+    celeste = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/celeste.anm2"),
+    celeste_guppy = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/celeste_guppy.anm2"),
+    cyborg = Isaac.GetCostumeIdByPath("godmode/gfx/costumes/cyborg.anm2"),
 }
 
 reg.challenges = {
@@ -1151,31 +1151,31 @@ if GODMODE.validate_rgon() then
 
     reg.closet_chars = {
         [reg.players.recluse] = {
-            char_sprite = "gfx/characters/arac_tainted/arac_black.png",
+            char_sprite = "godmode/gfx/characters/arac_tainted/arac_black.png",
             unlock = reg.players.t_recluse,
             achievement = reg.achievements.t_recluse,
             as = reg.players.recluse,
         },
         [reg.players.xaphan] = {
-            char_sprite = "gfx/characters/xaphan_tainted/xaphan_grey.png",
+            char_sprite = "godmode/gfx/characters/xaphan_tainted/xaphan_grey.png",
             unlock = reg.players.t_xaphan,
             achievement = reg.achievements.t_xaphan,
             as = reg.players.xaphan,
         },
         [reg.players.deli] = {
-            char_sprite = "gfx/characters/deli_tainted/deli_white.png",
+            char_sprite = "godmode/gfx/characters/deli_tainted/deli_white.png",
             unlock = reg.players.t_deli,
             achievement = reg.achievements.t_deli,
             as = reg.players.deli,
         },
         [reg.players.elohim] = {
-            char_sprite = "gfx/characters/elohim_tainted/elohim.png",
+            char_sprite = "godmode/gfx/characters/elohim_tainted/elohim.png",
             unlock = reg.players.t_elohim,
             achievement = reg.achievements.t_elohim,
             as = reg.players.elohim,
         },
         [reg.players.gehazi] = {
-            char_sprite = "gfx/characters/gehazi_tainted/gideon_green.png",
+            char_sprite = "godmode/gfx/characters/gehazi_tainted/gideon_green.png",
             unlock = reg.players.t_gehazi,
             achievement = reg.achievements.t_gehazi,
             as = reg.players.gehazi,

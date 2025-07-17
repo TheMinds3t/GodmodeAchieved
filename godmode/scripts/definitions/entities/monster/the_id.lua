@@ -14,7 +14,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	if data.sprite_flip ~= true then
 		GODMODE.util.macro_on_enemies(ent,monster.type,10,0, function(chain) 
-			chain:GetSprite():ReplaceSpritesheet(1,"gfx/monsters/the_id.png")
+			chain:GetSprite():ReplaceSpritesheet(1,"godmode/gfx/monsters/the_id.png")
 			chain:GetSprite():LoadGraphics()
 			data.sprite_flip = true
 		end)

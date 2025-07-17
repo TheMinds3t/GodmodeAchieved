@@ -19,8 +19,8 @@ stage.boss_room_path = "resources/rooms/nest/mom_fight.lua"
 stage.bosses = {
 	{
         Name="Mom",
-        Bossname = "gfx/ui/boss/bossname_45.0_mom.png",
-        Portrait = "gfx/ui/boss/portrait_45.0_mom.png",
+        Bossname = "godmode/gfx/ui/boss/bossname_45.0_mom.png",
+        Portrait = "godmode/gfx/ui/boss/portrait_45.0_mom.png",
         Weight = 1.0,
         Horseman = false,
         Rooms = nil,

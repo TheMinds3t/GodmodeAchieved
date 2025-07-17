@@ -27,7 +27,7 @@ monster.npc_update = function(self, ent, data, sprite)
         sprite:Play("Charge",true)
 
         if ent.SubType == 1 then
-            sprite:ReplaceSpritesheet(1,"gfx/effects/adra_charge_red.png")
+            sprite:ReplaceSpritesheet(1,"godmode/gfx/effects/adra_charge_red.png")
             sprite:LoadGraphics()
         end
     end

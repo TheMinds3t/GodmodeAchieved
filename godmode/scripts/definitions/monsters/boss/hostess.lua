@@ -27,7 +27,7 @@ end
 
 monster.set_delirium_visuals = function(self,ent)
     for i=0,5 do 
-        ent:GetSprite():ReplaceSpritesheet(i,"gfx/bosses/deliriumforms/the_hostess.png")
+        ent:GetSprite():ReplaceSpritesheet(i,"godmode/gfx/bosses/deliriumforms/the_hostess.png")
     end
     ent:GetSprite():LoadGraphics()
 end

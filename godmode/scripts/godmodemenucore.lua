@@ -2756,11 +2756,11 @@ function dssmenucore.init(DSSModName, MenuProvider)
         end
 
         local spritePaths = {
-            Shadow = "gfx/ui/deadseascrolls/menu_shadow.png",
-            Back = "gfx/ui/deadseascrolls/menu_back.png",
-            Face = "gfx/ui/deadseascrolls/menu_face.png",
-            Border = "gfx/ui/deadseascrolls/menu_border.png",
-            Mask = "gfx/ui/deadseascrolls/menu_mask.png",
+            Shadow = "godmode/gfx/ui/deadseascrolls/menu_shadow.png",
+            Back = "godmode/gfx/ui/deadseascrolls/menu_back.png",
+            Face = "godmode/gfx/ui/deadseascrolls/menu_face.png",
+            Border = "godmode/gfx/ui/deadseascrolls/menu_border.png",
+            Mask = "godmode/gfx/ui/deadseascrolls/menu_mask.png",
         }
 
         dssmenu.MenuSpritesMain = nil

@@ -376,8 +376,8 @@ end
 -- ENHANCED BOSS BARS
 
 if HPBars then -- check if the mod is installed
-    local bar_path = "gfx/ui/boss/bar_icons/"
-    local bar_path_bar = "gfx/ui/boss/bars/"
+    local bar_path = "godmode/gfx/ui/boss/bar_icons/"
+    local bar_path_bar = "godmode/gfx/ui/boss/bars/"
     HPBars.Conditions["isSubtype"] = function(entity,args) return entity.SubType == args[1] end 
 	HPBars.BossDefinitions[GODMODE.registry.entities.souleater.type.."."..GODMODE.registry.entities.souleater.variant] = { -- the table BossDefinitions is used to define boss specific content. Entries are defined with "Type.Variant" of the boss
 		sprite = bar_path.."souleater.png", -- path to the .png file that will be used as the icon for this boss
@@ -544,70 +544,70 @@ function load_stageapi_integration()
     StageAPI.UnregisterCallbacks(GODMODE.mod_id)
 
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.recluse, {
-        Name = "gfx/ui/boss/names/arac.png",
-        Portrait = "gfx/ui/stage/arac.png",
+        Name = "godmode/gfx/ui/boss/names/arac.png",
+        Portrait = "godmode/gfx/ui/stage/arac.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.t_recluse, {
-        Name = "gfx/ui/boss/names/arac.png",
-        Portrait = "gfx/ui/stage/tainted_arac.png",
+        Name = "godmode/gfx/ui/boss/names/arac.png",
+        Portrait = "godmode/gfx/ui/stage/tainted_arac.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.xaphan, {
-        Name = "gfx/ui/boss/names/xaphan.png",
-        Portrait = "gfx/ui/stage/xaphan.png",
+        Name = "godmode/gfx/ui/boss/names/xaphan.png",
+        Portrait = "godmode/gfx/ui/stage/xaphan.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.t_xaphan, {
-        Name = "gfx/ui/boss/names/xaphan.png",
-        Portrait = "gfx/ui/stage/tainted_xaphan.png",
+        Name = "godmode/gfx/ui/boss/names/xaphan.png",
+        Portrait = "godmode/gfx/ui/stage/tainted_xaphan.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.deli, {
-        Name = "gfx/ui/boss/names/deli.png",
-        Portrait = "gfx/ui/stage/deli.png",
+        Name = "godmode/gfx/ui/boss/names/deli.png",
+        Portrait = "godmode/gfx/ui/stage/deli.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.t_deli, {
-        Name = "gfx/ui/boss/names/deli.png",
-        Portrait = "gfx/ui/stage/tainted_deli.png",
+        Name = "godmode/gfx/ui/boss/names/deli.png",
+        Portrait = "godmode/gfx/ui/stage/tainted_deli.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.elohim, {
-        Name = "gfx/ui/boss/names/elohim.png",
-        Portrait = "gfx/ui/stage/elohim.png",
+        Name = "godmode/gfx/ui/boss/names/elohim.png",
+        Portrait = "godmode/gfx/ui/stage/elohim.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.t_elohim, {
-        Name = "gfx/ui/boss/names/elohim.png",
-        Portrait = "gfx/ui/stage/tainted_elohim.png",
+        Name = "godmode/gfx/ui/boss/names/elohim.png",
+        Portrait = "godmode/gfx/ui/stage/tainted_elohim.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.gehazi, {
-        Name = "gfx/ui/boss/names/gehazi.png",
-        Portrait = "gfx/ui/stage/gehazi.png",
+        Name = "godmode/gfx/ui/boss/names/gehazi.png",
+        Portrait = "godmode/gfx/ui/stage/gehazi.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.t_gehazi, {
-        Name = "gfx/ui/boss/names/gehazi.png",
-        Portrait = "gfx/ui/stage/tainted_gehazi.png",
+        Name = "godmode/gfx/ui/boss/names/gehazi.png",
+        Portrait = "godmode/gfx/ui/stage/tainted_gehazi.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     StageAPI.AddPlayerGraphicsInfo(GODMODE.registry.players.the_sign, {
-        Name = "gfx/ui/boss/names/thesign.png",
-        Portrait = "gfx/ui/stage/thesign.png",
+        Name = "godmode/gfx/ui/boss/names/thesign.png",
+        Portrait = "godmode/gfx/ui/stage/thesign.png",
         NoShake = false,
-        -- Controls = "gfx/backdrop/controls_fiend.png"
+        -- Controls = "godmode/gfx/backdrop/controls_fiend.png"
     })
     
     function create_stage(stage_file)
@@ -1377,13 +1377,13 @@ function load_stageapi_integration()
     GODMODE.backdrops = {}
 
     GODMODE.backdrops.unlock_room_gfx = GODMODE.make_room_gfx({
-        rocks = "gfx/grid/unlock_room/rocks.png",
-        pits = "gfx/grid/unlock_room/pits.png",
-        alt_pits = "gfx/grid/unlock_room/pits.png",
-        bridge = "gfx/grid/unlock_room/bridge.png",
-        shading = "gfx/backdrop/base_shading/shading",
-        player_spot = "gfx/ui/stage/unlock_room/boss_spot.png",
-        boss_spot = "gfx/ui/stage/unlock_room/player_spot.png",
+        rocks = "godmode/gfx/grid/unlock_room/rocks.png",
+        pits = "godmode/gfx/grid/unlock_room/pits.png",
+        alt_pits = "godmode/gfx/grid/unlock_room/pits.png",
+        bridge = "godmode/gfx/grid/unlock_room/bridge.png",
+        shading = "godmode/gfx/backdrop/base_shading/shading",
+        player_spot = "godmode/gfx/ui/stage/unlock_room/boss_spot.png",
+        boss_spot = "godmode/gfx/ui/stage/unlock_room/player_spot.png",
     
         backdrop_gfx = {
             Walls = {""},
@@ -1392,14 +1392,14 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/unlock_room/unlock", 
+        backdrop_prefix = "godmode/gfx/backdrop/unlock_room/unlock", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/unlock_room/doors/normal.png", req=GODMODE.util.base_room_door},
-            {graphic="gfx/grid/basedoors/door_00_shopdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_SHOP}}},
-            {graphic="gfx/grid/basedoors/door_05_arcaderoomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_ARCADE}}},
-            {graphic="gfx/grid/basedoors/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
+            {graphic="godmode/gfx/grid/unlock_room/doors/normal.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/basedoors/door_00_shopdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_SHOP}}},
+            {graphic="godmode/gfx/grid/basedoors/door_05_arcaderoomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_ARCADE}}},
+            {graphic="godmode/gfx/grid/basedoors/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
         }
     })
 
@@ -1411,11 +1411,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/observatory/observatory_back", 
+        backdrop_prefix = "godmode/gfx/backdrop/observatory/observatory_back", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/observatory_door.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/observatory_door.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1427,11 +1427,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/correction/correct_", 
+        backdrop_prefix = "godmode/gfx/backdrop/correction/correct_", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/correction_door.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/correction_door.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1443,11 +1443,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/correction/correction_back", 
+        backdrop_prefix = "godmode/gfx/backdrop/correction/correction_back", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/correction_door2.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/correction_door2.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1459,11 +1459,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/god_palace_night/sheol_", 
+        backdrop_prefix = "godmode/gfx/backdrop/god_palace_night/sheol_", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/door_19_sheoldoor.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/door_19_sheoldoor.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1475,11 +1475,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/god_palace_day/palace_", 
+        backdrop_prefix = "godmode/gfx/backdrop/god_palace_day/palace_", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/door_22_cathedraldoor.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/door_22_cathedraldoor.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1494,12 +1494,12 @@ function load_stageapi_integration()
         underlay = function() --MC_PRE_BACKDROP_RENDER_WATER
             
         end,
-        backdrop_prefix = "gfx/backdrop/god_sanctuary/sanctuary_", 
+        backdrop_prefix = "godmode/gfx/backdrop/god_sanctuary/sanctuary_", 
         backdrop_suffix = ".png",
-        overlay = StageAPI.Overlay("gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
+        overlay = StageAPI.Overlay("godmode/gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
     
         doors = {
-            {graphic="gfx/grid/sanctuary/door.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/sanctuary/door.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1511,11 +1511,11 @@ function load_stageapi_integration()
             Corners = {"corner"}
         }, 
     
-        backdrop_prefix = "gfx/backdrop/lower/lower_", 
+        backdrop_prefix = "godmode/gfx/backdrop/lower/lower_", 
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="gfx/grid/correction_door.png", req=GODMODE.util.base_room_door},
+            {graphic="godmode/gfx/grid/correction_door.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1523,7 +1523,7 @@ function load_stageapi_integration()
         -- [LevelStage.STAGE5..","..StageType.STAGETYPE_ORIGINAL] = "SheolToPalace",
         -- [LevelStage.STAGE5..","..StageType.STAGETYPE_WOTL] = "CathedralToPalace",
         -- [LevelStage.STAGE6..","..StageType.STAGETYPE_ORIGINAL] = "DarkRoomToFurnace",
-        [LevelStage.STAGE6..","..StageType.STAGETYPE_WOTL] = StageAPI.Overlay("gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
+        [LevelStage.STAGE6..","..StageType.STAGETYPE_WOTL] = StageAPI.Overlay("godmode/gfx/backdrop/god_sanctuary/sanctuary_overlay.anm2", Vector(0.55,0.45), Vector(-10,-10)),
     }
 
     GODMODE.backdrop_config_toggles = {
@@ -1579,7 +1579,7 @@ function load_stageapi_integration()
 
 
 
-    -- GODMODE.ObservatoryDoor = StageAPI.CustomDoor("ObservatoryDoor", "gfx/grid/observatory_door.anm2", nil, nil, nil, nil, true)
+    -- GODMODE.ObservatoryDoor = StageAPI.CustomDoor("ObservatoryDoor", "godmode/gfx/grid/observatory_door.anm2", nil, nil, nil, nil, true)
 
     GODMODE.observatory_rooms = StageAPI.RoomsList("GODMODE-Observatory",include("resources.rooms.observatory_rooms"))--StageAPI.CreateEmptyRoomLayout(RoomShape.ROOMSHAPE_1x1)
 

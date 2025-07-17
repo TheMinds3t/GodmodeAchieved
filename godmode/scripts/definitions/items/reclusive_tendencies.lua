@@ -84,7 +84,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
                 local chigger = Isaac.Spawn(GODMODE.registry.entities.chigger.type, GODMODE.registry.entities.chigger.variant, 1, player.Position, RandomVector()*(player:GetCollectibleRNG(item.instance):RandomFloat() * 4 + 3), nil)
                 chigger:ToFamiliar().Player = player
                 chigger:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-                chigger:GetSprite():ReplaceSpritesheet(0, "gfx/familiars/chigger_tainted.png")
+                chigger:GetSprite():ReplaceSpritesheet(0, "godmode/gfx/familiars/chigger_tainted.png")
                 chigger:GetSprite():LoadGraphics()
                 chigger.CollisionDamage = player.Damage / 10.0 * 2.5
             end    

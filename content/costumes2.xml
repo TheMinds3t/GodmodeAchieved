@@ -1,4 +1,4 @@
-<costumes anm2root="gfx/costumes/">
+<costumes anm2root="godmode/gfx/costumes/">
     <!-- Items -->
     <costume anm2path="luc_wings.anm2" isFlying="true" priority="99" type="none" hasSkinAlt="true" />
     <costume anm2path="heart_arrest.anm2" id="8" type="passive" hasSkinAlt="true" />

@@ -9,7 +9,7 @@ monster.npc_init = function(self, ent)
     
     if clamped_subtype > 0 then 
         for i=0,4 do 
-            ent:GetSprite():ReplaceSpritesheet(i,"gfx/monsters/delirious_pile_"..clamped_subtype..".png")
+            ent:GetSprite():ReplaceSpritesheet(i,"godmode/gfx/monsters/delirious_pile_"..clamped_subtype..".png")
         end
 
         ent:GetSprite():LoadGraphics()
@@ -67,7 +67,7 @@ monster.npc_kill = function(self, ent)
 
             tear.Height = -20
             tear.FallingSpeed = 0.0
-            tear:GetSprite():ReplaceSpritesheet(0, "gfx/tear/delirious_pile_tears.png")
+            tear:GetSprite():ReplaceSpritesheet(0, "godmode/gfx/tear/delirious_pile_tears.png")
             tear:GetSprite():LoadGraphics()
             tear:GetSprite():Play("RegularTear6",true)
 

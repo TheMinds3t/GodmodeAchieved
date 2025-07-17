@@ -114,9 +114,7 @@ monster.npc_update = function(self, ent, data, sprite)
 					ent2:HasEntityFlags(EntityFlag.FLAG_FRIENDLY_BALL)) and not (ent2.Type == monster.type and ent2.Variant == monster.variant) then
 				if data.run_from == nil then
 					data.run_from = ent2
-					GODMODE.log("set run from!",true)
 				elseif (data.run_from.Position - ent.Position):Length() > (ent2.Position - ent.Position):Length() then
-					GODMODE.log("set run from!!",true)
 					data.run_from = ent2
 				end
 			end
@@ -231,14 +229,14 @@ monster.new_room = function(self)
 	-- keepah card
 	for i=1,count do 
 		local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
-		config_parrot(parrot, not GODMODE.room:IsFirstVisit(), "gfx/familiars/shopbird"..(parrot.InitSeed % 3)..".png")	
+		config_parrot(parrot, not GODMODE.room:IsFirstVisit(), "godmode/gfx/familiars/shopbird"..(parrot.InitSeed % 3)..".png")	
 	end
 
 	-- keepah!
 	if is_shop() then
 		if GODMODE.save_manager.get_config("ShopParrot","true") == "true" then 
 			local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
-			config_parrot(parrot, GODMODE.room:IsFirstVisit(), (GODMODE.birthday_mode == true and "gfx/familiars/shopbird_birthday.png" or "gfx/familiars/shopbird.png"))
+			config_parrot(parrot, GODMODE.room:IsFirstVisit(), (GODMODE.birthday_mode == true and "godmode/gfx/familiars/shopbird_birthday.png" or "godmode/gfx/familiars/shopbird.png"))
 		end
 	end
 end

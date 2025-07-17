@@ -9,9 +9,9 @@ monster.data_init = function(self, params)
 end
 
 monster.set_delirium_visuals = function(self,ent)
-	ent:GetSprite():ReplaceSpritesheet(0,"gfx/bosses/deliriumforms/gimmimick.png")
+	ent:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/bosses/deliriumforms/gimmimick.png")
     for i=3,6 do 
-        ent:GetSprite():ReplaceSpritesheet(i,"gfx/bosses/deliriumforms/gimmimick.png")
+        ent:GetSprite():ReplaceSpritesheet(i,"godmode/gfx/bosses/deliriumforms/gimmimick.png")
     end
     ent:GetSprite():LoadGraphics()
 end

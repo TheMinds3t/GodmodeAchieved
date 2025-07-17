@@ -1,4 +1,4 @@
-<players root="gfx/characters/" portraitroot="gfx/ui/player/portraits/" nameimageroot="gfx/ui/player/names/">
+<players root="godmode/gfx/characters/" portraitroot="godmode/gfx/ui/player/portraits/" nameimageroot="godmode/gfx/ui/player/names/">
     <player name="Xaphan" skin="xaphan/xaphan.png" hp="2" black="4" bombs="0"
           nameimage="names/xaphan.png" 
           portrait="xaphan.png" 

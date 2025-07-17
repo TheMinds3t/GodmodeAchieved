@@ -15,7 +15,7 @@ item.encyc_entry = {
 item.pickup_update = function(self, pickup, data, sprite)
 	if pickup.Variant == PickupVariant.PICKUP_SHOPITEM or pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE then 
 		if pickup.SubType == item.instance then 
-			sprite:ReplaceSpritesheet(1,"gfx/items/collectibles/collectibles_papal_cross_both.png")
+			sprite:ReplaceSpritesheet(1,"godmode/gfx/items/collectibles/collectibles_papal_cross_both.png")
 			sprite:LoadGraphics()
 		end
 	end

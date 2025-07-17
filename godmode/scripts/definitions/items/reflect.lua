@@ -79,11 +79,11 @@ item.tear_move_scalars = {
 }
 
 item.tear_charge_sprites = {
-    [-1] = "gfx/tear_glass_0.anm2",
-    [0] = "gfx/tear_glass_0.anm2",
-    [1] = "gfx/tear_glass_1.anm2",
-    [2] = "gfx/tear_glass_2.anm2",
-    [3] = "gfx/tear_glass_3.anm2",
+    [-1] = "godmode/gfx/tear_glass_0.anm2",
+    [0] = "godmode/gfx/tear_glass_0.anm2",
+    [1] = "godmode/gfx/tear_glass_1.anm2",
+    [2] = "godmode/gfx/tear_glass_2.anm2",
+    [3] = "godmode/gfx/tear_glass_3.anm2",
 }
 
 item.eval_cache = function(self, player,cache,data)

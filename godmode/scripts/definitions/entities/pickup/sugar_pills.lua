@@ -23,7 +23,7 @@ monster.pickup_init = function(self, ent, data, sprite)
 	
 			if sugar_drop_flag or ent.InitSeed % 100 < tonumber(GODMODE.save_manager.get_config("SugarPillChance","0.2")) * 100 then 
 				GODMODE.save_manager.set_ent_data(ent,"SugarPill","true")
-				sprite:ReplaceSpritesheet(0, "gfx/pickups/sugar_pills.png")
+				sprite:ReplaceSpritesheet(0, "godmode/gfx/pickups/sugar_pills.png")
 				sprite:LoadGraphics()
 			end
 		end	
