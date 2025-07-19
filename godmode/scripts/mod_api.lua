@@ -238,6 +238,9 @@ god_api.is_tutorial_active = function(tutorial_id)
     end
 end
 
+-- activates a tutorial with the given tutorial ID.
+-- tutorial_id: string/GODMODE.tutorials.list key. 
+-- args: an array {} of parameters the tutorial requires. This changes per-tutorial, but usually is just an array with a player reference {Isaac.GetPlayer()}
 god_api.activate_tutorial = function(tutorial_id, args)
     if GODMODE.tutorials.list[tutorial_id] then 
         GODMODE.tutorials.activate_tutorial(tutorial_id, args)
@@ -245,5 +248,27 @@ god_api.activate_tutorial = function(tutorial_id, args)
         GODMODE.log("[API/ERROR] Tutorial ID \'"..tutorial_id.."\' does not exist, cannot activate.")
     end
 end
+
+-- returns the current number of Faithless hearts the player has.
+-- player: EntityPlayer obj. 
+-- returns: # of faithless hearts (int, 0-12)
+god_api.get_faithless_hearts = function(player)
+    return GODMODE.util.get_faithless(player)
+end
+
+-- adds to the current number of faithless hearts the player has.
+-- player: EntityPlayer obj.
+-- amount: integer (0-12)
+god_api.add_faithless_hearts = function(player, amount)
+    GODMODE.util.add_faithless(player, amount)
+end
+
+-- sets the current number of faithless hearts the player has.
+-- player: EntityPlayer obj.
+-- amount: integer (0-12)
+god_api.set_faithless_hearts = function(player, amount)
+    god_api.add_faithless(player, amount - god_api.get_faithless_hearts(player))
+end
+
 
 return god_api

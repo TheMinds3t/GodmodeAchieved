@@ -93,7 +93,7 @@ save_manager.load = function()
                 local type = ent.type
                 local variant = ent.variant
                 local subtype = ent.subtype
-
+                
                 if new[seed] == true then 
                     GODMODE.log("Found duplicate persistent entry for seed \'"..seed.."\', removing duplicate", true)
                     table.remove(save_manager.god_data.dynamic.persistent_entities,index)
@@ -225,6 +225,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["VoidStrength"] = "4"
         save_manager.god_data.config["LighterTreasure"] = "false"
         save_manager.god_data.config["RedJuiceSetting"] = "1"
+        save_manager.god_data.config["MinRoamSpeed"] = "0.1"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 

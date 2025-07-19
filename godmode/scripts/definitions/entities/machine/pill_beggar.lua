@@ -84,8 +84,14 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 end
 
-monster.slot_bomb_drops = function(self, slot) 
-    
+monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
+    if collided then 
+        ent:BloodExplode()
+        local speed = 2
+        Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_PILL,ent:GetDropRNG():RandomInt(PillColor.NUM_PILLS),ent.Position,(RandomVector()*speed+Vector(0,speed*1.5)):Resized(ent:GetDropRNG():RandomFloat()*3+2),nil)
+        Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_PILL,ent:GetDropRNG():RandomInt(PillColor.NUM_PILLS),ent.Position,(RandomVector()*speed+Vector(0,speed*1.5)):Resized(ent:GetDropRNG():RandomFloat()*3+2),nil)
+        ent:Kill()
+    end
 end
 
 return monster

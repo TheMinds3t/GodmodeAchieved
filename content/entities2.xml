@@ -114,7 +114,11 @@
     </entity>
     <entity anm2path="famil_hellfiah.anm2" baseHP="0" tags="noreroll cansacrifice" collisionDamage="0" collisionMass="16" collisionRadius="13" friction="1" id="3" name="Hellfiah" numGridCollisionPoints="12" shadowSize="13" portrait="1000" gridCollision="walls">
     </entity>
-
+    <entity anm2path="famil_snail.anm2" baseHP="0" tags="noreroll" collisionDamage="0" collisionMass="32" collisionRadius="15" friction="1" id="3" name="Cursed Snail" numGridCollisionPoints="12" shadowSize="13" portrait="1000">
+    </entity>
+    <entity anm2path="famil_loded_sack.anm2" baseHP="0" tags="noreroll" collisionDamage="0" collisionMass="32" collisionRadius="16" friction="1" id="3" name="Loded Sack" numGridCollisionPoints="12" shadowSize="13">
+        <gibs amount="4" poop="1" />
+    </entity>
     <!-- FAMILIARS END -->
 
 
@@ -669,6 +673,8 @@
     <entity anm2path="effect_bone_shield.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="16" friction="1" id="1000" name="Crossbones Shield" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="704" gridCollision="none"  shutdoors="false">
     </entity>
     <entity anm2path="effect_aztec_shield.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="16" friction="1" id="1000" name="Aztec Shield" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="704" subtype="1" gridCollision="none"  shutdoors="false">
+    </entity>
+    <entity anm2path="effect_snail_shield.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="16" friction="1" id="1000" name="Snail Shield" numGridCollisionPoints="8" shadowSize="0" stageHP="0" variant="704" subtype="2" gridCollision="none"  shutdoors="false">
     </entity>
     <entity anm2path="effect_tear_gas.anm2" baseHP="0" tags="noreroll" boss="0" champion="0" collisionDamage="0" collisionMass="1" collisionRadius="0" friction="1" id="1000" name="Tear Gas Can" numGridCollisionPoints="0" shadowSize="0" stageHP="0" variant="706" subtype="0" shutdoors="false">
     </entity>

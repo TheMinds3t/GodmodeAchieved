@@ -27,28 +27,41 @@ monster.effect_update = function(self, ent, data, sprite)
         end
     end
 
-    -- 
-    -- ent:FollowParent(ent.Parent or ent.SpawnerEntity)
+    if ent.SubType < GODMODE.registry.entities.snail_shield.subtype then 
+        -- ent:FollowParent(ent.Parent or ent.SpawnerEntity)
 
-    if data.plays_left == nil then
-        if ent.SubType == 1 then
-            data.plays_left = 20
-        else
-            data.plays_left = 3
+        if data.plays_left == nil then
+            if ent.SubType == 1 then
+                data.plays_left = 20
+            else
+                data.plays_left = 3
+            end
+
+            sprite:Play("Form", true)
         end
 
-        sprite:Play("Form", true)
-    end
 
-
-    if sprite:IsEventTriggered("Time") or sprite:IsFinished("Form") then
-        if sprite:GetAnimation() == "Form" then
-            sprite:Play("Idle", false)
-        else
-            data.plays_left = data.plays_left - 1
-            if data.plays_left == 0 then
-                sprite:Play("Break", true)
+        if sprite:IsEventTriggered("Time") or sprite:IsFinished("Form") then
+            if sprite:GetAnimation() == "Form" then
+                sprite:Play("Idle", false)
+            else
+                data.plays_left = data.plays_left - 1
+                if data.plays_left == 0 then
+                    sprite:Play("Break", true)
+                end
             end
+        end
+    else         
+        if ent.Timeout > 0 then 
+            ent.Timeout = ent.Timeout - 1
+            if sprite:IsFinished("Form") and not sprite:IsPlaying("Idle") then 
+                sprite:Play("Idle",true)
+            elseif ent.FrameCount == 1 then 
+                sprite:Play("Form", true)
+            end
+        elseif ent.Timeout == 0 then 
+            sprite:Play("Break",true)
+            ent.Timeout = -1
         end
     end
 

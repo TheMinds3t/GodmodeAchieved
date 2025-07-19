@@ -20,7 +20,7 @@ monster.spawn_flat_tear = function(self, ent, ang, speed, height)
 end
 
 monster.set_delirium_visuals = function(self,ent)
-	ent:GetSprite():ReplaceSpritesheet(0,"gfx/bosses/deliriumforms/bathemo.png")
+	ent:GetSprite():ReplaceSpritesheet(0,"godmode/gfx/bosses/deliriumforms/bathemo.png")
     ent:GetSprite():LoadGraphics()
 end
 

@@ -9,7 +9,7 @@
 		<Item Name="Larval Therapy" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Taenia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Fuzzy Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
-		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blaze's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="The Uncommon Cough" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Crown of Gold" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -26,6 +26,9 @@
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hot Potato" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Door Rift" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Loded Sack" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="shop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -46,6 +49,7 @@
 		<Item Name="Cash Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="boss">
 		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -118,6 +122,7 @@
 		<Item Name="Fractal Key" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="library">
 		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -136,7 +141,7 @@
 	</Pool>
 	<Pool Name="goldenChest">
 		<Item Name="Fruit Flies" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
-		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blaze's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Black Mushroom" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Four Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -146,6 +151,8 @@
 		<Item Name="Hysteria" Weight="0.1" RemoveOn="0.05" DecreaseBy="0.1"/>
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="redChest">
 		<Item Name="Wings of Betrayal" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -171,7 +178,7 @@
 		<Item Name="Larval Therapy" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Taenia" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Heart Arrest" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
-		<Item Name="Max's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Blaze's Head" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="The Uncommon Cough" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Sharing is Caring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Gold Plated Battery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -183,6 +190,8 @@
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hot Potato" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Door Rift" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="greedShop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -211,6 +220,7 @@
 		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Dad's Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="greedCurse">
@@ -270,6 +280,7 @@
 		<Item Name="Dragon Fruit" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Greedy Glance" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Birthday Slice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="planetarium">
@@ -294,12 +305,14 @@
 		<Item Name="Crimson Solution" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hellfiah Saus" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Red Juice" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Door Rift" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="babyShop">
 		<Item Name="Fallen Guardian" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Hellfiah Saus" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Late Delivery" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="GODMODE_pillBeggar">

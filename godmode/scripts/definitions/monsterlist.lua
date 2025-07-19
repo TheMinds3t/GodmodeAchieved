@@ -147,5 +147,7 @@ table.insert(ret, include("godmode.scripts.definitions.entities.familiar.deli_ha
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.deli_eye"))
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.vengeful_dagger"))
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.hellfiah"))
+table.insert(ret, include("godmode.scripts.definitions.entities.familiar.cursed_snail"))
+table.insert(ret, include("godmode.scripts.definitions.entities.familiar.loded_sack"))
 
 return ret

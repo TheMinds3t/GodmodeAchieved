@@ -176,6 +176,7 @@ monster.npc_update = function(self, ent, data, sprite)
         tear.ProjectileFlags = tear.ProjectileFlags | ProjectileFlags.BURST8 | ProjectileFlags.DECELERATE
         data.tears = data.tears or {}
         table.insert(data.tears,tear)
+        GODMODE.sfx:Play(GODMODE.registry.sounds.meow)
         GODMODE.sfx:Play(SoundEffect.SOUND_WEIRD_WORM_SPIT,Options.SFXVolume*1.0+0.75)
     end
 
@@ -192,6 +193,7 @@ monster.npc_update = function(self, ent, data, sprite)
         Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLOOD_EXPLOSION, 0, ent.Position + head_offset(ent), Vector.Zero, ent)
         GODMODE.game:ShakeScreen(10)
         data.summon_count = (data.summon_count or 0) + 1
+        GODMODE.sfx:Play(GODMODE.registry.sounds.meow,1.0,0,false,1.2)
     end
 
     if sprite:IsEventTriggered("SFX") then 

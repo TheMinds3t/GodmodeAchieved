@@ -417,6 +417,7 @@ else
             local time = math.min(tonumber(GODMODE.save_manager.get_data("FloorEnterTime","120000")),tonumber(GODMODE.save_manager.get_config("VoidEnterTime","9005")))
             local time_inc = 1
 
+            -- this makes the timer for COTV scale based on the player's move speed, with a move speed of 2.0 being 100% 
             if GODMODE.cached_max_speed == nil or (GODMODE.frame_count or GODMODE.game:GetFrameCount()) % 20 == 0 then 
                 local max_speed = 0
                 GODMODE.util.macro_on_players(function(player) 
@@ -426,8 +427,8 @@ else
                 time_inc = max_speed / 2.0
             end
 
+            -- halve the timer speed if the floor is twice as bigs
             if GODMODE.util.has_curse(LevelCurse.CURSE_OF_LABYRINTH) then time_inc = time_inc / 2 end
-
             GODMODE.save_manager.set_data("FloorEnterTime",""..time-time_inc)
 
             if time <= 0 or GODMODE.game.Challenge == GODMODE.registry.challenges.out_of_time then
@@ -467,6 +468,8 @@ else
             level:AddAngelRoomChance(1.0)
         end
 
+        -- hidden command for godmode, type "edengrind" on the it lives floor, bit of a lore drop: my save data got wiped and 
+        -- instead of manually doing this over and over, I wrote a macro inside of Godmode to get Eden tokens lol
         if GODMODE.eden_grind_cmd == true then 
             if room:GetType() == RoomType.ROOM_BOSS and GODMODE.level:GetStage() == LevelStage.STAGE4_2 then 
                 if room:IsClear() then 
@@ -1389,12 +1392,20 @@ else
         local level = GODMODE.level
 
         local stat_help = GODMODE.save_manager.get_config("StatHelp","true") == "true"
+        local min_move_speed = tonumber(GODMODE.save_manager.get_config("MinRoamSpeed","0.1"))
         GODMODE.save_manager.set_data("PlayerCount","0",true)
         GODMODE.util.macro_on_players(function(player) 
             if stat_help and GODMODE.util.is_start_of_run() then 
                 local score = GODMODE.util.get_stat_score(player).score
                 local old = tonumber(GODMODE.save_manager.get_player_data(player,"BaseStats",""..score))
                 GODMODE.save_manager.set_player_data(player,"BaseStats",(old + score) / 2)
+            end
+
+            player:AddCacheFlags(CacheFlag.CACHE_SPEED)
+            player:EvaluateItems()
+
+            if player.SubType == GODMODE.registry.players.t_elohim and room:GetType() == RoomType.ROOM_BOSS then 
+                GODMODE.save_manager.set_player_data(player,"BossDMG",player:GetTotalDamageTaken())
             end
         end)
 
@@ -1407,7 +1418,6 @@ else
             MusicManager():Crossfade(GODMODE.registry.music.misfortunate)
             GODMODE.save_manager.set_data("CorrectionNeeded","false")
             GODMODE.save_manager.set_data("CorrectionPortalSpawned","false",true)
-
             GODMODE.paint_correction_room_fx()
         end
 
@@ -1734,14 +1744,6 @@ else
             Isaac.GetPlayer():UseCard(Card.CARD_SOUL_ISAAC,UseFlag.USE_NOANIM | UseFlag.USE_NOANNOUNCER)
         end
 
-        if room:GetType() == RoomType.ROOM_BOSS then 
-            GODMODE.util.macro_on_players(function(player) 
-                if player.SubType == GODMODE.registry.players.t_elohim then 
-                    GODMODE.save_manager.set_player_data(player,"BossDMG",player:GetTotalDamageTaken())
-                end
-            end)
-        end
-
         -- dehazard boss and miniboss rooms by replacing spiked rocks, breaking spikes, etc
         if room:IsClear() and (room:GetType() == RoomType.ROOM_BOSS or room:GetType() == RoomType.ROOM_MINIBOSS or room_data.SurpriseMiniboss == true) then 
             if GODMODE.save_manager.get_config("DehazardBossRooms","true") == "true" then 
@@ -1794,6 +1796,11 @@ else
             local portal = Isaac.Spawn(GODMODE.registry.entities.ivory_portal.type, GODMODE.registry.entities.ivory_portal.variant, 0, room:FindFreePickupSpawnPosition(room:GetCenterPos()+Vector(-64,0)),Vector.Zero,nil)
             portal:Update()
         end
+
+        GODMODE.util.macro_on_players(function(player) 
+            player:AddCacheFlags(CacheFlag.CACHE_SPEED)
+            player:EvaluateItems()
+        end)
         
         local room_data = GODMODE.level:GetCurrentRoomDesc()
 
@@ -2392,6 +2399,11 @@ else
             elseif cache == CacheFlag.CACHE_FIREDELAY then 
                 player.MaxFireDelay = player.MaxFireDelay * (1.0+math.min(0.5,penalty*0.05))
             end
+        end
+
+        if cache == CacheFlag.CACHE_SPEED and GODMODE.room:IsClear() then 
+            local min_move_speed = math.max(0.1,tonumber(GODMODE.save_manager.get_config("MinRoamSpeed","0.1")))
+            player.MoveSpeed = math.max(min_move_speed,player.MoveSpeed)
         end
 
         if GODMODE.validate_rgon() and (player:HasPlayerForm(PlayerForm.PLAYERFORM_LORD_OF_THE_FLIES) or player:HasPlayerForm(PlayerForm.PLAYERFORM_SPIDERBABY)) then 

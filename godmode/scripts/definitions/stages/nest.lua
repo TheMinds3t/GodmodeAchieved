@@ -46,40 +46,40 @@ stage.graphics = {
 }
 
 stage.room_path = "resources/rooms/"..stage_prefix.."rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.nest.challenge_waves","resources.rooms.nest.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.godmode.rooms.nest.challenge_waves","resources.godmode.rooms.nest.boss_challenge_waves"}
 
 stage.bosses = {
 	{
         Name="Wretched",
-        Bossname = "godmode/gfx/ui/boss/bossname_100.1_thewretched.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_100.1_thewretched.png",
+        Bossname = "gfx/ui/boss/bossname_100.1_thewretched.png",
+        Portrait = "gfx/ui/boss/portrait_100.1_thewretched.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.nest.bosses.wretched",
+        Rooms = "resources.godmode.rooms.nest.bosses.wretched",
     },
 	{
         Name="Reap Creap",
-        Bossname = "godmode/gfx/ui/boss/bossname_reapcreep.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_900.0_reapcreep.png",
+        Bossname = "gfx/ui/boss/bossname_reapcreep.png",
+        Portrait = "gfx/ui/boss/portrait_900.0_reapcreep.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.nest.bosses.reapcreep",
+        Rooms = "resources.godmode.rooms.nest.bosses.reapcreep",
     },
 	{
         Name="Widow",
-        Bossname = "godmode/gfx/ui/boss/bossname_100.0_widow.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_100.0_widow.png",
+        Bossname = "gfx/ui/boss/bossname_100.0_widow.png",
+        Portrait = "gfx/ui/boss/portrait_100.0_widow.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.nest.bosses.widow",
+        Rooms = "resources.godmode.rooms.nest.bosses.widow",
     },
 	{
         Name="Teratoma",
-        Bossname = "godmode/gfx/ui/boss/bossname_71.1_teratoma.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_71.1_teratoma.png",
+        Bossname = "gfx/ui/boss/bossname_71.1_teratoma.png",
+        Portrait = "gfx/ui/boss/portrait_71.1_teratoma.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.nest.bosses.teratoma",
+        Rooms = "resources.godmode.rooms.nest.bosses.teratoma",
     },
     {
         Name="Outbreak",
@@ -87,15 +87,15 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/outbreak.png",
         Weight = 2.0,
         Horseman = false,
-        Rooms = "resources.rooms.nest.bosses.outbreak",
+        Rooms = "resources.godmode.rooms.nest.bosses.outbreak",
     },
     {
         Name="War",
-        Bossname = "godmode/gfx/ui/boss/bossname_65.0_war.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_65.0_war.png",
+        Bossname = "gfx/ui/boss/bossname_65.0_war.png",
+        Portrait = "gfx/ui/boss/portrait_65.0_war.png",
         Weight = 1.0,
         Horseman = true,
-        Rooms = "resources.rooms.nest.bosses.war",
+        Rooms = "resources.godmode.rooms.nest.bosses.war",
     }
 }
 

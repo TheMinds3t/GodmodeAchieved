@@ -128,7 +128,6 @@ monster.player_collide = function(self, player,ent,entfirst)
             GODMODE.save_manager.set_player_data(player,"MaxFruit"..ent.SubType,tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..ent.SubType,"0"))+stat_ups[ent.SubType].amt*mult,true)
             GODMODE.save_manager.set_player_data(player,"TimeStamp"..ent.SubType,(GODMODE.frame_count or GODMODE.game:GetFrameCount()),true)
             GODMODE.sfx:Play(SoundEffect.SOUND_VAMP_GULP)
-
         end
         
         return true

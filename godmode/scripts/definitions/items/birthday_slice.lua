@@ -18,7 +18,7 @@ item.encyc_entry = {
 item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
     local num = player:GetCollectibleNum(item.instance)
-    local amt = 0.05 * num + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BINGE_EATER) * 0.025
+    local amt = (0.05 + player:GetCollectibleNum(CollectibleType.COLLECTIBLE_BINGE_EATER) * 0.025) * num
 
     if cache == CacheFlag.CACHE_FIREDELAY then
         player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay, player.MaxFireDelay * amt)

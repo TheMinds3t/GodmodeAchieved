@@ -87,6 +87,9 @@
 	<passive id="102" cache="damage luck firedelay speed" description="10 Years! Strength in Frailty and Discovery" gfx="fallen_skull.png" tags="nochallenge nokeeper offensive quest" name="Fallen Skull" quality = "4" customtags="op anniversary observatory" />
 	<active id="103" maxcharges="4" description="Cry harder" gfx="tear_gas.png" name="Tear Gas" tags="tearsup" quality = "2" />
 	<passive id="104" cache="luck" description="Lucky?" gfx="collectibles_clover2.png" name="Three Leaf Clover" quality = "1" />
+	<familiar id="105" description="Hungry shield" gfx="snail_curse.png" name="Curse of the Snail" quality = "1" />
+	<passive id="106" cache="speed" description="All doors are connected..." gfx="door_rift.png" name="Door Rift" quality = "0" />
+	<familiar id="107" description="Diper friends" gfx="loaded_diaper.png" name="Loded Sack" quality = "0" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />

@@ -130,6 +130,6 @@ monster.npc_kill = function(self,ent)
 	statue:GetSprite():SetFrame(ent:GetSprite():GetAnimation(),ent:GetSprite():GetFrame())
 	-- statue:GetSprite():Play(statue:GetSprite():GetAnimation(),false)
 	statue:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-
 end
+
 return monster

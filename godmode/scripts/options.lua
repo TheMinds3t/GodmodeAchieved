@@ -1126,6 +1126,21 @@ options.layout = {
 
                 tooltip = {strset = {'only 1 item','per item room', 'or get','all items?','','(just makes','godmode','multi rooms','a choice)'}}
             },
+            {
+                str = 'min roam speed',
+                min = 10, max = 200, increment = 5, suf='%', setting = 10,
+                variable = 'GodmodeMinRoamSpeed',
+                
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("MinRoamSpeed","0.1")) * 100.0
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("MinRoamSpeed",var / 100.0,true)
+                end,
+
+                tooltip = {strset = {'what is the','minimum','speed for','moving in','cleared rooms?'}}
+            },
+            options.gap,
             -- -- new autofire mechanic!
             -- {
             --     str = 'auto attack',

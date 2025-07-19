@@ -16,7 +16,7 @@ local decay_time = 30.0 * 30.0
 local max_stacks = 20
 
 item.eval_cache = function(self, player,cache,data)
-	local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
+	local distort = math.max(0,tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0")))
 
     if cache == CacheFlag.CACHE_LUCK then 
 		player.Luck = player.Luck + tonumber(GODMODE.save_manager.get_player_data(player, "RedJuiceLuck", "0"))

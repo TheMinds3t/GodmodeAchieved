@@ -1,12 +1,12 @@
 local item = {}
 item.instance = GODMODE.registry.items.edible_soul
-item.eid_description = "↑ +1 Black Heart#When you die with no lives remaining, revive, lose your body and gain three charmed Furnace Knights, three broken hearts and flight# Health gets set to 1 black heart on trigger"
+item.eid_description = "↑ +1 Black Heart#When you die, revive, lose your body and gain three charmed Furnace Knights, three broken hearts and flight# Health gets set to 3 black hearts on trigger"
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},
       {str = "+1 Black Heart"},
-      {str = "When you die with no lives remaining, you will become revived with the following additions:"},
-      {str = " - All hearts you previously had get converted into a single black heart"},
+      {str = "When you die, you will become revived with the following additions:"},
+      {str = " - All hearts you previously had get converted into three black hearts"},
       {str = " - +3 broken hearts"},
       {str = " - +3 charmed Furnace Knights"},
       {str = " - Flight"},
@@ -48,7 +48,7 @@ item.player_update = function(self,player,data)
 		player:AddGoldenHearts(-24)
 		player:AddRottenHearts(-24)
 
-		if player:GetBrokenHearts() < 9 then 
+		if player:GetBrokenHearts() + GODMODE.api.get_faithless(player) < 9 then 
 			player:AddBlackHearts(6)
 		end
 
@@ -86,7 +86,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         local data = GODMODE.get_ent_data(player)
 		local death_flag = player:GetSprite():IsPlaying("Death")
 
-		if player:GetExtraLives() == 0 and GODMODE.util.get_player_hits(player) <= amount and player:GetCollectibleNum(item.instance) > 0 or death_flag then 
+		if (GODMODE.util.get_player_hits(player) <= amount or death_flag) and player:GetCollectibleNum(item.instance) > 0 then 
 			if not death_flag then 
 				player:PlayExtraAnimation("Death")
 

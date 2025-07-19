@@ -737,7 +737,7 @@ function load_stageapi_integration()
     create_stage("fruit_cellar")
     create_stage("intestines")
     create_stage("nest")
-    GODMODE.fallen_light_entrance = StageAPI.RoomsList("FallenLightEntrance",assert(include("resources.rooms.luc.bossroom"),"Error loading Fallen Light entrance!"))
+    GODMODE.fallen_light_entrance = StageAPI.RoomsList("FallenLightEntrance",assert(include("resources.godmode.rooms.luc.bossroom"),"Error loading Fallen Light entrance!"))
 
     GODMODE.make_room_gfx = function(graphics)
         local backdrop_copy = {GODMODE.util.deep_copy(graphics.backdrop_gfx),GODMODE.util.deep_copy(graphics.backdrop_prefix),GODMODE.util.deep_copy(graphics.backdrop_suffix)}
@@ -974,7 +974,7 @@ function load_stageapi_integration()
     -- Each room layout must include a group entity per room group it is a part of. This is so that a room can be in two groups, if desired.
     GODMODE.generate_ivory_map = function()
         GODMODE.ivory_level_roomlist = GODMODE.ivory_level_roomlist or StageAPI.RoomsList("GODMODEIvoryLevelMap")
-        GODMODE.ivory_level_rooms = include("resources.rooms.luc.ivory_rooms")
+        GODMODE.ivory_level_rooms = include("resources.godmode.rooms.luc.ivory_rooms")
 
         local level_map = GODMODE.generate_semi_randomized_floor(GODMODE.ivory_level_roomlist, GODMODE.ivory_level_rooms)
     end
@@ -999,7 +999,7 @@ function load_stageapi_integration()
     GODMODE.generate_semi_randomized_floor = function(rooms_list, rooms, max_tries_per_tile)
         max_tries_per_tile = max_tries_per_tile or 33
         rooms_list = rooms_list or StageAPI.RoomsLists["GODMODEIvoryLevelMap"] or StageAPI.RoomsList("GODMODEIvoryLevelMap")
-        rooms = rooms or include("resources.rooms.luc.ivory_rooms")
+        rooms = rooms or include("resources.godmode.rooms.luc.ivory_rooms")
 
         -- empty the RoomsList
         rooms_list.All = {}
@@ -1581,7 +1581,7 @@ function load_stageapi_integration()
 
     -- GODMODE.ObservatoryDoor = StageAPI.CustomDoor("ObservatoryDoor", "godmode/gfx/grid/observatory_door.anm2", nil, nil, nil, nil, true)
 
-    GODMODE.observatory_rooms = StageAPI.RoomsList("GODMODE-Observatory",include("resources.rooms.observatory_rooms"))--StageAPI.CreateEmptyRoomLayout(RoomShape.ROOMSHAPE_1x1)
+    GODMODE.observatory_rooms = StageAPI.RoomsList("GODMODE-Observatory",include("resources.godmode.rooms.observatory_rooms"))--StageAPI.CreateEmptyRoomLayout(RoomShape.ROOMSHAPE_1x1)
 
     -- REVEL.MirrorRoomLayout.Type = "Mirror"
     -- StageAPI.RegisterLayout("MirrorRoom", REVEL.MirrorRoomLayout)

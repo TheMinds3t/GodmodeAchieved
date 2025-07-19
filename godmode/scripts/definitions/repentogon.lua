@@ -134,7 +134,7 @@ if GODMODE.validate_rgon() then
                 ret = offset
 
                 if (data.shifted or false) ~= true then 
-                    pickup:GetSprite():ReplaceSpritesheet(5, "gfx/grid/cursed_altar.png")
+                    pickup:GetSprite():ReplaceSpritesheet(5, "godmode/gfx/grid/cursed_altar.png")
                     pickup:GetSprite():LoadGraphics()
                     data.shifted = true     
                 end
@@ -181,7 +181,7 @@ if GODMODE.validate_rgon() then
             local more_options = GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS)
             if more_options > 0 and GODMODE.save_manager.get_config("MoreOptionsRework","true") == "true" then 
                 GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,nil,function(item)
-                    item:GetSprite():ReplaceSpritesheet(5,"gfx/grid/options_altar_"..item:ToPickup().OptionsPickupIndex..".png")
+                    item:GetSprite():ReplaceSpritesheet(5,"godmode/gfx/grid/options_altar_"..item:ToPickup().OptionsPickupIndex..".png")
                     item:GetSprite():LoadGraphics()
                 end)
             end

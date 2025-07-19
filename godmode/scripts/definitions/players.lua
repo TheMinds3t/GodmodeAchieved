@@ -39,7 +39,7 @@ players[GODMODE.registry.players.recluse] = {
     }},
     encyclopedia_details = {
         name = "Recluse",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Recluse",
     }
 }
@@ -100,7 +100,7 @@ players[GODMODE.registry.players.t_recluse] = {
     }},
     encyclopedia_details = {
         name = "Recluse",
-        anmfile = "gfx/ui/main menu/encyc_portraits_alt.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits_alt.anm2",
         anmname = "Tainted Recluse",
         description = "The friendless",
     },
@@ -191,7 +191,7 @@ players[GODMODE.registry.players.xaphan] = {
     }},
     encyclopedia_details = {
         name = "Xaphan",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Xaphan",
     }
 }
@@ -298,7 +298,7 @@ players[GODMODE.registry.players.t_xaphan] = {
     }},
     encyclopedia_details = {
         name = "Xaphan",
-        anmfile = "gfx/ui/main menu/encyc_portraits_alt.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits_alt.anm2",
         anmname = "Tainted Xaphan",
         description = "The deflector",
     }
@@ -362,7 +362,7 @@ players[GODMODE.registry.players.elohim] = {
     }},
     encyclopedia_details = {
         name = "Elohim",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Elohim",
     }
 }
@@ -423,7 +423,7 @@ players[GODMODE.registry.players.t_elohim] = {
     }},
     encyclopedia_details = {
         name = "Elohim",
-        anmfile = "gfx/ui/main menu/encyc_portraits_alt.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits_alt.anm2",
         anmname = "Tainted Elohim",
         description = "The witness",
     }
@@ -477,7 +477,7 @@ players[GODMODE.registry.players.gehazi] = {
     }},
     encyclopedia_details = {
         name = "Gehazi",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Gehazi",
     },
     update = function(self, player, data) 
@@ -680,7 +680,7 @@ players[GODMODE.registry.players.t_gehazi] = {
     },
     encyclopedia_details = {
         name = "Tainted Gehazi",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Gehazi",
         description = "The indebted",
     }
@@ -949,7 +949,7 @@ players[GODMODE.registry.players.deli] = {
     }},
     encyclopedia_details = {
         name = "Deli",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "Deli",
     }
 }
@@ -1056,7 +1056,7 @@ players[GODMODE.registry.players.t_deli] = {
     }},
     encyclopedia_details = {
         name = "Deli",
-        anmfile = "gfx/ui/main menu/encyc_portraits_alt.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits_alt.anm2",
         anmname = "Tainted Deli",
         description = "The delirious",
     }
@@ -1180,7 +1180,7 @@ players[GODMODE.registry.players.the_sign] = {
     }},
     encyclopedia_details = {
         name = "The Sign",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "The Sign",
         description = "The shackled",
     }
@@ -1260,7 +1260,7 @@ players[GODMODE.registry.players.t_sign] = {
     }},
     encyclopedia_details = {
         name = "The Sign",
-        anmfile = "gfx/ui/main menu/encyc_portraits.anm2",
+        anmfile = "godmode/gfx/ui/main menu/encyc_portraits.anm2",
         anmname = "The Sign",
         description = "The shackled",
     }

@@ -45,64 +45,64 @@ stage.graphics = {
     }
 }
 
-stage.room_path = "resources.rooms.fruit_cellar.fruitcellar_rooms"
+stage.room_path = "resources.godmode.rooms.fruit_cellar.fruitcellar_rooms"
 
 stage.rooms = {
-    {path="resources.rooms.fruit_cellar.fruitcellar_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
-    {path="resources.rooms.fruit_cellar.secret_exit",type=RoomType.ROOM_SECRET_EXIT,id="SecretExit"},
+    {path="resources.godmode.rooms.fruit_cellar.fruitcellar_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
+    {path="resources.godmode.rooms.fruit_cellar.secret_exit",type=RoomType.ROOM_SECRET_EXIT,id="SecretExit"},
 }
 
 
-stage.challenge_wave_path = {"resources.rooms.fruit_cellar.challenge_waves","resources.rooms.fruit_cellar.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.godmode.rooms.fruit_cellar.challenge_waves","resources.godmode.rooms.fruit_cellar.boss_challenge_waves"}
 
 stage.bosses = {
 	{
         Name="DukeOfFlies",
-        Bossname = "godmode/gfx/ui/boss/bossname_67.0_dukeofflies.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_67.0_dukeofflies.png",
+        Bossname = "gfx/ui/boss/bossname_67.0_dukeofflies.png",
+        Portrait = "gfx/ui/boss/portrait_67.0_dukeofflies.png",
         Weight = 1,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.dukeofflies",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.dukeofflies",
     },
 	{
         Name="Dingle",
-        Bossname = "godmode/gfx/ui/boss/bossname_261.0_dingle.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_261.0_dingle.png",
+        Bossname = "gfx/ui/boss/bossname_261.0_dingle.png",
+        Portrait = "gfx/ui/boss/portrait_261.0_dingle.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.dingle",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.dingle",
     },
 	{
         Name="Little Horn",
-        Bossname = "godmode/gfx/ui/boss/bossname_404.0_littlehorn.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_404.0_littlehorn.png",
+        Bossname = "gfx/ui/boss/bossname_404.0_littlehorn.png",
+        Portrait = "gfx/ui/boss/portrait_404.0_littlehorn.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.littlehorn",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.littlehorn",
     },
 	{
         Name="Widow",
-        Bossname = "godmode/gfx/ui/boss/bossname_100.0_widow.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_100.0_widow.png",
+        Bossname = "gfx/ui/boss/bossname_100.0_widow.png",
+        Portrait = "gfx/ui/boss/portrait_100.0_widow.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.widow",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.widow",
     },
 	{
         Name="Monstro",
-        Bossname = "godmode/gfx/ui/boss/bossname_20.0_monstro.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_20.0_monstro.png",
+        Bossname = "gfx/ui/boss/bossname_20.0_monstro.png",
+        Portrait = "gfx/ui/boss/portrait_20.0_monstro.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.monstro",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.monstro",
     },
 	{
         Name="Pin",
-        Bossname = "godmode/gfx/ui/boss/bossname_62.0_pin.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_62.0_pin.png",
+        Bossname = "gfx/ui/boss/bossname_62.0_pin.png",
+        Portrait = "gfx/ui/boss/portrait_62.0_pin.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.pin",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.pin",
     },
     {
         Name="Megaworm",
@@ -110,15 +110,15 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/megaworm.png",
         Weight = 1.5,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.megaworm",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.megaworm",
     },
     {
         Name="Famine",
-        Bossname = "godmode/gfx/ui/boss/bossname_63.0_famine.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_63.0_famine.png",
+        Bossname = "gfx/ui/boss/bossname_63.0_famine.png",
+        Portrait = "gfx/ui/boss/portrait_63.0_famine.png",
         Weight = 1.0,
         Horseman = true,
-        Rooms = "resources.rooms.fruit_cellar.bosses.famine",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.famine",
     },
     {
         Name="BulgeBat",
@@ -126,7 +126,7 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/bulgebat.png",
         Weight = 2.0,
         Horseman = false,
-        Rooms = "resources.rooms.fruit_cellar.bosses.bulgebat",
+        Rooms = "resources.godmode.rooms.fruit_cellar.bosses.bulgebat",
     },
 }
 

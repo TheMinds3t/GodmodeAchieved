@@ -92,6 +92,9 @@ reg.items = {
     fallen_skull = Isaac.GetItemIdByName("Fallen Skull"),
     tear_gas = Isaac.GetItemIdByName("Tear Gas"),
     three_leaf_clover = Isaac.GetItemIdByName("Three Leaf Clover"),
+    door_rift = Isaac.GetItemIdByName("Door Rift"),
+    curse_of_the_snail = Isaac.GetItemIdByName("Curse of the Snail"),
+    loded_sack = Isaac.GetItemIdByName("Loded Sack"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -195,6 +198,14 @@ reg.entities = {
     hellfiah_familiar = {
         type = Isaac.GetEntityTypeByName("Hellfiah"),
         variant = Isaac.GetEntityVariantByName("Hellfiah"),
+    },
+    cursed_snail = {
+        type = Isaac.GetEntityTypeByName("Cursed Snail"),
+        variant = Isaac.GetEntityVariantByName("Cursed Snail"),
+    },
+    loded_sack = {
+        type = Isaac.GetEntityTypeByName("Loded Sack"),
+        variant = Isaac.GetEntityVariantByName("Loded Sack"),
     },
 
     opia_soul = {
@@ -648,6 +659,11 @@ reg.entities = {
         variant = Isaac.GetEntityVariantByName("Aztec Shield"),
         subtype = 1
     },
+    snail_shield = {
+        type = Isaac.GetEntityTypeByName("Snail Shield"),
+        variant = Isaac.GetEntityVariantByName("Snail Shield"),
+        subtype = 2
+    },
     heart_container = {
         type = Isaac.GetEntityTypeByName("Heart Container (Pickup)"),
         variant = Isaac.GetEntityVariantByName("Heart Container (Pickup)")
@@ -983,6 +999,7 @@ reg.sounds = {
     correction_bell = Isaac.GetSoundIdByName("GODMODE.correction_bell"),
     child_blargh = Isaac.GetSoundIdByName("GODMODE.child_blargh"),
     tutorial_text = Isaac.GetSoundIdByName("GODMODE.tutorial_text"),
+    meow = Isaac.GetSoundIdByName("GODMODE.meow"),
 }
 
 reg.transformations = {

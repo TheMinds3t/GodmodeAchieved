@@ -155,16 +155,22 @@ monster.npc_update = function(self, ent, data, sprite)
         end
     end
 
-    --enables dr. fetus and other explosion based attacks to break the hazards, super fucky but their fault for not adding effect_collide lol
-    for index,explode in ipairs(monster.explode_checks) do 
-        if (explode.pos - ent.Position):Length() < explode.size then 
-            table.remove(monster.explode_checks,index)
-            ent:Kill()
-            break
-        elseif explode.time - (GODMODE.frame_count or GODMODE.game:GetFrameCount()) < -5 then 
-            table.remove(monster.explode_checks,index)
-            break
-        end
+    -- --enables dr. fetus and other explosion based attacks to break the hazards, super fucky but their fault for not adding effect_collide lol
+    -- for index,explode in ipairs(monster.explode_checks) do 
+    --     if (explode.pos - ent.Position):Length() < explode.size then 
+    --         table.remove(monster.explode_checks,index)
+    --         ent:Kill()
+    --         break
+    --     elseif explode.time - (GODMODE.frame_count or GODMODE.game:GetFrameCount()) < -5 then 
+    --         table.remove(monster.explode_checks,index)
+    --         break
+    --     end
+    -- end
+end
+
+monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
+    if collided then 
+        ent:Kill()
     end
 end
 
@@ -220,19 +226,6 @@ monster.tear_collide = function(self,tear,ent,entfirst)
     end
 end
 
-monster.effect_update = function(self,fx)
-    if fx.Variant == EffectVariant.BOMB_EXPLOSION and fx.FrameCount == 1 then 
-        -- GODMODE.log("test!",true)
-        table.insert(monster.explode_checks, {time=(GODMODE.frame_count or GODMODE.game:GetFrameCount()),pos=fx.Position,size=fx.Scale*explosion_size})
 
-        -- GODMODE.util.macro_on_enemies(nil,monster.type,monster.variant,nil,function(door)
-        --     GODMODE.log("hi? len = "..((hazard.Position-fx.Position):Length()),true)
-        --     if (hazard.Position-fx.Position):Length() < fx.Size*2 then 
-        --         GODMODE.log("hi!",true)
-        --         hazard:Kill() 
-        --     end 
-        -- end)
-    end
-end
 
 return monster

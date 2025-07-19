@@ -4,9 +4,9 @@ end
 
 return {
     [GODMODE.registry.entities.the_ritual.variant] = {
-        portrait="gfx/ui/boss/ritual.png",
-        name="gfx/ui/boss/ritual_name.png",
-        spot="gfx/ui/boss/bossspot_09_sheol.png",
+        portrait="godmode/gfx/ui/boss/ritual.png",
+        name="godmode/gfx/ui/boss/ritual_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_09_sheol.png",
         roomfile="the_ritual", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE5 and not GODMODE.level:IsAltStage() then
@@ -25,9 +25,9 @@ return {
         }
     },
     [GODMODE.registry.entities.sacred_mind.variant] = {
-        portrait="gfx/ui/boss/sacred.png",
-        name="gfx/ui/boss/sacred_name.png",
-        spot="gfx/ui/boss/bossspot_10_cathedral.png",
+        portrait="godmode/gfx/ui/boss/sacred.png",
+        name="godmode/gfx/ui/boss/sacred_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_10_cathedral.png",
         roomfile="the_sacred", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE5 and GODMODE.level:IsAltStage() then
@@ -47,9 +47,9 @@ return {
 
     },
     [GODMODE.registry.entities.souleater.variant] = {
-        portrait="gfx/ui/boss/souleater.png",
-        name="gfx/ui/boss/souleater_name.png",
-        spot="gfx/ui/boss/bossspot_11_darkroom.png",
+        portrait="godmode/gfx/ui/boss/souleater.png",
+        name="godmode/gfx/ui/boss/souleater_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_11_darkroom.png",
         roomfile="souleater", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE6 and not GODMODE.level:IsAltStage() then
@@ -69,9 +69,9 @@ return {
 
     },
     [GODMODE.registry.entities.grand_marshall.variant] = {
-        portrait="gfx/ui/boss/grandmarshall.png",
-        name="gfx/ui/boss/grandmarshall_name.png",
-        spot="gfx/ui/boss/bossspot_12_chest.png",
+        portrait="godmode/gfx/ui/boss/grandmarshall.png",
+        name="godmode/gfx/ui/boss/grandmarshall_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_12_chest.png",
         roomfile="grand_marshall", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE6 and GODMODE.level:IsAltStage() then
@@ -90,9 +90,9 @@ return {
         }
     },
     [GODMODE.registry.entities.hostess.variant] = {
-        portrait="gfx/ui/boss/hostess.png",
-        name="gfx/ui/boss/hostess_name.png",
-        spot="gfx/ui/boss/bossspot_07_womb.png",
+        portrait="godmode/gfx/ui/boss/hostess.png",
+        name="godmode/gfx/ui/boss/hostess_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_07_womb.png",
         roomfile="hostess", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE4_1 and not is_rep_stage() then
@@ -111,9 +111,9 @@ return {
         }
     },
     [GODMODE.registry.entities.bathemo_swarm.variant] = {
-        portrait="gfx/ui/boss/bathemo.png",
-        name="gfx/ui/boss/bathemo_name.png",
-        spot="gfx/ui/boss/bossspot_04_catacombs.png",
+        portrait="godmode/gfx/ui/boss/bathemo.png",
+        name="godmode/gfx/ui/boss/bathemo_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_04_catacombs.png",
         roomfile="bathemo", --scripts/room_overrides/x
         chance = function()
             if (GODMODE.level:GetStage() == LevelStage.STAGE2_1 or GODMODE.level:GetStage() == LevelStage.STAGE2_2) and not is_rep_stage() then
@@ -132,9 +132,9 @@ return {
         }
     },
     [GODMODE.registry.entities.ludomaw.variant] = {
-        portrait="gfx/ui/boss/ludomaw.png",
-        name="gfx/ui/boss/ludomaw_name.png",
-        spot="gfx/ui/boss/bossspot_04_catacombs.png",
+        portrait="godmode/gfx/ui/boss/ludomaw.png",
+        name="godmode/gfx/ui/boss/ludomaw_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_04_catacombs.png",
         roomfile="ludomaw", --scripts/room_overrides/x
         chance = function()
             if (GODMODE.level:GetStage() == LevelStage.STAGE3_1) and not is_rep_stage() then
@@ -153,9 +153,9 @@ return {
         }
     },
     [GODMODE.registry.entities.bubbly_plum.variant] = {
-        portrait="gfx/ui/boss/bubble_plum.png",
-        name="gfx/ui/boss/bubble_plum_name.png",
-        spot="gfx/ui/boss/bossspot_01x_downpour.png",
+        portrait="godmode/gfx/ui/boss/bubble_plum.png",
+        name="godmode/gfx/ui/boss/bubble_plum_name.png",
+        spot="godmode/gfx/ui/boss/bossspot_01x_downpour.png",
         roomfile="bubble_plum", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE1_1 or GODMODE.level:GetStage() == LevelStage.STAGE1_2 and is_rep_stage() then
@@ -174,9 +174,9 @@ return {
         }
     },
     [GODMODE.registry.entities.mega_worm.variant] = {
-        portrait="gfx/ui/boss/megaworm.png",
-        name="gfx/ui/boss/megaworm_name.png",
-        spot="gfx/ui/boss/bossspot.png",
+        portrait="godmode/gfx/ui/boss/megaworm.png",
+        name="godmode/gfx/ui/boss/megaworm_name.png",
+        spot="godmode/gfx/ui/boss/bossspot.png",
         roomfile="megaworm", --scripts/room_overrides/x
         chance = function()
             if (GODMODE.level:GetStage() == LevelStage.STAGE1_1 or GODMODE.level:GetStage() == LevelStage.STAGE1_2) and not is_rep_stage() then
@@ -195,9 +195,9 @@ return {
         }
     },
     [GODMODE.registry.entities.blightfly.variant] = {
-        portrait="gfx/ui/boss/blightfly.png",
-        name="gfx/ui/boss/blightfly_name.png",
-        spot="gfx/ui/boss/bossspot.png",
+        portrait="godmode/gfx/ui/boss/blightfly.png",
+        name="godmode/gfx/ui/boss/blightfly_name.png",
+        spot="godmode/gfx/ui/boss/bossspot.png",
         roomfile="blightfly", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE4_1 and is_rep_stage() then
@@ -216,9 +216,9 @@ return {
         }
     },
     [GODMODE.registry.entities.brazier.variant] = {
-        portrait="gfx/ui/boss/brazier.png",
-        name="gfx/ui/boss/brazier_name.png",
-        spot="gfx/ui/boss/bossspot.png",
+        portrait="godmode/gfx/ui/boss/brazier.png",
+        name="godmode/gfx/ui/boss/brazier_name.png",
+        spot="godmode/gfx/ui/boss/bossspot.png",
         roomfile="brazier", --scripts/room_overrides/x
         chance = function()
             if GODMODE.level:GetStage() == LevelStage.STAGE2_1 and is_rep_stage() then

@@ -157,12 +157,12 @@ stage.get_cur_gfx = function(self)
 end
 
 stage.rooms = {
-    {path="resources.rooms.luc.ivory_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
-    {path="resources.rooms.luc.mask_room",type=RoomType.ROOM_SECRET,id="Secret"},
+    {path="resources.godmode.rooms.luc.ivory_rooms",type=RoomType.ROOM_DEFAULT,id="General"},
+    {path="resources.godmode.rooms.luc.mask_room",type=RoomType.ROOM_SECRET,id="Secret"},
 }
 
 -- stage.room_path = "resources/rooms/luc/rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.luc.challenge_waves","resources.rooms.luc.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.godmode.rooms.luc.challenge_waves","resources.godmode.rooms.luc.boss_challenge_waves"}
 
 stage.bosses = {
     {
@@ -171,7 +171,7 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/final.png",
         Weight = 1.0,
         Horseman = true,
-        Rooms = "resources.rooms.luc.bossroom",
+        Rooms = "resources.godmode.rooms.luc.bossroom",
     },
     {
         Name="Angelusossa", --A small nod at my old, weird way of naming things
@@ -179,7 +179,7 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/final.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.luc.bossroom",
+        Rooms = "resources.godmode.rooms.luc.bossroom",
     },
 }
 

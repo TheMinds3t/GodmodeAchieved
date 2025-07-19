@@ -35,6 +35,11 @@
 		<sample weight="1" path="cough/cough2.wav" />
 		<sample weight="1" path="cough/cough3.wav" />
 	</sound>
+	<sound name="GODMODE.meow">
+		<sample weight="1" path="meow1.wav" />
+		<sample weight="1" path="meow2.wav" />
+		<sample weight="1" path="meow3.wav" />
+	</sound>
 	<sound name="GODMODE.correction_bell">
 		<sample weight="1" path="correction bell.wav" />
 	</sound>

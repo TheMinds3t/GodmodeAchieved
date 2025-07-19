@@ -18,7 +18,7 @@ monster.npc_update = function(self, ent, data, sprite)
 			data.numleft = 4
 		end
 
-		data.cooldown = 60
+		data.cooldown = 30
 	end
 
 	data.cooldown = data.cooldown - 1
@@ -86,7 +86,7 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
 
 			if flag then
 				data.numleft = data.numleft - 1
-				data.cooldown = 60
+				data.cooldown = 30
 			end
 		end
     end

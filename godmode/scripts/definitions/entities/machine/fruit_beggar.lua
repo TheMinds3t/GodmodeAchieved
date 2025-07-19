@@ -37,6 +37,13 @@ monster.player_collide = function(self,ent2,ent,ent_first)
     end
 end
 
+monster.drop_fruit = function(count,ent)
+    for i = 0, count do 
+        local speed = 2
+        Isaac.Spawn(GODMODE.registry.entities.fruit.type,GODMODE.registry.entities.fruit.variant,0,ent.Position,(RandomVector()*speed+Vector(0,speed*1.5)):Resized(ent:GetDropRNG():RandomFloat()*3+2),nil)    
+    end
+end
+
 monster.npc_update = function(self, ent, data, sprite)
     data.origin = data.origin or ent.Position 
     ent.Velocity = data.origin - ent.Position
@@ -74,10 +81,7 @@ monster.npc_update = function(self, ent, data, sprite)
             local item = GODMODE.itempools.get_from_pool("fruit_beggar",ent:GetDropRNG())
             Isaac.Spawn(EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,item,GODMODE.room:FindFreePickupSpawnPosition(ent.Position+Vector(0,64)),Vector.Zero,nil)
         else -- 2-3 fruit!
-            for i = 0, ent:GetDropRNG():RandomInt(2) + 1 do 
-                local speed = 2
-                Isaac.Spawn(GODMODE.registry.entities.fruit.type,GODMODE.registry.entities.fruit.variant,0,ent.Position,(RandomVector()*speed+Vector(0,speed*1.5)):Resized(ent:GetDropRNG():RandomFloat()*3+2),nil)    
-            end
+            monster.drop_fruit(ent:GetDropRNG():RandomInt(2) + 1, ent)
         end
     end	
 
@@ -87,6 +91,14 @@ monster.npc_update = function(self, ent, data, sprite)
 
     if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
         ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
+    end
+end
+
+monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
+    if collided then 
+        ent:BloodExplode()
+        monster.drop_fruit(ent:GetDropRNG():RandomInt(4) + 3, ent)
+        ent:Kill()
     end
 end
 

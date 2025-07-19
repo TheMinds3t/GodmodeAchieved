@@ -42,8 +42,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         if player:HasCollectible(item.instance) and (player:GetCollectibleRNG(item.instance):RandomFloat() < 0.33 or (data.morphine_cooldown or 0) > 0) then
             if data.morphine_cooldown == nil or data.morphine_cooldown <= 0 then 
                 data.morphine_cooldown = 30 
-                GODMODE.sfx:Play(SoundEffect.SOUND_ANIMAL_SQUISH, Options.SFXVolume+0.2, 20)
-                GODMODE.sfx:Play(SoundEffect.SOUND_BLOBBY_WIGGLE, Options.SFXVolume+0.2)
+                GODMODE.sfx:Play(SoundEffect.SOUND_ANIMAL_SQUISH, 1, 20)
+                GODMODE.sfx:Play(SoundEffect.SOUND_BLOBBY_WIGGLE, 1)
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR,false,true)
                 player:AnimateCollectible(Isaac.GetItemIdByName("Morphine Used"))
             end

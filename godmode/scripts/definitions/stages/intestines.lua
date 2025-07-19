@@ -46,7 +46,7 @@ stage.graphics = {
 }
 
 stage.room_path = "resources/rooms/"..stage_prefix.."rooms.lua"
-stage.challenge_wave_path = {"resources.rooms.intestines.challenge_waves","resources.rooms.intestines.boss_challenge_waves"}
+stage.challenge_wave_path = {"resources.godmode.rooms.intestines.challenge_waves","resources.godmode.rooms.intestines.boss_challenge_waves"}
 
 stage.bosses = {
     {
@@ -55,7 +55,7 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/ding_dang.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.dingdang",
+        Rooms = "resources.godmode.rooms.intestines.bosses.dingdang",
     },
     {
         Name="Hostess",
@@ -63,15 +63,15 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/hostess.png",
         Weight = 1.5,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.hostess",
+        Rooms = "resources.godmode.rooms.intestines.bosses.hostess",
     },
     {
         Name="Brownie",
-        Bossname = "godmode/gfx/ui/boss/bossname_402.0_brownie.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_402.0_brownie.png",
+        Bossname = "gfx/ui/boss/bossname_402.0_brownie.png",
+        Portrait = "gfx/ui/boss/portrait_402.0_brownie.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.brownie",
+        Rooms = "resources.godmode.rooms.intestines.bosses.brownie",
     },
     {
         Name="BowlPlay",
@@ -79,15 +79,15 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/bowlplay.png",
         Weight = 2.0,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.bowl_play",
+        Rooms = "resources.godmode.rooms.intestines.bosses.bowl_play",
     },
     {
         Name="MamaGurdy",
-        Bossname = "godmode/gfx/ui/boss/bossname_266.0_mamagurdy.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_266.0_mamagurdy.png",
+        Bossname = "gfx/ui/boss/bossname_266.0_mamagurdy.png",
+        Portrait = "gfx/ui/boss/portrait_266.0_mamagurdy.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.mamagurdy",
+        Rooms = "resources.godmode.rooms.intestines.bosses.mamagurdy",
     },
     {
         Name="Teratula",
@@ -95,15 +95,15 @@ stage.bosses = {
         Portrait = "godmode/gfx/ui/boss/teratula.png",
         Weight = 1.0,
         Horseman = false,
-        Rooms = "resources.rooms.intestines.bosses.teratula",
+        Rooms = "resources.godmode.rooms.intestines.bosses.teratula",
     },
     {
         Name="Death",
-        Bossname = "godmode/gfx/ui/boss/bossname_66.0_death.png",
-        Portrait = "godmode/gfx/ui/boss/portrait_66.0_death.png",
+        Bossname = "gfx/ui/boss/bossname_66.0_death.png",
+        Portrait = "gfx/ui/boss/portrait_66.0_death.png",
         Weight = 1.0,
         Horseman = true,
-        Rooms = "resources.rooms.intestines.bosses.death",
+        Rooms = "resources.godmode.rooms.intestines.bosses.death",
     }
 }
 

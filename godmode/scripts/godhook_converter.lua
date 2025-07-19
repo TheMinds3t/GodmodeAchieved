@@ -930,6 +930,7 @@ godhook.functions.famil_post_render = function(self,ent,offset)
         end
     end
 end
+
 godhook.functions.effect_post_render = function(self,ent,offset)
     if godhook.hook.monsters["effect_post_render"] and godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant] ~= nil then
         godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
@@ -945,6 +946,7 @@ godhook.functions.effect_post_render = function(self,ent,offset)
         end
     end
 end
+
 godhook.functions.bomb_init = function(self, ent)
     if godhook.hook.monsters["bomb_init"] then
         for ind=1, #godhook.hook.monster_keys["bomb_init"] do
@@ -964,6 +966,7 @@ godhook.functions.bomb_init = function(self, ent)
         end
     end
 end
+
 godhook.functions.effect_init = function(self, ent)
     local data = GODMODE.get_ent_data(ent)
 
@@ -984,7 +987,39 @@ godhook.functions.effect_init = function(self, ent)
         end
     end
 end
+
 godhook.functions.effect_update = function(self, ent)
+    -- jerryrigged homebrew explode callback B)
+    if ent.Variant == EffectVariant.BOMB_EXPLOSION and ent.FrameCount == 1 then 
+        -- 48 = base explosion size
+        local explode_pos, explode_size = ent.Position, ent.Scale * 48
+        GODMODE.log("EXPLODE!",true)
+
+        -- check all entities in the room to see if they have a function mapped
+        local ents = Isaac.GetRoomEntities()
+        for ind=0, #ents do 
+            local ent2 = ents[ind]
+            
+            if ent2 then 
+                local collided = (explode_pos - ent2.Position):Length() < explode_size
+                local data = GODMODE.get_ent_data(ent2)
+                local sprite = ent2:GetSprite()
+
+                if godhook.hook.monsters["explode_frame"] and godhook.hook.monsters["explode_frame"][ent2.Type..","..ent2.Variant] ~= nil then 
+                    godhook.hook.monsters["explode_frame"][ent2.Type..","..ent2.Variant](self,ent2,data,sprite,ent,explode_pos,explode_size,collided)
+                end
+
+                if godhook.hook.items["explode_frame"] then
+                    for ind=1, #godhook.hook.item_keys["explode_frame"] do
+                        local func = godhook.hook.items["explode_frame"][godhook.hook.item_keys["explode_frame"][ind]]
+                        if func then
+                            func(self,ent2,data,sprite,ent,explode_pos,explode_size,collided)
+                        end
+                    end
+                end
+            end
+        end
+    end
 
     if godhook.hook.monsters["effect_update"] and godhook.hook.monsters["effect_update"][ent.Type..","..ent.Variant] ~= nil then
         local data = GODMODE.get_ent_data(ent)
@@ -1342,6 +1377,11 @@ godhook.hook_list = {
     -- internal hooks
     -- called on entities when inside of the delirium room, if it exists allows to apply a delirium skin
     ["set_delirium_visuals"] = function(funcname, object)
+        godhook.add_hook(funcname,object,nil)
+    end,
+    
+    --called when the first frame of the explode animation is happening on an explosion effect (closest to on-explode I can get) | explode_frame(fx,position,explode_size)
+    ["explode_frame"] = function(funcname, object)
         godhook.add_hook(funcname,object,nil)
     end,
 

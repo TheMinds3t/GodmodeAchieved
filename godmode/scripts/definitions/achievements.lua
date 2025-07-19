@@ -208,7 +208,7 @@ ret.update = function()
             GODMODE.log("Loaded achievement splash sprite!")
         end
 
-        GODMODE.sprites.unlock_sprite:ReplaceSpritesheet(3,"gfx/achievements/"..ret.achievement_queue[1].name..".png")
+        GODMODE.sprites.unlock_sprite:ReplaceSpritesheet(3,"godmode/gfx/achievements/"..ret.achievement_queue[1].name..".png")
         GODMODE.sprites.unlock_sprite:LoadGraphics()
         GODMODE.sprites.unlock_sprite:Play("Scene",true)
         GODMODE.cur_splash = GODMODE.sprites.unlock_sprite 
