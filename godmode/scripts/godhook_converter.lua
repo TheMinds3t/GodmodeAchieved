@@ -993,7 +993,7 @@ godhook.functions.effect_update = function(self, ent)
     if ent.Variant == EffectVariant.BOMB_EXPLOSION and ent.FrameCount == 1 then 
         -- 48 = base explosion size
         local explode_pos, explode_size = ent.Position, ent.Scale * 48
-        GODMODE.log("EXPLODE!",true)
+        -- GODMODE.log("EXPLODE!",true)
 
         -- check all entities in the room to see if they have a function mapped
         local ents = Isaac.GetRoomEntities()

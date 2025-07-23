@@ -48,7 +48,7 @@ item.player_update = function(self,player,data)
 		player:AddGoldenHearts(-24)
 		player:AddRottenHearts(-24)
 
-		if player:GetBrokenHearts() + GODMODE.api.get_faithless(player) < 9 then 
+		if player:GetBrokenHearts() + GODMODE.api.get_faithless_hearts(player) < 9 then 
 			player:AddBlackHearts(6)
 		end
 

@@ -1463,7 +1463,7 @@ function load_stageapi_integration()
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="godmode/gfx/grid/door_19_sheoldoor.png", req=GODMODE.util.base_room_door},
+            {graphic="gfx/grid/door_19_sheoldoor.png", req=GODMODE.util.base_room_door},
         }
     })
 
@@ -1479,7 +1479,7 @@ function load_stageapi_integration()
         backdrop_suffix = ".png",
     
         doors = {
-            {graphic="godmode/gfx/grid/door_22_cathedraldoor.png", req=GODMODE.util.base_room_door},
+            {graphic="gfx/grid/door_22_cathedraldoor.png", req=GODMODE.util.base_room_door},
         }
     })
 

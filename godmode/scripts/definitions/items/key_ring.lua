@@ -30,12 +30,19 @@ local fail_items = {
 item.try_key = function(self, player)
     local chance = tonumber(GODMODE.save_manager.get_player_data(player,"KeyRingChance","0.0"))
     local rng = player:GetCollectibleRNG(item.instance)
+    local data = GODMODE.get_ent_data(player)
 
     if rng:RandomFloat() < chance then 
         GODMODE.save_manager.set_player_data(player,"KeyRingChance","0.0",true)
-        player:UseActiveItem(success_items[rng:RandomInt(#success_items)+1],true)
+        if data.dads_key_ring ~= true then 
+            player:UseActiveItem(success_items[rng:RandomInt(#success_items)+1],true)
+        end
+
+        data.dads_key_ring = true  
+        return true 
     else 
         player:AnimateTrinket(fail_items[rng:RandomInt(#fail_items)+1])
+        return false 
     end
 end
 
@@ -43,10 +50,12 @@ local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) then
         local player = enthit:ToPlayer()
         local chance = tonumber(GODMODE.save_manager.get_player_data(player,"KeyRingChance","0.0"))
+        local data = GODMODE.get_ent_data(player)
 
         if chance >= 1.0 then 
-            item.try_key(self, player)
-        else 
+            if item.try_key(self, player) then
+            end
+        elseif data.dads_key_ring ~= true then 
             GODMODE.save_manager.set_player_data(player,"KeyRingChance",math.min(1,chance+dmg_perc_increase * player:GetCollectibleNum(item.instance)),true)
         end
     end
@@ -56,6 +65,12 @@ if GODMODE.validate_rgon() then
     item.pre_player_hit = hit_func
 else
     item.npc_hit = hit_func
+end
+
+item.new_room = function()
+    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+        GODMODE.get_ent_data(player).dads_key_ring = nil
+    end)
 end
 
 item.room_rewards = function(self)

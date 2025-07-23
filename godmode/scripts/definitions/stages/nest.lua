@@ -45,7 +45,7 @@ stage.graphics = {
     }
 }
 
-stage.room_path = "resources/rooms/"..stage_prefix.."rooms.lua"
+stage.room_path = "resources/godmode/rooms/"..stage_prefix.."rooms.lua"
 stage.challenge_wave_path = {"resources.godmode.rooms.nest.challenge_waves","resources.godmode.rooms.nest.boss_challenge_waves"}
 
 stage.bosses = {

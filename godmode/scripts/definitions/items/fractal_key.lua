@@ -114,12 +114,19 @@ item.post_render = function(self,player,index)
 
             local pos = GODMODE.util.get_center_of_screen() * Vector(tonumber(GODMODE.save_manager.get_config("FractalDisplayX","0.05")),tonumber(GODMODE.save_manager.get_config("FractalDisplayY","0.9"))) * 2
 
+            -- stathud
             if render_type == 3 then 
-                pos = GODMODE.util.get_center_of_screen() * Vector(0.03+Options.HUDOffset * 0.07,1.375+Options.HUDOffset * 0.075)
+                local yoff = 1.4125
+                
+                if GODMODE.validate_rgon() and Options.StatHUDPlanetarium and Isaac.GetPersistentGameData():Unlocked(Achievement.PLANETARIUMS) then 
+                    yoff = yoff + 0.1
+                end
+
+                pos = GODMODE.util.get_center_of_screen() * Vector(0.0275+Options.HUDOffset * 0.07,yoff + Options.HUDOffset * 0.075)
             end
             
             item.ui_anim:Render(pos, Vector(0,0), Vector(0,0))
-            Isaac.RenderText(math.floor(chance * 100).."%",pos.X+8,pos.Y - 5.5,255,255,255,255)
+            Isaac.RenderScaledText(math.floor(chance * 100).."%",pos.X+8,pos.Y - 5.5,0.8,0.8,180/255,180/255,180/255,1)
         end
     end
 end

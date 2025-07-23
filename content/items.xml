@@ -12,10 +12,10 @@
 	<familiar id="7" description="I hear mommy!" gfx="collectibles_pairofcans.png" name="Pair of Cans" tags="monstermanual" quality = "1" />
 	<passive achievement="GODMODE_FL_Samson" id="8" cache="firedelay" description="It hurts.." gfx="collectibles_heartarrest.png" name="Heart Arrest" tags="dead" quality = "1" />
 	<active achievement="GODMODE_FL_Judas" id="9" maxcharges="2" description="As we burn another page" gfx="collectibles_burntdiary.png" name="Burnt Diary" tags="offensive book" quality = "1" />
-	<passive achievement="GODMODE_FL_Azazel" id="10" cache="luck" description="This tastes funny.." gfx="collectibles_bloodpudding.png" name="Blood Pudding" tags="" quality = "2" />
+	<passive achievement="GODMODE_FL_Azazel" id="10" cache="luck" description="This tastes funny.." gfx="collectibles_bloodpudding.png" name="Blood Pudding" tags="" quality = "1" />
 	<passive achievement="GODMODE_SugarRush" id="11" cache="speed firedelay damage" maxhearts="-2" description="I.. Need.. MORE!" gfx="collectibles_sugar.png" name="Sugar!" tags="offensive tearsup" quality = "1" />
 	<active id="12" maxcharges="2" description="What'd I do?" gfx="collectibles_cooler.png" name="Angry Apple Juice" tags="offensive" quality = "2" />
-	<passive achievement="GODMODE_FL_Recluse" id="13" cache="damage" description="My eyes itch" gfx="collectibles_chiggers.png" name="Larval Therapy" tags="offensive fly spider summonable" quality = "1" />
+	<passive achievement="GODMODE_FL_Recluse" id="13" cache="damage" description="My eyes itch" gfx="collectibles_chiggers.png" name="Larval Therapy" tags="offensive fly spider summonable" quality = "3" />
 	<passive achievement="GODMODE_FL_JacobEsau" id="14" cache="firedelay" description="Be strong in the face of evil" gfx="collectibles_marshallscarf.png" name="Marshall Scarf" tags="angel summonable tearsup" quality = "3" />
 	<passive id="15" cache="range firedelay shotspeed" description="Brain power up" gfx="collectibles_taenia.png" name="Taenia" tags="offensive summonable tearsup" quality = "3" />
 	<active achievement="GODMODE_FL_Apollyon" id="16" maxcharges="6" description="Let it all out!" gfx="collectibles_anguishjar.png" name="Anguish Jar" tags="offensive" quality = "3" />
@@ -26,7 +26,7 @@
 	<active id="21" maxcharges="2" description="Become reborn in the water!" gfx="collectibles_baptismal_cross.png" name="Baptismal Cross" tags="offensive angel" quality = "1" />
 	<passive id="22" cache="shotspeed" description="I-I-I'm fINE!!" gfx="collectibles_whoopcough.png" name="The Uncommon Cough" tags="offensive" quality = "3" />
 	<passive id="23" cache="speed" description="Slurp with love!" maxhearts="2" hearts="4" gfx="collectibles_ladle.png" name="The Ladle" tags="nolostbr summonable" quality = "2" />
-	<passive id="24" cache="damage" description="I think it's stopping!" gfx="collectibles_nosebleed.png" name="Nosebleed" tags="summonable" quality = "3" />
+	<passive id="24" cache="damage" description="I think it's stopping!" gfx="collectibles_nosebleed.png" name="Nosebleed" tags="summonable" quality = "4" />
 	<active id="25" maxcharges="2" chargetype="special" cache="damage firedelay" description="Prove your strength to them" gfx="collectibles_trophy_of_power.png" name="Child's Trophy" tags="offensive tearsup" quality = "1" />
 	<passive id="26" description="Sight Up?" maxhearts="2" hearts="4" gfx="collectibles_carrot.png" name="The Carrot" tags="food" quality = "2" />
 	<passive achievement="GODMODE_FL_Gehazi" id="27" cache="damage" description="Money, money, money!" gfx="collectibles_crown_of_gold.png" name="Crown of Gold" coins="5" tags="nokeeper" quality = "3" />
@@ -34,7 +34,7 @@
 	<passive id="28" description="Money = Charge" gfx="collectibles_gold_battery.png" name="Gold Plated Battery" coins="10" tags="battery" customtags="cyborg" quality = "2" />
 	<passive id="29" cache="damage luck firedelay" description="Luck = power" gfx="collectibles_clover.png" name="Four Leaf Clover" tags="offensive summonable tearsup" quality = "3" />
 	<passive achievement="GODMODE_FL_TheLost" id="30" cache="firedelay" description="A little later than expected" gfx="collectibles_late_delivery.png" name="Late Delivery" tags="tearsup dead" quality = "4" />
-	<active id="31" description="It smells sleepy" gfx="collectibles_black_mushroom.png" name="Black Mushroom" tags="mushroom" quality = "2" />
+	<active id="31" description="It smells sleepy" gfx="collectibles_black_mushroom.png" name="Black Mushroom" tags="mushroom" quality = "4" />
 	<passive achievement="GODMODE_FL_Lilith" id="32" description="We feel invincible!" devilprice="2" gfx="collectibles_sharing_is_caring.png" name="Sharing is Caring" tags="offensive summonable" quality = "3" />
 	<passive achievement="GODMODE_FL_Magdalene" id="33" description="Seeping bleeding" gfx="tampon.png" name="Cloth on a String" tags="offensive summonable" quality = "2" />
 	<passive achievement="GODMODE_FL_Magdalene" id="34" description="Seeping power" gfx="golden_tampon.png" name="Cloth of Gold" tags="offensive" quality = "2" />
@@ -43,31 +43,31 @@
 	<passive id="37" description="Paid fulfillment" devilprice="2" gfx="filthy_thoughts.png" name="Forbidden Knowledge" tags="book nokeeper summonable nolostbr" quality = "3" />
 	<active achievement="GODMODE_FL_Cain" id="38" maxcharges="4" description="Game time?" gfx="arcade_stub.png" name="Arcade Ticket" tags="" quality = "1" />
 	<passive achievement="GODMODE_FL_TheForgotten" id="39" description="Break for protection" devilprice="2" gfx="bone_cross.png" name="Crossbones" tags="offensive summonable" quality = "3" />
-	<active achievement="GODMODE_FL_TheSign" id="40" maxcharges="4" description="Feel their soul" gfx="opia.png" name="Opia" tags="offensive" quality = "4" />
+	<active achievement="GODMODE_FL_TheSign" id="40" maxcharges="4" description="Feel their soul" gfx="opia.png" name="Opia" tags="offensive" quality = "3" />
 	<passive id="41" description="Rotten flecks" gfx="gangrene.png" name="Gangrene" tags="offensive bob summonable dead" quality = "2" />
 	<passive id="42" cache="luck speed" description="Good for you" gfx="soul_food.png" name="Soul Food" soulhearts="4" tags="food" quality = "2" />
-	<passive id="43" cache="damage shotspeed" description="The lie" gfx="devils_food.png" name="Devil's Food" blackhearts="4" tags="food offensive" quality = "2" customtags="cake" />
+	<passive id="43" cache="damage shotspeed" description="The lie" gfx="devils_food.png" name="Devil's Food" blackhearts="4" tags="food offensive" quality = "3" customtags="cake" />
 	<passive id="44" cache="firedelay range" description="Forbidden" gfx="angel_food.png" name="Angel Food" soulhearts="2" tags="tearsup food" quality = "2" customtags="cake" />
 	<active achievement="GODMODE_FL_Keeper" id="45" maxcharges="12" description="Look up to the hearts of gold" gfx="saint_book.png" name="Book of Saints" tags="book angel" quality = "3" />
-	<passive achievement="GODMODE_FL_Eden" id="46" description="Become anything" gfx="jack_of_trades.png" name="Jack-of-all-Trades" tags="baby fly syringe mom book poop mushroom angel devil guppy spider bob" customtags="cyborg celeste cultist" quality = "4" shopprice="49" />
+	<passive achievement="GODMODE_FL_Eden" id="46" description="Become anything" gfx="jack_of_trades.png" name="Jack-of-all-Trades" tags="baby fly syringe mom book poop mushroom angel devil guppy spider bob" customtags="cyborg celeste cultist" quality = "3" shopprice="49" />
 	<active id="47" description="Loss = Life" gfx="tecpatl.png" name="Tecpatl" quality = "2" />
 	<active achievement="GODMODE_ImpendingDoom" id="48" maxcharges="2" description="Time is running out for all" gfx="calendar.png" name="Impending Doom" tags="offensive" quality = "3" />
 	<active id="49" description="Ring for protection" gfx="ghanta.png" name="Ghanta" quality = "1" tags="nolostbr" shopprice="20" />
 	<passive achievement="GODMODE_Vajra" id="50" description="Strike down those who break your spirit" gfx="vajra.png" name="Vajra" tags="nolostbr" quality = "4" shopprice="30" />
 	<active id="51" maxcharges="6" description="Cleanse your soul" gfx="quran.png" name="Qur'an" tags="book nolostbr" quality = "3" />
 	<passive achievement="GODMODE_PrayerMat" id="52" description="Clear your mind" gfx="prayer_mat.png" name="Prayer Mat" quality = "4" tags="nolostbr" shopprice="30" />
-	<active id="53" maxcharges="8" description="Evil spirits, wane!" gfx="diya_lamp.png" name="Diya" tags="offensive" quality = "3" />
+	<active id="53" maxcharges="8" description="Evil spirits, wane!" gfx="diya_lamp.png" name="Diya" tags="offensive" quality = "4" />
 	<passive id="54" description="The darkness is weakened" gfx="nirvana.png" name="Nirvana" tags="summonable" quality = "4" />
-	<passive id="55" description="You feel blessed" gfx="brass_cross.png" name="Brass Cross" tags="summonable" soulhearts="4" quality = "3" />
+	<passive id="55" description="You feel blessed" gfx="brass_cross.png" name="Brass Cross" tags="summonable" soulhearts="4" quality = "2" />
 	<passive achievement="GODMODE_CelestialApproach" id="56" description="The power of sustainment +3 Keys" gfx="celeste_tail.png" name="Celestial Tail" keys="3" tags="stars" customtags="celeste" quality = "4" />
 	<active achievement="GODMODE_CelestialApproach" id="57" maxcharges="12" description="Slash them in your soul" gfx="celeste_paw.png" name="Celestial Paw" quality = "4" tags="stars offensive" customtags="celeste" />
-	<passive achievement="GODMODE_CelestialApproach" id="58" cache="damage" description="The power of life" gfx="celeste_collar.png" name="Celestial Collar" quality = "4" tags="stars offensive" customtags="celeste" />
+	<passive achievement="GODMODE_CelestialApproach" id="58" cache="damage" description="The power of life" gfx="celeste_collar.png" name="Celestial Collar" quality = "3" tags="stars offensive" customtags="celeste" />
 	<passive id="59" description="Spilled Milk + HP Up" gfx="soft_serve.png" name="Soft Serve" tags="summonable offensive" soulhearts="2" quality = "4" />
 	<active id="60" maxcharges="6" description="Atone at home!" gfx="portable_confessional.png" name="Portable Confessional" tags="nolostbr" soulhearts="0" quality = "3" />
 	<passive achievement="GODMODE_OutOfTime" id="61" cache="speed" description="Time means nothing now" gfx="second_thought.png" name="A Second Thought" tags="summonable lazarusshared" soulhearts="0" quality = "2" />
 	<passive id="62" description="Wrath = power +5 Bombs" gfx="war_banner.png" name="War Banner" tags="summonable offensive" bombs="5" quality = "2" />
 	<active id="74" maxcharges="12" description="They hear your call" gfx="seraphim_horn.png" tags="offensive angel" name="Seraphim Warhorn" quality = "2" />
-	<passive id="75" cache="flying" devilprice="2" description="He'll come for you when you're gone" gfx="eaten_soul.png" name="Edible Soul" tags="summonable devil lazarusshared" blackhearts="2" quality = "4" customtags="revive" />
+	<passive id="75" cache="flying" devilprice="2" description="He'll come for you when you're gone" gfx="eaten_soul.png" name="Edible Soul" tags="summonable devil lazarusshared" blackhearts="2" quality = "3" customtags="revive" />
 	<familiar id="76" devilprice="2" description="The heat has marked you" gfx="fallen_guard.png" name="Fallen Guardian" tags="summonable familiar offensive baby monstermanual" quality = "3" />
 	<passive id="78" description="Bubbly vengeance" gfx="bubble_wand.png" tags="offensive summonable" name="Bubble Wand" quality = "2" />
 	<passive id="79" cache="speed" description="Cleaning services" gfx="feather_duster.png" tags="summonable" name="Feather Duster" quality = "1" />
@@ -90,6 +90,7 @@
 	<familiar id="105" description="Hungry shield" gfx="snail_curse.png" name="Curse of the Snail" quality = "1" />
 	<passive id="106" cache="speed" description="All doors are connected..." gfx="door_rift.png" name="Door Rift" quality = "0" />
 	<familiar id="107" description="Diper friends" gfx="loaded_diaper.png" name="Loded Sack" quality = "0" />
+	<!-- <familiar id="108" description="Ceaseless void" gfx="celeste_hairball.png" name="Celestial Hairball" quality = "2" /> -->
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />

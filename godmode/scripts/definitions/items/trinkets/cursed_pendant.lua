@@ -12,11 +12,11 @@ item.encyc_entry = {
 
 item.eval_cache = function(self, player,cache,data)
     if not (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then return end
-
+    local num = player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance)
     if cache == CacheFlag.CACHE_DAMAGE then 
-        player.Damage = player.Damage * 1.1
+        player.Damage = player.Damage * (1 + 0.1 * num)
     elseif cache == CacheFlag.CACHE_SPEED then 
-        player.MoveSpeed = player.MoveSpeed + 0.2
+        player.MoveSpeed = player.MoveSpeed + 0.2 * num
     end
 end
 

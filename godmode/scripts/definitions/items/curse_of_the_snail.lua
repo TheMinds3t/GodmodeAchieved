@@ -6,7 +6,7 @@ item.encyc_entry = {
 	{ -- Effects
 		{str = "Effects", fsize = 2, clr = 3, halign = 0},
 		{str = "Spawns a snail familiar that deals 1 full heart of contact damage to Isaac while awake, but does not chase Isaac unless he is inside its radius. If the snail deals damage to Isaac, the snail sleeps for the room."},
-		{str = "While inside its radius, he will also receive all damage you would take up to 2 full hearts of damage per room."},
+		{str = "While inside its radius, he will also receive all damage you would take up to 1 full heart of damage per room."},
 		{str = "BFFs! will multiply the maximum damage per room by 2, and stacking this item will increase the maximum damage he can inflict/receive per room by 1/2 hearts per stack."},
 	},
 }

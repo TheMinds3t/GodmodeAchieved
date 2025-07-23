@@ -6,7 +6,7 @@ monster.variant = GODMODE.registry.entities.ivory_portal.variant
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
         if ent.SubType == 0 
-            or ent.SubType == 1 and GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather, true) > 0 then 
+            or (ent.SubType == 1 and GODMODE.util.total_item_count(GODMODE.registry.trinkets.bone_feather, true) > 0) then 
             data.persistent_state = GODMODE.persistent_state.single_room
         end
 

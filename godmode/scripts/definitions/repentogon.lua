@@ -89,7 +89,7 @@ if GODMODE.validate_rgon() then
         end
 
         -- render sign level
-        if not pause_menu and playertype == GODMODE.registry.players.the_sign and MenuManager.GetActiveMenu() == MainMenuType.CHARACTER then 
+        if not pause_menu and playertype == GODMODE.registry.players.the_sign and MenuManager and MenuManager.GetActiveMenu() == MainMenuType.CHARACTER then 
             local kills = tonumber(GODMODE.save_manager.get_persistant_data("PalaceKills","0",true))
 
             if kills > 0 then 

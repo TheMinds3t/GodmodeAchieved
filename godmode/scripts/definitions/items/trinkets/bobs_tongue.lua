@@ -14,9 +14,10 @@ item.eval_cache = function(self, player,cache,data)
     if not (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then return end
 
 	local data = GODMODE.get_ent_data(player)
+    local num = player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance)
 
     if cache == CacheFlag.CACHE_FIREDELAY then
-        player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.25*player:GetTrinketMultiplier(item.instance))
+        player.MaxFireDelay = GODMODE.util.add_tears(player, player.MaxFireDelay,0.25*num)
     end
 end
 

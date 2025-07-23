@@ -13,7 +13,9 @@ item.encyc_entry = {
 
 item.pickup_init = function(self, pickup)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        if pickup.Variant ~= PickupVariant.PICKUP_LIL_BATTERY and player:GetTrinketRNG(item.instance):RandomFloat() < 0.05 and #GODMODE.util.does_player_have(item.instance, true) > 0 and GODMODE.room:IsFirstVisit() then
+        local num = player:GetTrinketMultiplier(item.instance) + player:GetEffects():GetTrinketEffectNum(item.instance)
+        if pickup.Variant ~= PickupVariant.PICKUP_LIL_BATTERY and player:GetTrinketRNG(item.instance):RandomFloat() < 0.05 * num 
+            and GODMODE.room:IsFirstVisit() then
             Isaac.Spawn(pickup.Type, PickupVariant.PICKUP_LIL_BATTERY, 0, GODMODE.room:FindFreePickupSpawnPosition(pickup.Position), Vector.Zero, nil)
         end
     end, true)

@@ -2115,8 +2115,8 @@ else
                     if tear.Velocity.X > 0 and vel.X < 0 then vel.X = vel.X * 3 elseif tear.Velocity.X < 0 and vel.X > 0 then vel.X = vel.X * 3 end 
                     if tear.Velocity.Y > 0 and vel.Y < 0 then vel.Y = vel.Y * 3 elseif tear.Velocity.Y < 0 and vel.Y > 0 then vel.Y = vel.Y * 3 end 
                     tear.Velocity = -tear.Velocity + vel * 2
-                    data.sign_tears = data.sign_tears or {}
-                    table.insert(data.sign_tears, tear)
+                    data = GODMODE.get_ent_data(tear)
+                    data.sign_tear = true 
                 end
             elseif (player:GetPlayerType() == GODMODE.registry.players.deli or player:GetPlayerType() == GODMODE.registry.players.t_deli) and player:GetFireDirection() ~= Direction.NO_DIRECTION then
                 local data = GODMODE.get_ent_data(player)
@@ -2129,6 +2129,32 @@ else
                 end
             elseif (player:GetPlayerType() == GODMODE.registry.players.xaphan or player:GetPlayerType() == GODMODE.registry.players.t_elohim) and tear.Variant == TearVariant.BLUE then
                 tear:ChangeVariant(TearVariant.BLOOD)
+            end
+        end
+    end
+
+    function GODMODE.mod_object:tear_update(tear)
+        local data = GODMODE.get_ent_data(tear)
+
+        if data.sign_tear == true then 
+            data.source = data.source or tear.SpawnerEntity or tear.Parent 
+
+            if data.source then 
+                local perc = math.min(1.0,tear.FrameCount / 5.0)
+                if perc < 1.0 then
+                    tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,perc)
+                end
+
+                if (tear.Position - data.source.Position):Length() < 16 then
+                    tear:Kill()
+                end
+
+                if tear:IsDead() then 
+                    tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,1.0)
+                end
+            else 
+                data.source = nil
+                data.sign_tear = nil 
             end
         end
     end
@@ -3077,6 +3103,7 @@ else
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_PLAYER_RENDER, GODMODE.mod_object.post_player_render)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, GODMODE.mod_object.tear_fire)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, GODMODE.mod_object.tear_init)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, GODMODE.mod_object.tear_update)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, GODMODE.mod_object.tear_collide, EntityType.EntityTear)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE , GODMODE.mod_object.laser_update)  
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, GODMODE.mod_object.eval_cache)

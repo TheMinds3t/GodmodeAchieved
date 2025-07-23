@@ -57,6 +57,7 @@ reg.items = {
     diya = Isaac.GetItemIdByName("Diya"),
     nirvana = Isaac.GetItemIdByName("Nirvana"),
     brass_cross = Isaac.GetItemIdByName("Brass Cross"),
+    -- celestial_hairball = Isaac.GetItemIdByName("Celestial Hairball"),
     celestial_tail = Isaac.GetItemIdByName("Celestial Tail"),
     celestial_paw = Isaac.GetItemIdByName("Celestial Paw"),
     celestial_collar = Isaac.GetItemIdByName("Celestial Collar"),

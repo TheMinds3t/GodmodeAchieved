@@ -1121,9 +1121,9 @@ players[GODMODE.registry.players.the_sign] = {
         if true then
         -- if kills > 0 then
 
-            data.added_sign_birthright = GODMODE.save_manager.get_player_data(player, "SignBirthright", "false") == "true"
-            
-            if not data.added_sign_birthright and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
+            if GODMODE.save_manager.get_player_data(player, "SignBirthright", "false") == "false" 
+                and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
+                
                 GODMODE.save_manager.set_player_data(player, "SignBirthright", "true",true)
                 player:AddBrokenHearts(-12)
                 player:AddSoulHearts(2)
@@ -1136,26 +1136,12 @@ players[GODMODE.registry.players.the_sign] = {
                 data.flame:ToFamiliar().Player = player
                 data.flame:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             end
-
-            data.sign_tears = data.sign_tears or {}
-
-            for i,tear in ipairs(data.sign_tears) do
-                local perc = math.min(1.0,tear.FrameCount / 5.0)
-                if perc < 1.0 then
-                    tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,perc)
-                end
-
-                local dist = tear.Position - player.Position
-
-                if math.abs(dist.X) < 16 and math.abs(dist.Y) < 16 then
-                    tear:Kill()
-                end
-
-                if tear:IsDead() then 
-                    tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,1.0)
-                    table.remove(data.sign_tears, i)
-                end
-            end
+        end
+    end,
+    tear_collide = function(self, tear, ent2, player) 
+        local data = GODMODE.get_ent_data(tear)
+        if player and ent2 and ent2:ToPlayer() and GetPtrHash(ent2) == GetPtrHash(player) then 
+            tear:Kill()
         end
     end,
     encyclopedia_entry = {{ -- Start Data
