@@ -170,9 +170,7 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 end
 
-monster.npc_post_render = function(self,ent,offset)
-    local data = GODMODE.get_ent_data(ent)
-
+monster.npc_post_render = function(self,ent,offset,data,sprite)
     if data.second_sprite == nil then 
         data.second_sprite = Sprite()
         data.second_sprite:Load("godmode/gfx/grid/fatal_attraction.anm2",true)

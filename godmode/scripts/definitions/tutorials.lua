@@ -206,6 +206,38 @@ tutorials.list = {
             true,
         }
     },
+    ["KeepahBossIntro"] = {
+        lock_doors = false, lock_controls = true,
+        validate_args = function(args) 
+            return args[1] and args[1]:ToPlayer() ~= nil 
+                and args[2] and args[2].Type == GODMODE.registry.entities.keepah_boss.type and args[2].Variant == GODMODE.registry.entities.keepah_boss.variant
+            end,
+        get_pos = function(args) return args[2] end,
+        timeline = {
+            function(self,args)
+                tutorials.set_spotlight(self.get_pos(args),true,0.5,0.75,Vector(0,0))
+                tutorials.spotlight.real_opacity = 0.0
+                tutorials.spotlight.real_scale = 4.0
+                local data = GODMODE.get_ent_data(args[2])
+                data.blue_flag = true 
+            end,
+
+            function(self,args)
+                tutorials.set_spotlight(self.get_pos(args),true,0.5,0.75,Vector(0,0))
+                tutorials.spotlight.real_opacity = 0.0
+                tutorials.spotlight.real_scale = 4.0
+                local data = GODMODE.get_ent_data(args[2])
+                data.red_flag = true 
+            end,
+
+            function(self,args)
+                tutorials.set_spotlight(self.get_pos(args),true,0.66,0.7,Vector(-0,0))
+                tutorials.create_text(player, "Keepah is definitely over it... welp", 1)
+            end,
+
+            true,
+        }
+    },
 }
 
 -- how fast to update the position of the spotlight graphic in world coordinates

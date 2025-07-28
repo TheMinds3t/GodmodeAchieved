@@ -77,6 +77,7 @@ table.insert(ret, include("godmode.scripts.definitions.entities.boss.outbreak"))
 table.insert(ret, include("godmode.scripts.definitions.entities.boss.bulge_bat"))
 table.insert(ret, include("godmode.scripts.definitions.entities.boss.brazier"))
 table.insert(ret, include("godmode.scripts.definitions.entities.boss.error"))
+table.insert(ret, include("godmode.scripts.definitions.entities.boss.keepah"))
 
 table.insert(ret, include("godmode.scripts.definitions.entities.boss.famine"))
 table.insert(ret, include("godmode.scripts.definitions.entities.boss.war"))

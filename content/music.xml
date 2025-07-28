@@ -1,19 +1,19 @@
-<music root="music/">
-	<track name="GODMODE A Blackened Light" intro="luciferpalace_intro.ogg" path="luciferpalace.ogg" layer="luciferpalace_layer.ogg" loop="true" />
-	<track name="GODMODE Experiencing Revelation" path="palace_fight.ogg" loop="true" />
-	<track name="GODMODE Peripheral Visions" intro="fruit cellar/intro.ogg" path="fruit cellar/main.ogg" layerintro="fruit cellar/intro_layer.ogg" layer="fruit cellar/main_layer.ogg" loop="true" />
-	<track name="GODMODE Shellstepping" intro="nest/main_intro.ogg" path="nest/main.ogg" layerintro="nest/layer_intro.ogg" layer="nest/layer.ogg" loop="true" />
-	<track name="GODMODE Pulsations" intro="intestines/intro_main.ogg" path="intestines/main.ogg" layerintro="intestines/intro_layer.ogg" layer="intestines/layer.ogg" loop="true" />
+<music root="">
+	<track name="GODMODE A Blackened Light" intro="godmode/music/luciferpalace_intro.ogg" path="godmode/music/luciferpalace.ogg" layer="godmode/music/luciferpalace_layer.ogg" loop="true" />
+	<track name="GODMODE Experiencing Revelation" path="godmode/music/palace_fight.ogg" loop="true" />
+	<track name="GODMODE Peripheral Visions" intro="godmode/music/fruit cellar/intro.ogg" path="godmode/music/fruit cellar/main.ogg" layerintro="godmode/music/fruit cellar/intro_layer.ogg" layer="godmode/music/fruit cellar/main_layer.ogg" loop="true" />
+	<track name="GODMODE Shellstepping" intro="godmode/music/nest/main_intro.ogg" path="godmode/music/nest/main.ogg" layerintro="godmode/music/nest/layer_intro.ogg" layer="godmode/music/nest/layer.ogg" loop="true" />
+	<track name="GODMODE Pulsations" intro="godmode/music/intestines/intro_main.ogg" path="godmode/music/intestines/main.ogg" layerintro="godmode/music/intestines/intro_layer.ogg" layer="godmode/music/intestines/layer.ogg" loop="true" />
 
-	<track name="GODMODE The Stars Gaze Back" intro="observatory_intro.ogg" path="observatory.ogg" loop="true" />
-	<track name="GODMODE Misfortunate" intro="correction_intro.ogg" path="correction.ogg" loop="true" />
-	<track name="GODMODE Twinkles of a Last Thought" path="ending.ogg" loop="true" />
-	<track name="GODMODE_EndingVoiceover" path="ending voiceover.ogg" loop="false" />
+	<track name="GODMODE The Stars Gaze Back" intro="godmode/music/observatory_intro.ogg" path="godmode/music/observatory.ogg" loop="true" />
+	<track name="GODMODE Misfortunate" intro="godmode/music/correction_intro.ogg" path="godmode/music/correction.ogg" loop="true" />
+	<track name="GODMODE Twinkles of a Last Thought" path="godmode/music/ending.ogg" loop="true" />
+	<track name="GODMODE_EndingVoiceover" path="godmode/music/ending voiceover.ogg" loop="false" />
 
 	<!-- Palace (Day) -->
-	<track name="GODMODE Cathedral" intro="palace (day)/asfabs intro.ogg" path="palace (day)/asfabs main.ogg" layerintro="palace (day)/asfabs intro layer.ogg" layer="palace (day)/asfabs layer.ogg" loop="true" />
-	<track name="GODMODE Boss (Cathedral - Isaac)" intro="palace (day)/boss_intro.ogg" path="palace (day)/boss.ogg" loop="true" />
+	<track name="GODMODE Cathedral" intro="godmode/music/palace (day)/asfabs intro.ogg" path="godmode/music/palace (day)/asfabs main.ogg" layerintro="godmode/music/palace (day)/asfabs intro layer.ogg" layer="godmode/music/palace (day)/asfabs layer.ogg" loop="true" />
+	<track name="GODMODE Boss (Cathedral - Isaac)" intro="godmode/music/palace (day)/boss_intro.ogg" path="godmode/music/palace (day)/boss.ogg" loop="true" />
 
-	<track name="GODMODE Shop Room" intro="persuasions_intro.ogg" path="persuasions.ogg" loop="true" />
+	<track name="GODMODE Shop Room" intro="godmode/music/persuasions_intro.ogg" path="godmode/music/persuasions.ogg" loop="true" />
 </music>
  

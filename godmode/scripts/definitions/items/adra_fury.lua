@@ -256,8 +256,7 @@ item.npc_init = function(self, ent, data)
     end
 end
 
-item.npc_post_render = function(self, ent,offset)
-    local data = GODMODE.get_ent_data(ent)
+item.npc_post_render = function(self, ent, offset, data, sprite)
     if data and data.adra_fury == true then
         item.indicator:SetFrame("Blessing", ent.FrameCount % 6)
         item.indicator:Render(Isaac.WorldToScreen(ent.Position+ent.SpriteOffset)-Vector(0,ent.Size+8),Vector.Zero,Vector.Zero)

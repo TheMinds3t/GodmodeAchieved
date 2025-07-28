@@ -69,14 +69,14 @@ if GODMODE.validate_rgon() then
 
         if GODMODE.sprites.mm_addon_sprite == nil then
             GODMODE.sprites.mm_addon_sprite = Sprite()
-            GODMODE.sprites.mm_addon_sprite:Load("godmode/gfx/ui/main menu/god_mainmenu_addons.anm2", true)
+            GODMODE.sprites.mm_addon_sprite:Load("gfx/ui/main menu/god_mainmenu_addons.anm2", true)
             GODMODE.log("Loaded Fallen Light/The Sign Completion mark sprite!")
         end
 
         -- draw unlock conditions (to make RGON text not show for non-RGON users)
         if GODMODE.sprites.unlock_sprite == nil then
             GODMODE.sprites.unlock_sprite = Sprite()
-            GODMODE.sprites.unlock_sprite:Load("godmode/gfx/ui/main menu/unlock_overlay.anm2", true)
+            GODMODE.sprites.unlock_sprite:Load("gfx/ui/main menu/unlock_overlay.anm2", true)
             GODMODE.log("Loaded Unlock condition overlay sprite!")
         end
 

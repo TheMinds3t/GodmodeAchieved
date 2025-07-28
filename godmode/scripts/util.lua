@@ -671,9 +671,21 @@ util.mult_color = function(multiplier)
 	return Color(multiplier,multiplier,multiplier,multiplier,multiplier,multiplier,multiplier)
 end
 
+-- make screen size changing smooth
+util.center_damp = 10.0
+
 --DSS center of screen function
 util.get_center_of_screen = function()
-	return (GODMODE.room:GetRenderSurfaceTopLeft() * 2 + Vector(442, 286))/2
+	if util.goal_center == nil or util.goal_center.X ~= Isaac.GetScreenWidth()/2.0 then 
+		util.goal_center = Vector(Isaac.GetScreenWidth()/2, Isaac.GetScreenHeight()/2)
+		util.cached_center = util.cached_center or util.goal_center
+	end
+
+	if util.cached_center == nil or util.cached_center and (util.goal_center - util.cached_center):Length() > 1 then 
+		util.cached_center = (util.cached_center * util.center_damp + util.goal_center) / (util.center_damp + 1)
+	end
+
+	return util.cached_center or util.goal_center
 end
 
 local corners = {{x=0.05,y=0.075},{x=1.25,y=0.075},{x=0.05,y=1.9},{x=1.25,y=1.9}}
@@ -795,7 +807,7 @@ util.scaling_presets = {
 			stage = 6+7-stage
 		end
 	
-		if StageAPI and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
+		if StageAPI and StageAPI.GetCurrentStage and StageAPI.GetCurrentStage() and GODMODE.stages[StageAPI.GetCurrentStage().Name] then 
 			stage = GODMODE.stages[StageAPI.GetCurrentStage().Name].simulating_stage or stage
 		end
 	

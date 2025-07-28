@@ -605,18 +605,17 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     end
 end
 
-monster.npc_post_render = function(self,ent,offset)
+monster.npc_post_render = function(self,ent,offset,data,sprite)
     if ent.SubType ~= 0 or string.match(ent:GetSprite():GetAnimation(), "0") then return end
-    local data = GODMODE.get_ent_data(ent)
 
     if data.second_sprite == nil then 
         data.second_sprite = Sprite()
-        data.second_sprite:Load(ent:GetSprite():GetFilename(),true)
+        data.second_sprite:Load(sprite:GetFilename(),true)
         data.second_sprite:Play("Pupil",false)
     end
 
     data.second_sprite.Offset = ent.SpriteOffset
-    data.second_sprite.Color = Color.Lerp(Color(1,1,1,1),ent:GetSprite().Color,0.5)
+    data.second_sprite.Color = Color.Lerp(Color(1,1,1,1),sprite.Color,0.5)
 
     local eye_pos = ent.Position + phase_2_eye_offset
 

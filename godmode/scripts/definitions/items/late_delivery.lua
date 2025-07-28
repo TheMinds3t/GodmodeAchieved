@@ -10,7 +10,6 @@ item.encyc_entry = {
 	},
 }
 
-
 item.eval_cache = function(self, player,cache,data)
     if not player:HasCollectible(item.instance) then return end
 
@@ -19,15 +18,13 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-
 item.render_player_ui = function(self,player,index)
 	if player:HasCollectible(item.instance) then
 		if item.delivery_anim == nil then
 			item.delivery_anim = Sprite()
-			item.delivery_anim:Load("/gfx/famil_late_delivery.anm2", true)
+			item.delivery_anim:Load("godmode/gfx/famil_late_delivery.anm2", true)
 			item.delivery_anim.Color = Color(0.8,0.8,0.8,1) --fixes over-exposure problem
 		end
-
 
 		local data = GODMODE.get_ent_data(player)
 		data.late_delivery_counter = tonumber(GODMODE.save_manager.get_player_data(player, "DeliveryCounter", "2500"))

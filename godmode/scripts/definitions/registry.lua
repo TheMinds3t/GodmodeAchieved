@@ -519,6 +519,35 @@ reg.entities = {
         type = Isaac.GetEntityTypeByName("Error Keeper (Boss)"),
         variant = Isaac.GetEntityVariantByName("Error Keeper (Boss)")
     },
+    keepah_boss = {
+        type = Isaac.GetEntityTypeByName("Keepah (Boss)"),
+        variant = Isaac.GetEntityVariantByName("Keepah (Boss)"),
+    },
+    keepah_boss_head_move = {
+        type = Isaac.GetEntityTypeByName("Keepah Head (Move)"),
+        variant = Isaac.GetEntityVariantByName("Keepah Head (Move)"),
+        subtype=1,
+    },
+    keepah_boss_head_still = {
+        type = Isaac.GetEntityTypeByName("Keepah Head (Still)"),
+        variant = Isaac.GetEntityVariantByName("Keepah Head (Still)"),
+        subtype=2,
+    },
+    keepah_boss_head_both = {
+        type = Isaac.GetEntityTypeByName("Keepah Head (Both)"),
+        variant = Isaac.GetEntityVariantByName("Keepah Head (Both)"),
+        subtype=3,
+    },
+    keepah_boss_head_both_alt = {
+        type = Isaac.GetEntityTypeByName("Keepah Head (Both Alt)"),
+        variant = Isaac.GetEntityVariantByName("Keepah Head (Both Alt)"),
+        subtype=4,
+    },
+    keepah_boss_dead = {
+        type = Isaac.GetEntityTypeByName("Keepah (Dead)"),
+        variant = Isaac.GetEntityVariantByName("Keepah (Dead)"),
+        subtype=5,
+    },
     godmode_famine = {
         type = Isaac.GetEntityTypeByName("(GODMODE) Famine"),
         variant = Isaac.GetEntityVariantByName("(GODMODE) Famine")

@@ -241,10 +241,8 @@ end
 
 monster.bypass_hooks = {["pickup_init"] = true, ["pickup_post_render"] = true}
 
-monster.npc_post_render = function(self, ent, offset)
+monster.npc_post_render = function(self, ent, offset, data, sprite)
 	if GODMODE.validate_rgon() then --needs null position
-		local data = GODMODE.get_ent_data(ent)
-
 		if data and data.chest_locked == true and data.chest ~= nil then 
 			if monster.eye_sprite == nil then
 				monster.eye_sprite = Sprite()
@@ -253,13 +251,13 @@ monster.npc_post_render = function(self, ent, offset)
 		
 			local reg = GODMODE.registry.mimic_chests[data.chest.Variant]
 
-			local chest_nf = ent:GetSprite():GetNullFrame("chest")
+			local chest_nf = sprite:GetNullFrame("chest")
 			monster.eye_sprite.Scale = chest_nf:GetScale()
 			monster.eye_sprite.Color = chest_nf:GetColor()
 			monster.eye_sprite.Offset = chest_nf:GetPos() + base_offset + (reg.null_pos_off or Vector.Zero)
 			local pos = ent.Position + base_eye_offset + (reg.eye_pos_off or Vector.Zero)
 		
-			monster.eye_sprite:SetFrame("Eye"..ent:GetSprite():GetAnimation(),ent:GetSprite():GetFrame())
+			monster.eye_sprite:SetFrame("Eye"..sprite:GetAnimation(),sprite:GetFrame())
 			monster.eye_sprite:Render(Isaac.WorldToScreen(pos),Vector.Zero,Vector.Zero)	
 		end	
 	end

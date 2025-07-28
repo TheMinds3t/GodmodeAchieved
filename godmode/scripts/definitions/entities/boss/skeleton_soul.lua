@@ -301,9 +301,7 @@ monster.npc_kill = function(self,ent)
 	end
 end
 
-monster.npc_post_render = function(self, ent, offset)
-	local data = GODMODE.get_ent_data(ent)
-
+monster.npc_post_render = function(self, ent, offset, data, sprite)
 	if data.finished_intro == true then 
 		if monster.tell ~= nil and (data.idle_timeout or 0) > 1 then
 			monster.tell.Color = Color(1,1,1,math.min(9,math.max(0,data.idle_timeout - 9))/9)

@@ -401,7 +401,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		elseif data.final_phase == true and data.hole_made ~= true then
 			for i=0,fira_max_layers do
 				if fira_inject ~= "" and i ~= 5 and i ~= fira_max_layers or fira_inject == "" and i ~= 6 then --replace all spritesheets except for the light that shows during the appear animation
-					sprite:ReplaceSpritesheet(i,"/gfx/bosses/skeletal_angel_"..fira_inject.."2.png")
+					sprite:ReplaceSpritesheet(i,"/godmode/gfx/bosses/skeletal_angel_"..fira_inject.."2.png")
 				end
 			end
 			sprite:LoadGraphics()

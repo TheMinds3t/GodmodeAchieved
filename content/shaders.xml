@@ -41,13 +41,13 @@
                 
                 if(TimeOut > 0.0)
                 {
-                    float scale = 1.0-(TimeOut/30.0);
+                    float scale = 1.0 - (TimeOut / 30.0);
                     if(scale > 1.0) {
                         scale = 1.0;
                     }
 
                     if(TimeOut > 32.0){
-                        scale = (TimeOut-32.0)/3.0;
+                        scale = (TimeOut - 32.0) / 3.0;
                     }
 
                     Color.r *= scale;
@@ -106,10 +106,10 @@
 
                 if(TimeOut > 0.0)
                 {
-                    float PosOff = TexCoord0.x*(100.0+cos(TimeOut*0.075)*50.0)+TexCoord0.y*(100.0+sin(TimeOut*0.05)*50.0);
-                    Color.r *= 1.0 - abs(sin((TimeOut+60.0+PosOff)/(180.0/3.14)*5.0))*0.3*IntensityOut*(Color.r*0.6+0.4);
-                    Color.g *= 1.0 - abs(sin((TimeOut+120.0+PosOff)/(180.0/3.14)*5.0))*0.3*IntensityOut*(Color.g*0.6+0.4);
-                    Color.b *= 1.0 - abs(sin((TimeOut+180.0+PosOff)/(180.0/3.14)*5.0))*0.3*IntensityOut*(Color.b*0.6+0.4);
+                    float PosOff = TexCoord0.x * (100.0 + cos(TimeOut * 0.075) * 50.0) + TexCoord0.y * (100.0 + sin(TimeOut * 0.05) * 50.0);
+                    Color.r *= 1.0 - abs(sin((TimeOut + 60.0 + PosOff) / (180.0 / 3.14) * 5.0)) * 0.3 * IntensityOut * (Color.r * 0.6 + 0.4);
+                    Color.g *= 1.0 - abs(sin((TimeOut + 120.0 + PosOff) / (180.0 / 3.14) * 5.0)) * 0.3 * IntensityOut * (Color.g * 0.6 + 0.4);
+                    Color.b *= 1.0 - abs(sin((TimeOut + 180.0 + PosOff) / (180.0 / 3.14) * 5.0)) * 0.3 * IntensityOut * (Color.b * 0.6 + 0.4);
                 }
 
                 gl_FragColor = Color;
@@ -160,9 +160,9 @@
 
                 if(TimeOut > 0.0)
                 {
-                    Color.r *= 1.0+(TimeOut / 40.0)*1.0;
-                    Color.g -= (TimeOut / 40.0)*0.8;
-                    Color.b -= (TimeOut / 40.0)*0.8;                    
+                    Color.r *= 1.0 + (TimeOut / 40.0) * 1.0;
+                    Color.g -= (TimeOut / 40.0) * 0.8;
+                    Color.b -= (TimeOut / 40.0) * 0.8;                    
                 }
 
                 gl_FragColor = Color;
@@ -172,7 +172,6 @@
     <shader name="GODMODE_EndingShader">
         <parameters>
             <param name="Intensity" type="float"/>
-            <param name="Time" type="float"/>
         </parameters>
         <vertex><![CDATA[
             attribute vec3 Position;
@@ -221,6 +220,7 @@
         <parameters>
             <param name="Intensity" type="float"/>
             <param name="Time" type="float"/>
+            <param name="Style" type="float"/>
         </parameters>
         <vertex><![CDATA[
             attribute vec3 Position;
@@ -251,13 +251,13 @@
 
                 vec2 center = vec2(RenderData.x / 2.0, RenderData.y / 2.0);
                 vec2 coord = TexCoord;
-                float xScale = 1.0 + cos(Position.y+Time/34.0) * 0.1;
-                float xOff = sin(Position.x * 0.1 * Intensity + Time / 20.0 * xScale * TexCoord.x * Intensity) * 0.01*Intensity - 0.01;
+                float xScale = 1.0 + cos(Position.y + Time / 34.0) * 0.1;
+                float xOff = sin(Position.x * 0.1 * Intensity + Time / 20.0 * xScale * TexCoord.x * Intensity) * 0.01 * Intensity - 0.01;
 
-                if(Style == 1)
+                if(StyleOut == 1.0 || StyleOut == 3.0)
                 {
                     coord.x += xOff - xOff / 2.0;
-                    coord.y += 0;
+                    coord.y += 0.0;
                 }
 
                 TexCoord0 = coord;
@@ -277,18 +277,17 @@
             void main(void)
             {
                 vec4 Color = Color0 * texture2D(Texture0, TexCoord0);
-
-                if(IntensityOut > 0.0 && StyleOut < 3)
+                if(IntensityOut > 0.0 && StyleOut <= 2.0)
                 {
                     float avg = (Color.r + Color.g + Color.b) / 3.0;
 
-                    if(avg > 0.75 + (1 - IntensityOut) * 0.25)
+                    if(avg > (0.75 + (1.0 - IntensityOut) * 0.25))
                     {
                         Color.r = 1.0;
                         Color.g = 1.0;
                         Color.b = 1.0;
                     }
-                    else if(avg > 0.25 - (1 - IntensityOut) * 0.25)
+                    else if(avg > (0.25 - (1.0 - IntensityOut) * 0.25))
                     {
                         Color.r = Color.r + IntensityOut * IntensityOut * IntensityOut;
                         
@@ -297,10 +296,10 @@
                             Color.r = 1.0;
                         }
 
-                        Color.g = Color.g - IntensityOut * (0.9+cos(TexCoord0.x * 5.0+TimeOut/15.0)*0.5);
-                        Color.b = Color.b - IntensityOut * (0.9+sin(TexCoord0.y * 12.0+TimeOut/23.0)*0.5);
+                        Color.g = Color.g - IntensityOut * (0.9 + cos(TexCoord0.x * 5.0 + TimeOut / 15.0) * 0.5);
+                        Color.b = Color.b - IntensityOut * (0.9 + sin(TexCoord0.y * 12.0 + TimeOut / 23.0) * 0.5);
                     }
-                    else if(avg > 0.1 - (1 - IntensityOut) * 0.1)
+                    else if(avg > (0.1 - (1.0 - IntensityOut) * 0.1))
                     {
                         Color.r = 0.2;
                         Color.g = 0.0;

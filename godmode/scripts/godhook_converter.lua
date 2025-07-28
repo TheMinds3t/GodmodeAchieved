@@ -876,15 +876,18 @@ godhook.functions.choose_curse = function(self,curses)
     end
 end
 godhook.functions.npc_post_render = function(self,ent,offset)
+    local sprite = ent:GetSprite()
+    local data = GODMODE.get_ent_data(ent)
+
     if godhook.hook.monsters["npc_post_render"] and godhook.hook.monsters["npc_post_render"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["npc_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+        godhook.hook.monsters["npc_post_render"][ent.Type..","..ent.Variant](self,ent,offset,data,sprite)
     end
 
     if godhook.hook.items["npc_post_render"] then
         for ind=1, #godhook.hook.item_keys["npc_post_render"] do
             local func = godhook.hook.items["npc_post_render"][godhook.hook.item_keys["npc_post_render"][ind]]
             if func then
-                local ret = func(self,ent,offset)
+                local ret = func(self,ent,offset,data,sprite)
                 if ret ~= nil then return ret end
             end
         end
@@ -1001,7 +1004,7 @@ godhook.functions.effect_update = function(self, ent)
             local ent2 = ents[ind]
             
             if ent2 then 
-                local collided = (explode_pos - ent2.Position):Length() < explode_size
+                local collided = (explode_pos - ent2.Position):Length() < explode_size*2
                 local data = GODMODE.get_ent_data(ent2)
                 local sprite = ent2:GetSprite()
 

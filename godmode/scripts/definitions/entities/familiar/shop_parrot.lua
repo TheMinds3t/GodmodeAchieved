@@ -6,6 +6,7 @@ local donation_variant = {DONATION_MACHINE=8}
 local donate_buy_cooldown = 30
 local max_volume_range = 320 --silent
 local min_volume_range = 80 --loudest
+local anger_threshold = 3
 
 local is_shop = function()
 	return (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_SHOP
@@ -171,13 +172,11 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 end
 
-monster.npc_post_render = function(self, ent, offset)
-	local data = GODMODE.get_ent_data(ent)
-
+monster.npc_post_render = function(self, ent, offset, data, sprite)
 	if data.bubble ~= nil then
-		if ent:GetSprite():IsPlaying("Appear") then
+		if sprite:IsPlaying("Appear") then
 			data.talk_sprite = "BubbleAppear"
-			data.bubble:SetFrame("BubbleAppear", ent:GetSprite():GetFrame())
+			data.bubble:SetFrame("BubbleAppear", sprite:GetFrame())
 		elseif data.bubble:GetAnimation() == "BubbleAppear" then
 			data.bubble:SetFrame(0)
 		end
@@ -239,6 +238,22 @@ monster.new_room = function(self)
 			config_parrot(parrot, GODMODE.room:IsFirstVisit(), (GODMODE.birthday_mode == true and "godmode/gfx/familiars/shopbird_birthday.png" or "godmode/gfx/familiars/shopbird.png"))
 		end
 	end
+end
+
+monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
+    if collided then 
+		data.talk_sprite = "BubbleWarn"
+		sprite:Play("TalkSweat",true)
+		data.bubble:Play(data.talk_sprite,true)
+		data.ouch_count = (data.ouch_count or 0) + 1
+
+		ent.Velocity = (ent.Position - explode_pos)
+
+		if data.ouch_count >= anger_threshold and GODMODE.save_manager.get_data("KeepahBossKilled","false") == "false" then 
+			ent:Remove()
+			local new = Isaac.Spawn(GODMODE.registry.entities.keepah_boss.type,GODMODE.registry.entities.keepah_boss.variant,GODMODE.registry.entities.keepah_boss.subtype,ent.Position,Vector.Zero,ent)
+		end
+    end
 end
 
 monster.player_collide = function(self, player,ent,entfirst,data) 

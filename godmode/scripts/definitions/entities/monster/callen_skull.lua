@@ -72,8 +72,8 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 end
 
-monster.npc_post_render = function(self, ent, offset)
-    monster.sprite:SetFrame(ent:GetSprite():GetOverlayAnimation().."Shadow",ent:GetSprite():GetFrame())
+monster.npc_post_render = function(self, ent, offset, data, sprite)
+    monster.sprite:SetFrame(sprite:GetOverlayAnimation().."Shadow",sprite:GetFrame())
     local perc = math.min(ent.I1 / callen_skull_effect, 1)
     local r_perc = 1.0 - math.min(ent.I1 / callen_skull_effect, 3) / 3
     monster.sprite.Color = Color(1,r_perc,r_perc,perc*0.9)

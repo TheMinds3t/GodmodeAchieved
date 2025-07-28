@@ -368,17 +368,16 @@ monster.npc_collide = function(self,ent,ent2,entfirst)
     end
 end
 
-monster.npc_post_render = function(self,ent,offset)
+monster.npc_post_render = function(self,ent,offset,data,sprite)
     if ent.SubType == 1 then return end
-    local data = GODMODE.get_ent_data(ent)
 
     if data.second_sprite == nil then 
         data.second_sprite = Sprite()
-        data.second_sprite:Load(ent:GetSprite():GetFilename(),true)
+        data.second_sprite:Load(sprite:GetFilename(),true)
     end
 
     data.second_sprite.Offset = ent.SpriteOffset
-    data.second_sprite.Color = Color.Lerp(Color(1,1,1,1),ent:GetSprite().Color,0.5)
+    data.second_sprite.Color = Color.Lerp(Color(1,1,1,1),sprite.Color,0.5)
 
     for ind,pos in ipairs(eye_positions) do 
         local eye_pos = ent.Position + pos
@@ -389,7 +388,7 @@ monster.npc_post_render = function(self,ent,offset)
             eye_pos = eye_pos + ang
         end
 
-        ent:GetSprite():Render(Isaac.WorldToScreen(eye_pos+off2))
+        sprite:Render(Isaac.WorldToScreen(eye_pos+off2))
     end
 
     data.second_sprite:Render(Isaac.WorldToScreen(ent.Position+off2))

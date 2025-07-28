@@ -859,7 +859,6 @@ else
             -- end
 
             GODMODE.cotv_timer_st_cache = GODMODE.cotv_timer_st_cache or (GODMODE.util.total_item_count(GODMODE.registry.items.a_second_thought))
-
             
             if GODMODE.cotv_timer_st_cache > 0 then 
                 GODMODE.sprites.cotv_timer_sprite:SetFrame("TimerBackST",(GODMODE.frame_count or GODMODE.game:GetFrameCount())%40)
@@ -2145,9 +2144,9 @@ else
                     tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,perc)
                 end
 
-                if (tear.Position - data.source.Position):Length() < 16 then
-                    tear:Kill()
-                end
+                -- if (tear.Position - data.source.Position):Length() < 16 then
+                --     tear:Kill()
+                -- end
 
                 if tear:IsDead() then 
                     tear.Color = Color(tear.Color.R,tear.Color.G,tear.Color.B,1.0)
@@ -2427,7 +2426,7 @@ else
             end
         end
 
-        if cache == CacheFlag.CACHE_SPEED and GODMODE.room:IsClear() then 
+        if cache == CacheFlag.CACHE_SPEED and (GODMODE.room or Game():GetRoom()):IsClear() then 
             local min_move_speed = math.max(0.1,tonumber(GODMODE.save_manager.get_config("MinRoamSpeed","0.1")))
             player.MoveSpeed = math.max(min_move_speed,player.MoveSpeed)
         end
@@ -2768,7 +2767,7 @@ else
             local params = {
                 Intensity = math.min(1,distort),
                 Time = (GODMODE.frame_count or GODMODE.game:GetFrameCount()),
-                Style = GODMODE.shader_params.red_juice_setting or 3
+                Style = (GODMODE.shader_params.red_juice_setting or 1)
             }
 
             return params
