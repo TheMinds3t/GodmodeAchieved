@@ -130,7 +130,7 @@ monster.spawn_blood_fx = function(self,ent,explode_col)
 end
 
 monster.npc_init = function(self, ent, data)
-	if GODMODE.save_manager.get_data("FallenLightCleared","false") == "true" then 
+	if GODMODE.save_manager.get_data("FallenLightCleared","false") == "true" and GODMODE.is_at_palace and GODMODE.is_at_palace() then 
 		ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 		data.cur_phase = 2
 		data.soul_made = true 
@@ -164,7 +164,7 @@ monster.do_unlocks = function(self, ent, data)
 		proj:Die() 
 	end)
 	
-	if data.unlock_achieved ~= true then 
+	if data.unlock_achieved ~= true and GODMODE.is_at_palace and GODMODE.is_at_palace() then 
 		GODMODE.util.macro_on_players(function(player) 
 			GODMODE.achievements.unlock_fallen_light(player)
 		end)
@@ -180,7 +180,7 @@ monster.do_unlocks = function(self, ent, data)
 			GODMODE.log("adding "..(add + 1).." to win streak!",true)
 		end
 
-		if data.soul == nil then 
+		if data.soul == nil and GODMODE.is_at_palace and GODMODE.is_at_palace() then 
 			GODMODE.save_manager.set_data("FallenLightCleared","true",true) 
 		end	
 	end
@@ -443,7 +443,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		
 		for i=0,fira_max_layers do
 			if fira_inject ~= "" and i ~= 5 and i ~= fira_max_layers or fira_inject == "" and i ~= 6 then
-				sprite:ReplaceSpritesheet(i,"/gfx/bosses/skeletal_angel_"..fira_inject..(tostring(data.cur_phase))..".png")
+				sprite:ReplaceSpritesheet(i,"/godmode/gfx/bosses/skeletal_angel_"..fira_inject..(tostring(data.cur_phase))..".png")
 			end
 		end
 

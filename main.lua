@@ -1693,26 +1693,37 @@ else
             end
         end
 
-        local subtype = level:GetCurrentRoomDesc().Data.Subtype
-        if room:GetType() == RoomType.ROOM_TREASURE and (subtype == 1 or subtype == 3) then
-            if GODMODE.save_manager.get_config("BothRepPathItems", "true") == "false" and level:GetStageType() > StageType.STAGETYPE_AFTERBIRTH or level:GetStageType() < StageType.STAGETYPE_REPENTANCE then
+        if room:GetType() == RoomType.ROOM_TREASURE then
+            local spawn_scale = false 
+            local subtype = level:GetCurrentRoomDesc().Data.Subtype
 
+            if (subtype == 1 or subtype == 3) then 
+                if GODMODE.save_manager.get_config("BothRepPathItems", "true") == "false" and level:GetStageType() > StageType.STAGETYPE_AFTERBIRTH or level:GetStageType() < StageType.STAGETYPE_REPENTANCE then
+                    spawn_scale = true 
+
+                    -- more options rework 
+                    local more_options = GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS)
+                    if more_options > 0 and GODMODE.save_manager.get_config("MoreOptionsRework","true") == "true" then 
+                        local cur_index = 0
+                        GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,nil,function(item)
+                            item:ToPickup().OptionsPickupIndex = cur_index+1
+                            item:GetSprite():ReplaceSpritesheet(5,"gfx/grid/options_altar_"..(cur_index+1)..".png")
+                            item:GetSprite():LoadGraphics()
+                            cur_index = ((cur_index + 1) % math.min(5,more_options + 1))
+                        end)
+                    end
+                end
+            end
+
+            if GODMODE.save_manager.get_config("LighterTreasure","false") == "true" then 
+                spawn_scale = true 
+            end
+
+            if spawn_scale == true then 
                 if GODMODE.util.count_enemies(nil, GODMODE.registry.entities.golden_scale.type, GODMODE.registry.entities.golden_scale.variant) == 0 then 
                     local pos = room:FindFreePickupSpawnPosition(room:GetCenterPos())
                     local scale = Isaac.Spawn(GODMODE.registry.entities.golden_scale.type, GODMODE.registry.entities.golden_scale.variant, 0, pos, Vector(0,0), nil)
                     scale:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-                end
-
-                -- more options rework 
-                local more_options = GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_MORE_OPTIONS)
-                if more_options > 0 and GODMODE.save_manager.get_config("MoreOptionsRework","true") == "true" then 
-                    local cur_index = 0
-                    GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,PickupVariant.PICKUP_COLLECTIBLE,nil,function(item)
-                        item:ToPickup().OptionsPickupIndex = cur_index+1
-                        item:GetSprite():ReplaceSpritesheet(5,"gfx/grid/options_altar_"..(cur_index+1)..".png")
-                        item:GetSprite():LoadGraphics()
-                        cur_index = ((cur_index + 1) % math.min(5,more_options + 1))
-                    end)
                 end
             end
         end

@@ -37,18 +37,20 @@ monster.npc_update = function(self, ent, data, sprite)
 		if data.run_from ~= nil then
 			if data.run_from:IsDead() or not data.run_from:IsVisible() then
 				data.run_from = nil
-				GODMODE.log("run from is gone!",true)
+				-- GODMODE.log("run from is gone!",true)
 			else
 				target_pos = data.run_from.Position
 				local room_state = ent.Position - target_pos
 				local dist = (ent.Position - target_pos):Length()
 
 				-- too close to enemy for keepah
-				if dist < ent.Size*16 and is_shop() then
-					if is_shop() then 
-						ent.Velocity = ent.Velocity + room_state:Resized(math.min(room_state:Length(),35)) / 80.0
+				if ent.SubType == 0 and is_shop() then 
+					if dist < ent.Size*16 then
+						if is_shop() then 
+							ent.Velocity = ent.Velocity + room_state:Resized(math.min(room_state:Length(),35)) / 80.0
+						end
 					end
-				elseif not is_shop() then 
+				else
 					room_state = target_pos - ent.Position 
 					ent.Velocity = ent.Velocity + room_state:Resized(math.min(room_state:Length(),35)) / 20.0
 				end
@@ -139,7 +141,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		elseif data.run_from ~= nil and ent:GetDropRNG():RandomInt(3) >= 5 - data.talk_chance then
 			data.talk_sprite = "BubbleFear"..ent:GetDropRNG():RandomInt(2)
 			
-			if not is_shop() then 
+			if ent.SubType > 0 then 
 				data.talk_sprite = "BubbleFear3"
 			end
 
@@ -186,24 +188,31 @@ monster.npc_post_render = function(self, ent, offset, data, sprite)
 end
 
 local config_parrot = function(parrot, appear2, alt_sprite)
+	local data = GODMODE.get_ent_data(parrot)
+
 	if alt_sprite then 
 		parrot:GetSprite():ReplaceSpritesheet(0,alt_sprite)
 		parrot:GetSprite():LoadGraphics()
+		data.alt_sprite = true 
 	end
 	
-	parrot.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+	if parrot.SubType == 0 then 
+		parrot.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+	else
+		parrot.EntityCollisionClass = EntityCollisionClass.ENTCOLL_ENEMIES
+	end
+	
 	parrot.FlipX = parrot.Position.X - Isaac.GetPlayer().Position.X < 0
 	parrot:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 
 	if appear2 then
-		if is_shop() then 
+		if parrot.SubType == 0 then 
 			parrot:GetSprite():Play("Appear2",true)
 		else 
 			parrot:GetSprite():Play("Idle",true)
 		end
 	else
 		parrot:GetSprite():Play("Appear",true)
-		local data = GODMODE.get_ent_data(parrot)
 		data.bubble = Sprite()
 		data.bubble:Load("godmode/gfx/famil_parrot.anm2", true)
 		data.talk_sprite = "BubbleAppear"
@@ -227,7 +236,7 @@ monster.new_room = function(self)
 	
 	-- keepah card
 	for i=1,count do 
-		local parrot = Isaac.Spawn(monster.type,monster.variant,0,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())),Vector.Zero,nil)
+		local parrot = Isaac.Spawn(monster.type,monster.variant,1,GODMODE.room:FindFreePickupSpawnPosition((GODMODE.room_center or GODMODE.room:GetCenterPos())) + RandomVector():Resized(16),Vector.Zero,nil)
 		config_parrot(parrot, not GODMODE.room:IsFirstVisit(), "godmode/gfx/familiars/shopbird"..(parrot.InitSeed % 3)..".png")	
 	end
 
@@ -241,17 +250,29 @@ monster.new_room = function(self)
 end
 
 monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
-    if collided then 
+    if collided and ent.SubType == 0 then 
 		data.talk_sprite = "BubbleWarn"
 		sprite:Play("TalkSweat",true)
 		data.bubble:Play(data.talk_sprite,true)
-		data.ouch_count = (data.ouch_count or 0) + 1
+		local fought_already = GODMODE.save_manager.get_data("KeepahBossKilled","false") == "true"
+		local targ_vel = (ent.Position - explode_pos)
+		ent.Velocity = targ_vel:Resized(explode_size - targ_vel:Length())
 
-		ent.Velocity = (ent.Position - explode_pos)
+		if not fought_already then 
+			data.ouch_count = (data.ouch_count or 0) + 1
 
-		if data.ouch_count >= anger_threshold and GODMODE.save_manager.get_data("KeepahBossKilled","false") == "false" then 
-			ent:Remove()
-			local new = Isaac.Spawn(GODMODE.registry.entities.keepah_boss.type,GODMODE.registry.entities.keepah_boss.variant,GODMODE.registry.entities.keepah_boss.subtype,ent.Position,Vector.Zero,ent)
+			if data.ouch_count >= anger_threshold then 
+				ent:Remove()
+				local new = Isaac.Spawn(GODMODE.registry.entities.keepah_boss.type,GODMODE.registry.entities.keepah_boss.variant,GODMODE.registry.entities.keepah_boss.subtype,ent.Position,Vector.Zero,ent)
+				GODMODE.room:SetClear(false)
+
+				for i=0,DoorSlot.NUM_DOOR_SLOTS do 
+					local door = GODMODE.room:GetDoor(i)
+					if door then 
+						door:Close(true)
+					end
+				end	
+			end
 		end
     end
 end
@@ -279,6 +300,7 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
 		if GODMODE.util.is_valid_enemy(ent2, true) and ent:IsFrame(4,1) then 
 			ent2:TakeDamage((GODMODE.level:GetAbsoluteStage() / 4.0 + 5.0) / 5.0, 0, EntityRef(Isaac.GetPlayer()), 0)
 		end
+
 		return false 
 	end
 end

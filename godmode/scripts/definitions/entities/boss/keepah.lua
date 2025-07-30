@@ -319,6 +319,20 @@ monster.npc_update = function(self, ent, data, sprite)
             if sprite:IsEventTriggered("Explode") then 
                 data.mama_mega_negate = 20
                 GODMODE.room:MamaMegaExplosion(ent.Position)
+
+                if data.destroyed_shop ~= true then 
+                    GODMODE.util.schedule_function(function() 
+                        GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,nil,nil,function(shop)
+                            GODMODE.log("hi!",true)
+                            if shop and shop:ToPickup() and shop:ToPickup().ShopItemId > 0 then 
+                                Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,shop.Position,Vector.Zero,nil)
+                                shop:Remove()
+                            end
+                        end)
+                    end, 20)
+                    
+                    data.destroyed_shop = true 
+                end
             end
 
             data.mad_lane_switch_time = math.max((data.mad_lane_switch_time or 0) - 1, 0)
@@ -505,8 +519,8 @@ monster.npc_kill = function(self, ent)
 			new.MaxHitPoints = -1
             new.HitPoints = -1
 			flag = false
+            GODMODE.save_manager.set_data("KeepahBossKilled","true",true)
 			ent:Remove()
-            GODMODE.save_manager.get_data("KeepahBossKilled","true")
         else 
             local new = Isaac.Spawn(GODMODE.registry.entities.keepah.type,GODMODE.registry.entities.keepah.variant,GODMODE.registry.entities.keepah.subtype,ent.Position,Vector.Zero,ent)
             ent:Remove()
@@ -519,7 +533,7 @@ end
 
 -- create the hardmode fight!
 monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
-    if collided and data.bubble then 
+    if collided and data.bubble and not data.mad then 
         data.bubble:Play("TextEnrage",true)
         data.mad = true
         set_mad_lane_types(ent,data,sprite)
