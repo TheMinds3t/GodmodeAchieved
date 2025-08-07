@@ -12,13 +12,13 @@ monster.subtypes = {
 }
 
 monster.burrow_health_pool = 100
-monster.burrow_health_pool_scaled = 20
+monster.burrow_health_pool_scaled = 25
 monster.max_enemies = 5
 
 monster.burrow_spawn_int = 2
 monster.burrow_spawn_var = 2
 
-monster.health_max = 12
+monster.slam_tick_inc = 1 / 25.0
 
 monster.spawnable_spiders = {
     {
@@ -42,6 +42,7 @@ monster.spawnable_spiders = {
         {type=EntityType.ENTITY_SPIDER,var=0},
         {type=EntityType.ENTITY_HOPPER,var=1}, --trite
         {type=EntityType.ENTITY_HOPPER,var=1}, --trite
+        {type=GODMODE.registry.entities.electrite.type,var=GODMODE.registry.entities.electrite.variant,limit=2},
         {type=EntityType.ENTITY_SPIDER_L2,var=0},
         {type=EntityType.ENTITY_BIGSPIDER,var=0},    
     },
@@ -52,6 +53,7 @@ monster.spawnable_spiders = {
         {type=EntityType.ENTITY_HOPPER,var=1}, --trite
         {type=EntityType.ENTITY_CRAZY_LONG_LEGS,var=1},
         {type=EntityType.ENTITY_BIGSPIDER,var=0},    
+        {type=GODMODE.registry.entities.electrite.type,var=GODMODE.registry.entities.electrite.variant,limit=3},
     },
     -- {type=EntityType.ENTITY_SPIDER,var=0},
     -- {type=EntityType.ENTITY_BIGSPIDER,var=0},    
@@ -64,6 +66,8 @@ monster.spawnable_spiders = {
     -- {type=GODMODE.registry.entities.planter.type,var=GODMODE.registry.entities.planter.variant},
     -- {type=GODMODE.registry.entities.godleg.type,var=GODMODE.registry.entities.godleg.variant},
 }        
+
+monster.num_waves = #monster.spawnable_spiders
 
 local function is_in_room(pos)
 	local tl = (GODMODE.room_top_left or GODMODE.room:GetTopLeftPos())
@@ -113,6 +117,7 @@ local function spawn_rock_fx(ent)
     end
 end
 
+-- allows for the slam attack too
 monster.spider_logic = function(self,data,ent, sprite)
     data.target_pos = data.target_pos or ent.Position
     local player = ent:GetPlayerTarget()
@@ -136,11 +141,41 @@ monster.spider_logic = function(self,data,ent, sprite)
         end
     end
 
-    if sprite:IsPlaying("Idle") or sprite:IsPlaying("Walk") then 
-        if (data.target_pos - ent.Position):Length() > ent.Size then 
+    if sprite:IsEventTriggered("Stop") then 
+        data.exploded = true 
+    end
+
+    if sprite:IsEventTriggered("Explode") then 
+        GODMODE.game:BombExplosionEffects(ent.Position, 20.0, TearFlags.TEAR_NORMAL, Color.Default, ent, 0.66)
+        local shock = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.SHOCKWAVE, 0, ent.Position+Vector(ent.Size,ent.Size):Resized(ent.Size/2):Rotated(ent:GetDropRNG():RandomFloat()*360), Vector.Zero, ent)
+        shock = shock:ToEffect()
+        shock.Parent = ent
+        shock.Timeout = 12
+        shock:SetRadii(8.0, 56.0)
+        ent.Velocity = Vector.Zero
+        ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
+    end
+
+    if sprite:IsPlaying("Slam") and data.exploded ~= true then 
+        local dir = (ent:GetPlayerTarget().Position - ent.Position)
+        ent.Velocity = ent.Velocity * 0.975 + dir:Resized(12 / 20.0)
+    end
+
+    if sprite:IsPlaying("Idle") or sprite:IsPlaying("Walk") or sprite:IsFinished("Slam") then 
+        local roll = ent:GetDropRNG():RandomFloat()
+        local thres = ((data.last_slam_proc or -1) * 0.25)
+        if roll < thres then 
+            GODMODE.log("last_slam = "..tostring(thres)..", roll="..roll,true)
+            data.last_slam_proc = -1
+            ent.Velocity = ent.Velocity * 0.25 
+            data.exploded = false 
+            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
+            sprite:Play("Slam",true)
+        elseif (data.target_pos - ent.Position):Length() > ent.Size then 
             ent.Velocity = ent.Velocity * math.min(0.45,math.max(0.8,(100-ent.FrameCount)/100)) + (data.target_pos - ent.Position):Resized(4)    
             data.target_found = data.target_found + 0.1
             sprite:Play("Walk",false)
+            data.last_slam_proc = (data.last_slam_proc or -1) + monster.slam_tick_inc
         else
             sprite:Play("Idle",false)
             ent.Velocity = Vector.Zero
@@ -154,18 +189,24 @@ monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
 
     if ent.SubType == monster.subtypes.boss then --outbreak -------------------------------------------------------------------------
-        if ent.MaxHitPoints ~= monster.health_max then 
-            ent.HitPoints = monster.health_max
-            ent.MaxHitPoints = monster.health_max
-        end
-
         if sprite:IsEventTriggered("Shake") then 
             GODMODE.game:ShakeScreen(16)
         end
 
-        ent.HitPoints = math.max(ent.HitPoints,(monster.health_max - (data.burrow_count or 0)*3-3))
+        -- ent.HitPoints = math.max(ent.HitPoints,(monster.health_max - (data.burrow_count or 0)*3-3))
+        local perc = ent.HitPoints / ent.MaxHitPoints 
+        data.burrow_count = data.burrow_count or 0
+        local threshold = 1.0 - (data.burrow_count or 0) * (1 / monster.num_waves) - 0.05
 
-        monster:spider_logic(data,ent,sprite)
+            -- GODMODE.log("threshold="..tostring(threshold)..",perc="..tostring(math.floor(perc*10000) / 100.0)..", cur_wave = "..tostring(data.burrow_count), true)
+        if perc < threshold then 
+            if sprite:GetAnimation() ~= "DigIn" then 
+                sprite:Play("DigIn",true)
+            end
+        else
+            monster:spider_logic(data,ent,sprite)
+        end
+
         data.burrow_health_pool = data.burrow_health_pool or 0
 
         if data.burrow_health_pool > 0 then 
@@ -242,6 +283,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
                 data.target_found = 0
                 ent.I1 = 30
+                data.last_slam_proc = -1
             end
         end    
     elseif ent.SubType ~= monster.subtypes.minion then --burrows -------------------------------------------------------------------------
@@ -264,8 +306,14 @@ monster.npc_update = function(self, ent, data, sprite)
                 local count = math.min(#monster.spawnable_spiders,GODMODE.get_ent_data(ent.Parent).burrow_count)
                 
                 if count > 0 and count < 5 then 
-                    local spider = monster.spawnable_spiders[count][ent:GetDropRNG():RandomInt(#monster.spawnable_spiders[count])+1]
+                    local spider = nil
                     local enemy = nil 
+                    local depth = 25
+
+                    while depth > 0 and (spider == nil or (spider.limit ~= nil and GODMODE.util.count_enemies(ent,spider.type,spider.var or 0,spider.subtype or 0) > spider.limit)) do 
+                        spider = monster.spawnable_spiders[count][ent:GetDropRNG():RandomInt(#monster.spawnable_spiders[count])+1]
+                        depth = depth - 1
+                    end
     
                     if spider ~= nil then 
                         enemy = Isaac.Spawn(spider.type,spider.var or 0,spider.subtype or 0,ent.Position,Vector.Zero,ent.Parent)
@@ -308,8 +356,6 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
         if ((enthit:GetSprite():IsPlaying("DigIn") or enthit:GetSprite():IsPlaying("DigOut") or enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0) then
             return false 
-        elseif math.ceil(enthit.HitPoints) % 3 == 0 and math.ceil(enthit.HitPoints) < enthit.MaxHitPoints then
-            enthit:GetSprite():Play("DigIn",true)
         end
     end
 end

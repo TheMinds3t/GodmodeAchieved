@@ -317,13 +317,12 @@ monster.npc_update = function(self, ent, data, sprite)
             end
 
             if sprite:IsEventTriggered("Explode") then 
-                data.mama_mega_negate = 20
+                data.mama_mega_negate = 30
                 GODMODE.room:MamaMegaExplosion(ent.Position)
 
                 if data.destroyed_shop ~= true then 
                     GODMODE.util.schedule_function(function() 
                         GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,nil,nil,function(shop)
-                            GODMODE.log("hi!",true)
                             if shop and shop:ToPickup() and shop:ToPickup().ShopItemId > 0 then 
                                 Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,shop.Position,Vector.Zero,nil)
                                 shop:Remove()

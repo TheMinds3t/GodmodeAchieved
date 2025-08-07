@@ -505,17 +505,35 @@ end
 godhook.functions.npc_update = function(self, ent)
     ent = ent:ToNPC()
     local data = GODMODE.get_ent_data(ent)
+    local key = ent.Type..","..ent.Variant
     local sprite = ent:GetSprite() --adding common vars to ease up callbacks
-    if godhook.hook.monsters["npc_update"] and godhook.hook.monsters["npc_update"][ent.Type..","..ent.Variant] ~= nil then 
-        godhook.hook.monsters["npc_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+    if godhook.hook.monsters["npc_update"] and godhook.hook.monsters["npc_update"][key] ~= nil then 
+        godhook.hook.monsters["npc_update"][key](self,ent,data,sprite)
 
         if GODMODE.util.is_delirium() then     
-            if godhook.hook.monsters["set_delirium_visuals"][ent.Type..","..ent.Variant] ~= nil and ent:IsBoss() and (data.delirium_visuals_changed or false) == false then
+            if godhook.hook.monsters["set_delirium_visuals"][key] ~= nil and ent:IsBoss() and (data.delirium_visuals_changed or false) == false then
                 if ent:HasEntityFlags(EntityFlag.FLAG_APPEAR) then ent:ClearEntityFlags(EntityFlag.FLAG_APPEAR) end
-                godhook.hook.monsters["set_delirium_visuals"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+                godhook.hook.monsters["set_delirium_visuals"][key](self,ent,data,sprite)
                 data.delirium_visuals_changed = true
             end
         end
+    elseif ent.Type == GODMODE.registry.entities.nerve_cluster.type then 
+        godhook.alerted = godhook.alerted or {}
+        if godhook.alerted[key] == nil then 
+            GODMODE.log("[ERROR/INCOMPAT] Entity \'"..ent.Type.."."..ent.Variant.."."..ent.SubType.."\' does not have an update function?")
+            godhook.alerted[key] = true
+        end
+
+        if data.oopsified ~= true then 
+            sprite:Load("godmode/gfx/0__oops.anm2", true)
+            sprite:Play("Oops",true)
+            data.oopsified = true
+            ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
+            ent.MaxHitPoints = 10
+            ent.HitPoints = 10
+        end
+
+        ent.Velocity = ent.Velocity * 0.2
     end
 
     if godhook.hook.items["npc_update"] then
@@ -878,9 +896,15 @@ end
 godhook.functions.npc_post_render = function(self,ent,offset)
     local sprite = ent:GetSprite()
     local data = GODMODE.get_ent_data(ent)
+    local key = ent.Type..","..ent.Variant
 
-    if godhook.hook.monsters["npc_post_render"] and godhook.hook.monsters["npc_post_render"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["npc_post_render"][ent.Type..","..ent.Variant](self,ent,offset,data,sprite)
+    if godhook.hook.monsters["npc_post_render"] and godhook.hook.monsters["npc_post_render"][key] ~= nil then
+        godhook.hook.monsters["npc_post_render"][key](self,ent,offset,data,sprite)
+    end
+
+    if data.oopsified then 
+        local wts = Isaac.WorldToScreen(ent.Position)
+        Isaac.RenderScaledText(key..","..ent.SubType, wts.X, wts.Y, 0.5, 0.5, 1, 1, 1, 1)
     end
 
     if godhook.hook.items["npc_post_render"] then
@@ -894,8 +918,8 @@ godhook.functions.npc_post_render = function(self,ent,offset)
     end
 end
 godhook.functions.pickup_post_render = function(self,ent,offset)
-    if godhook.hook.monsters["pickup_post_render"] and godhook.hook.monsters["pickup_post_render"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["pickup_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+    if godhook.hook.monsters["pickup_post_render"] and godhook.hook.monsters["pickup_post_render"][key] ~= nil then
+        godhook.hook.monsters["pickup_post_render"][key](self,ent,offset)
     end
 
     if godhook.hook.bypass_monster_keys["pickup_post_render"] then

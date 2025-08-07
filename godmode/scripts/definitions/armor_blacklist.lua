@@ -28,6 +28,7 @@ ret.entities =
 	{type=EntityType.ENTITY_MOLE, variant=1},
 	{type=EntityType.ENTITY_MOM, variant=0},
 	{type=EntityType.ENTITY_GIDEON}, --softlock if not here, gets to 8/7 waves and doesn't die
+	{type=GODMODE.registry.entities.outbreak.type,variant=GODMODE.registry.entities.outbreak.variant}, --softlock if not here, gets to 8/7 waves and doesn't die
 }
 
 ret.no_champ = {
