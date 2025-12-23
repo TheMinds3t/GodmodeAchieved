@@ -15,8 +15,8 @@ stage.graphics = {
 	boss_spot = "godmode/gfx/ui/stage/"..stage_prefix.."player_spot.png",
 
 	backdrop_gfx = {
-        -- Walls = {"1","2","3","4","5","6"},
-        Walls = {"6"},
+        Walls = {"1","2","3","4","5","6"},
+        -- Walls = {"6"},
         NFloors = {"nfloor"},
         LFloors = {"lfloor"},
         Corners = {"corner"}

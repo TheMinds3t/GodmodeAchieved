@@ -78,7 +78,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 				end
 			end
 
-			GODMODE.log("snail_shield="..tostring(data.snail_shield)..",snail_shield_invuln="..tostring(data.snail_shield_invuln)..",deflect="..tostring(deflect_flag)..",amount="..tostring(amount)..",snailhealth="..shield_left,true)
+			GODMODE.log("snail_shield="..tostring(data.snail_shield)..",snail_shield_invuln="..tostring(data.snail_shield_invuln)..",deflect="..tostring(deflect_flag)..",amount="..tostring(amount)..",snailhealth="..shield_left,false)
 			if deflect_flag == true then 
 				-- spawn fx
 
