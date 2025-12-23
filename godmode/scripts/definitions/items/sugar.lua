@@ -46,7 +46,7 @@ item.first_level = function(self)
         GODMODE.util.macro_on_players(function(player) 
             for i=1,4 do 
                 player:AddCollectible(GODMODE.registry.items.sugar)
-            end            
+            end
         end)
     end
 end

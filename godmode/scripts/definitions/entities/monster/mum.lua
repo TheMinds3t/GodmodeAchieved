@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Mum"
+monster.name = "[GODMODE] Mum"
 monster.type = GODMODE.registry.entities.mum.type
 monster.variant = GODMODE.registry.entities.mum.variant
 local speedup_time = 80

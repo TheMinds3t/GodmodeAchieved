@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Guard of the Father"
+monster.name = "[GODMODE] Guard of the Father"
 monster.type = GODMODE.registry.entities.guard_of_the_father.type
 monster.variant = GODMODE.registry.entities.guard_of_the_father.variant
 monster.npc_update = function(self, ent, data, sprite)

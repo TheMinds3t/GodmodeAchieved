@@ -1,6 +1,6 @@
 local monster = {}
 
-monster.name = "Papal Flame"
+monster.name = "[GODMODE] Papal Flame"
 monster.type = GODMODE.registry.entities.papal_flame.type
 monster.variant = GODMODE.registry.entities.papal_flame.variant
 
@@ -13,7 +13,7 @@ local function set_kill_msgs()
         {"Get a life"},
         {"u r virgin"},
         {"Is this your preferred", "way to spend time?"},
-        {"Well, there goes "},
+        {"Well, there goes "}, -- autopopulated on fire death
         {"Have you even eaten today?"},
         {"Have you even showered today?", "I smell you from *my*", "screen..."},
         {"meehoy meenoy"},
@@ -28,7 +28,14 @@ local function set_kill_msgs()
         {"yeet"},
         {"so it seems","you've discovered","my little secret."},
         {"ggwp"},
+        {"doomfist lowkey", "holds lobbies", "hostage"},
         {"do you like my sword", "sword sword my", "diamond sword sword"},
+        {"one day you", "will remember", "me by my name"},
+        {"unavoidable damage"},
+        {"irrecoverable damage"},
+        {"FATALITY!"},
+        {"try again next time?"},
+        {"gg go next?"},
     }
 end
 
@@ -64,7 +71,11 @@ monster.npc_update = function(self, ent, data, sprite)
     if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
         ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
     end
-    
+
+    if not GODMODE.sfx:IsPlaying(SoundEffect.SOUND_FIRE_BURN) then 
+        ent:PlaySound(SoundEffect.SOUND_FIRE_BURN,1,1,true,0.9+ent:GetDropRNG():RandomFloat()*0.075)
+    end
+
     ent.Velocity = Vector(0,0)
 end
 

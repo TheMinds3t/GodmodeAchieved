@@ -1,5 +1,5 @@
 <items gfxroot="godmode/gfx/items/" version="1" deathanm2="gfx/itemportraits.anm2">
-	<passive achievement="GODMODE_FL_XXX" id="0" cache="damage speed" devilprice="2" broken="2" description="I can't feel anything!" gfx="collectibles_morphine.png" name="Morphine" tags="nokeeper syringe offensive summonable" quality = "3" />
+	<passive achievement="GODMODE_FL_XXX" id="0" cache="damage speed" devilprice="2" broken="2" description="I can't feel anything!" gfx="collectibles_morphine.png" name="Morphine" tags="nokeeper syringe offensive summonable" quality = "2" />
 	<!-- ↓ For animating the above ↑  -->
 	<passive id="0" description="You shouldn't have this..." gfx="collectibles_morphine_used.png" name="Morphine Used" quality = "0" hidden="true" />
 

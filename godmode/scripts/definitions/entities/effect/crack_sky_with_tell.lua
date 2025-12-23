@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Crack The Sky (With Tell)"
+monster.name = "[GODMODE] Crack The Sky (With Tell)"
 monster.type = GODMODE.registry.entities.crack_the_sky.type
 monster.variant = GODMODE.registry.entities.crack_the_sky.variant
 

@@ -1,6 +1,6 @@
 local monster = {}
 --fruit cellar famine
-monster.name = "(GODMODE) War without horse"
+monster.name = "[GODMODE] War without horse"
 monster.type = GODMODE.registry.entities.godmode_war_no_horse.type
 monster.variant = GODMODE.registry.entities.godmode_war_no_horse.variant
 local max_slow = 20

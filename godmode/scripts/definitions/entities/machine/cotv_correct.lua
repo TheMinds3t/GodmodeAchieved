@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "COTV (Correction Room)"
+monster.name = "[GODMODE] COTV (Correction Room)"
 monster.type = GODMODE.registry.entities.cotv_correct.type
 monster.variant = GODMODE.registry.entities.cotv_correct.variant
 local scale_frames = 20

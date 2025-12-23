@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Lucifer's Palace Mural"
+monster.name = "[GODMODE] Lucifer's Palace Mural"
 monster.type = GODMODE.registry.entities.palace_mural.type
 monster.variant = GODMODE.registry.entities.palace_mural.variant
 

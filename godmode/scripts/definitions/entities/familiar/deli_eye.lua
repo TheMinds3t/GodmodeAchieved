@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Delirious Eye"
+monster.name = "[GODMODE] Delirious Eye"
 monster.type = GODMODE.registry.entities.deli_eye.type
 monster.variant = GODMODE.registry.entities.deli_eye.variant
 

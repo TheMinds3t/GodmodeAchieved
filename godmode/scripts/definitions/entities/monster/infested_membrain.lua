@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Infested MemBrain"
+monster.name = "[GODMODE] Infested MemBrain"
 monster.type = GODMODE.registry.entities.infested_membrain.type
 monster.variant = GODMODE.registry.entities.infested_membrain.variant
 

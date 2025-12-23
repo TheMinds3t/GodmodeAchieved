@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Barfer"
+monster.name = "[GODMODE] Barfer"
 monster.type = GODMODE.registry.entities.barfer.type
 monster.variant = GODMODE.registry.entities.barfer.variant
 
@@ -69,6 +69,8 @@ monster.npc_update = function(self, ent, data, sprite)
         ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
 
         if sprite:IsEventTriggered("Puke") then
+            ent:ToNPC():PlaySound(SoundEffect.SOUND_GURG_BARF, 1.0, 1, false, 1.1 + ent:GetDropRNG():RandomFloat() * 0.2)
+            ent:ToNPC():PlaySound(SoundEffect.SOUND_BLOODSHOOT, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
             data.puke = 30
             local p = Isaac.Spawn(ent.Type,ent.Variant,1,ent.Position+vel*5,vel*0.15,ent)
             p:GetSprite():Play("PukeUp", true)

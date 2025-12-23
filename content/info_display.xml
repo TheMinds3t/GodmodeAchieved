@@ -1,0 +1,27 @@
+<collectibles>
+	<collectible id="1">
+		<info collectible="706" text="&lt;color=0xFFc30404&gt;x1 locust 1.5x Isaac's damage"/>
+	</collectible>
+</collectibles>
+<trinkets>
+	<trinket id="1">
+		<info notcollectible="439" tag="2" text="Spawns a coin each time Isaac takes damage"/>
+		<info notcollectible="439" tag="1" text="Spawns 2 coins each time Isaac takes damage"/>
+		<info collectible="439" tag="2" text="Spawns 2 coins each time Isaac takes damage"/>
+		<info collectible="439" tag="1" text="Spawns 3 coins each time Isaac takes damage"/>
+	</trinket>
+</trinkets>
+<pills>
+	<pill id="0">
+		<info tag="2" text="Fart dealing 5 damage and poison to nearby enemies"/>
+		<info tag="1" text="Fart dealing 5 damage and poison to all enemies in the room"/>
+		<info collectible="348" text="Recharge 1"/>
+	</pill>
+</pills>
+<cards>
+	<card id="1">
+		<info text="Teleport to the starting room of the current floor"/>
+		<info collectible="286" text="Recharge 2"/>
+	</card>
+</cards>
+

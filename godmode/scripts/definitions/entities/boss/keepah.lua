@@ -1,6 +1,6 @@
 local monster = {}
 
-monster.name = "Keepah (Boss)"
+monster.name = "[GODMODE] Keepah (Boss)"
 monster.type = GODMODE.registry.entities.keepah_boss.type
 monster.variant = GODMODE.registry.entities.keepah_boss.variant
 

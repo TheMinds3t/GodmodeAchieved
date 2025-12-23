@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "The Sunken"
+monster.name = "[GODMODE] The Sunken"
 monster.type = Isaac.GetEntityTypeByName(monster.name)
 monster.variant = Isaac.GetEntityVariantByName(monster.name)
 monster.subtype = 0

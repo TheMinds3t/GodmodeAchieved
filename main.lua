@@ -196,6 +196,10 @@ else
                             GODMODE.log("Removed \'"..coll.."\' from "..player:GetName().." for ending sequence stability!")
                             player:RemoveCollectible(coll)
                         end
+
+                        if player:GetEffects():HasCollectibleEffect(coll) then 
+                            player:GetEffects():RemoveCollectibleEffect(coll, player:GetEffects():GetCollectibleEffectNum(coll)) 
+                        end
                     end
                 end)
                 
@@ -203,9 +207,10 @@ else
                 ending:Load("godmode/gfx/cutscenes/ending.anm2", true)
                 ending.PlaybackSpeed = 0.666
                 GODMODE.cur_splash = ending 
-                GODMODE.playing_ending = Isaac.GetPlayer().InitSeed 
+                GODMODE.playing_ending = Isaac.GetPlayer().InitSeed
+                -- GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover2, 1.0)
                 MusicManager():Play(GODMODE.registry.music.twinkles, 1.0)
-                MusicManager():UpdateVolume()    
+                MusicManager():UpdateVolume()
             end
     
             GODMODE.log("Playing Godmode ending!",true)    
@@ -296,7 +301,7 @@ else
         GODMODE.save_manager.inited = nil
 
         MusicManager():Enable()
-        GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover)
+        GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover2)
         GODMODE.cur_splash = nil
     end 
 
@@ -339,18 +344,19 @@ else
         if GODMODE.cur_splash ~= nil then
             GODMODE.cur_splash:Play("Scene", false)
 
-            if GODMODE.playing_ending == Isaac.GetPlayer().InitSeed and Input.IsButtonPressed(Keyboard.KEY_ENTER,Isaac.GetPlayer().ControllerIndex) then 
+            if GODMODE.playing_ending == Isaac.GetPlayer().InitSeed and (Input.IsButtonPressed(Keyboard.KEY_ENTER,Isaac.GetPlayer().ControllerIndex) or Input.IsButtonPressed(Keyboard.KEY_SPACE,Isaac.GetPlayer().ControllerIndex)) then 
                 GODMODE.game:FinishChallenge()
                 GODMODE.playing_ending = nil
             end
 
             if GODMODE.cur_splash:IsEventTriggered("LuciferTransition") then --palace!
                 Isaac.ExecuteCommand("cstage IvoryPalace")
-                GODMODE.generate_ivory_map()
+                -- GODMODE.generate_ivory_map()
             end
-            
+
+            -- this is to mark the ending as attained! no need to start the voiceover here anymore
             if GODMODE.cur_splash:IsEventTriggered("Start") then 
-                GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover,3)
+                GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover2,3)
                 GODMODE.save_manager.set_data("EndingAchieved","true",true)
             end
 
@@ -1027,6 +1033,12 @@ else
 
             --Persistence functionality
             if data.persistent_state and data.persistent_state > GODMODE.persistent_state.none then
+                local targ_seed = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
+
+                if StageAPI and StageAPI.GetCurrentLevelMap() and StageAPI.GetCurrentRoom() then 
+                    targ_seed = StageAPI.GetCurrentRoom().DecorationSeed
+                end
+
                 if not ent:HasEntityFlags(persistent_flags) then
                     ent:AddEntityFlags(persistent_flags)
                 end
@@ -1035,7 +1047,7 @@ else
                     GODMODE.room = Game():GetRoom()
                     GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
                     data.persistent_data = saved_data or {
-                        room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),
+                        room = targ_seed,
                         in_room = true,
                         floor = GODMODE.level:GetStage(),
                     }
@@ -1045,8 +1057,8 @@ else
                     if GODMODE.level:GetStage() ~= data.persistent_data.floor then 
                         ent:Remove()
                     end
-                    
-                    if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.persistent_data.room then
+
+                    if targ_seed ~= data.persistent_data.room then
                         data.persistent_data.in_room = false
                         ent.Visible = false
                         -- ent.Position = Vector(-1000,-1000)
@@ -1071,14 +1083,14 @@ else
                         data.persistent_data.grid_coll_class = ent.GridCollisionClass
                     end
                 elseif data.persistent_state >= GODMODE.persistent_state.between_rooms then
-                    if (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) ~= data.persistent_data.room then
+                    if targ_seed ~= data.persistent_data.room then
                         local door_pos = GODMODE.level.EnterDoor
                         if GODMODE.room:GetDoor(door_pos) ~= nil then 
                             local dir = GODMODE.room:GetDoor(door_pos).Direction
                             if door_pos_mods[dir] ~= nil then 
                                 if door_pos ~= -1 then
                                     ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room and GODMODE.room:GetBottomRightPos() ) * (door_pos_mods[dir or 1] or Vector(1,1))
-                                    data.persistent_data.room = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
+                                    data.persistent_data.room = targ_seed
                                 end
                             else
                                 GODMODE.log("doorpos \'"..dir.."\' not registered, please fix")
@@ -1302,8 +1314,9 @@ else
                 local stats = GODMODE.util.get_stat_score(player)
                 GODMODE.save_manager.set_player_data(player,"ScaledStatThres", stat_thres)
                 -- GODMODE.log("Stat score = "..stats.score..", threshold ="..stat_thres, true)
+                local faithless = GODMODE.util.get_faithless(player)
 
-                if stats.score < stat_thres then 
+                if stats.score < math.max(0.25,stat_thres + faithless * 0.05) then 
                     correction = true
                     GODMODE.log("Stat score of "..stats.score.." is lower than the threshold (currently "..stat_thres..")", true)
                 else 
@@ -2181,14 +2194,15 @@ else
             GODMODE.save_manager.set_data("Player"..player.InitSeed,(cur+1),true)
             GODMODE.log("registered player "..(cur + 1).." with InitSeed \'"..player.InitSeed.."\' as "..player:GetName(),true)
         elseif existing_index then 
-            GODMODE.save_manager.set_data("PlayerCount", cur + 1)
+            -- GODMODE.save_manager.set_data("PlayerCount", cur + 1)
+            GODMODE.log("player with InitSeed \'"..player.InitSeed.."\' "..player:GetName().." already registered",true)
         end
 
         GODMODE.save_manager.save()
     end
 
     function GODMODE.mod_object:player_init(player)
- 
+        GODMODE.mod_object:register_player(player)
     end
 
     function GODMODE.mod_object:player_update(player)
@@ -3425,6 +3439,19 @@ else
         
             if show_useage ~= nil then 
                 Isaac.ConsoleOutput(show_useage.."\nUsage: \'gm_config_preset <load|save|view> <name>")
+            end
+        elseif cmd == "palace_tester" then 
+            Isaac.ExecuteCommand("bosstester")
+            Isaac.ExecuteCommand("g c333")
+            Isaac.ExecuteCommand("cstage IvoryPalace")
+            Isaac.ExecuteCommand("l GODMODE.generate_ivory_map()")            
+        elseif cmd == "reseed" or cmd == "creseed" then 
+            for _,ent in ipairs(Isaac.GetRoomEntities()) do 
+                local dat = GODMODE.get_ent_data(ent)
+
+                if dat and dat.persistent_state and dat.persistent_state ~= GODMODE.persistent_state.between_floors then 
+                    ent:Remove()
+                end
             end
         end
     end)

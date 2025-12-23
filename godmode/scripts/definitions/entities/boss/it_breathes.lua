@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "It Breathes!"
+monster.name = "[GODMODE] It Breathes!"
 monster.type = 800
 monster.variant = 128
 --monster.subtype = 0 --deobfuscated

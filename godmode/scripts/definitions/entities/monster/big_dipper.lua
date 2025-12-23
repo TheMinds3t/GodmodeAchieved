@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Big Dipper"
+monster.name = "[GODMODE] Big Dipper"
 monster.type = GODMODE.registry.entities.big_dipper.type
 monster.variant = GODMODE.registry.entities.big_dipper.variant
 
@@ -60,6 +60,7 @@ monster.npc_update = function(self, ent, data, sprite)
             end
         end
         local r = GODMODE.room
+        ent:ToNPC():PlaySound(SoundEffect.SOUND_MUSHROOM_POOF, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
     end
 end
 

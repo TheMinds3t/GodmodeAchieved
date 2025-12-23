@@ -17,8 +17,8 @@
 	<sound name="GODMODE.red_coin_complete">
 		<sample weight="1" path="pickups/red_coin_complete.wav" />
 	</sound>
-	<sound name="GODMODE.godmode_ending">
-		<sample weight="1" path="ending voiceover.wav" />
+	<sound name="GODMODE.godmode_ending2">
+		<sample weight="1" path="endings/ending2.wav" />
 	</sound>
 	<sound name="GODMODE.keepah_chirp">
 		<sample weight="1" path="keepah/keepah0.wav" />

@@ -1,6 +1,6 @@
 local monster = {}
 --fruit cellar famine
-monster.name = "(GODMODE) Death Horse"
+monster.name = "[GODMODE] Death Horse"
 monster.type = GODMODE.registry.entities.godmode_death_horse.type
 monster.variant = GODMODE.registry.entities.godmode_death_horse.variant
 

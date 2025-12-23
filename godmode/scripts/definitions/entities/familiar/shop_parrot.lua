@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Keepah (Shop Parrot)"
+monster.name = "[GODMODE] Keepah (Shop Parrot)"
 monster.type = GODMODE.registry.entities.keepah.type
 monster.variant = GODMODE.registry.entities.keepah.variant
 local donation_variant = {DONATION_MACHINE=8}

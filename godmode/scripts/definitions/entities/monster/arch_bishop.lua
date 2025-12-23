@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Arch Bishop" -- and demon priest (subtype 1)
+monster.name = "[GODMODE] Arch Bishop" -- and demon priest (subtype 1)
 monster.type = GODMODE.registry.entities.arch_bishop.type
 monster.variant = GODMODE.registry.entities.arch_bishop.variant
 

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Player Trail FX"
+monster.name = "[GODMODE] Player Trail FX"
 monster.type = GODMODE.registry.entities.player_trail_fx.type
 monster.variant = GODMODE.registry.entities.player_trail_fx.variant
 

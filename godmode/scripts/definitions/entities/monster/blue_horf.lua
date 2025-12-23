@@ -1,11 +1,8 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Hushed Horf"
+monster.name = "[GODMODE] Hushed Horf"
 monster.type = GODMODE.registry.entities.hushed_horf.type
 monster.variant = GODMODE.registry.entities.hushed_horf.variant
-
-local max_children = 5
-local child_spawn_total = 10
 
 monster.npc_update = function(self, ent, data, sprite)
     if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end	
@@ -22,39 +19,24 @@ monster.npc_update = function(self, ent, data, sprite)
     elseif sprite:IsFinished("Idle") then 
         ent.I1 = ent.I1 + 1
 
-        if ent:GetDropRNG():RandomFloat() < ent.I1 * 0.35 - 0.35 then 
+        if ent:GetDropRNG():RandomFloat() < ent.I1 * 0.5 - 0.35 then 
             ent.I1 = -1
-            local num_children = GODMODE.util.count_child_enemies(ent,true)
-
-            if num_children <= 1 then 
-                sprite:Play("Attack",true)
-            else 
-                sprite:Play("Idle",true)
-            end
+            sprite:Play("Attack",true)
         end
     end
 
     if sprite:IsEventTriggered("Fire") then 
-        if (data.max_children or child_spawn_total) <= 0 then 
-            local tear = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position,Vector(1,0):Rotated(360/split_into*i):Resized(4.0 + (GODMODE.game.Difficulty % 2) * 3.0),ent)
-            tear = tear:ToProjectile()
-            tear.Height = -40
-            tear.ProjectileFlags = tear.ProjectileFlags | ProjectileFlags.DECELERATE | ProjectileFlags.CONTINUUM
-        else
-            -- local sub = 
-            for i=1,max_children do 
-                local fly = Isaac.Spawn(EntityType.ENTITY_HUSH_FLY, 0, 0, ent.Position, Vector.Zero, ent)
-                fly:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-                fly.Parent = player
-                data.max_children = (data.max_children or child_spawn_total) - 1
-
-                if data.max_children <= 0 then break end
-            end
-
-
-            Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.POOF01, 0, ent.Position + Vector(0,-16), Vector.Zero, nil)
-            ent:ToNPC():PlaySound(SoundEffect.SOUND_CHILD_ANGRY_ROAR, 1.0, 1, false, 0.7 + ent:GetDropRNG():RandomFloat() * 0.3)
-        end
+        local ang = math.rad((player.Position-(ent.Position)):GetAngleDegrees())
+        local spd = 7.0 + (GODMODE.game.Difficulty % 2) * 3.5
+        local tear = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,0,0,ent.Position,Vector(math.cos(ang)*spd,math.sin(ang)*spd),ent)
+        tear = tear:ToProjectile()
+        tear.Height = -25
+        tear.FallingSpeed = 0.0
+        tear.FallingAccel = -(4.2/60.0)
+        tear.Scale = 2
+        tear.ProjectileFlags = tear.ProjectileFlags | ProjectileFlags.BURST | ProjectileFlags.CONTINUUM
+        GODMODE.sfx:Play(SoundEffect.SOUND_WEIRD_WORM_SPIT,Options.SFXVolume*1.0+0.75)
+        ent:ToNPC():PlaySound(SoundEffect.SOUND_CHILD_ANGRY_ROAR, 1.0, 1, false, 0.7 + ent:GetDropRNG():RandomFloat() * 0.3)
     end
 end
 

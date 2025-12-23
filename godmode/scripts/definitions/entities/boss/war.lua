@@ -1,6 +1,6 @@
 local monster = {}
 --nest war
-monster.name = "(GODMODE) War"
+monster.name = "[GODMODE] War"
 monster.type = GODMODE.registry.entities.godmode_war.type
 monster.variant = GODMODE.registry.entities.godmode_war.variant
 

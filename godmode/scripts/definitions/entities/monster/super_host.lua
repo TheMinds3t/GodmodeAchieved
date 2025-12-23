@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Spiked Host"
+monster.name = "[GODMODE] Spiked Host"
 monster.type = GODMODE.registry.entities.spiked_host.type
 monster.variant = GODMODE.registry.entities.spiked_host.variant
 
@@ -31,7 +31,7 @@ monster.npc_update = function(self, ent, data, sprite)
 	ent.Velocity = ent.Velocity * 0.7
 
 	if sprite:IsPlaying("Idle") and data.time % 30 == (20+data.rand) then
-		if ent:GetDropRNG():RandomInt(11-math.min(data.invuln_tries,8)) <= 2 then
+		if ent:GetDropRNG():RandomInt(11-math.min(data.invuln_tries,10)) <= 2 then
 			sprite:Play("Attack", true)
 			data.invuln_hits = 0
 			data.invuln_tries = -1
@@ -65,9 +65,11 @@ monster.npc_update = function(self, ent, data, sprite)
 	data.invuln_cooldown = math.max(0,(data.invuln_cooldown or 0) - 1)
 	
 	if sprite:IsEventTriggered("Toggle") then
+		ent:ToNPC():PlaySound(data.vulnerable and SoundEffect.SOUND_MONSTER_GRUNT_4 or SoundEffect.SOUND_MONSTER_GRUNT_2, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
 		data.vulnerable = not data.vulnerable
 	end
 	if sprite:IsEventTriggered("Attack") then
+		ent:ToNPC():PlaySound(SoundEffect.SOUND_BLOODSHOOT, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
 		for i=0,3 do
 			local ang = (player.Position - ent.Position):GetAngleDegrees() + ent:GetDropRNG():RandomFloat() * 10 - 5
 			data:spawn_tear(math.rad(ang),4.0-i*0.7)
@@ -82,7 +84,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 		if entsrc.Type ~= 3 then
 			if (data.invuln_cooldown or 0) <= 0 then 
 				data.invuln_hits = math.min(15, (data.invuln_hits or 0) + amount) 
-				data.invuln_cooldown = 30+data.invuln_hits
+				data.invuln_cooldown = 20+data.invuln_hits
 			end
 		end
 		return false

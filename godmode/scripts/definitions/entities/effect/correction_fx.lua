@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Correction FX"
+monster.name = "[GODMODE] Correction FX"
 monster.type = GODMODE.registry.entities.correction_fx.type
 monster.variant = GODMODE.registry.entities.correction_fx.variant
 

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Queen Fly"
+monster.name = "[GODMODE] Queen Fly"
 monster.type = GODMODE.registry.entities.queen_fly.type
 monster.variant = GODMODE.registry.entities.queen_fly.variant
 
@@ -69,6 +69,8 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 		if convert_data ~= nil then
 			local ent2 = convert_data.ent
 			local convert = convert_data.convert
+            Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.HEART,0,ent2.Position-Vector(8,64),Vector.Zero,ent)
+            GODMODE.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
 			ent2:Morph(convert,0,0,ent2:GetChampionColorIdx())
 			Isaac.Spawn(1000,3,0,ent2.Position - Vector(0,16),Vector(0,0),ent)
 		elseif GODMODE.util.count_enemies(ent,EntityType.ENTITY_POOTER) == 0 then

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Chanter"
+monster.name = "[GODMODE] Chanter"
 monster.type = GODMODE.registry.entities.chanter.type
 monster.variant = GODMODE.registry.entities.chanter.variant
 
@@ -29,6 +29,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 
 		if not sprite:IsPlaying("HeadChant") and ent:IsFrame(40,15) and ent:GetDropRNG():RandomFloat() < (0.8-math.min(ent.I2 / 8, 0.65)) and ent.FrameCount > 30 then
 			ent.I2 = 0
+			ent:ToNPC():PlaySound(SoundEffect.SOUND_GRROOWL, 1.0, 1, true, 1.1 + ent:GetDropRNG():RandomFloat() * 0.2)
 			GODMODE.util.macro_on_enemies(nil,monster.type,monster.variant,nil,function(chanter) 
 				chanter:GetSprite():Play("HeadChant",true)
 				ent.I2 = ent.I2 + 1
@@ -41,6 +42,17 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 	if ent.I1 > 0 then 
 		ent.I1 = ent.I1 - 1
 		ent.Velocity = ent.Velocity * 0.5
+	end
+
+	if GODMODE.sfx:IsPlaying(SoundEffect.SOUND_GRROOWL) and sprite:IsPlaying("HeadChant") then 
+		data.kamehameha_ticks = (data.kamehameha_ticks or 0) + 1
+		GODMODE.sfx:AdjustPitch(SoundEffect.SOUND_GRROOWL, 0.85+(data.kamehameha_ticks or 0) / 30.0)
+	end
+
+	if sprite:IsEventTriggered("SFX") then 
+		data.kamehameha_ticks = 0
+		GODMODE.sfx:Stop(SoundEffect.SOUND_GRROOWL)
+		ent:ToNPC():PlaySound(SoundEffect.SOUND_UNHOLY, 1.0, 1, false, 0.7 + ent:GetDropRNG():RandomFloat() * 0.2)
 	end
 
 	if sprite:IsEventTriggered("Ring") then
@@ -56,6 +68,13 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 			b_data.fire_time = 40
 			b_data.laser_timeout = 23
         end
+	end
+end
+
+monster.npc_kill = function(self, ent)
+	local total_chanters = GODMODE.util.count_enemies(nil, monster.type,monster.variant,-1,false)
+	if ent:GetSprite():IsPlaying("HeadChant") and GODMODE.sfx:IsPlaying(SoundEffect.SOUND_GRROOWL) and total_chanters <= 1 then 
+		GODMODE.sfx:Stop(SoundEffect.SOUND_GRROOWL)
 	end
 end
 

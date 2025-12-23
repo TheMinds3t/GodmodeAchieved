@@ -145782,4 +145782,40 @@
 			<entity type="1000" variant="0" subtype="0" weight="1.0"/>
 		</spawn>
 	</room>
+	<room variant="0" name="GreedFest 5000" type="3" subtype="0" shape="1" width="13" height="7" difficulty="1" weight="1.0">
+		<door exists="True" x="-1" y="3"/>
+		<door exists="True" x="6" y="-1"/>
+		<door exists="True" x="6" y="7"/>
+		<door exists="True" x="13" y="3"/>
+		<spawn x="6" y="0">
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+			<entity type="700" variant="116" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="2" y="1">
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+			<entity type="50" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="10" y="1">
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+			<entity type="50" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="2">
+			<entity type="4500" variant="10" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="4">
+			<entity type="9000" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+		<spawn x="3" y="5">
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+			<entity type="5" variant="40" subtype="4" weight="1.0"/>
+		</spawn>
+		<spawn x="9" y="5">
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+			<entity type="5" variant="20" subtype="7" weight="1.0"/>
+		</spawn>
+		<spawn x="6" y="6">
+			<entity type="5" variant="30" subtype="2" weight="1.0"/>
+			<entity type="969" variant="0" subtype="0" weight="1.0"/>
+		</spawn>
+	</room>
 </rooms>

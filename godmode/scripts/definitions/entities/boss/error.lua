@@ -1,6 +1,6 @@
 local monster = {}
 
-monster.name = "Error Keeper (Boss)"
+monster.name = "[GODMODE] Error Keeper (Boss)"
 monster.type = GODMODE.registry.entities.error_boss.type
 monster.variant = GODMODE.registry.entities.error_boss.variant
 

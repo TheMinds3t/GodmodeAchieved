@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Shatter Coin"
+monster.name = "[GODMODE] Shatter Coin"
 monster.type = GODMODE.registry.entities.shatter_coin.type
 monster.variant = GODMODE.registry.entities.shatter_coin.variant
 
@@ -22,6 +22,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 
     if sprite:IsEventTriggered("VelocityFlag") then
         data.velocity_flag = true
+        ent:PlaySound(SoundEffect.SOUND_CHAIN_BREAK, 1, 1, false, 1.3)
     end
 
     if sprite:IsFinished("Shatter") then

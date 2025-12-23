@@ -1,6 +1,6 @@
 local monster = {}
 --colon death
-monster.name = "(GODMODE) Death"
+monster.name = "[GODMODE] Death"
 monster.type = GODMODE.registry.entities.godmode_death.type
 monster.variant = GODMODE.registry.entities.godmode_death.variant
 

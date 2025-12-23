@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Door Hazard"
+monster.name = "[GODMODE] Door Hazard"
 monster.type = GODMODE.registry.entities.door_hazard.type
 monster.variant = GODMODE.registry.entities.door_hazard.variant
 monster.explode_checks = {} 
@@ -22,7 +22,7 @@ monster.hazard_profile = {
         dead_anim = "VoidDead",
         health = 10.0,
         touch_effect = function(ent,player) 
-            GODMODE.save_manager.set_data("VoidDMProj",tonumber(GODMODE.save_manager.get_data("VoidDMProj","0"))+1)
+            GODMODE.save_manager.set_data("VoidBHProj",tonumber(GODMODE.save_manager.get_data("VoidBHProj","0"))+1)
             ent:Kill()
             monster.npc_kill(nil,ent)
 

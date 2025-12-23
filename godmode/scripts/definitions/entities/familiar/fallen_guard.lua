@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Fallen Guard (Familiar)"
+monster.name = "[GODMODE] Fallen Guard (Familiar)"
 monster.type = GODMODE.registry.entities.fallen_guard_familiar.type
 monster.variant = GODMODE.registry.entities.fallen_guard_familiar.variant
 monster.max_state = 15 

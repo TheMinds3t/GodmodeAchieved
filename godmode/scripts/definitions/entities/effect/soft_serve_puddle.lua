@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Soft Serve Spawner"
+monster.name = "[GODMODE] Soft Serve Spawner"
 monster.type = GODMODE.registry.entities.soft_serve.type
 monster.variant = GODMODE.registry.entities.soft_serve.variant
 

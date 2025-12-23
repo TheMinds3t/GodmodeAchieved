@@ -268,104 +268,104 @@ end
 monster.pickup_post_render = function(self,ent,offset)
     local data = GODMODE.get_ent_data(ent)
 
-    if data.buff == nil then return end
+    if data.buff ~= nil and ent.Type == monster.type and ent.Variant == monster.variant then 
+        if data.second_sprite == nil then 
+            data.second_sprite = Sprite()
+            data.second_sprite:Load(ent:GetSprite():GetFilename(),true)
+            data.second_sprite.PlaybackSpeed = 0
+        end
 
-    if data.second_sprite == nil then 
-        data.second_sprite = Sprite()
-        data.second_sprite:Load(ent:GetSprite():GetFilename(),true)
-        data.second_sprite.PlaybackSpeed = 0
-    end
+        data.second_sprite.Offset = ent.SpriteOffset - Vector(0,shrine_sprite_off)
+        -- ent:GetSprite().Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0),ent:GetColor().RO,ent:GetColor().BO,ent:GetColor().GO)
+        data.second_sprite.Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0))
 
-    data.second_sprite.Offset = ent.SpriteOffset - Vector(0,shrine_sprite_off)
-    -- ent:GetSprite().Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0),ent:GetColor().RO,ent:GetColor().BO,ent:GetColor().GO)
-    data.second_sprite.Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0))
+        if data.buff.type == "stat" then 
+            local count = data.buff.val or 0
+            local max_count = count
+            local base_off = -12
+            data.second_sprite:SetFrame("Stat_Bitfont",render_frame[data.buff.stat_type] or 1)
+            -- draw sprites
+            while count > 1 do 
+                count = count - 1
+                local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + ent.Index * 30) % 360)
+                local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(off-(GODMODE.frame_count or GODMODE.game:GetFrameCount())*12))*4+4)
+                data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.1+0.125)
+                data.second_sprite:Render(Isaac.WorldToScreen(ent.Position
+                    +Vector(math.floor(count / 2) * -bh_spacing+base_off,
+                            -count % 2 * bh_spacing)
+                        +off_vec
+                        ))
+            end
+            -- draw number
+            data.second_sprite.Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0))
+            local pos = Isaac.WorldToScreen(ent.Position + Vector(-bh_spacing,8))
+            data.second_sprite:Render(pos)
+            data.second_sprite:SetFrame("Cost",max_count)
+            data.second_sprite:Render(Vector(pos.X + -bh_spacing+34,pos.Y))
+            -- Isaac.RenderScaledText("x"..max_count,pos.X + -bh_spacing+22,pos.Y-16,1.0,1.0,1,1,1,1)
+        
+        elseif data.buff.type == "item" then 
+            if data.replaced_second_sprite ~= true then 
+                local config = Isaac.GetItemConfig():GetCollectible(data.buff.id)
+                data.second_sprite:ReplaceSpritesheet(1,config.GfxFileName)
+                data.second_sprite:LoadGraphics()
+                data.replaced_second_sprite = true
+            end
 
-    if data.buff.type == "stat" then 
-        local count = data.buff.val or 0
+            data.second_sprite:SetFrame("Item",ent.FrameCount % 20)
+            data.second_sprite:Render(Isaac.WorldToScreen(ent.Position+Vector(-bh_spacing+4,29)))
+        end
+
+        --debuff
+        data.second_sprite:SetFrame("Stat_Bitfont",7)
+        local pos = Isaac.WorldToScreen(ent.Position + Vector(bh_spacing,8))
+        local count = data.debuff 
+        local death_flag = false 
+
+        if data.nearest_player and data.nearest_player and data.nearest_player:GetBrokenHearts() + count >= 12 then 
+            local dist = (ent.Position - data.nearest_player.Position):Length() / active_radius
+
+            if dist <= 1 then 
+                data.second_sprite:SetFrame("Stat_Bitfont",9)
+                death_flag = true    
+                count = 8
+            end
+        end
+
         local max_count = count
-        local base_off = -12
-        data.second_sprite:SetFrame("Stat_Bitfont",render_frame[data.buff.stat_type] or 1)
+        local base_off = math.min(1,math.ceil(count / 2)) * bh_spacing / -4
         -- draw sprites
         while count > 1 do 
             count = count - 1
-            local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + ent.Index * 30) % 360)
-            local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(off-(GODMODE.frame_count or GODMODE.game:GetFrameCount())*12))*4+4)
-            data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.1+0.125)
+            local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
+            local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(math.deg(off)-((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index*20)*12))*8+6)
+
+            if death_flag then 
+                data.second_sprite.Scale = Vector(0.8+count*0.06125,0.8+count*0.06125)+Vector(math.cos(off),math.sin(off)):Resized(0.2)
+                off_vec = off_vec + Vector(0,-8)
+            end
+
+            data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.075+0.1)
             data.second_sprite:Render(Isaac.WorldToScreen(ent.Position
-                +Vector(math.floor(count / 2) * -bh_spacing+base_off,
-                        -count % 2 * bh_spacing)
+                +Vector(bh_spacing,--math.floor(count / 2) * bh_spacing+20,
+                        8)---count % 2 * bh_spacing)
                     +off_vec
                     ))
         end
+
         -- draw number
+        data.second_sprite.Scale = Vector(1,1)
         data.second_sprite.Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0))
-        local pos = Isaac.WorldToScreen(ent.Position + Vector(-bh_spacing,8))
+        local pos = Isaac.WorldToScreen(ent.Position + Vector(bh_spacing,8))
         data.second_sprite:Render(pos)
-        data.second_sprite:SetFrame("Cost",max_count)
-        data.second_sprite:Render(Vector(pos.X + -bh_spacing+34,pos.Y))
-        -- Isaac.RenderScaledText("x"..max_count,pos.X + -bh_spacing+22,pos.Y-16,1.0,1.0,1,1,1,1)
-    
-    elseif data.buff.type == "item" then 
-        if data.replaced_second_sprite ~= true then 
-            local config = Isaac.GetItemConfig():GetCollectible(data.buff.id)
-            data.second_sprite:ReplaceSpritesheet(1,config.GfxFileName)
-            data.second_sprite:LoadGraphics()
-            data.replaced_second_sprite = true
+
+        if not death_flag then 
+            data.second_sprite:SetFrame("Cost",max_count)
+            data.second_sprite:Render(Vector(pos.X + bh_spacing-18,pos.Y))    
         end
 
-        data.second_sprite:SetFrame("Item",ent.FrameCount % 20)
-        data.second_sprite:Render(Isaac.WorldToScreen(ent.Position+Vector(-bh_spacing+4,29)))
+        -- Isaac.RenderScaledText("x"..max_count,pos.X + bh_spacing-22,pos.Y-16,1.0,1.0,1,1,1,1)
     end
-
-    --debuff
-    data.second_sprite:SetFrame("Stat_Bitfont",7)
-    local pos = Isaac.WorldToScreen(ent.Position + Vector(bh_spacing,8))
-    local count = data.debuff 
-    local death_flag = false 
-
-    if data.nearest_player and data.nearest_player and data.nearest_player:GetBrokenHearts() + count >= 12 then 
-        local dist = (ent.Position - data.nearest_player.Position):Length() / active_radius
-
-        if dist <= 1 then 
-            data.second_sprite:SetFrame("Stat_Bitfont",9)
-            death_flag = true    
-            count = 8
-        end
-    end
-
-    local max_count = count
-    local base_off = math.min(1,math.ceil(count / 2)) * bh_spacing / -4
-    -- draw sprites
-    while count > 1 do 
-        count = count - 1
-        local off = math.rad((360 / max_count * count + ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index) * 6 + 180 + ent.Index * 30) % 360)
-        local off_vec = Vector(math.cos(off),math.sin(off)):Resized(math.sin(math.rad(math.deg(off)-((GODMODE.frame_count or GODMODE.game:GetFrameCount()) + ent.Index*20)*12))*8+6)
-
-        if death_flag then 
-            data.second_sprite.Scale = Vector(0.8+count*0.06125,0.8+count*0.06125)+Vector(math.cos(off),math.sin(off)):Resized(0.2)
-            off_vec = off_vec + Vector(0,-8)
-        end
-
-        data.second_sprite.Color = Color(1,1,1,math.sin(off)*0.075+0.1)
-        data.second_sprite:Render(Isaac.WorldToScreen(ent.Position
-            +Vector(bh_spacing,--math.floor(count / 2) * bh_spacing+20,
-                    8)---count % 2 * bh_spacing)
-                +off_vec
-                ))
-    end
-
-    -- draw number
-    data.second_sprite.Scale = Vector(1,1)
-    data.second_sprite.Color = Color(1,1,1,math.min(1,(data.fade_time or 0) / 60.0))
-    local pos = Isaac.WorldToScreen(ent.Position + Vector(bh_spacing,8))
-    data.second_sprite:Render(pos)
-
-    if not death_flag then 
-        data.second_sprite:SetFrame("Cost",max_count)
-        data.second_sprite:Render(Vector(pos.X + bh_spacing-18,pos.Y))    
-    end
-
-    -- Isaac.RenderScaledText("x"..max_count,pos.X + bh_spacing-22,pos.Y-16,1.0,1.0,1,1,1,1)
 end
 
 monster.use_item = function(self, coll,rng,player,flags,slot,var_data)

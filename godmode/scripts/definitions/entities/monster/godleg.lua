@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Godleg"
+monster.name = "[GODMODE] Godleg"
 monster.type = GODMODE.registry.entities.godleg.type
 monster.variant = GODMODE.registry.entities.godleg.variant
 
@@ -50,6 +50,7 @@ monster.npc_update = function(self, ent, data, sprite)
 		local angle = 360 / ring_size
 		local offset = ent:GetDropRNG():RandomFloat() * angle
 		local size = 32.0
+        ent:PlaySound(SoundEffect.SOUND_MULTI_SCREAM,1,0,false,0.8+ent:GetDropRNG():RandomFloat()*0.075)
 
 		for i=1,ring_size do
 			local ang = math.rad(angle * i + offset)
@@ -59,6 +60,7 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 
 	if sprite:IsEventTriggered("Explode") then
+        ent:PlaySound(SoundEffect.SOUND_BOSS_LITE_ROAR,1,0,false,0.8+ent:GetDropRNG():RandomFloat()*0.075)
 		GODMODE.game:ShakeScreen(5)
 		GODMODE.game:BombExplosionEffects(ent.Position,10.0,0,Color(1,1,1,1,0,0,0),ent,1.0,false,true)
 		ent.I1 = 1

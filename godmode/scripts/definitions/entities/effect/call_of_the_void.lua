@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Call of the Void"
+monster.name = "[GODMODE] Call of the Void"
 monster.type = GODMODE.registry.entities.call_of_the_void.type
 monster.variant = GODMODE.registry.entities.call_of_the_void.variant
 

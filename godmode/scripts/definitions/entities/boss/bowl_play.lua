@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Bowl Play (Corny)"
+monster.name = "[GODMODE] Bowl Play (Corny)"
 monster.type = GODMODE.registry.entities.bowl_play.type
 monster.variant = GODMODE.registry.entities.bowl_play.variant
 

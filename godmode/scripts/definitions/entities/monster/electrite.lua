@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Electrite"
+monster.name = "[GODMODE] Electrite"
 monster.type = GODMODE.registry.entities.electrite.type
 monster.variant = GODMODE.registry.entities.electrite.variant
 
@@ -70,6 +70,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
     if sprite:IsEventTriggered("Jump") then 
         ent.State = 10
+        ent:PlaySound(SoundEffect.SOUND_BLOBBY_WIGGLE,1,0,false,0.95+ent:GetDropRNG():RandomFloat()*0.075)
     end
 
     if ent.State > 0 and ent.State < 10 then 
@@ -82,7 +83,8 @@ monster.npc_update = function(self, ent, data, sprite)
 
     if sprite:IsEventTriggered("Land") then 
         ent.State = 9
-
+        ent:PlaySound(SoundEffect.SOUND_BIRD_FLAP,1,0,false,0.95+ent:GetDropRNG():RandomFloat()*0.075)
+        
         if sprite:IsPlaying("Drill") then 
             for i=0,5 do 
                 monster.wood(self,ent) 

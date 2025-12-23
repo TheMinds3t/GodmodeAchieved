@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Spiked Flesh Host"
+monster.name = "[GODMODE] Spiked Flesh Host"
 monster.type = GODMODE.registry.entities.spiked_flesh_host.type
 monster.variant = GODMODE.registry.entities.spiked_flesh_host.variant
 
@@ -28,6 +28,7 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 		sprite:Play("Idle", true)
 	end
 	if sprite:IsEventTriggered("Attack") then
+		ent:ToNPC():PlaySound(SoundEffect.SOUND_BLOODSHOOT, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
 		data.atk_count = data.atk_count + 1
 		local count = 2+data.atk_count
 		local space = 90 / count  

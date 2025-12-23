@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Masked Angel Statue"
+monster.name = "[GODMODE] Masked Angel Statue"
 monster.type = GODMODE.registry.entities.masked_angel_statue.type
 monster.variant = GODMODE.registry.entities.masked_angel_statue.variant
 monster.animations = {"Idle","Phase2","Phase3","Phase4"}

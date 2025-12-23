@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Trailer"
+monster.name = "[GODMODE] Trailer"
 monster.type = GODMODE.registry.entities.trailer.type
 monster.variant = GODMODE.registry.entities.trailer.variant
 
@@ -74,6 +74,13 @@ monster.npc_update = function(self, ent, data, sprite)
         sprite:Play("Head",false)
         if ent.FrameCount % 10 == 0 then
             Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.CREEP_RED,0,ent.Position, Vector(0,0),ent)
+        end
+
+        if ent.FrameCount % 20 == 0 and ent:GetDropRNG():RandomFloat() < (data.sound_tick or 0) * 0.1 then 
+            ent:PlaySound(SoundEffect.SOUND_CHILD_ANGRY_ROAR,1,0,false,1)
+            data.sound_tick = 0
+        else
+            data.sound_tick = (data.sound_tick or 0) + 1 / 20.0
         end
 
         if data.body == nil or data.body:IsDead() then

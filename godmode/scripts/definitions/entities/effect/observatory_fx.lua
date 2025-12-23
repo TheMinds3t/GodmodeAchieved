@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Observatory FX"
+monster.name = "[GODMODE] Observatory FX"
 monster.type = GODMODE.registry.entities.observatory_fx.type
 monster.variant = GODMODE.registry.entities.observatory_fx.variant
 

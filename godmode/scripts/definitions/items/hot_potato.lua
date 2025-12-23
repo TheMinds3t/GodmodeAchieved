@@ -41,7 +41,7 @@ end
 item.tear_collide = function(self, tear, ent2, entfirst)
     local player = GODMODE.util.get_player_from_attack(EntityRef(tear))
 
-    if player and player:HasCollectible(item.instance) then 
+    if player and player:HasCollectible(item.instance) and tear.Variant == GODMODE.registry.entities.hot_potato_tear_chunk.variant then 
         local data = GODMODE.get_ent_data(tear)
         if data.hot_potato then 
             ent2:AddBurn(EntityRef(tear),23,tear.CollisionDamage * 0.1)

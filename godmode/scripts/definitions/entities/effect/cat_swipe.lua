@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Celestial Swipe"
+monster.name = "[GODMODE] Celestial Swipe"
 monster.type = GODMODE.registry.entities.celestial_swipe.type
 monster.variant = GODMODE.registry.entities.celestial_swipe.variant
 

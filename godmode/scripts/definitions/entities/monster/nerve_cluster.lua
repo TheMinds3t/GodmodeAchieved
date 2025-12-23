@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Nerve Cluster"
+monster.name = "[GODMODE] Nerve Cluster"
 monster.type = GODMODE.registry.entities.nerve_cluster.type
 monster.variant = GODMODE.registry.entities.nerve_cluster.variant
 

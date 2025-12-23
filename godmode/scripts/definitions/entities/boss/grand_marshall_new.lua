@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "The Grand Marshall"
+monster.name = "[GODMODE] The Grand Marshall"
 monster.type = GODMODE.registry.entities.grand_marshall.type
 monster.variant = GODMODE.registry.entities.grand_marshall.variant
 

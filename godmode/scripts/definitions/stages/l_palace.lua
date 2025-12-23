@@ -38,14 +38,14 @@ local default_graphics = {
         {graphic="godmode/gfx/grid/"..stage_prefix.."doors/arcade.png", req={RequireEither = {RoomType.ROOM_ARCADE}}},
         {graphic="godmode/gfx/grid/"..stage_prefix.."doors/sacrifice.png", req={RequireEither = {RoomType.ROOM_SACRIFICE}}},
         {graphic="godmode/gfx/grid/"..stage_prefix.."doors/ambush.png", req={RequireEither = {RoomType.ROOM_CHALLENGE}}},
-        {graphic="godmode/gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
-        {graphic="godmode/gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_LIBRARY},RequireTarget = {RoomType.ROOM_DEFAULT}}},
-        {graphic="godmode/gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_CHEST}}},
-        {graphic="godmode/gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_CHEST},RequireTarget = {RoomType.ROOM_DEFAULT}}},
-        {graphic="godmode/gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_PLANETARIUM}}},
-        {graphic="godmode/gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_PLANETARIUM},RequireTarget = {RoomType.ROOM_DEFAULT}}},
-        {graphic="godmode/gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_DICE}}},
-        {graphic="godmode/gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DICE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_LIBRARY}}},
+        {graphic="gfx/grid/door_13_librarydoor.png", req={RequireCurrent = {RoomType.ROOM_LIBRARY},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_CHEST}}},
+        {graphic="gfx/grid/door_02b_chestroomdoor.png", req={RequireCurrent = {RoomType.ROOM_CHEST},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_PLANETARIUM}}},
+        {graphic="gfx/grid/door_00x_planetariumdoor.png", req={RequireCurrent = {RoomType.ROOM_PLANETARIUM},RequireTarget = {RoomType.ROOM_DEFAULT}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DEFAULT},RequireTarget = {RoomType.ROOM_DICE}}},
+        {graphic="gfx/grid/door_00_diceroomdoor.png", req={RequireCurrent = {RoomType.ROOM_DICE},RequireTarget = {RoomType.ROOM_DEFAULT}}},
     }
 }
 
@@ -70,7 +70,7 @@ stage.deterioration_levels = {
             boss_spot = "godmode/gfx/ui/stage/"..stage_prefix.."player_spot.png",
 
             backdrop_gfx = {
-                Walls = {"1","2","3"},
+                Walls = {"1"},--,"2","3"},
                 NFloors = {"nfloor"},
                 LFloors = {"lfloor"},
                 Corners = {"corner"}
@@ -109,7 +109,7 @@ stage.deterioration_levels = {
             boss_spot = "godmode/gfx/ui/stage/"..stage_prefix.."player_spot.png",
 
             backdrop_gfx = {
-                Walls = {"1","2","3"},
+                Walls = {"1"},--,"2","3"},
                 NFloors = {"nfloor"},
                 LFloors = {"lfloor"},
                 Corners = {"corner"}

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Sugar Pill"
+monster.name = "[GODMODE] Sugar Pill"
 monster.type = EntityType.ENTITY_PICKUP
 monster.variant = PickupVariant.PICKUP_PILL
 

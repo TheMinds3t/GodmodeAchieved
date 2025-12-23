@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Burnt Page"
+monster.name = "[GODMODE] Burnt Page"
 monster.type = GODMODE.registry.entities.burnt_page.type
 monster.variant = GODMODE.registry.entities.burnt_page.variant
 

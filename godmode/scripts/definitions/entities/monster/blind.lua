@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Blind Spider"
+monster.name = "[GODMODE] Blind Spider"
 monster.type = GODMODE.registry.entities.blind_spider.type
 monster.variant = GODMODE.registry.entities.blind_spider.variant
 
@@ -24,7 +24,7 @@ monster.npc_update = function(self, ent, data, sprite)
     local player = ent:GetPlayerTarget()
     if not data.anim then
         sprite:Play("Idle",true)
-        data.anim = sprite:IsPlaying("Idle")
+        data.anim = true
     end
 
     local ti = player.Position - ent.Position
@@ -59,10 +59,12 @@ monster.npc_update = function(self, ent, data, sprite)
     end
 
     if sprite:IsEventTriggered("Fire") then
-        if ent.SubType == 1 then
-            for i=0,1 do
+        local fright_flag = ent.SubType == 1
+        if fright_flag then
+            local dir = player.Position - ent.Position 
+            for i=0,2 do
                 local spd = 0.5 + ent:GetDropRNG():RandomFloat()
-                local f = math.rad(360 / 8 * i + ent:GetDropRNG():RandomFloat() * 360)
+                local f = math.rad(dir:GetAngleDegrees() + ent:GetDropRNG():RandomFloat() * 50-25)
                 monster.spawn_tear(self,ent,f,spd,2.5)
             end
         else
@@ -78,8 +80,16 @@ monster.npc_update = function(self, ent, data, sprite)
             tear.Height = tear.Height - 10
             tear.FallingAccel = tear.FallingAccel * 2.0
         end
+
+        ent:PlaySound(SoundEffect.SOUND_CHILD_ANGRY_ROAR,1,0,false,0.9 + (fright_flag and -0.2 or 0.0))
     end
 
+    if ent.FrameCount % 20 == 0 and ent:GetDropRNG():RandomFloat() < (data.sound_tick or 0) * 0.1 and sprite:IsPlaying("Idle") then 
+        ent:PlaySound(SoundEffect.SOUND_FAT_GRUNT,1,0,false,1.2+ent:GetDropRNG():RandomFloat()*0.075 + (fright_flag and -0.2 or 0.0))
+        data.sound_tick = 0
+    else
+        data.sound_tick = (data.sound_tick or 0) + 1 / 20.0
+    end
 end
 
 return monster

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = ""
+monster.name = "[GODMODE] "
 monster.type = Isaac.GetEntityTypeByName(monster.name)
 monster.variant = Isaac.GetEntityVariantByName(monster.name)
 

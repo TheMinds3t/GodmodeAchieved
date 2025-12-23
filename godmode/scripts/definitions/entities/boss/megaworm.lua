@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Mega Worm"
+monster.name = "[GODMODE] Mega Worm"
 monster.type = GODMODE.registry.entities.mega_worm.type
 monster.variant = GODMODE.registry.entities.mega_worm.variant
 
@@ -215,7 +215,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 end
 
 monster.npc_collide = function(self, ent, ent2, entfirst)
-    if ent2.Type == EntityType.ENTITY_ROUND_WORM then 
+    if ent2.Type == EntityType.ENTITY_ROUND_WORM and ent.Type == monster.type and ent.Variant == monster.variant then 
         return true 
     end
 end

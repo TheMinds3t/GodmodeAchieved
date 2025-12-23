@@ -1,6 +1,6 @@
 local monster = {}
 --nest war
-monster.name = "The Collapsed"
+monster.name = "[GODMODE] The Collapsed"
 monster.type = GODMODE.registry.entities.the_collapsed.type
 monster.variant = GODMODE.registry.entities.the_collapsed.variant
 
@@ -293,12 +293,20 @@ monster.npc_update = function(self, ent, data, sprite)
                         if data.cry_time <= 0 then 
                             sprite:Play("2CryOut",true)
                             local dir = (ent:GetDropRNG():RandomInt(2) == 1 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT)
+                            local dir2 = (ent:GetDropRNG():RandomInt(2) == 1 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT)
                             monster.ring(ent, Vector.Zero, 
                             0, 
                             1.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
                             32 - ((GODMODE.game.Difficulty + 1) % 2) * 8, dir | ProjectileFlags.ACCELERATE, function(proj) 
                                 proj.Scale = 2
-                                proj.CurvingStrength = 1 / 240
+                                proj.CurvingStrength = 1 / 480
+                            end)
+                            monster.ring(ent, Vector.Zero, 
+                            0, 
+                            1.75 - ((GODMODE.game.Difficulty + 1) % 2) * 0.45, 
+                            24 - ((GODMODE.game.Difficulty + 1) % 2) * 6, dir2 | ProjectileFlags.ACCELERATE, function(proj) 
+                                proj.Scale = 1.5
+                                proj.CurvingStrength = 1 / 600
                             end)
 
                             data.phase2_flag = phase2_flags[ent:GetDropRNG():RandomInt(#phase2_flags) + 1]
@@ -417,7 +425,7 @@ monster.npc_update = function(self, ent, data, sprite)
                     360 / count, 
                     2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_time / 8.0 * 1.5, 
                     count, flag1 | ProjectileFlags.ACCELERATE | (data.phase2_flag or 0), function(proj) 
-                        proj.Scale = 2
+                        proj.Scale = 2.5
                         proj.CurvingStrength = 1 / 360
                     end, true)
 
@@ -425,7 +433,7 @@ monster.npc_update = function(self, ent, data, sprite)
                     -360 / count, 
                     2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_time / 8.0 * 1.5, 
                     count, flag2 | ProjectileFlags.ACCELERATE | (data.phase2_flag or 0), function(proj) 
-                        proj.Scale = 2
+                        proj.Scale = 2.5
                         proj.CurvingStrength = 1 / 360
                     end, true)
             elseif sprite:IsPlaying("1CryFlash") then 
@@ -508,7 +516,7 @@ monster.npc_update = function(self, ent, data, sprite)
             end
 
             if phase2_fight then
-                GODMODE.log(tostring(phase2_fight).." & "..tostring(data.atk).." & "..tostring(data.phase2_transition),true)
+                -- GODMODE.log(tostring(phase2_fight).." & "..tostring(data.atk).." & "..tostring(data.phase2_transition),true)
 
                 if not sprite:IsPlaying("HandTransition") and data.phase2_transition ~= true or data.phase2_transition == true and not (sprite:GetAnimation() == "HandTransition" or sprite:GetAnimation() == "Hand2") then 
                     sprite:Play("HandTransition",true)

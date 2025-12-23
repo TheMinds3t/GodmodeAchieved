@@ -1186,12 +1186,42 @@ util.is_death_certificate = function()
 	return GetPtrHash(GODMODE.level:GetRoomByIdx(id,-1)) == GetPtrHash(GODMODE.level:GetRoomByIdx(id,2))
 end
 
+-- rep+
 local heart_start = {
 	[1] = Vector(48,12),
-	[2] = Vector(469,12),
-	[3] = Vector(106,267),
+	[2] = Vector(111,12),
+	[3] = Vector(47,27),
+	[4] = Vector(48,18),
+}
+local heart_end = {
+	[1] = Vector(68,24),
+	[2] = Vector(135,24),
+	[3] = Vector(63,33),
 	[4] = Vector(533,267),
 }
+local heart_anchor = {
+	[1] = {pos=function() return Vector.Zero end,off_scale=Vector(1,1)},
+	[2] = {pos=function() return util.get_center_of_screen()*Vector(2,0) end,off_scale=Vector(-1,1)},
+	[3] = {pos=function() return util.get_center_of_screen()*2 end,off_scale=Vector(-1,-1)},
+	[4] = {pos=function() return util.get_center_of_screen()*Vector(0,2) end,off_scale=Vector(1,-1)},
+}
+
+if REPENTANCE_PLUS == true then 
+	GODMODE.log("Adding rep+ heart UI positions",false)
+	-- rep 
+	heart_start = {
+		[1] = Vector(48,18),
+		[2] = Vector(127,18),
+		[3] = Vector(47,27),
+		[4] = Vector(533,267),
+	}
+	heart_end = {
+		[1] = Vector(68,30),
+		[2] = Vector(151,30),
+		[3] = Vector(63,33),
+		[4] = Vector(533,267),
+	}
+end
 
 local hud_mult = {
 	Vector(1,1), Vector(-1.2,1), Vector(1,-1), Vector(-0.8,-0.5)
@@ -1204,16 +1234,31 @@ util.get_heart_pos_for = function(player,h_ind)
 	local slot = tonumber(GODMODE.save_manager.get_data("Player"..player.InitSeed,"0"))
 	local width = 6 / math.min(slot,2)
 	local invert = Vector(1,1)
-	if player:GetPlayerType() == PlayerType.PLAYER_ESAU then slot = slot + 2 width = 6 end
-	if slot == 4 then 
+	if player:GetPlayerType() == PlayerType.PLAYER_ESAU and player:GetMainTwin() then 
+		local main_slot = tonumber(GODMODE.save_manager.get_data("Player"..player:GetMainTwin().InitSeed,"0"))
+		
+		if main_slot == 1 then 
+			slot = 3
+			width = 6
+		else
+			return  
+		end
+	end
+
+	if slot == 4 or slot == 3 then 
 		invert = Vector(-1,1)
 		-- h_ind = 12 - h_ind
 	end
 
-	if slot > 4 or slot < 1 then GODMODE.log("[ERROR] trying to render heart ui for slot "..slot..", which is invalid (slot 1 to 4 is valid)",true) return nil end
-	local base_pos = heart_start[slot]
+	if slot > 4 or slot < 1 then GODMODE.log("[ERROR] trying to render heart ui for slot "..slot.." and player \'"..player:GetName().."\', which is invalid (slot 1 to 4 is valid)", true) return nil end
+	-- local base_pos = heart_start[slot] * (1 - Options.HUDOffset) + heart_end[slot] * Options.HUDOffset
+	-- anchored top left/bottom right
+	local base_pos = (heart_start[slot] * (1 - Options.HUDOffset) + heart_end[slot] * Options.HUDOffset) * heart_anchor[slot].off_scale + heart_anchor[slot].pos()
 
-	return base_pos + Vector(heart_size.X * (h_ind % width), heart_size.Y * math.floor(h_ind / width)) * invert + hud_off_vec * Options.HUDOffset * hud_mult[slot]
+	return base_pos + Vector(
+		heart_size.X * (h_ind % width), 
+		heart_size.Y * math.floor(h_ind / width)
+	) * invert
 end
 
 local heart_spots = {

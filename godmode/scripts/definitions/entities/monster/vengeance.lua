@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Vengeance"
+monster.name = "[GODMODE] Vengeance"
 monster.type = GODMODE.registry.entities.vengeance.type
 monster.variant = GODMODE.registry.entities.vengeance.variant
 monster.states = {
@@ -194,6 +194,7 @@ monster.npc_update = function(self, ent, data, sprite)
             end
 
             if frame == 22 then 
+                ent:ToNPC():PlaySound(SoundEffect.SOUND_SATAN_BLAST, 1.2, 1, false, 0.8 + ent:GetDropRNG():RandomFloat() * 0.2)
                 if up then 
                     data.laser = EntityLaser.ShootAngle(1,ent.Position+Vector(0,-8),270,48,Vector(0,-16),ent)
                 else
@@ -202,6 +203,14 @@ monster.npc_update = function(self, ent, data, sprite)
                 data.laser.MaxDistance = 24
             end
         end
+    end
+
+    if ent.FrameCount % 20 == 0 and ent:GetDropRNG():RandomFloat() < (data.sound_tick or 0) * 0.1 then 
+        ent:PlaySound((ent:GetDropRNG():RandomInt(2) == 0 and SoundEffect.SOUND_MONSTER_GRUNT_1 or SoundEffect.SOUND_MONSTER_GRUNT_2),1,0,false,
+            0.95+ent:GetDropRNG():RandomFloat()*0.075 - (ent.I1 >= monster.states.mad and 0.2 or 0.0))
+        data.sound_tick = 0
+    else
+        data.sound_tick = (data.sound_tick or 0) + 1 / 10.0
     end
 end
 

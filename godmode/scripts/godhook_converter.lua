@@ -67,8 +67,9 @@ godhook.functions.player_collide = function(self, player,ent,entfirst)
             end
         end
 
-        if godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant] ~= nil then
-            local ret = godhook.hook.monsters["player_collide"][ent.Type..","..ent.Variant](self,player,ent,entfirst,p_data)
+        local key = ent.Type..","..ent.Variant
+        if godhook.hook.monsters["player_collide"][key] ~= nil then
+            local ret = godhook.hook.monsters["player_collide"][key](self,player,ent,entfirst,p_data)
 
             if ret ~= nil then
                 return ret
@@ -91,8 +92,9 @@ godhook.functions.player_collide = function(self, player,ent,entfirst)
 end
 godhook.functions.pickup_collide = function(self, pickup,ent,entfirst)
     if godhook.hook.monsters["pickup_collide"] then
-        if godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant] ~= nil then 
-            local ret = godhook.hook.monsters["pickup_collide"][ent.Type..","..ent.Variant](self,pickup,ent,entfirst)
+        local key = ent.Type..","..ent.Variant
+        if godhook.hook.monsters["pickup_collide"][key] ~= nil then 
+            local ret = godhook.hook.monsters["pickup_collide"][key](self,pickup,ent,entfirst)
 
             if ret ~= nil then
                 return ret
@@ -123,10 +125,12 @@ godhook.functions.pickup_collide = function(self, pickup,ent,entfirst)
     end
 end
 godhook.functions.tear_collide = function(self, tear,ent,entfirst)
-    if godhook.hook.monsters["tear_collide"] and godhook.hook.monsters["tear_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["tear_collide"][ent.Type..","..ent.Variant](self,tear,ent,entfirst)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["tear_collide"] and godhook.hook.monsters["tear_collide"][key] ~= nil then
+        local ret = godhook.hook.monsters["tear_collide"][key](self,tear,ent,entfirst)
 
         if ret ~= nil then
+            GODMODE.log(key.." = "..tostring(ret),true)
             return ret
         end
     end
@@ -138,6 +142,7 @@ godhook.functions.tear_collide = function(self, tear,ent,entfirst)
                 local ret = func(self,tear,ent,entfirst)
 
                 if ret ~= nil then
+                    GODMODE.log(tostring(ret),true)
                     return ret 
                 end
             end
@@ -145,8 +150,9 @@ godhook.functions.tear_collide = function(self, tear,ent,entfirst)
     end
 end
 godhook.functions.laser_collide = function(self, laser,ent,entfirst)
-    if godhook.hook.monsters["laser_collide"] and godhook.hook.monsters["laser_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["laser_collide"][ent.Type..","..ent.Variant](self,laser,ent,entfirst)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["laser_collide"] and godhook.hook.monsters["laser_collide"][key] ~= nil then
+        local ret = godhook.hook.monsters["laser_collide"][key](self,laser,ent,entfirst)
 
         if ret ~= nil then
             return ret
@@ -167,14 +173,15 @@ godhook.functions.laser_collide = function(self, laser,ent,entfirst)
     end
 end
 godhook.functions.familiar_collide = function(self, fam,ent,entfirst)
+    local key = ent.Type..","..ent.Variant
     if godhook.hook.monsters["familiar_collide"] and godhook.hook.monsters["familiar_collide"][fam.Type..","..fam.Variant] ~= nil then
         local ret = godhook.hook.monsters["familiar_collide"][fam.Type..","..fam.Variant](self,fam,ent,entfirst)
 
         if ret ~= nil then
             return ret
         end
-    elseif godhook.hook.monsters["familiar_collide"] and godhook.hook.monsters["familiar_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["familiar_collide"][ent.Type..","..ent.Variant](self,fam,ent,entfirst)
+    elseif godhook.hook.monsters["familiar_collide"] and godhook.hook.monsters["familiar_collide"][key] ~= nil then
+        local ret = godhook.hook.monsters["familiar_collide"][key](self,fam,ent,entfirst)
 
         if ret ~= nil then
             return ret
@@ -195,8 +202,9 @@ godhook.functions.familiar_collide = function(self, fam,ent,entfirst)
     end
 end
 godhook.functions.npc_collide = function(self, ent,ent2,entfirst)
-    if godhook.hook.monsters["npc_collide"] and godhook.hook.monsters["npc_collide"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["npc_collide"][ent.Type..","..ent.Variant](self,ent,ent2,entfirst)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["npc_collide"] and godhook.hook.monsters["npc_collide"][key] ~= nil then
+        local ret = godhook.hook.monsters["npc_collide"][key](self,ent,ent2,entfirst)
 
         if ret ~= nil then
             return ret
@@ -477,10 +485,11 @@ godhook.functions.player_render = function(self,player,offset)
 end
 
 godhook.functions.npc_init = function(self, ent)
+    local key = ent.Type..","..ent.Variant
     local data = GODMODE.get_ent_data(ent)
     if godhook.hook.monsters["npc_init"] then 
-        if godhook.hook.monsters["npc_init"][ent.Type..","..ent.Variant] ~= nil then
-            godhook.hook.monsters["npc_init"][ent.Type..","..ent.Variant](self,ent,data)
+        if godhook.hook.monsters["npc_init"][key] ~= nil then
+            godhook.hook.monsters["npc_init"][key](self,ent,data)
         end
     
         if godhook.hook.bypass_monster_keys["npc_init"] then
@@ -546,8 +555,9 @@ godhook.functions.npc_update = function(self, ent)
     end
 end
 godhook.functions.pre_npc_update = function(self, ent)
-    if godhook.hook.monsters["pre_npc_update"] and godhook.hook.monsters["pre_npc_update"][ent.Type..","..ent.Variant] ~= nil then
-        local ret = godhook.hook.monsters["pre_npc_update"][ent.Type..","..ent.Variant](self,ent)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["pre_npc_update"] and godhook.hook.monsters["pre_npc_update"][key] ~= nil then
+        local ret = godhook.hook.monsters["pre_npc_update"][key](self,ent)
         
         if ret ~= nil then return ret end
     end
@@ -563,8 +573,9 @@ godhook.functions.pre_npc_update = function(self, ent)
     end
 end
 godhook.functions.npc_kill = function(self, ent)
-    if godhook.hook.monsters["npc_kill"] and godhook.hook.monsters["npc_kill"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["npc_kill"][ent.Type..","..ent.Variant](self,ent)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["npc_kill"] and godhook.hook.monsters["npc_kill"][key] ~= nil then
+        godhook.hook.monsters["npc_kill"][key](self,ent)
     end
 
     if godhook.hook.items["npc_kill"] then
@@ -577,8 +588,9 @@ godhook.functions.npc_kill = function(self, ent)
     end
 end
 godhook.functions.npc_remove = function(self, ent)
-    if godhook.hook.monsters["npc_remove"] and godhook.hook.monsters["npc_remove"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["npc_remove"][ent.Type..","..ent.Variant](self,ent)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["npc_remove"] and godhook.hook.monsters["npc_remove"][key] ~= nil then
+        godhook.hook.monsters["npc_remove"][key](self,ent)
     end
 
     if godhook.hook.items["npc_remove"] then
@@ -635,8 +647,9 @@ end
 godhook.functions.pickup_update = function(self, ent)
     local data = GODMODE.get_ent_data(ent)
     local sprite = ent:GetSprite()
-    if godhook.hook.monsters["pickup_update"] and godhook.hook.monsters["pickup_update"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["pickup_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["pickup_update"] and godhook.hook.monsters["pickup_update"][key] ~= nil then
+        godhook.hook.monsters["pickup_update"][key](self,ent,data,sprite)
     else 
         if godhook.hook.monsters["pickup_update"] then
             for ind=1, #godhook.hook.monster_keys["pickup_update"] do
@@ -689,8 +702,9 @@ godhook.functions.use_item = function(self, coll,rng,player,flags,slot,var_data)
 end
 godhook.functions.tear_fire = function(self, ent)
     local tear_data = GODMODE.get_ent_data(ent)
-    if godhook.hook.monsters["tear_fire"] and godhook.hook.monsters["tear_fire"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["tear_fire"][ent.Type..","..ent.Variant](self,ent,tear_data)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["tear_fire"] and godhook.hook.monsters["tear_fire"][key] ~= nil then
+        godhook.hook.monsters["tear_fire"][key](self,ent,tear_data)
     end
 
     if godhook.hook.items["tear_fire"] then
@@ -704,9 +718,10 @@ godhook.functions.tear_fire = function(self, ent)
 end
 godhook.functions.tear_init = function(self, ent)
     local tear_data = GODMODE.get_ent_data(ent)
+    local key = ent.Type..","..ent.Variant
 
-    if godhook.hook.monsters["tear_init"] and godhook.hook.monsters["tear_init"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["tear_init"][ent.Type..","..ent.Variant](self,ent,tear_data)
+    if godhook.hook.monsters["tear_init"] and godhook.hook.monsters["tear_init"][key] ~= nil then
+        godhook.hook.monsters["tear_init"][key](self,ent,tear_data)
     end
 
     if godhook.hook.items["tear_init"] then
@@ -721,9 +736,10 @@ end
 godhook.functions.pickup_init = function(self, ent)
     local data = GODMODE.get_ent_data(ent)
     local sprite = ent:GetSprite()
+    local key = ent.Type..","..ent.Variant
     if godhook.hook.monsters["pickup_init"] then
-        if godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant] ~= nil then 
-            godhook.hook.monsters["pickup_init"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+        if godhook.hook.monsters["pickup_init"][key] ~= nil then 
+            godhook.hook.monsters["pickup_init"][key](self,ent,data,sprite)
         end
 
         if godhook.hook.bypass_monster_keys["pickup_init"] then
@@ -746,8 +762,10 @@ godhook.functions.pickup_init = function(self, ent)
     end
 end
 godhook.functions.familiar_init = function(self, ent)
-    if godhook.hook.monsters["familiar_init"] and godhook.hook.monsters["familiar_init"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["familiar_init"][ent.Type..","..ent.Variant](self,ent)
+    local key = ent.Type..","..ent.Variant
+
+    if godhook.hook.monsters["familiar_init"] and godhook.hook.monsters["familiar_init"][key] ~= nil then
+        godhook.hook.monsters["familiar_init"][key](self,ent)
     end
 
     if godhook.hook.items["familiar_init"] then
@@ -918,6 +936,7 @@ godhook.functions.npc_post_render = function(self,ent,offset)
     end
 end
 godhook.functions.pickup_post_render = function(self,ent,offset)
+    local key = ent.Type..","..ent.Variant
     if godhook.hook.monsters["pickup_post_render"] and godhook.hook.monsters["pickup_post_render"][key] ~= nil then
         godhook.hook.monsters["pickup_post_render"][key](self,ent,offset)
     end
@@ -943,8 +962,9 @@ godhook.functions.pickup_post_render = function(self,ent,offset)
     end
 end
 godhook.functions.famil_post_render = function(self,ent,offset)
-    if godhook.hook.monsters["famil_post_render"] and godhook.hook.monsters["famil_post_render"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["famil_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["famil_post_render"] and godhook.hook.monsters["famil_post_render"][key] ~= nil then
+        godhook.hook.monsters["famil_post_render"][key](self,ent,offset)
     end
 
     if godhook.hook.items["famil_post_render"] then
@@ -959,8 +979,9 @@ godhook.functions.famil_post_render = function(self,ent,offset)
 end
 
 godhook.functions.effect_post_render = function(self,ent,offset)
-    if godhook.hook.monsters["effect_post_render"] and godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["effect_post_render"][ent.Type..","..ent.Variant](self,ent,offset)
+    local key = ent.Type..","..ent.Variant
+    if godhook.hook.monsters["effect_post_render"] and godhook.hook.monsters["effect_post_render"][key] ~= nil then
+        godhook.hook.monsters["effect_post_render"][key](self,ent,offset)
     end
 
     if godhook.hook.items["effect_post_render"] then
@@ -1016,6 +1037,8 @@ godhook.functions.effect_init = function(self, ent)
 end
 
 godhook.functions.effect_update = function(self, ent)
+    local key = ent.Type..","..ent.Variant
+
     -- jerryrigged homebrew explode callback B)
     if ent.Variant == EffectVariant.BOMB_EXPLOSION and ent.FrameCount == 1 then 
         -- 48 = base explosion size
@@ -1048,10 +1071,10 @@ godhook.functions.effect_update = function(self, ent)
         end
     end
 
-    if godhook.hook.monsters["effect_update"] and godhook.hook.monsters["effect_update"][ent.Type..","..ent.Variant] ~= nil then
+    if godhook.hook.monsters["effect_update"] and godhook.hook.monsters["effect_update"][key] ~= nil then
         local data = GODMODE.get_ent_data(ent)
         local sprite = ent:GetSprite()
-        godhook.hook.monsters["effect_update"][ent.Type..","..ent.Variant](self,ent,data,sprite)
+        godhook.hook.monsters["effect_update"][key](self,ent,data,sprite)
     -- else 
         -- if godhook.hook.monsters["effect_update"] then
         --     local data = GODMODE.get_ent_data(ent)
@@ -1146,8 +1169,10 @@ godhook.functions.projectile_update = function(self,projectile)
     end
 end
 godhook.functions.input_event = function(self,ent,hook,action)
-    if godhook.hook.monsters["input_event"] and godhook.hook.monsters["input_event"][ent.Type..","..ent.Variant] ~= nil then
-        godhook.hook.monsters["input_event"][ent.Type..","..ent.Variant](self,ent,hook,action)
+    local key = ent.Type..","..ent.Variant
+
+    if godhook.hook.monsters["input_event"] and godhook.hook.monsters["input_event"][key] ~= nil then
+        godhook.hook.monsters["input_event"][key](self,ent,hook,action)
     end
 
     if godhook.hook.items["input_event"] then

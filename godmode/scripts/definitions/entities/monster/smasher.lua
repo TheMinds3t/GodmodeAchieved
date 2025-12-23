@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Slammer"
+monster.name = "[GODMODE] Slammer"
 monster.type = GODMODE.registry.entities.slammer.type
 monster.variant = GODMODE.registry.entities.slammer.variant
 
@@ -37,6 +37,7 @@ monster.npc_update = function(self, ent, data, sprite)
     if (data.time) % 100 == 0 and sprite:IsPlaying("Idle") then
         ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_NONE
         sprite:Play("GoUp",false)
+        ent:PlaySound(SoundEffect.SOUND_MONSTER_ROAR_0,1,2,false,1)
     end
 
     ent.Velocity = ent.Velocity * 0.15

@@ -1,6 +1,6 @@
 local monster = {}
 
-monster.name = "Shade Hand"
+monster.name = "[GODMODE] Shade Hand"
 monster.type = GODMODE.registry.entities.shade.type
 monster.variant = GODMODE.registry.entities.shade.variant
 
@@ -16,6 +16,7 @@ monster.npc_update = function(self, ent, data, sprite)
     	sprite:Play("Darkness",false)
     end
     if sprite:IsEventTriggered("Darkness") then
+        ent:PlaySound(SoundEffect.SOUND_LOW_INHALE,1,0,false,0.8+ent:GetDropRNG():RandomFloat()*0.075)
     	GODMODE.game:Darken(math.min(1.0,0.55 + 0.05 * GODMODE.util.count_enemies(nil, monster.type, monster.variant)),156)
     end
 end

@@ -119,37 +119,39 @@ item.player_update = function(self, player,data)
 end
 
 item.tear_collide = function(self,tear,ent,entfirst)
-    local flag = false
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        local data = GODMODE.get_ent_data(player)
-        local state = tonumber(GODMODE.save_manager.get_player_data(player, "OpiaState", "0"))
+    if tear.Variant == GODMODE.registry.entities.opia_soul.variant then 
+        local flag = false
+        GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+            local data = GODMODE.get_ent_data(player)
+            local state = tonumber(GODMODE.save_manager.get_player_data(player, "OpiaState", "0"))
 
-        if state ~= 3 and data.opia_ent == nil and data.opia_tear ~= nil and not data.opia_tear:IsDead() and GetPtrHash(data.opia_tear) == GetPtrHash(tear) then
-            if not ent:IsBoss() and ent:IsVulnerableEnemy() then
-                if ent.HitPoints > tear.CollisionDamage then
-                    GODMODE.save_manager.set_player_data(player, "OpiaState", 3,true)
-                    data.opia_ent = ent
-                    data.opia_ent:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
-                    ent.Size = 0
-                    ent.HitPoints = ent.MaxHitPoints
-                    Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,player.Position,Vector.Zero,player)
-                    Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,ent.Position,Vector.Zero,ent)
-                    data.opia_tear:Kill()
-                    data.opia_tear = nil
+            if state ~= 3 and data.opia_ent == nil and data.opia_tear ~= nil and not data.opia_tear:IsDead() and GetPtrHash(data.opia_tear) == GetPtrHash(tear) then
+                if not ent:IsBoss() and ent:IsVulnerableEnemy() then
+                    if ent.HitPoints > tear.CollisionDamage then
+                        GODMODE.save_manager.set_player_data(player, "OpiaState", 3,true)
+                        data.opia_ent = ent
+                        data.opia_ent:AddEntityFlags(EntityFlag.FLAG_FRIENDLY)
+                        ent.Size = 0
+                        ent.HitPoints = ent.MaxHitPoints
+                        Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,player.Position,Vector.Zero,player)
+                        Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,ent.Position,Vector.Zero,ent)
+                        data.opia_tear:Kill()
+                        data.opia_tear = nil
+                    end
+                else
+                    tear.CollisionDamage = player.Damage * 4
+                    Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,tear.Position,Vector.Zero,tear)
                 end
-            else
-                tear.CollisionDamage = player.Damage * 4
-                Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,tear.Position,Vector.Zero,tear)
-            end
 
-            if data.opia_ent and GetPtrHash(data.opia_ent) == GetPtrHash(ent) then
-                flag = true 
+                if data.opia_ent and GetPtrHash(data.opia_ent) == GetPtrHash(ent) then
+                    flag = true 
+                end
             end
+        end)
+
+        if flag == true then
+            return true   
         end
-    end)
-
-    if flag == true then
-        return true   
     end
 end
 
@@ -164,17 +166,19 @@ item.tear_fire = function(self,tear)
 end
 
 item.npc_collide = function(self,ent,ent2,entfirst)
-    local flag = false
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        local data = GODMODE.get_ent_data(player)
+    if ent.Type == GODMODE.registry.entities.opia_soul.type and ent.Variant == GODMODE.registry.entities.opia_soul.variant then 
+        local flag = false
+        GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+            local data = GODMODE.get_ent_data(player)
 
-        if data.opia_ent and GetPtrHash(data.opia_ent) == GetPtrHash(ent) then
-            flag = true 
+            if data.opia_ent and GetPtrHash(data.opia_ent) == GetPtrHash(ent) then
+                flag = true 
+            end
+        end)
+
+        if flag == true then
+            return true   
         end
-    end)
-
-    if flag == true then
-        return true   
     end
 end
 

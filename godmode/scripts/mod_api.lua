@@ -270,5 +270,64 @@ god_api.set_faithless_hearts = function(player, amount)
     god_api.add_faithless(player, amount - god_api.get_faithless_hearts(player))
 end
 
+-- creates a new entry in the godmode save system for a Fallen Light unlock. 
+-- player_type: PlayerType(RGON) or string(NON-RGON). The custom player_type to add an unlock for.
+-- achievement_id: int(RGON) or string(NON-RGON). The achievement ID to add an unlock for.
+god_api.add_fl_unlock = function(player_type, achievement_id)
+    if type(achievement_id) == "number" and GODMODE.validate_rgon() then -- RGON
+        GODMODE.achievements.achievement_list_repentogon.fallen_light[player_type] = achievement_id
+    end
+end
+
+-- retrieves the maximum difficulty (uncleared = 0, normal/greed = 1, hard/greedier = 2) The Fallen Light was defeated with the given player. 
+-- player_name: string. The name of the player
+god_api.get_fl_completion = function(player_name)
+    return tonumber(GODMODE.save_manager.get_persistent_data("FallenLightKilled."..player_name,"0"))
+end
+
+-- retrieves the maximum difficulty (uncleared = 0, normal/greed = 1, hard/greedier = 2) the Sign was defeated with the given player. 
+-- player_name: string. The name of the player
+god_api.get_sign_completion = function(player_name)
+    return tonumber(GODMODE.save_manager.get_persistent_data("TheSignKilled."..player_name,"0"))
+end
+
+--[[
+────────────────────────────────────────
+─────────────██─────────────────────────
+─────────██████─────────────────────────
+────────███████─────────────────────────
+────────███████─────────────────────────
+────────██████──────────────────────────
+───────███████─────────────────────██───
+───────███████─────────────────█████████
+───────██████──────────────────█████████
+───────██████────────────────────██████─
+──────███████───────────────────███████─
+──────██████─────────────────────────██─
+──────██████────────────────────────────
+──────██████────────██████───────████───
+──────█████───────█████████─────██████──
+─────██████─────███████████────███████──
+─────█████────█████████████────███████──
+─────█████───█████████████─────██████───
+─────███████████──████████────███████───
+────███████████────███████────███████───
+────██████████─────██████─────███████───
+────█████████──────██████────███████────
+────████████───────██████────███████────
+───████████────────██████────███████────
+───████████───────███████────███████────
+───███████────────██████─────███████────
+───███████────────██████────████████────
+──███████────────███████────████████────
+──███████────────███████────████████────
+──██████─────────███████────████████────
+──██████─────────███████────████████────
+──██████────────█████████────██████─────
+─────────────────████████─────██────────
+──────────────────█████─────────────────
+────────────────────────────────────────
+]]
+-- MOD DEVELOPERS and readers: if you want any extra hooks or features more accessible just reach out to 'minds3t' on discord, I'll expand this file as much as needed! 
 
 return god_api

@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Outbreak"
+monster.name = "[GODMODE] Outbreak"
 monster.type = GODMODE.registry.entities.outbreak.type
 monster.variant = GODMODE.registry.entities.outbreak.variant
 monster.move_delay = 18 
@@ -251,11 +251,11 @@ monster.npc_update = function(self, ent, data, sprite)
             end
         end
 
-        if sprite:IsPlaying("DigIn") then 
+        if sprite:IsPlaying("DigIn") or sprite:IsPlaying("Appear") then 
             ent.Velocity = ent.Velocity * 0.5
         elseif sprite:IsFinished("DigOut") then 
             sprite:Play("Idle",true)
-        end
+        end 
 
         if sprite:IsEventTriggered("Emerge") then 
             spawn_rock_fx(ent)
@@ -354,7 +354,7 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 
         -- GODMODE.log("flags = "..flags,true)
 
-        if ((enthit:GetSprite():IsPlaying("DigIn") or enthit:GetSprite():IsPlaying("DigOut") or enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0) then
+        if ((enthit:GetSprite():IsPlaying("Appear")) or enthit:ToNPC().I1 > 0) then
             return false 
         end
     end

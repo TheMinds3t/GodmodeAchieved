@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Mimic Worm"
+monster.name = "[GODMODE] Mimic Worm"
 monster.type = GODMODE.registry.entities.mimic_worm.type
 monster.variant = GODMODE.registry.entities.mimic_worm.variant
 
@@ -213,7 +213,7 @@ end
 monster.tear_collide = function(self,tear,ent,entfirst)
     local data = GODMODE.get_ent_data(ent)
 
-    if data.opened ~= true then
+    if data.opened ~= true and ent.Type == monster.type and ent.Variant == monster.variant then
         return true
     end
 end

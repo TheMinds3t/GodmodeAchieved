@@ -1,6 +1,6 @@
 local monster = {}
 -- monster.data gets updated every callback
-monster.name = "Bubbly Plum"
+monster.name = "[GODMODE] Bubbly Plum"
 monster.type = GODMODE.registry.entities.bubbly_plum.type
 monster.variant = GODMODE.registry.entities.bubbly_plum.variant
 
@@ -512,7 +512,7 @@ end
 
 monster.npc_collide = function(self,ent,ent2,entfirst)
     local anim_flag = ent2:GetSprite():IsPlaying("Attack3Loop") or ent2:GetSprite():IsPlaying("Attack3BackLoop")
-    if ent.SubType > 0 then
+    if ent.SubType > 0 and ent.Type == monster.type and ent.Variant == monster.variant then
         if ent2.Type == EntityType.ENTITY_PLAYER and not ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) 
             or ent:HasEntityFlags(EntityFlag.FLAG_FRIENDLY) and GODMODE.util.is_valid_enemy(ent2) and not ent2:HasEntityFlags(EntityFlag.FLAG_FRIENDLY)
                 and not (ent2.Type == ent.Type and ent2.Variant == ent.Variant and ent2.SubType > 0) then 
@@ -542,7 +542,7 @@ monster.knife_collide = function(self,knife,ent,entfirst)
 end
 
 monster.tear_collide = function(self,tear,ent,entfirst)
-    if entfirst == true then
+    if entfirst == true and ent.Type == monster.type and ent.Variant == monster.variant then
         if (ent:GetSprite():IsPlaying("Attack3Loop") or ent:GetSprite():IsPlaying("Attack3BackLoop")) then 
             ent.Velocity = ent.Velocity * 0.8 + tear.Velocity*0.125*tear.Scale
             GODMODE.get_ent_data(ent).last_vel = ent.Velocity

@@ -49,6 +49,10 @@ item.first_level = function(self)
             player:AddCacheFlags(buff)
         end
         player:EvaluateItems()
+
+        if Isaac.GetChallenge() == GODMODE.registry.challenges.out_of_time then
+            GODMODE.util.add_faithless(player, 3)
+        end
     end)
 end
 

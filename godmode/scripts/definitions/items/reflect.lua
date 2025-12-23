@@ -100,8 +100,8 @@ item.eval_cache = function(self, player,cache,data)
     if cache == CacheFlag.CACHE_WEAPON then 
         if GODMODE.validate_rgon() and player:GetWeapon(1):GetWeaponType() ~= WeaponType.WEAPON_LUDOVICO_TECHNIQUE then 
             player:SetWeapon(Isaac.CreateWeapon(WeaponType.WEAPON_LUDOVICO_TECHNIQUE,player),1)
-        else
-            player:GetEffects():AddCollectibleEffect(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE,false)
+        elseif not player:HasCollectible(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE) then
+            player:AddCollectible(CollectibleType.COLLECTIBLE_LUDOVICO_TECHNIQUE,0,false)
         end
     end
 
@@ -187,11 +187,12 @@ item.discharge_tear = function(player, tear, explode, reduce, fx, explode_src)
 end
 
 item.shoot_fire = function(player, tear, ang, spd, lifemod)
+    local pyromaniac_flag = player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)
     local dir = Vector(1,0):Rotated(ang):Resized(spd)
     local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLUE_FLAME, 0, tear.Position, dir, player):ToEffect()
     effect:SetTimeout(math.floor(item.fire_lifebase * (lifemod or 1)))
     effect:SetColor(item.fire_col, 999, 1, false, true)
-    effect.CollisionDamage = (1.0 + math.min(0.33,player.Damage * GODMODE.level:GetAbsoluteStage() / 13.0)) / 2.0
+    effect.CollisionDamage = (1.0 + math.min(0.33,player.Damage * GODMODE.level:GetAbsoluteStage() / 13.0)) / 2.0 * (pyromaniac_flag and 1.25 or 1.0)
 end
 
 item.tear_update = function(self, tear, data, sprite)
@@ -200,6 +201,7 @@ item.tear_update = function(self, tear, data, sprite)
     if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO ~= 0 then 
         local charge = tonumber(GODMODE.save_manager.get_ent_data(tear,"Charge",item.default_charge))
         local stats = item.fire_stats[charge]
+        local pyromaniac_flag = player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)
         data.reflect_time = math.max(0,(data.reflect_time or 0) - 1)
 
         if tear:IsFrame(5,1) then 
@@ -231,7 +233,7 @@ item.tear_update = function(self, tear, data, sprite)
         if stats ~= false then 
             data.reflect_strength = math.max(stats.min,data.reflect_strength)
 
-            if (stats.interval or 0) > 0 and tear:IsFrame(stats.interval, tear.InitSeed % stats.interval) then 
+            if (stats.interval or 0) > 0 and tear:IsFrame(stats.interval - (pyromaniac_flag and math.floor(stats.interval * 0.25) or 0), tear.InitSeed % stats.interval) then 
                 local dir = player:GetAimDirection():GetAngleDegrees() + tear:GetDropRNG():RandomFloat() * item.fire_angle_range - item.fire_angle_range / 2.0
 
                 if player:GetFireDirection() == Direction.NONE then 
@@ -240,7 +242,7 @@ item.tear_update = function(self, tear, data, sprite)
 
                 item.shoot_fire(player, tear, 
                     dir, 
-                    (tear.Velocity:Length() * 0.5 + item.fire_speed * 0.75) * (stats.speedmod or 1.0), 
+                    (tear.Velocity:Length() * 0.5 + item.fire_speed * 0.75) * (stats.speedmod or 1.0) * (pyromaniac_flag and 1.5 or 1.0), 
                     (stats.lifemod or 1.0) * (tear:GetDropRNG():RandomFloat() * item.fire_life_deviance + 1.0 - item.fire_life_deviance / 2.0))
             end
         end
@@ -255,7 +257,7 @@ item.tear_update = function(self, tear, data, sprite)
             
             if time <= 0 and data.reflect_time <= 0 and charge > 0 then 
                 if player.ControlsEnabled == true then 
-                    player:TakeDamage(1,DamageFlag.DAMAGE_FIRE,EntityRef(player),20)
+                    player:TakeDamage(1, pyromaniac_flag == true and DamageFlag.DAMAGE_NO_PENALTIES or DamageFlag.DAMAGE_FIRE, EntityRef(player),20)
                 end
 
                 item.discharge_tear(player, tear, player.ControlsEnabled, true, player:HasInvincibility(DamageFlag.DAMAGE_EXPLOSION) and player or nil)
@@ -308,6 +310,11 @@ item.player_update = function(self, player, data, sprite)
 
         if player:IsFrame(20,1) then 
             player:AddCacheFlags(CacheFlag.CACHE_SHOTSPEED)
+
+            if not player:HasWeaponType(WeaponType.WEAPON_LUDOVICO_TECHNIQUE) then 
+                player:AddCacheFlags(CacheFlag.CACHE_WEAPON)
+            end
+
             player:EvaluateItems()
         end
     end

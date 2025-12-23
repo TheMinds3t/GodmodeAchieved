@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Grapes (Pickup)"
+monster.name = "[GODMODE] Grapes (Pickup)"
 monster.type = GODMODE.registry.entities.fruit.type
 monster.variant = GODMODE.registry.entities.fruit.variant
 

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Chest Infestor"
+monster.name = "[GODMODE] Chest Infestor"
 monster.type = GODMODE.registry.entities.chest_mimic.type
 monster.variant = GODMODE.registry.entities.chest_mimic.variant
 

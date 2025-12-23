@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Tear Gas"
+monster.name = "[GODMODE] Tear Gas"
 monster.type = GODMODE.registry.entities.tear_gas_can.type
 monster.variant = GODMODE.registry.entities.tear_gas_can.variant
 

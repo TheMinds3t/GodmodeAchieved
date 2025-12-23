@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Fallen Light Crack"
+monster.name = "[GODMODE] Fallen Light Crack"
 monster.type = GODMODE.registry.entities.fallen_light_crack.type
 monster.variant = GODMODE.registry.entities.fallen_light_crack.variant
 

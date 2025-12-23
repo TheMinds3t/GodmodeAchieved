@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="robot" CreatedOn="10/14/2021 11:47:22 AM" Version="125" Fps="42"/>
+	<Info CreatedBy="robot" CreatedOn="11/2/2025 8:15:14 PM" Version="126" Fps="42"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="monsters\chanter_body.png" Id="0"/>
@@ -14,6 +14,7 @@
 		</Nulls>
 		<Events>
 			<Event Name="Ring" Id="0"/>
+			<Event Name="SFX" Id="1"/>
 		</Events>
 	</Content>
 	<Animations DefaultAnimation="WalkHori">
@@ -181,6 +182,7 @@
 			</NullAnimations>
 			<Triggers>
 				<Trigger EventId="0" AtFrame="31"/>
+				<Trigger EventId="1" AtFrame="72"/>
 			</Triggers>
 		</Animation>
 		<Animation Name="WalkVert" FrameNum="20" Loop="true">

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Bathemo Swarm"
+monster.name = "[GODMODE] Bathemo Swarm"
 monster.type = GODMODE.registry.entities.bathemo_swarm.type
 monster.variant = GODMODE.registry.entities.bathemo_swarm.variant
 local spawn_thres_min = 0.3
@@ -81,7 +81,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
 	if sprite:IsFinished("Idle") or sprite:IsFinished("Attack") or sprite:IsFinished("Spawn") or sprite:IsFinished("Slam") then
 		ent.I1 = ent.I1 + 1 
-
+		ent:PlaySound(SoundEffect.SOUND_BIRD_FLAP,1,1,false,0.75)
 		if ent:GetDropRNG():RandomFloat() < ent.I1 * 0.33 then 
 			ent.I1 = (perc < slam_spam_thres and 3 or -1)
 			local spawn_flag = perc > spawn_thres_min
@@ -125,6 +125,7 @@ monster.npc_update = function(self, ent, data, sprite)
 			shock.MaxRadius = GODMODE.util.grid_size * 1.5
 			GODMODE.game:MakeShockwave(ent.Position, 0.0575, 0.005, 20)
 			GODMODE.game:ShakeScreen(10)
+			ent:PlaySound(SoundEffect.SOUND_FORESTBOSS_STOMPS,1,1,false,1)
 		end
 	elseif sprite:IsEventTriggered("SwarmSpawn") then
 		local teethers = GODMODE.util.count_enemies (nil,GODMODE.registry.entities.teether.type , GODMODE.registry.entities.teether.variant, -1)

@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Hover"
+monster.name = "[GODMODE] Hover"
 monster.type = GODMODE.registry.entities.hover.type
 monster.variant = GODMODE.registry.entities.hover.variant
 
@@ -45,6 +45,13 @@ if not (ent.Type == monster.type and ent.Variant == monster.variant) then return
 			end
 		end
 	end
+
+	if ent.FrameCount % 20 == 0 and ent:GetDropRNG():RandomFloat() < (data.sound_tick or 0) * 0.1 then 
+        ent:PlaySound(SoundEffect.SOUND_MONSTER_YELL_A,1,0,false,1.2+ent:GetDropRNG():RandomFloat()*0.075 + (fright_flag and -0.2 or 0.0))
+        data.sound_tick = 0
+    else
+        data.sound_tick = (data.sound_tick or 0) + 1 / 20.0
+    end
 end
 
 monster.npc_kill = function(self, ent)

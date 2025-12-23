@@ -1,5 +1,5 @@
 local monster = {}
-monster.name = "Drifter"
+monster.name = "[GODMODE] Drifter"
 monster.type = GODMODE.registry.entities.drifter.type
 monster.variant = GODMODE.registry.entities.drifter.variant
 
@@ -51,6 +51,8 @@ monster.npc_update = function(self, ent, data, sprite)
 	end
 
 	if sprite:IsEventTriggered("fire") then
+		ent:ToNPC():PlaySound(SoundEffect.SOUND_TEARS_FIRE, 1.0, 1, false, 0.9 + ent:GetDropRNG():RandomFloat() * 0.2)
+		ent:ToNPC():PlaySound(SoundEffect.SOUND_FIRE_RUSH, 0.5, 1, false, 0.95 + ent:GetDropRNG():RandomFloat() * 0.2)
 		local t = Isaac.Spawn(EntityType.ENTITY_PROJECTILE,2,0,ent.Position,ent.Velocity * -0.15,ent)   
 		t:SetColor(Color(0.25,1.0,1.0,0.4,1.8,1.8,1.8),60,100,false,false)
 	end
