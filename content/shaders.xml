@@ -251,13 +251,13 @@
 
                 vec2 center = vec2(RenderData.x / 2.0, RenderData.y / 2.0);
                 vec2 coord = TexCoord;
-                float xScale = 1.0 + cos(Position.y + Time / 34.0) * 0.1;
-                float xOff = sin(Position.x * 0.1 * Intensity + Time / 20.0 * xScale * TexCoord.x * Intensity) * 0.01 * Intensity - 0.01;
+                float xScale = 1.0 + cos(Position.y) * 0.1;
+                float xOff = sin(Position.x * 0.1 * Intensity + (Time / 20.0) * xScale * TexCoord.x) * 0.01 * Intensity - 0.01;
 
                 if(StyleOut == 1.0 || StyleOut == 3.0)
                 {
                     coord.x += xOff - xOff / 2.0;
-                    coord.y += 0.0;
+                    coord.y += sin(xOff)*0.01;
                 }
 
                 TexCoord0 = coord;

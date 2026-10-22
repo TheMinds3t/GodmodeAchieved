@@ -63,69 +63,100 @@ local max_doors = { --used for pile of keys
     [RoomShape.ROOMSHAPE_LBR] = 8,
 }
 
+local redkey_use_blacklist = {
+    [UseFlag.USE_VOID] = true,
+    [UseFlag.USE_MIMIC] = true,
+    [UseFlag.USE_CARBATTERY] = true,
+}
+
+local red_key_prevent_dupe = {} -- a frame cache of each time the POK was used 
+
+local set_wipe_red_key_dupes = function(data)
+    GODMODE.util.macro_on_enemies(nil, EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_TAROTCARD, nil, function(card_ent)
+            if card_ent.SubType == card then
+                local time_spawned = GODMODE.game:GetFrameCount() - card_ent.FrameCount+1
+                for killframe,_ in pairs(red_key_prevent_dupe) do GODMODE.log("prevent dupe frame "..killframe.." = "..time_spawned.."?",true) end 
+                if red_key_prevent_dupe[time_spawned] == true then
+                    GODMODE.log("   yes!",true)
+                    card_ent:Remove()
+                end
+            end
+    end, nil, true)
+
+    red_key_prevent_dupe[(GODMODE.frame_count or GODMODE.game:GetFrameCount())] = true 
+end
+
 local pok_use_effect = function(card,player,flags) 
-    local echo_chamber = player:HasCollectible(CollectibleType.COLLECTIBLE_ECHO_CHAMBER)
-
-    if echo_chamber == true then 
-        local data = GODMODE.get_ent_data(player)
-
-        if (data.use_frame or -1) == (GODMODE.frame_count or GODMODE.game:GetFrameCount()) then 
-            return
-        elseif data.use_frame ~= nil then 
-            data.use_frame = nil 
-        end
-
-        data.use_frame = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
-    end
-
-    local level = GODMODE.level
-    local room = GODMODE.room
-    local door_count = 0
-    local closest_door = nil
-
-    for doorslot=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
-        if doorslot+1 > GODMODE.util.get_max_doors(room:GetRoomShape()) then break end 
-
-        if room:GetDoor(doorslot) ~= nil then 
-            door_count = door_count + 1 
-        end
-
-        local door_pos = room:GetDoorSlotPosition(doorslot)
-            
-        if closest_door == nil or (player.Position - room:GetDoorSlotPosition(closest_door)):Length() > (player.Position - door_pos):Length() then 
-            closest_door = doorslot
-        end
-    end
-
-    local success = level:MakeRedRoomDoor(level:GetCurrentRoomIndex(), closest_door)
-    player:AnimateCard(Card.CARD_CRACKED_KEY)
+    local echo_chamber = player:HasCollectible(CollectibleType.COLLECTIBLE_ECHO_CHAMBER) or player:HasTrinket(TrinketType.TRINKET_ENDLESS_NAMELESS)
+    local data = GODMODE.get_ent_data(player)
     
-    local doors = {}
-    local door_count2 = 0
-    local bluewomb_flag = level:GetStage() == LevelStage.STAGE4_3 and GODMODE.save_manager.get_config("BlueWombRework","true","true") == "true"
-    
-    for doorslot=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
-        local door = room:GetDoor(doorslot)
-        if door ~= nil then 
-            door_count2 = door_count2 + 1 
-            -- table.insert(doors, room:GetDoor(doorslot))
-            if door.TargetRoomIndex == GridRooms.ROOM_ERROR_IDX and bluewomb_flag then
-                door:TryBlowOpen(true,player)
+    if data then 
+        if echo_chamber == true then 
+            set_wipe_red_key_dupes(data)
+        end
+
+        local level = GODMODE.level
+        local room = GODMODE.room
+        local door_count = 0
+        local closest_door = nil
+
+        for doorslot=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
+            if doorslot+1 > GODMODE.util.get_max_doors(room:GetRoomShape()) then break end 
+
+            if room:GetDoor(doorslot) ~= nil then 
+                door_count = door_count + 1 
+            end
+
+            local door_pos = room:GetDoorSlotPosition(doorslot)
+            if closest_door == nil or (player.Position - room:GetDoorSlotPosition(closest_door)):Length() > (player.Position - door_pos):Length() then 
+                closest_door = doorslot
             end
         end
-    end    
-    
-    if door_count2 == door_count then 
-        player:AddCard(card)
 
-        if player:HasTrinket(TrinketType.TRINKET_ENDLESS_NAMELESS) then 
-            GODMODE.get_ent_data(player).red_key_prevent_dupe = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
-        end
-    else
-        if pok_transition[card] then 
-            player:AddCard(pok_transition[card])
+        if max_doors[GODMODE.room:GetRoomShape()] > door_count then 
+            local success = level:MakeRedRoomDoor(level:GetCurrentRoomIndex(), closest_door)
+            player:AnimateCard(Card.CARD_CRACKED_KEY)
+            
+            local door_count2 = 0
+            local bluewomb_flag = level:GetStage() == LevelStage.STAGE4_3 and GODMODE.save_manager.get_config("BlueWombRework","true","true") == "true"
+            
+            for doorslot=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
+                local door = room:GetDoor(doorslot)
+                if door ~= nil then 
+                    door_count2 = door_count2 + 1 
+                    -- table.insert(doors, room:GetDoor(doorslot))
+                    if door.TargetRoomIndex == GridRooms.ROOM_ERROR_IDX and bluewomb_flag then
+                        door:TryBlowOpen(true,player)
+                    end
+                end
+            end    
+
+            local spawn_new = true 
+
+            for flag in pairs(redkey_use_blacklist) do 
+                if flags & flag == flag then spawn_new = false break end 
+            end
+
+            if spawn_new == true then 
+                -- if ( or echo_chamber) then 
+                --     GODMODE.get_ent_data(player).red_key_prevent_dupe = (GODMODE.frame_count or GODMODE.game:GetFrameCount())
+                -- end
+                
+                if door_count2 == door_count then 
+                    player:AddCard(card)
+                else
+                    if pok_transition[card] then 
+                        player:AddCard(pok_transition[card])
+                    end
+                end
+                
+                set_wipe_red_key_dupes(data)
+
+            end
+
         end
     end
+
 end
 
 cards_pills.card_actions = {

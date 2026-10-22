@@ -40,7 +40,7 @@
           portrait="tainted_deli.png" 
           bSkinParent="Deli"
           skinColor="0" pocketActive="38"
-          birthright="Fragmentation" healthlimit="2" achievement="GODMODE_TDeli" />
+          birthright="Fragmentation" achievement="GODMODE_TDeli" />
       <player name="Tainted Xaphan" skin="xaphan_tainted/xaphan.png" black="2" bombs="1"
           nameimage="names/xaphan.png" 
           portrait="tainted_xaphan.png" 

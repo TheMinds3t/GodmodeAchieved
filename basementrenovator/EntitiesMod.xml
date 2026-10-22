@@ -55,6 +55,8 @@
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Electrite.png" ID="700" Name="Electrite" Variant="47" Subtype="0" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/HushedHorf.png" ID="700" Name="Hushed Horf" Variant="48" Subtype="0" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/HushedFatty.png" ID="700" Name="Hushed Fatty" Variant="49" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Hushed Clotty.png" ID="700" Name="Hushed Clotty" Variant="52" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Hushed Freddy.png" ID="700" Name="Hushed Freddy" Variant="53" Subtype="0" Boss="0" />
 
 	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock L.png" Kind="Godmode" Name="Devil's Lock (Left)" Subtype="0" Variant="700" MirrorX="202.0.2" />
 	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock U.png" Kind="Godmode" Name="Devil's Lock (Up)" Subtype="1" Variant="700" MirrorY="202.0.3" />

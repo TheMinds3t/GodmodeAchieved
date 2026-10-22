@@ -23,10 +23,15 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		data.nosebleed_mult_level = math.max(1.0, (data.nosebleed_mult_level or 1.5) - (1 / (max_time * 120)))
-		if data.nosebleed_mult_level > 1 then
+		if data.nosebleed_mult_level > 1 and player:IsFrame(3, 10) then
+			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
+			player:EvaluateItems()
+			data.nosebleed_needs_reset = true 
+		elseif data.nosebleed_mult_level <= 1 and data.nosebleed_needs_reset == true then 
+			data.nosebleed_needs_reset = nil 
 			player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_TEARCOLOR)
 			player:EvaluateItems()
 		end

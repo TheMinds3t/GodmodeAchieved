@@ -15,7 +15,7 @@ local gangrene_vel_thres = 0.85
 local gangrene_vel_inherit = 0.25
 
 item.player_update = function(self, player, data)
-	if player:HasCollectible(item.instance) then
+	if player:HasCollectible(item.instance) and Isaac.CountEnemies() + Isaac.CountBosses() > 0 then
 		if not player:IsDead() then
 			data.gangrene_counter = (data.gangrene_counter or 0) + player:GetCollectibleRNG(item.instance):RandomFloat()
 

@@ -103,7 +103,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
         data.adra_cooldown = math.max(0,(data.adra_cooldown or 0) - 1)
         -- if data.adra_cooldown > 0 then

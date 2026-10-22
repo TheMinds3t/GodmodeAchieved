@@ -262,7 +262,7 @@ local set_mad_lane_types = function(ent,data,sprite)
     end
 
     data.mad_lane_switch_time = mad_lane_switch_time
-    data.delay = data.delay + diff_head_type_add
+    data.delay = (data.delay or 0) + diff_head_type_add
 end
 
 monster.fire_tear = function(ent,dir,speed)
@@ -301,6 +301,8 @@ monster.npc_update = function(self, ent, data, sprite)
         if ent.SubType == GODMODE.registry.entities.keepah_boss.subtype then 
             if sprite:IsFinished("Appear") then 
                 sprite:Play("Transform",true)
+                data.blue_flag = true 
+                data.red_flag = true 
             end
 
             if sprite:IsFinished("Transform") then 
@@ -323,7 +325,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 if data.destroyed_shop ~= true then 
                     GODMODE.util.schedule_function(function() 
                         GODMODE.util.macro_on_enemies(nil,EntityType.ENTITY_PICKUP,nil,nil,function(shop)
-                            if shop and shop:ToPickup() and shop:ToPickup().ShopItemId > 0 then 
+                            if shop and shop:ToPickup() and shop:ToPickup().ShopItemId >= 0 then 
                                 Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.POOF01,0,shop.Position,Vector.Zero,nil)
                                 shop:Remove()
                             end
@@ -337,30 +339,31 @@ monster.npc_update = function(self, ent, data, sprite)
             data.mad_lane_switch_time = math.max((data.mad_lane_switch_time or 0) - 1, 0)
 
             -- for enraged form, changes the current lane attack types
-            if data.mad_lane_switch_time <= 0 and data.mad then 
+            if data.mad_lane_switch_time <= 0 and data.mad and data.delay then 
                 set_mad_lane_types(ent,data,sprite)
             end
 
             -- speech bubble
             if data.bubble then 
-                if data.blue_flag == true then 
-                    data.blue_flag = nil 
-                    data.bubble:Play("TextBlue",true)
-                end
-
-                if data.red_flag == true then 
-                    data.red_flag = nil 
-                    data.bubble:Play("TextRed",true)
-                end
-
                 data.bubble:Update()
 
                 if data.bubble:IsFinished(data.bubble:GetAnimation()) then 
+
                     data.bubble_ticks = (data.bubble_ticks or min_bubble_time) - 1
 
                     if data.bubble_ticks <= 0 then 
-                        data.bubble:Play("Text"..tostring(ent:GetDropRNG():RandomInt(num_text_options)+1),true)
-                        data.bubble_ticks = min_bubble_time + ent:GetDropRNG():RandomInt(bubble_time_var) + 1
+                        if data.blue_flag == true and not sprite:IsPlaying("Transform") then 
+                            data.blue_flag = nil 
+                            data.bubble:Play("TextBlue",true)
+                        elseif data.red_flag == true and not sprite:IsPlaying("Transform") then 
+                            data.red_flag = nil 
+                            data.bubble:Play("TextOrange",true)
+                            data.bubble.PlaybackSpeed = 0.6
+                        else 
+                            data.bubble:Play("Text"..tostring(ent:GetDropRNG():RandomInt(num_text_options)+1),true)
+                            data.bubble_ticks = min_bubble_time + ent:GetDropRNG():RandomInt(bubble_time_var) + 1
+                            data.bubble.PlaybackSpeed = 1.0
+                        end
                     end
                 end
             else 
@@ -397,7 +400,7 @@ monster.npc_update = function(self, ent, data, sprite)
 
             local cur_atk = keepah_atks[data.cur_attack or 0]
 
-            if cur_atk == nil and (data.goal_pos - ent.Position):Length() < ent.Size * 2.5 then 
+            if cur_atk == nil and (data.goal_pos - ent.Position):Length() < ent.Size * 2.5 and not data.blue_flag and not data.red_flag then 
                 data.cur_attack = choose_next_atk(ent,data,sprite)
                 data.atk_start_cd = attack_breathe_window 
             elseif cur_atk then 
@@ -550,6 +553,10 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
         if data.mama_mega_negate <= 0 then data.mama_mega_negate = nil end  
         return false 
 	end
+
+    if data.red_flag == true or data.blue_flag == true then 
+        return false 
+    end
 end
 
 return monster

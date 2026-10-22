@@ -1,10 +1,10 @@
 local item = {}
 item.instance = GODMODE.registry.items.divine_wrath
-item.eid_description = "Gain +3% damage each time you clear a room without taking damage#Damage bonus caps at +100% damage#Bonus is lost if you take damage, damaging all enemies in the room"
+item.eid_description = "+0.5 Damage#Gain +3% damage each time you clear a room without taking damage#Damage bonus caps at +100% damage#Bonus is lost if you take damage, damaging all enemies in the room"
 item.encyc_entry = {
 	{ -- Effects
 		{str = "Effects", fsize = 2, clr = 3, halign = 0},
-		{str = "Gain +3% damage each time you clear a room without taking damage, up to +100% damage."},
+		{str = "+0.5 Damage. Gain +3% damage each time you clear a room without taking damage, up to +100% damage."},
 		{str = "The bonus is lost if you take damage that would impact your devil deal chance."},
 		{str = "When the bonus is lost, all enemies in the room take that percentage of their current health as damage."},
 	},
@@ -18,7 +18,7 @@ item.eval_cache = function(self, player,cache,data)
 
 	if cache == CacheFlag.CACHE_DAMAGE then
 		local amt = tonumber(GODMODE.save_manager.get_player_data(player,"DivineWrathCount","0"))
-		player.Damage = player.Damage * (1 + amt * item.amt_scale * player:GetCollectibleNum(item.instance))
+		player.Damage = (player.Damage + 0.5) * (1 + amt * item.amt_scale * player:GetCollectibleNum(item.instance))
 	end
 end
 

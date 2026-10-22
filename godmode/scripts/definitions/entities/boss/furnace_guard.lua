@@ -5,7 +5,7 @@ monster.variant = GODMODE.registry.entities.furnace_guard.variant
 
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 
-        local bonus = math.min(250,(GODMODE.util.get_basic_dps(ent) / 10.0) * 100)
+        local bonus = GODMODE.util.get_average_stat_score() * 250
         if ent.SubType > 0 then bonus = 0 end
 
         ent.MaxHitPoints = ent.MaxHitPoints + bonus

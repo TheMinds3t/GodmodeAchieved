@@ -11,7 +11,7 @@ item.encyc_entry = {
 }
 
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
     if player:HasCollectible(item.instance) or (data.crimson_cooldown or 0) > 0 then
         data.crimson_cooldown = (data.crimson_cooldown or 0) - 1
     end

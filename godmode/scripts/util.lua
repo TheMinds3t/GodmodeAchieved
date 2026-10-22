@@ -39,21 +39,6 @@ util.wrap_angle = function(angle, degrees)
 	end
 end
 
-util.get_basic_dps = function(ent)
-	if ent == nil or ent.GetPlayerTarget == nil then ent = Isaac.GetPlayer() end
-    local player = ent:ToPlayer() or ent:GetPlayerTarget()
-	if player == nil then player = Isaac.GetPlayer() end
-
-	if player:ToPlayer() then
-		player = player:ToPlayer()
-	    local freq = player.MaxFireDelay
-    	local dmg = player.Damage
-		return dmg * 30 / (freq + 1)
-    end
-
-	return 0
-end
-
 util.tearflag_mods = {
 	[TearFlags.TEAR_SPECTRAL] = 0.3,
 	[TearFlags.TEAR_PIERCING] = 0.4,
@@ -235,6 +220,17 @@ end
 
 util.get_stat_scale = function()
 	return tonumber(GODMODE.save_manager.get_config("StatHelpScale","0.8")) * util.get_health_scale(nil,1)
+end
+
+util.get_average_stat_score = function()
+	local score, num = 0, 0
+	GODMODE.util.macro_on_players(function(player) 
+		score = score + util.get_stat_score(player).score
+		num = num + 1
+	end)
+	if num > 0 then 
+		return score / num / util.get_max_stat_score()
+	else return 0 end 
 end
 
 util.get_max_stat_score = function()
@@ -565,8 +561,9 @@ util.macro_on_enemies = function(spawner,ent_type,var, subtype, funct, predicate
 	for i=1,#ents do 
 		local enemy = ents[i]
 		if enemy then
-			local spawner_flag = (spawner == nil or ((enemy.SpawnerEntity ~= nil and GetPtrHash(enemy.SpawnerEntity) == GetPtrHash(spawner)) or 
-			(enemy.Parent ~= nil and GetPtrHash(enemy.Parent) == GetPtrHash(spawner))))
+			local spawner_flag = (spawner == nil or 
+				((enemy.SpawnerEntity ~= nil and GetPtrHash(enemy.SpawnerEntity) == GetPtrHash(spawner)) or 
+					(enemy.Parent ~= nil and GetPtrHash(enemy.Parent) == GetPtrHash(spawner))))
 			local type_flag = (ent_type == -1 or enemy.Type == ent_type) and (var == -1 or enemy.Variant == var) and (subtype == -1 or enemy.SubType == subtype)
 			if spawner_flag and predicate(enemy) == true and type_flag then
 					funct(enemy)
@@ -1178,7 +1175,7 @@ util.calc_broken_perc = function(include_faithless)
 end
 
 util.get_player_hits = function(player,containers,red_only)
-	return math.ceil((((containers or red_only) and player:GetMaxHearts() or player:GetHearts()) + player:GetSoulHearts() + (player:GetBoneHearts() * (containers and 2 or 1))) / (containers and 2 or 1)) + player:GetBrokenHearts() * (red_only and 2 or 0)
+	return math.ceil((((containers or red_only) and player:GetMaxHearts() or player:GetHearts()) + player:GetSoulHearts() + (player:GetBoneHearts() * (containers and 2 or 1))) / (containers and 2 or 1))-- + player:GetBrokenHearts() * (red_only and 2 or 0)
 end
 
 util.is_death_certificate = function()
@@ -1551,5 +1548,30 @@ end
 	
 -- 	return {min_weight = min, max_weight = max, weight_scalar = scalar, rooms = ret, roomlist = roomlist}
 -- end	
+
+-- random = Random obj, weight_list = {{weight=1,entry="hello"},{weight=1,entry="world"}}
+util.weighted_random = function(random, weight_list, max_weight)
+    if max_weight == nil then 
+        max_weight = 0
+        for _,entry in ipairs(weight_list) do 
+            max_weight = max_weight + entry.weight
+        end
+        
+        return util.weighted_random(random, weight_list, max_weight)
+    end
+
+    local cur_entry = weight_list[random:RandomInt(#weight_list)+1]
+
+    while max_weight > 0 and cur_entry.weight > 0 do 
+        max_weight = max_weight - cur_entry.weight 
+        cur_entry = weight_list[random:RandomInt(#weight_list)+1]
+    end
+
+    return cur_entry
+end
+
+util.reload_sprite_graphics = function(sprite)
+	sprite:Load(sprite:GetFilename(), true)
+end
 
 return util

@@ -12,7 +12,7 @@ item.encyc_entry = {
 local cost = 5
 local charge_time = 40
 
-item.player_update = function(self,player, data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		local percent = math.max(0,(charge_time-(data.gold_battery_cooldown or charge_time))/charge_time)
 

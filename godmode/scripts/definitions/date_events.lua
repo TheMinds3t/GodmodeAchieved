@@ -1,24 +1,31 @@
 local events = {}
+
+local function add_with_config_check(var_name, config_key)
+    if GODMODE.save_manager.set_config(config_key, "true") == "true" then 
+        GODMODE[var_name] = true 
+    end
+end
+
 events.dates = {
     {
         name="MINDS3T's birthday",
         date = {month=6, day=4},
         modifier = function() 
-            GODMODE.birthday_mode = true 
+            add_with_config_check("birthday_mode","RGONEventBday")
         end 
     },
     {
         name="Harvester's birthday",
         date = {month=9, day=6},
         modifier = function() 
-            GODMODE.birthday_mode = true 
+            add_with_config_check("birthday_mode","RGONEventBday")
         end 
     },
     {
         name="Busybody's birthday",
         date = {month=11, day=7},
         modifier = function() 
-            GODMODE.birthday_mode = true 
+            add_with_config_check("birthday_mode","RGONEventBday")
         end 
     },
 
@@ -26,7 +33,8 @@ events.dates = {
         name="April Fool's",
         date = {month=4, day=1},
         modifier = function() 
-            GODMODE.keepah_mode = true 
+            add_with_config_check("keepah_mode","RGONEventKeepah")
+            GODMODE.april_fools = true 
         end 
     },
 
@@ -34,22 +42,22 @@ events.dates = {
         name="Christmas Eve",
         date = {month=12, day=24},
         modifier = function() 
-            GODMODE.christmas_mode = true 
+            add_with_config_check("christmas_mode","RGONEventXMas")
         end 
     },
     {
         name="Christmas Day",
         date = {month=12, day=25},
         modifier = function() 
-            GODMODE.christmas_mode = true 
+            add_with_config_check("christmas_mode","RGONEventXMas")
         end 
     },
     {
         name="Post-Christmas Day",
         date = {month=12, day=26},
         modifier = function() 
-            GODMODE.christmas_mode = true 
-        end 
+            add_with_config_check("christmas_mode","RGONEventXMas")
+        end
     },
 }
 
@@ -70,7 +78,6 @@ events.get_active_events = function(activate) -- thank you @psi_starbean in MOI 
         end
 
         events.active_events = active_events
-
         return active_events
     end
 

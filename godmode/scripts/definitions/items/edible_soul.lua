@@ -37,7 +37,7 @@ item.first_level = function(self)
 	end)
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	local flag = GODMODE.save_manager.get_player_data(player, "EdibleSoulApplied", "false") == "true"
 
 	if data.edible_soul_eaten == true then 

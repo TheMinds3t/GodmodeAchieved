@@ -27,7 +27,7 @@ item.spawn_fx = function(self, pos)
 	dust:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		if not player:IsDead() and player:IsFrame(1,10) then
 			if player:HasEntityFlags(EntityFlag.FLAG_SLOW) then 

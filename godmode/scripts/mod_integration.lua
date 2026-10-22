@@ -236,7 +236,7 @@ if EID then
                         end
                     end
                 elseif item.items and item.transformation == true and item.eid_transform ~= nil then 
-                    for item2,_ in pairs(item.items) do 
+                    for item2,_ in pairs(GODMODE.itempools.get_pool(item.items)) do 
                         if item2 ~= GODMODE.registry.items.jack_of_all_trades then 
                             EID:assignTransformation("collectible", item2, item.eid_transform)
                         end
@@ -626,9 +626,7 @@ function load_stageapi_integration()
                 stage:SetName(stage_file.api_id)
                 stage.DisplayName = stage_file.display_name
     
-                if stage.simulating_stage then 
-                    stage:SetStageNumber(stage.simulating_stage)
-                end
+                stage:SetStageNumber(stage.simulating_stage)
 
                 -- if stage.simulating_stage then 
                 --     GODMODE.save_manager.set_data("StageReseed"..stage.simulating_stage,"false",true)
@@ -994,9 +992,9 @@ function load_stageapi_integration()
     --[[ - Place a StageAPI boss indicator metadata entity on top of the groups in the map room layout to indicate you want rooms removed from the pool as they're placed.  ]]--
     --[[ - Refer to "resources/godmode/rooms/luc/ivory_rooms.lua" for an example of proper implementation.                                                                          ]]--
     --[[ ================================================================================================================================================================== ]]--
-    --[[ @param max_tries_per_tile: int (default 33)                                                                                                                        ]]--
     --[[ @param rooms_list: StageAPI.RoomsList                                                                                                                              ]]--
     --[[ @param rooms: include("luaroom file")                                                                                                                              ]]--
+    --[[ @param max_tries_per_tile: int (default 33)                                                                                                                        ]]--
     --[[ ================================================================================================================================================================== ]]--
     --[[ feel free to re-use this code or parts of it, even rename it, just keep this @ in the comments <3 this took me WAY too long to lay out lmao                        ]]--
     --[[ ================================================================================================================================================================== ]]--
@@ -1005,7 +1003,7 @@ function load_stageapi_integration()
         -- rooms_list = rooms_list or StageAPI.RoomsLists["GODMODEIvoryLevelMap"] or StageAPI.RoomsList("GODMODEIvoryLevelMap")
         -- rooms = rooms or include("resources.godmode.rooms.luc.ivory_rooms")
 
-        -- empty the RoomsList
+        -- empty the RoomsList if it's been used already for this function
         if rooms_list.used_for_randomized_floor then 
             rooms_list.All = {}
             rooms_list.ByShape = {}
@@ -1017,7 +1015,6 @@ function load_stageapi_integration()
         end
 
         rooms_list.used_for_randomized_floor = true 
-
         StageAPI.StageRNG:SetSeed(StageAPI.Seeds:GetStageSeed(GODMODE.level:GetStage()), 32)
         local rand = StageAPI.StageRNG 
 
@@ -1027,7 +1024,7 @@ function load_stageapi_integration()
 
         local get_group_for = function(type) 
             if room_groups[type] == nil then 
-                GODMODE.log("Registering group \'"..type.."\'",true) 
+                -- GODMODE.log("Registering group \'"..type.."\'",true) 
                 num_room_groups = num_room_groups + 1 
             end
 
@@ -1037,63 +1034,61 @@ function load_stageapi_integration()
 
         -- index rooms so that bigger rooms can generate correctly when placed randomly 
         for ind,room in ipairs(rooms_list.All) do 
-            -- scan room layouts for door restraints and group declarations
+            -- scan current room layout for door restraints and group declarations
             local no_door_list = {} 
             local groups_from_room = {}
-            -- look for Boss Indicator entities to indicate if room pools should deplete
+            -- look for Boss Indicator StageAPI entities to indicate if room pools should deplete
             local perishable_markers = {}
 
+            -- gather metadata
             for _,meta in ipairs(room.Entities) do 
                 -- collect invalid doors
-                if meta.Slot ~= nil and meta.Exists == false then 
+                if meta.Slot ~= nil and meta.Exists == false then  
                     no_door_list[#no_door_list + 1] = meta.Slot
-                    GODMODE.log("Collected door-invalidator for slot \'"..meta.Slot.."\' in room ID \'"..room.Variant.."\'!",true)
+                    -- GODMODE.log("Collected door-invalidator for slot \'"..meta.Slot.."\' in room ID \'"..room.Variant.."\'!",true)
                 end
 
-                -- this is indicating a random group for the map
+                -- this is indicating a new random group for the map = Room StageAPI metadata
                 if meta.Type == 199 and meta.Variant == 0 then 
-                    table.insert(groups_from_room, {type=meta.SubType,pos=Vector(meta.GridX,meta.GridY)})
-                    GODMODE.log("Collected group identifier \'"..meta.SubType.."\' for room ID \'"..room.Variant.."\'!",true)
+                    table.insert(groups_from_room, {type=meta.SubType,x=meta.GridX,y=meta.GridY,ind=ind})
+                    -- GODMODE.log("Collected group identifier \'"..meta.SubType.."\' for room ID \'"..room.Variant.."\'!",true)
                 end
 
-                -- this indicates a perishable group (pull rooms as they are placed)
+                -- this indicates a perishable group (pull rooms as they are placed) = Boss Indicator StageAPI metadata
                 if meta.Type == 199 and meta.Variant == 30 then 
-                    table.insert(perishable_markers, {pos=Vector(meta.GridX,meta.GridY)})
+                    table.insert(perishable_markers, {x=meta.GridX,y=meta.GridY})
                 end
             end
 
-            -- check each boss indicator for groups on top of it to mark them perishable
-            for _,meta in ipairs(perishable_markers) do 
-                for _,group in ipairs(groups_from_room) do 
-                    if group.pos.X == meta.GridX and group.pos.Y == meta.GridY then 
-                        get_group_for(group.type).perishable = true 
-                    end
-                end
-            end
-
-            -- register this room layout to all groups found in the file if it isn't the map room
-            if room.Variant == 0 and room.SubType == 1 then 
+            -- register all data this room layout found if it's not a map layout room (variant 0, subtype 1)
+            if not (room.Variant == 0 and room.SubType == 1) then 
+                -- walk through each identified room ID entity, update the summative vars for that room group as its being walked through
                 for _,group_id in ipairs(groups_from_room) do 
                     local cur_group = get_group_for(group_id.type)
-                    table.insert(cur_group, room)
-
-                    cur_group.list_of_variants = cur_group.list_of_variants or {}
-                    local room_shape_data = roomshape_to_neighbor_check[room.Shape] or {x = 1, y = 1}
-
-                    for i=1,room_shape_data.x * room_shape_data.y do 
-                        table.insert(cur_group.list_of_variants,room.Variant)
-                    end
-
+                    cur_group.weighted_pool = cur_group.weighted_pool or {}
+                    table.insert(cur_group.weighted_pool, {entry={room=room.ind,weighted=#cur_group.weighted_pool}, weight=room.Weight})
+                    room.no_door_list = no_door_list -- add a cache of inactive doors for speed later 
                     -- store the room
-                    cur_group[room.Variant] = {room=room,doors=room.Doors} 
                     cur_group.max_var = math.max(cur_group.max_var or room.Variant, room.Variant)
                     cur_group.min_var = math.min(cur_group.min_var or room.Variant, room.Variant)
                     cur_group.max_weight = math.max(cur_group.max_weight or room.Weight, room.Weight)
                     cur_group.min_weight = math.min(cur_group.min_weight or room.Weight, room.Weight)
                     cur_group.total_weight = (cur_group.total_weight or 0) + room.Weight
                 end
+            else -- this is a map layout room
+                -- check each boss indicator for groups matching that position to mark them perishable
+                for _,meta in ipairs(perishable_markers) do 
+                    for _,group in ipairs(groups_from_room) do 
+                        if group.x == meta.x and group.y == meta.y then 
+                            get_group_for(group.type).perishable = true 
+                        end
+                    end
+                end
             end
         end
+
+        -- done looking through the room files for identifying groups per room layout and floor layout plans
+        collectgarbage("collect")
 
         -- rooms from the map layout in the luarooms file 
         local map_rooms = {}
@@ -1106,7 +1101,7 @@ function load_stageapi_integration()
             return 
         end
 
-        -- scrape valid, replaceable rooms from the map
+        -- scrape valid, replaceable rooms from the map. This is where the real floor layout is being built in map_rooms
         for ind,ent in pairs(floorPlan.Entities) do 
             --pulled from stageapi to check for room entities
             local metadata = StageAPI.IsMetadataEntity(ent.Type, ent.Variant) 
@@ -1132,45 +1127,45 @@ function load_stageapi_integration()
         local check_room_size_at = function(shape, tile_x, tile_y, door_blacklist)
             local size = roomshape_to_neighbor_check[shape]
             if not size then 
-                GODMODE.log("   -> UNIMPLEMENTED SHAPE \'"..tostring(shape).."\', discarding...",true)
+                -- GODMODE.log("   -> UNIMPLEMENTED SHAPE \'"..tostring(shape).."\', discarding...",true)
                 return false, {x=0,y=0}
             end
 
             local cur_group_id = map_rooms[tile_x][tile_y].group_id
             local valid = true 
-            GODMODE.log("   -> room shape \'"..size.name.."\' is sized at \'"..size.x.."x"..size.y.."\' for tile \'"..(tile_x)..","..(tile_y).."\'. Third arg = "..tostring(size.skip and (size.skip.x..","..size.skip.y) or "NA"),true)
+            -- GODMODE.log("   -> room shape \'"..size.name.."\' is sized at \'"..size.x.."x"..size.y.."\' for tile \'"..(tile_x)..","..(tile_y).."\'. Third arg = "..tostring(size.skip and (size.skip.x..","..size.skip.y) or "NA"),true)
 
             for x_off=0, size.x-1 do 
                 for y_off=0, size.y-1 do 
                     local x_neighbor, y_neighbor = tile_x+x_off, tile_y+y_off
-                    GODMODE.log("    -> is \'"..(x_neighbor)..","..(y_neighbor).."\' invalid?",true)
+                    -- GODMODE.log("    -> is \'"..(x_neighbor)..","..(y_neighbor).."\' invalid?",true)
 
                     -- this is for L-room checks
                     if size.skip == nil or (size.skip ~= nil and not (size.skip.x == x_off and size.skip.y == y_off)) then 
                         -- if the room space is missing, then invalidate the room shape at this position 
                         if not map_rooms[x_neighbor] then 
-                            GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no row",true)
+                            -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no row",true)
                             valid=false 
                         elseif (map_rooms[x_neighbor] and (not map_rooms[x_neighbor][y_neighbor] or size.skip ~= nil and (size.skip.x == tile_x-x_neighbor and size.skip.y == tile_y-y_neighbor))) then 
-                            GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no col",true)
+                            -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! no col",true)
                             valid = false 
                         elseif map_rooms[x_neighbor][y_neighbor].disable_for_neighbor_check == true then 
-                            GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! already disabled",true)
+                            -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! already disabled",true)
                             valid = false 
                         else
                             local neighbor_group_id = map_rooms[x_neighbor][y_neighbor].group_id
                             
                             if cur_group_id ~= neighbor_group_id and room_groups[neighbor_group_id] then
-                                GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! different neighbor group (mine is "..cur_group_id..", not "..neighbor_group_id..")",true)
+                                -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} yes!!! different neighbor group (mine is "..cur_group_id..", not "..neighbor_group_id..")",true)
                                 valid = false 
                             else
-                                GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} no...",true)
+                                -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} no...",true)
                             end
                         end
 
                         if valid == false then break end 
                     else 
-                        GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} no, this is the skipped spot for the L room...",true)
+                        -- GODMODE.log("     -> {"..(x_neighbor)..","..(y_neighbor).."} no, this is the skipped spot for the L room...",true)
                     end
                 end
 
@@ -1179,12 +1174,12 @@ function load_stageapi_integration()
 
             -- check for the thin rooms to make sure they don't block a face of a room
             if valid and size.noneighbor ~= nil then
-                GODMODE.log("    -> checking neighbor requirements for \'"..size.name.."\' shape...",true)
+                -- GODMODE.log("    -> checking neighbor requirements for \'"..size.name.."\' shape...",true)
 
                 for _,check in ipairs(size.noneighbor) do 
-                    GODMODE.log("     -> is \'"..(tile_x-min_x+1).."+"..check.x..","..(tile_y-min_y+1).."+"..check.y.."\' empty?",true)
+                    -- GODMODE.log("     -> is \'"..(tile_x-min_x+1).."+"..check.x..","..(tile_y-min_y+1).."+"..check.y.."\' empty?",true)
                     if map_rooms[tile_x+check.x] and map_rooms[tile_x+check.x][tile_y+check.y] then 
-                        GODMODE.log("      -> NO, invalidating..",true)
+                        -- GODMODE.log("      -> NO, invalidating..",true)
                         valid = false 
                         break
                     end
@@ -1193,15 +1188,15 @@ function load_stageapi_integration()
 
             -- if there are doors that are disabled for this room, make sure it can still fit 
             if door_blacklist and #door_blacklist > 0 then 
-                GODMODE.log("     -> checking door slots for valid connections...",true)
+                -- GODMODE.log("     -> checking door slots for valid connections...",true)
                 for _,slot in ipairs(door_blacklist) do 
                     if slot and slot.Exists == false and doorpos_to_neighbor_check[slot] then 
                         local off = doorpos_to_neighbor_check[slot] 
 
-                        GODMODE.log("      -> is door slot "..slot.." offset safe?",true)
+                        -- GODMODE.log("      -> is door slot "..slot.." offset safe?",true)
 
                         if map_rooms[tile_x+off.x][tile_y+off.y] ~= nil then 
-                            GODMODE.log("       -> no!",true)
+                            -- GODMODE.log("       -> no!",true)
                             valid = false 
                         end
                     end
@@ -1228,25 +1223,27 @@ function load_stageapi_integration()
    
                         if cur_group then 
                             -- GODMODE.log("->valid room at \'"..x..","..y.."\'..",true)
-                            local selected_room = nil 
+                            local selected_room, selected_ind = nil, nil 
 
                             -- try up to 33 different rooms before leaving it at the default of 1
                             local max_depth = max_tries_per_tile
 
                             while max_depth > 0 do 
-                                -- get the pool of rooms for this map entry 
-                                selected_room = cur_group.list_of_variants[rand:RandomInt(#cur_group.list_of_variants) + 1]
-                                GODMODE.log("choosing a room (IDs between "..cur_group.min_var.."-"..cur_group.max_var..") for group "..group_id.."!",true)
-                                local room_shape = cur_group[selected_room].room.Shape
+                                -- pick a room with a weight limit
+                                selected_ind = GODMODE.util.weighted_random(rand, cur_group.weighted_pool, max_tries_per_tile+1).entry
+                                selected_room = rooms_list.All[selected_ind.room]
+                                -- GODMODE.log("choosing a room (IDs between "..cur_group.min_var.."-"..cur_group.max_var..") for group "..group_id.."!",true)
 
                                 -- if the room is valid 
-                                if cur_group[selected_room] and cur_group[selected_room].room then 
-                                    GODMODE.log("  ->checking room \'"..selected_room.."\', size \'"..room_shape.."\', for \'"..(x)..","..(y).."\'?",true)
-                                    local place_valid, check_grid = check_room_size_at(room_shape, x, y, cur_group[selected_room].doors)
+                                if selected_room then 
+                                    local room_shape = selected_room.Shape
+
+                                    -- GODMODE.log("  ->checking room \'"..selected_room.."\', size \'"..room_shape.."\', for \'"..(x)..","..(y).."\'?",true)
+                                    local place_valid, check_grid = check_room_size_at(room_shape, x, y, room.no_door_list) -- cur_group[room.Variant] represents the doors from that variant
                                     
                                     -- if the placement is valid for the selected room shape, then update the overlapping rooms for the room shape to say they are reserved.
                                     if place_valid then 
-                                        GODMODE.log("   ->valid placement of \'"..selected_room.."\', size \'"..check_grid.x.."x"..check_grid.y.."\', for \'"..(x)..","..(y).."\'!",true)
+                                        -- GODMODE.log("   ->valid placement of \'"..selected_room.."\', size \'"..check_grid.x.."x"..check_grid.y.."\', for \'"..(x)..","..(y).."\'!",true)
                                         local final_x, final_y = x,y
                                         -- convert all spaces that match 
                                         for grid_x_off=check_grid.x-1,0,-1  do 
@@ -1260,20 +1257,24 @@ function load_stageapi_integration()
                                                     local sel_room_ent = map_rooms[final_x][final_y]
 
                                                     if sel_room_ent then 
-                                                        sel_room_ent.SubType = selected_room * 4
+                                                        sel_room_ent.SubType = selected_ind.room * 4
                                                         GODMODE.log("----->placed room \'"..selected_room.."\' , size \'"..room_shape.."\', at \'"..(x).."+"..grid_x_off.." ("..final_x.."),"..(y).."+"..grid_y_off.." ("..final_y..")\'!",true)
                                                             
                                                         -- if there was a boss indicator on top of this group then remove the rooms from the pool as they place
                                                         if cur_group.perishable then  
-                                                            GODMODE.log("----->group is perishable, removing \'"..selected_room.."\' from pool!",true)
-                                                            table.remove(cur_group.list_of_variants, selected_room)
-                                                            cur_group[selected_room] = nil
+                                                            -- GODMODE.log("----->group is perishable, removing \'"..selected_room.."\' from pool!",true)
+                                                            table.remove(cur_group.weighted_pool, selected_ind.weighted)
+
+                                                            -- shift following indexes to keep it bug free
+                                                            for i=selected_ind.weighted, #cur_group.weighted_pool do 
+                                                                cur_group.weighted_pool[i].entry.weighted = cur_group.weighted_pool[i].entry.weighted - 1
+                                                            end
                                                         end
 
                                                         -- if this is a larger room we need to reserve these seats, so to speak
                                                         if check_grid.x > 1 or check_grid.y > 1 then 
                                                             sel_room_ent.disable_for_neighbor_check = true
-                                                            GODMODE.log("------> (marked the room as reserved due to size of current layout)",true)
+                                                            -- GODMODE.log("------> (marked the room as reserved due to size of current layout)",true)
                                                         end
                                                     end
                                                 end
@@ -1282,19 +1283,21 @@ function load_stageapi_integration()
 
                                         -- MinimapAPI pivots specifically this room type around 1,0 instead of 0,0 :L
                                         if MinimapAPI and MinimapAPI.RoomShapeGridPivots[room_shape] ~= Vector.Zero then 
-                                            GODMODE.log("----------> (added the room to the list of LTL rooms for MinimapAPI fix) (x="..final_x..",y="..final_y..",shape="..room_shape..")",true)
+                                            -- GODMODE.log("----------> (added the room to the list of LTL rooms for MinimapAPI fix) (x="..final_x..",y="..final_y..",shape="..room_shape..")",true)
                                             table.insert(minimapi_pivot_fix, {x=final_x,y=final_y,shape=room_shape})
                                         end
                                         
                                         break
                                     end
+                                else 
+                                    GODMODE.log("room index \'"..selected_ind.room.."\' is invalid (range = 1-"..#rooms_list.All")")
                                 end
 
                                 max_depth = max_depth - 1
                             end
 
-                            if max_depth == 0 then 
-                                GODMODE.log("set \'"..(x)..","..(y).."\' to default room of "..cur_group.min_var..".")
+                            if max_depth <= 0 then 
+                                -- GODMODE.log("set \'"..(x)..","..(y).."\' to default room of "..cur_group.min_var..".")
                                 map_rooms[x][y].SubType = cur_group.min_var * 4 -- if failed to find a successful room, use the first room ID indexed for the group
                             end
                         end
@@ -1371,7 +1374,7 @@ function load_stageapi_integration()
 
                         --         return false 
                         --     end
-                            
+
                         --     if has_planetarium() and (GODMODE.util.random() > (0.01/0.21) and stage.api_id == "FruitCellar" or stage.api_id ~= "FruitCellar") then 
                         --         while has_planetarium() and depth > 0 do
                         --             depth = depth - 1
@@ -1643,21 +1646,22 @@ end
 
 
 if MinimapAPI then 
-    GODMODE.sprites.minimapapi_sprite = Sprite()
-    GODMODE.sprites.minimapapi_sprite:Load("godmode/gfx/ui/minimapapi/godmode_minimap.anm2", true)
-	GODMODE.sprites.minimapapi_sprite:Play("ObservatoryIcon", false)
+    GODMODE.sprites.minimapapi_observatory_sprite = Sprite()
+    GODMODE.sprites.minimapapi_observatory_sprite:Load("godmode/gfx/ui/minimapapi/godmode_minimap.anm2", true)
+    GODMODE.sprites.minimapapi_map_sprite = Sprite()
+	GODMODE.sprites.minimapapi_map_sprite:Play("BlessingJustice", false)
     local curse_predicate = function(curse)
         return function() return GODMODE.util.has_curse(GODMODE.util.get_shifted_curse(curse)) end
     end
-	MinimapAPI:AddIcon("GODMODEObservatory", GODMODE.sprites.minimapapi_sprite)
+	MinimapAPI:AddIcon("GODMODEObservatory", GODMODE.sprites.minimapapi_observatory_sprite)
 
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Opportunity", curse_predicate(GODMODE.registry.blessings["opportunity"]), GODMODE.sprites.minimapapi_sprite, "BlessingOpportunity", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Kindness", curse_predicate(GODMODE.registry.blessings["kindness"]), GODMODE.sprites.minimapapi_sprite, "BlessingKindness", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Charity", curse_predicate(GODMODE.registry.blessings["charity"]), GODMODE.sprites.minimapapi_sprite, "BlessingCharity", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Faith", curse_predicate(GODMODE.registry.blessings["faith"]), GODMODE.sprites.minimapapi_sprite, "BlessingFaith", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Justice", curse_predicate(GODMODE.registry.blessings["justice"]), GODMODE.sprites.minimapapi_sprite, "BlessingJustice", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Fortitude", curse_predicate(GODMODE.registry.blessings["fortitude"]), GODMODE.sprites.minimapapi_sprite, "BlessingFortitude", 0)
-    MinimapAPI:AddMapFlag("GODMODEBlessing_Patience", curse_predicate(GODMODE.registry.blessings["patience"]), GODMODE.sprites.minimapapi_sprite, "BlessingPatience", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Opportunity", curse_predicate(GODMODE.registry.blessings["opportunity"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingOpportunity", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Kindness", curse_predicate(GODMODE.registry.blessings["kindness"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingKindness", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Charity", curse_predicate(GODMODE.registry.blessings["charity"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingCharity", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Faith", curse_predicate(GODMODE.registry.blessings["faith"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingFaith", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Justice", curse_predicate(GODMODE.registry.blessings["justice"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingJustice", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Fortitude", curse_predicate(GODMODE.registry.blessings["fortitude"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingFortitude", 0)
+    MinimapAPI:AddMapFlag("GODMODEBlessing_Patience", curse_predicate(GODMODE.registry.blessings["patience"]), GODMODE.sprites.minimapapi_map_sprite, "BlessingPatience", 0)
 end
 
 -- THEYVE DONE IT! THEYVE FIXED IT!

@@ -1,13 +1,13 @@
 local item = {}
 item.instance = GODMODE.registry.items.key_ring
-item.eid_description = "Gain a stacking chance to activate Dad's Key when:#- Clearing rooms +12.5%#- Taking damage +33%"
+item.eid_description = "Gain a stacking chance to activate Dad's Key when:#- Clearing rooms +12.5%#- Taking damage +33%#- If the chance fails, grants a random key trinket for the room."
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},
       {str = "A stacking chance builds up to activate Dad's Key when this item procs. The chance starts at 0% and grows by:"},
       {str = "  - Clearing rooms (+12.5%)"},
       {str = "  - Taking Damage (+33.4%)"},
-      {str = "When clearing a room, the chance is attempted and if successful uses Dad's Key and the chance is reset to 0%. Otherwise, does nothing (Random key trinket displayed)."},
+      {str = "When clearing a room, the chance is attempted and if successful uses Dad's Key and the chance is reset to 0%. Otherwise, grants a random key trinket for the room."},
       {str = "When taking damage, if the chance is currently above 100% then Dad's Key is used and the chance is reset to 0%."},
     }
 }
@@ -22,6 +22,7 @@ local success_items = {
 local fail_items = {
     TrinketType.TRINKET_RUSTED_KEY,
     TrinketType.TRINKET_STORE_KEY,
+    TrinketType.TRINKET_BLUE_KEY,
     TrinketType.TRINKET_GILDED_KEY,
     TrinketType.TRINKET_CRYSTAL_KEY,
     TrinketType.TRINKET_STRANGE_KEY,
@@ -41,7 +42,7 @@ item.try_key = function(self, player)
         data.dads_key_ring = true  
         return true 
     else 
-        player:AnimateTrinket(fail_items[rng:RandomInt(#fail_items)+1])
+        player:GetEffects():AddTrinketEffect(fail_items[rng:RandomInt(#fail_items)+1],false)
         return false 
     end
 end
@@ -53,8 +54,7 @@ local hit_func = function(self,enthit,amount,flags,entsrc,countdown)
         local data = GODMODE.get_ent_data(player)
 
         if chance >= 1.0 then 
-            if item.try_key(self, player) then
-            end
+            item.try_key(self, player)
         elseif data.dads_key_ring ~= true then 
             GODMODE.save_manager.set_player_data(player,"KeyRingChance",math.min(1,chance+dmg_perc_increase * player:GetCollectibleNum(item.instance)),true)
         end

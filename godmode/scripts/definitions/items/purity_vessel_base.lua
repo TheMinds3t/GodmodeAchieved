@@ -19,7 +19,7 @@ item.eval_cache = function(self, player,cache,data)
 end
 
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		data.vessel_cooldown = (data.vessel_cooldown or 30) - 1
 	end

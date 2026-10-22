@@ -21,7 +21,7 @@ item.eval_cache = function(self, player,cache,data)
     end
 end
 
-item.player_update = function(self,player)
+item.player_update = function(self, player,data,sprite)
     if player:IsFrame(30,1) and player:HasTrinket(item.instance) then
         local bob = GODMODE.special_items.bob_list 
         local count = 0

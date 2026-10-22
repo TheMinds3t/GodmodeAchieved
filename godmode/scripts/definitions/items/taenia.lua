@@ -41,7 +41,7 @@ local function action_to_direction(action)
     return nil
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		if data.brain_tears == nil then data.brain_tears = {dirs = {}} end
 

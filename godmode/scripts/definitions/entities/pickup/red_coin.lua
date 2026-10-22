@@ -10,11 +10,13 @@ monster.pickup_update = function(self, ent, data, sprite)
 
     if ent.Velocity:Length() <= 0.1 then ent.Velocity = Vector.Zero end
 
-    if sprite:IsFinished("Death") then
-        ent:Remove()
-    elseif not sprite:IsPlaying("Death") or sprite:IsFinished("Appear") then
-        if not sprite:IsPlaying("Appear") then 
-            sprite:Play("Idle",false)
+    if ent:GetEntityFlags() & EntityFlag.FLAG_NO_TARGET ~= 0 then 
+        if sprite:IsFinished("Death") or not sprite:IsPlaying("Death") then
+            ent:Remove()
+        end
+    else
+        if sprite:IsFinished("Appear") or not sprite:IsPlaying("Appear") then 
+            sprite:Play("Idle",true)
         end
     end
 end
@@ -30,12 +32,13 @@ monster.player_collide = function(self, player,ent,entfirst,data)
             return true
         end
 
-        if not ent:GetSprite():IsPlaying("Death") then
+        if ent:GetSprite():GetAnimation() ~= "Death" and ent:GetEntityFlags() & EntityFlag.FLAG_NO_TARGET == 0 then
             data.red_coin_count = tonumber(GODMODE.save_manager.get_player_data(player, "RedCoinCount", "0")) + 1
             GODMODE.save_manager.set_player_data(player, "RedCoinCount", data.red_coin_count,true)
             data.red_coin_display = 100
+            ent:AddEntityFlags(EntityFlag.FLAG_NO_TARGET)
             player:AddCoins(1)
-            ent:GetSprite():Play("Death",true)
+            ent:GetSprite():Play("Death",false)
 
             if data.red_coin_count == 5 then
                 player:AddCollectible(CollectibleType.COLLECTIBLE_ONE_UP)

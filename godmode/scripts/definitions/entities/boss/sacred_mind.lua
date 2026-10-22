@@ -52,8 +52,11 @@ monster.data_init = function(self, ent,data)
         bod.mind = ent
         bod.link_function = data.link_function
         bod.move_function = data.move_function
-        ent.MaxHitPoints = ent.MaxHitPoints + math.min(1000,(GODMODE.util.get_basic_dps(ent) / 10.0) * 100)
-        ent.HitPoints = ent.MaxHitPoints
+        if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" then 
+            local bonus = GODMODE.util.get_average_stat_score() * tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+            ent.MaxHitPoints = ent.MaxHitPoints + bonus
+            ent.HitPoints = ent.MaxHitPoints
+        end
 
         GODMODE.util.macro_on_players(function(player) player.Position = ent.Position + Vector(0,64) end)
 

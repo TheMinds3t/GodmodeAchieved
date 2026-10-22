@@ -5,11 +5,10 @@ monster.type = GODMODE.registry.entities.the_ritual.type
 monster.variant = GODMODE.registry.entities.the_ritual.variant
 
 monster.data_init = function(self, ent,data)
-	if ent.Type == monster.type and ent.Variant == monster.variant then 
-        if ent.SubType == 0 then
-            ent.HitPoints = ent.HitPoints + math.min(1000,(GODMODE.util.get_basic_dps(ent) / 10.0) * 100)
-            ent.MaxHitPoints = ent.HitPoints
-        end
+	if ent.Type == monster.type and ent.Variant == monster.variant and ent.SubType == 0 and GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" then 
+        local bonus = GODMODE.util.get_average_stat_score() * tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+        ent.MaxHitPoints = ent.MaxHitPoints + bonus
+        ent.HitPoints = ent.MaxHitPoints
     end
 end
 

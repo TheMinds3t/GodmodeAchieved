@@ -73,6 +73,7 @@ monster.npc_update = function(self, ent, data, sprite)
     data.target_pos = data.target_pos or ent.Position
     if sprite:IsFinished("Appear") then 
         sprite:Play("Idle",false)
+        ent:AddEntityFlags(EntityFlag.FLAG_NO_DEATH_TRIGGER)
     end
 
     if ent.I1 == 0 or ent:IsFrame(10,1) then 

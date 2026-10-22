@@ -52,8 +52,12 @@ end
 monster.data_init = function(self, ent,data)
 	if ent.Type == monster.type and ent.Variant == monster.variant then 	
 		local player = Isaac.GetPlayer(0)
-		ent.HitPoints = ent.HitPoints + math.min(1000,(GODMODE.util.get_basic_dps(ent) / 3.5) * 100)
-		ent.MaxHitPoints = ent.HitPoints
+		if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" then 
+			local bonus = GODMODE.util.get_average_stat_score() * tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+			ent.MaxHitPoints = ent.MaxHitPoints + bonus
+			ent.HitPoints = ent.MaxHitPoints
+		end
+
 		if HPBars then 
 			HPBars.BossIgnoreList[monster.type..","..monster.variant] = false
 		end

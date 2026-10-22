@@ -707,22 +707,21 @@ players[GODMODE.registry.players.deli] = {
         if og_laser and og_laser.Timeout == 0 then return end 
 
         if player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) or player:HasCollectible(GODMODE.registry.items.uncommon_cough) then
-            local xl = 5
-            
+            local proj_count = 5
             if player:HasCollectible(CollectibleType.COLLECTIBLE_DR_FETUS) then
-                xl = 1
+                proj_count = 1
             elseif player:HasCollectible(CollectibleType.COLLECTIBLE_TECH_X) then
-                xl = 1
+                proj_count = 1
             elseif player:HasCollectible(CollectibleType.COLLECTIBLE_TECHNOLOGY) then
-                xl = 2
+                proj_count = 2
             elseif player:HasCollectible(CollectibleType.COLLECTIBLE_TECHNOLOGY_2) then
-                xl = 1
+                proj_count = 1
             elseif player:HasCollectible(CollectibleType.COLLECTIBLE_BRIMSTONE) or player:HasCollectible(CollectibleType.COLLECTIBLE_TRISAGION) then
-                xl = 1
+                proj_count = 1
             end
 
             for i=-3,3 do
-                for x=0,xl do
+                for x=0,proj_count do
                     local real_ind = i
                     if i == 0 then real_ind = -4 end 
                     local dir = (data.cur_deli_ang + (360 / 8 * (real_ind))) % 360 + player:GetDropRNG():RandomFloat()*15-7.5
@@ -885,6 +884,11 @@ players[GODMODE.registry.players.deli] = {
                     end
                 else
                     t = player:FireTear(player.Position,spd,true,true,false)
+
+                    if player:HasCollectible(CollectibleType.COLLECTIBLE_CHOCOLATE_MILK) then 
+                        t.CollisionDamage = base_tear.CollisionDamage
+                        ang_scale = (ang_scale / 2.0 * (base_tear.CollisionDamage / player.Damage))
+                    end
                 end
 
                 if data.proj_ref:ToTear() then
@@ -955,8 +959,9 @@ players[GODMODE.registry.players.deli] = {
 }
 
 players[GODMODE.registry.players.t_deli] = {
-    eid_birthright = "One less eye closes any time eyes close on your halo#Shifting from Delusion to Oblivion creates a tear burst#Soul hearts have a 20% chance to open your halo's eyes", pocket_item = GODMODE.registry.items.deli_oblivion, tainted = true,
-    red_health = false, soul_health = true, bone_health = false, max_hits = 1, devil_choice = true,
+    eid_birthright = "One less eye closes any time eyes close on your halo#Shifting from Delusion to Oblivion creates a tear burst#Soul hearts have a 20% chance to open your halo's eyes", 
+    pocket_item = GODMODE.registry.items.deli_oblivion, tainted = true,
+    red_health = false, soul_health = true, bone_health = false, max_hits = 2, devil_choice = true,
     pocket_valid = {[GODMODE.registry.items.deli_oblivion] = true, [GODMODE.registry.items.deli_delusion] = true}, --allows for more than 1 pocket active
     update = function(self, player, data)
         data.trisagion_time = (data.trisagion_time or 0) + 1   
@@ -1091,13 +1096,10 @@ players[GODMODE.registry.players.the_sign] = {
             player.Damage = player.Damage - 1.25 + hearts/10*1.25
         end,
         [CacheFlag.CACHE_SPEED] = function(self, player)
-            local mod = 0.75
+            local br = player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT)
+            local mod = br == true and 1.0 or 0.75
 
-            if player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
-                mod = 1.0
-            end
-
-            player.MoveSpeed = player.MoveSpeed * mod
+            player.MoveSpeed = math.min(br * 2.0, player.MoveSpeed * mod)
         end,
         [CacheFlag.CACHE_SHOTSPEED] = function(self, player)
             player.ShotSpeed = player.ShotSpeed - 0.25
@@ -1116,33 +1118,24 @@ players[GODMODE.registry.players.the_sign] = {
             local mod = player:HasCollectible(CollectibleType.COLLECTIBLE_MONSTROS_LUNG) and 0.75 or 1
             player.TearRange = player.TearRange * mod + GODMODE.util.grid_size * 0.75
         end,
+        [CacheFlag.CACHE_FAMILIARS] = function(self, player)
+		    player:CheckFamiliar(GODMODE.registry.entities.sign_flame.variant, 1, player:GetDropRNG())
+        end
     },
     update = function(self, player, data)
-        if true then
-        -- if kills > 0 then
-
-            if GODMODE.save_manager.get_player_data(player, "SignBirthright", "false") == "false" 
-                and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
-                
-                GODMODE.save_manager.set_player_data(player, "SignBirthright", "true",true)
-                player:AddBrokenHearts(-12)
-                player:AddSoulHearts(2)
-                player:AddCacheFlags(CacheFlag.CACHE_SPEED)
-                player:EvaluateItems()
-            end
-
-            if data.flame == nil or data.flame:IsDead() then
-                data.flame = Isaac.Spawn(GODMODE.registry.entities.sign_flame.type, GODMODE.registry.entities.sign_flame.variant, 0, player.Position, Vector.Zero, player)
-                data.flame:ToFamiliar().Player = player
-                data.flame:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-            end
+        if GODMODE.save_manager.get_player_data(player, "SignBirthright", "false") == "false" 
+            and player:HasCollectible(CollectibleType.COLLECTIBLE_BIRTHRIGHT) then
+            
+            GODMODE.save_manager.set_player_data(player, "SignBirthright", "true",true)
+            player:AddBrokenHearts(-12)
+            player:AddSoulHearts(2)
+            player:AddCacheFlags(CacheFlag.CACHE_SPEED)
+            player:EvaluateItems()
         end
     end,
     tear_collide = function(self, tear, ent2, player) 
-        local data = GODMODE.get_ent_data(tear)
-        if player and ent2 and ent2:ToPlayer() and GetPtrHash(ent2) == GetPtrHash(player) then 
-            tear:Kill()
-        end
+        GODMODE.log("tear touched! x="..tear.Position.X..",y="..tear.Position.Y, true)
+        return true 
     end,
     encyclopedia_entry = {{ -- Start Data
         {str = "Start Data", fsize = 2, clr = 3, halign = 0},

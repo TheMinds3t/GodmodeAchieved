@@ -36,7 +36,7 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 
 	if data.bm_use == nil and player:IsFrame(30,1) or data.bm_use ~= nil then 
 		local use_room = tonumber(GODMODE.save_manager.get_player_data(player,"MushroomUse","-1"))

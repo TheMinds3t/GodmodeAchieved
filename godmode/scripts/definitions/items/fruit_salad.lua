@@ -10,7 +10,7 @@ item.encyc_entry = {
     },
 }
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
     if player:IsFrame(20,1) then 
         local count = tonumber(GODMODE.save_manager.get_player_data(player,"FruitSalad","0"))
 

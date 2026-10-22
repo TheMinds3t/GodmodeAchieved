@@ -32,7 +32,7 @@ end
 
 monster.pickup_update = function(self, ent, data, sprite)
 	local sugar = GODMODE.save_manager.get_ent_data(ent,"SugarPill","false") == "true"
-	data.sparkle_time = data.sparkle_time or sparkle.time 
+	if not data.sparkle_time then data.sparkle_time = sparkle.time end 
 
 	if sugar then 
 		if ent:IsFrame(data.sparkle_time,ent.InitSeed % data.sparkle_time) then

@@ -15,14 +15,17 @@ end
 
 transform.is_valid_item = function(player, pickup)
 	if pickup.Variant == PickupVariant.PICKUP_SHOPITEM and ent:ToPlayer():GetNumCoins() >= pickup.Price or pickup.Variant ~= PickupVariant.PICKUP_SHOPITEM then 
+		local subtype_flag = GODMODE.itempools.is_in_pool(transform.items, pickup.SubType) == true
 		if pickup -- Items from Godmode secrets challenge to transform pool
 			and (pickup.Variant == GODMODE.registry.entities.unlock_pedestal.variant 
-			and transform.items[GODMODE.achievements.get_unlock_at_index(pickup.SubType)] == true
+			and subtype_flag
+			-- and transform.items[GODMODE.achievements.get_unlock_at_index(pickup.SubType)] == true
 			and GODMODE.achievements.is_achievement_unlocked(GODMODE.achievements.get_unlock_at_index(pickup.SubType))) then 
 				return true 
 		elseif player:GetPlayerType() ~= PlayerType.PLAYER_CAIN_B -- add items from vanilla transform pool
 			and (pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE or pickup.Variant == PickupVariant.PICKUP_SHOPITEM) 
-			and transform.items[pickup.SubType] == true and not pickup.Touched then
+			and subtype_flag and not pickup.Touched then 
+			-- and transform.items[pickup.SubType] == true and not pickup.Touched then
 				return true
 		elseif GODMODE.util.is_modded_item(pickup.SubType) then -- add modded additions to transform pool
 			local config = Isaac.GetItemConfig():GetCollectible(pickup.SubType)
@@ -44,7 +47,7 @@ transform.pickup_collide = function(self, pickup,ent,entfirst)
 		local data = GODMODE.get_ent_data(pickup)
 		data.transform_added = data.transform_added or {}
 
-		if data.transform_added[transform.instance] ~= true and not transform.has_transform(ent:ToPlayer()) then
+		if data.transform_added[transform.instance] ~= true and not transform.has_transform(ent:ToPlayer()) and not pickup.Touched then
 			GODMODE.save_manager.set_player_data(ent:ToPlayer(), transform.instance.."Items", tonumber(GODMODE.save_manager.get_player_data(ent:ToPlayer(), transform.instance.."Items","0"))+1, true)
 			data.transform_added[transform.instance] = true
 			data.transform_cooldown = data.transform_cooldown or {}
@@ -61,7 +64,7 @@ transform.first_level = function(self)
 	end)
 end
 
-transform.player_update = function(self, player,data)
+transform.player_update = function(self, player,data,sprite)
 	data.transform_cooldown = data.transform_cooldown or {}
 
 	if data.transform_cooldown[transform.instance] then 

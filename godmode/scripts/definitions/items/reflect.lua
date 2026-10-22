@@ -8,7 +8,7 @@ item.encyc_entry = {
 		{str = "While held, Isaac's tears become a glass ball that always tries to impact Isaac."},
 		{str = "When used, gain a short window where all projectiles get deflected from you. If your own tear touches Isaac while this effect is active, the tear then increases in charge."},
 		{str = "When the tear increases in charge, a small AOE attack gets released around the tear and it gets harder to control the tear. If the tear is at its max charge stage, next time it contacts the player or enemy it will explode dealing clamp(10,Damage * 5,100) + 20 damage, release flames, and go back to the uncharged state."},
-		{str = "If the tear is charged at all, purple flames will be shot out of the tear dealing (1.0 + Damage / StageDepth / 13 capped at 0.3) / 2.0 based on what direction Isaac is shooting."},
+		{str = "If the tear is charged at all, purple flames will be shot out of the tear dealing (1.0 + min(Damage * 0.05, 0.5))) / 2.0 based on what direction Isaac is shooting."},
 		{str = "If the tear is charged at all, touching the tear without Reflect active will damage Isaac and discharge the tear, releasing the corresponding AOE attack. If Isaac touches the tear while Reflect is active, deals no damage and cycles the charge state like normal (if max charge, releases a safe player explosion at the tear's position)"},
 	},
 }
@@ -145,6 +145,7 @@ item.room_clear = function()
     return Isaac.CountEnemies() + Isaac.CountBosses() == 0
 end
 
+-- the full package for discharging the glass tear;; make it explode, actually reduce it, if FX is true create fire, and adding an explode_src prevents contact damage
 item.discharge_tear = function(player, tear, explode, reduce, fx, explode_src)
     fx = fx or true 
     local charge = tonumber(GODMODE.save_manager.get_ent_data(tear,"Charge",item.default_charge))
@@ -192,7 +193,7 @@ item.shoot_fire = function(player, tear, ang, spd, lifemod)
     local effect = Isaac.Spawn(EntityType.ENTITY_EFFECT, EffectVariant.BLUE_FLAME, 0, tear.Position, dir, player):ToEffect()
     effect:SetTimeout(math.floor(item.fire_lifebase * (lifemod or 1)))
     effect:SetColor(item.fire_col, 999, 1, false, true)
-    effect.CollisionDamage = (1.0 + math.min(0.33,player.Damage * GODMODE.level:GetAbsoluteStage() / 13.0)) / 2.0 * (pyromaniac_flag and 1.25 or 1.0)
+    effect.CollisionDamage = (1.0 + math.min(0.5,player.Damage * 0.05)) / 2.0 * (pyromaniac_flag and 1.25 or 1.0)
 end
 
 item.tear_update = function(self, tear, data, sprite)

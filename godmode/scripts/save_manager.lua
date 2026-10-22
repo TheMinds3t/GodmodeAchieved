@@ -17,7 +17,7 @@ end
 save_manager.has_loaded = false
 
 -- for RGON loading/saving in menus, enable to allow persistent entities to be scanned disable to prevent it
-save_manager.allow_persistent_load = true
+save_manager.allow_persistent_load = false
 
 save_manager.load = function()
     if Isaac.HasModData(GODMODE.mod_object) and Isaac.LoadModData(GODMODE.mod_object):len() > 0 then
@@ -196,7 +196,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["VoidEnterTime"] = tostring(30*60*3.5+5)
         save_manager.god_data.config["RedCoinCounterKey"] = ""..Keyboard.KEY_TAB
         save_manager.god_data.config["RedCoinCounterButton"] = ""..ButtonAction.ACTION_MAP
-        save_manager.god_data.config["DoorHazardChanceMod"] = "1.0"
+        save_manager.god_data.config["DoorHazardChanceMod"] = "0.1"
         save_manager.god_data.config["GodmodeStageChance"] = "0.25"
         save_manager.god_data.config["AltHorsemanChance"] = "0.2"
         save_manager.god_data.config["TXaphanTrail"] = "7"
@@ -214,7 +214,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["FractalDisplay"] = "2"
         save_manager.god_data.config["FractalDisplayX"] = "0.05"
         save_manager.god_data.config["FractalDisplayY"] = "0.9"
-        save_manager.god_data.config["ChestInfestChance"] = "30.0"
+        save_manager.god_data.config["ChestInfestChance"] = "30"
         save_manager.god_data.config["ChestInfestToggle"] = "true"
         save_manager.god_data.config["HPScaleMode"] = "2"
         save_manager.god_data.config["VanillaStoryHPBuff"] = "true"
@@ -226,6 +226,11 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["LighterTreasure"] = "false"
         save_manager.god_data.config["RedJuiceSetting"] = "1"
         save_manager.god_data.config["MinRoamSpeed"] = "0.1"
+        save_manager.god_data.config["HeavyTreasure"] = "true"
+        save_manager.god_data.config["SecretLights"] = "true"
+        save_manager.god_data.config["RGONEventBday"] = "true"
+        save_manager.god_data.config["RGONEventXMas"] = "true"
+        save_manager.god_data.config["RGONEventKeepah"] = "true"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 
@@ -464,6 +469,8 @@ save_manager.wipe = function()
     save_manager.god_data.dynamic = {persistent_entities={}}
 end
 
-save_manager.load()
+if not GODMODE.validate_rgon() then 
+    save_manager.load()
+end
 
 return save_manager

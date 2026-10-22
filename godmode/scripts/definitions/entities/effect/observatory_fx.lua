@@ -3,17 +3,17 @@ monster.name = "[GODMODE] Observatory FX"
 monster.type = GODMODE.registry.entities.observatory_fx.type
 monster.variant = GODMODE.registry.entities.observatory_fx.variant
 
-local base_depth_off = -200
+local base_depth_off = -1000
 local depth_offsets = {
-    [0] = 0, --platform 
-    [1] = -10, --moon
-    [2] = -20,
-    [3] = -5,
-    [4] = -7,
-    [5] = -15,
+    [0] = 800, --platform 
+    [1] = 200, --moon
+    [2] = 100,
+    [3] = 50,
+    [4] = 250,
+    [5] = 350,
     [6] = -3,
     [7] = -50, --background
-    [8] = 150, --door
+    [8] = 1200, --door
     [9] = -49, --background cloud
 }
 
@@ -53,12 +53,15 @@ monster.npc_update = function(self, ent, data, sprite)
         if not ent:HasEntityFlags(GODMODE.util.get_pseudo_fx_flags()) then 
             ent:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags())
         end
+
+        -- if ent.SubType ~= 8 then 
+        --     ent:AddEntityFlags(EntityFlag.FLAG_NO_REMOVE_ON_TEX_RENDER & EntityFlag.FLAG_RENDER_FLOOR)
+        -- end
         
         sprite:Play(anim_names[ent.SubType],true)
     end
 
     ent.DepthOffset = base_depth_off + (depth_offsets[ent.SubType] or 0)
-
     ent.Velocity = Vector(0,0)
 
     if ent.SubType ~= 8 then 

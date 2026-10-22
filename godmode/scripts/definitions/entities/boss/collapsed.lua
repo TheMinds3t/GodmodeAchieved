@@ -15,7 +15,7 @@ local raise_damp = 3
 local raise_height = 64
 local raise_deadzone = 8
 
-local eye_offset = Vector(24,-18)
+local eye_offset = Vector(28,-22)
 local eye2_offset = Vector(-eye_offset.X,eye_offset.Y)
 local cry_threshold = 0.66
 local phase2_threshold = 0.33
@@ -94,7 +94,7 @@ monster.ring = function(ent,pos,ang,speed,count,flags,mod_func,only_below)
     for i=1,count do 
         local ang = (i * (360 / count) + ang) % 360
 
-        if only_below == true and ang >= 0 and ang <= 180 or only_below ~= true then 
+        if (only_below == true and ang > 0 and ang < 180) or only_below ~= true then 
             local proj = monster.bullet(ent, pos, ang, speed, flags, mod_func)
         end
     end
@@ -177,24 +177,24 @@ monster.hand_attacks = {
 
             monster.ring(ent, Vector.Zero, 
                 monster.calc_ang(ent, Vector.Zero), 
-                7 - ((GODMODE.game.Difficulty + 1) % 2) * 1, 
-                12 - ((GODMODE.game.Difficulty + 1) % 2) * 4, ProjectileFlags.DECELERATE | flag, function(proj) 
+                7.1 - ((GODMODE.game.Difficulty + 1) % 2) * 1, 
+                10 - ((GODMODE.game.Difficulty + 1) % 2) * 2, ProjectileFlags.DECELERATE | flag, function(proj) 
                     proj.Scale = 2 
                     proj.CurvingStrength = 1 / 240
                 end)
             
             monster.ring(ent, Vector.Zero, 
                 monster.calc_ang(ent, Vector.Zero) + 360 / 16 / 2, 
-                2.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.75, 
-                16 - ((GODMODE.game.Difficulty + 1) % 2) * 6, ProjectileFlags.ACCELERATE | flag2, function(proj) 
+                2.55 - ((GODMODE.game.Difficulty + 1) % 2) * 0.75, 
+                14 - ((GODMODE.game.Difficulty + 1) % 2) * 4, ProjectileFlags.ACCELERATE | flag2, function(proj) 
                     proj.Scale = 1.7
                     proj.CurvingStrength = 1 / 360
                 end)
             
             monster.ring(ent, Vector.Zero, 
                 monster.calc_ang(ent, Vector.Zero) + 360 / 16 / 2, 
-                1.4 - ((GODMODE.game.Difficulty + 1) % 2) * 0.125, 
-                18 - ((GODMODE.game.Difficulty + 1) % 2) * 6, ProjectileFlags.ACCELERATE | flag, function(proj) 
+                1.45 - ((GODMODE.game.Difficulty + 1) % 2) * 0.125, 
+                16 - ((GODMODE.game.Difficulty + 1) % 2) * 4, ProjectileFlags.ACCELERATE | flag, function(proj) 
                     proj.Scale = 1.5 
                     proj.CurvingStrength = 1 / 360
                 end)
@@ -229,10 +229,10 @@ monster.hand_attacks = {
             data.squeeze_speed = 0
         end,
         fire = function(ent,data,sprite)
-            local count = data.squeeze_speed * 2 + 14 - ((GODMODE.game.Difficulty + 1) % 2) * 4
+            local count = data.squeeze_speed * 2 + 12 - ((GODMODE.game.Difficulty + 1) % 2) * 3
             monster.ring(ent, Vector.Zero, 
                 data.squeeze_off, 
-                -data.squeeze_speed * 0.25 + 2.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
+                -data.squeeze_speed * 0.5 + 3 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
                 count, ProjectileFlags.ACCELERATE, function(proj) proj.Scale = 1.0 end)
             data.squeeze_off = data.squeeze_off + 360 / count * (1 - (ent.I1 % 2) * 2)
             data.squeeze_speed = data.squeeze_speed + 1
@@ -247,7 +247,7 @@ monster.hand_attacks = {
         end,
         fire = function(ent,data,sprite)
             local matter = Isaac.Spawn(GODMODE.registry.entities.the_collapsed_matter.type,GODMODE.registry.entities.the_collapsed_matter.variant,GODMODE.registry.entities.the_collapsed_matter.subtype,
-            ent.Position + dark_matter_off, dark_matter_vel, ent.Parent or ent)
+            ent.Position + dark_matter_off, dark_matter_vel * (ent:GetDropRNG():RandomFloat()*0.2+0.9), ent.Parent or ent)
             matter:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
             matter:Update()
         end,
@@ -260,7 +260,7 @@ monster.hand_attacks = {
 monster.is_phase_2_anim = function(sprite, playing)
     local func = sprite.IsFinished 
     if playing then func = sprite.IsPlaying end 
-    return func(sprite,"1Transition") or func(sprite,"2CryIn") or func(sprite,"2CryOut") or func(sprite,"2CryLoop") or func(sprite,"2Idle") or (playing and monster.is_phase_2_anim(sprite) or false)
+    return func(sprite,"1Transition") or func(sprite,"2CryIn") or func(sprite,"2Lights") or func(sprite,"2CryOut") or func(sprite,"2CryLoop") or func(sprite,"2Idle") or (playing and monster.is_phase_2_anim(sprite) or false)
 end
 
 monster.npc_update = function(self, ent, data, sprite)
@@ -281,8 +281,8 @@ monster.npc_update = function(self, ent, data, sprite)
 
         -- end    
 
-        if sprite:IsFinished("1Idle") or sprite:IsFinished("1CryLoop") or sprite:IsFinished("1CryIn") or sprite:IsFinished("1CryOut") or sprite:IsFinished("1CryFlash") or 
-            sprite:IsFinished("1Transition") or sprite:IsFinished("2CryIn") or sprite:IsFinished("2CryOut") or sprite:IsFinished("2CryLoop") or sprite:IsFinished("2Idle") then 
+        if sprite:IsFinished("Appear") or sprite:IsFinished("1Idle") or sprite:IsFinished("1CryLoop") or sprite:IsFinished("1CryIn") or sprite:IsFinished("1CryOut") or sprite:IsFinished("1CryFlash") or 
+            sprite:IsFinished("1Transition") or sprite:IsFinished("2CryIn") or sprite:IsFinished("2Lights") or sprite:IsFinished("2CryOut") or sprite:IsFinished("2CryLoop") or sprite:IsFinished("2Idle") then 
             if data.phase2 == true then 
                 if sprite:IsFinished("1CryOut") or sprite:IsPlaying("1Idle") then 
                     sprite:Play("1Transition",true)
@@ -297,14 +297,14 @@ monster.npc_update = function(self, ent, data, sprite)
                             monster.ring(ent, Vector.Zero, 
                             0, 
                             1.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
-                            32 - ((GODMODE.game.Difficulty + 1) % 2) * 8, dir | ProjectileFlags.ACCELERATE, function(proj) 
+                            24 - ((GODMODE.game.Difficulty + 1) % 2) * 8, dir | ProjectileFlags.ACCELERATE, function(proj) 
                                 proj.Scale = 2
                                 proj.CurvingStrength = 1 / 480
                             end)
                             monster.ring(ent, Vector.Zero, 
                             0, 
                             1.75 - ((GODMODE.game.Difficulty + 1) % 2) * 0.45, 
-                            24 - ((GODMODE.game.Difficulty + 1) % 2) * 6, dir2 | ProjectileFlags.ACCELERATE, function(proj) 
+                            20 - ((GODMODE.game.Difficulty + 1) % 2) * 6, dir2 | ProjectileFlags.ACCELERATE, function(proj) 
                                 proj.Scale = 1.5
                                 proj.CurvingStrength = 1 / 600
                             end)
@@ -317,9 +317,11 @@ monster.npc_update = function(self, ent, data, sprite)
                     else
                         local atk = ent:GetDropRNG():RandomFloat()
     
-                        if atk < 0.5 then 
+                        if atk < 0.3 then 
                             sprite:Play("2CryIn",true)
-                            data.cry_time = ent:GetDropRNG():RandomInt(5) + 4
+                            data.cry_time = ent:GetDropRNG():RandomInt(3) + 3
+                        elseif atk < 0.6 then 
+                            sprite:Play("2Lights",true)
                         else 
                             sprite:Play("2Idle",true)
                         end
@@ -339,7 +341,6 @@ monster.npc_update = function(self, ent, data, sprite)
                 local cry_flag = sprite:IsPlaying("1CryLoop")
     
                 if perc <= phase2_threshold then 
-                    
                     if data.phase2 == nil and sprite:IsPlaying("1CryLoop") then 
                         data.phase2 = true 
                         sprite:Play("1CryOut",true)
@@ -417,6 +418,40 @@ monster.npc_update = function(self, ent, data, sprite)
         if sprite:IsEventTriggered("Fire") then
             if sprite:IsPlaying("1Transition") then 
                 GODMODE.game:ShakeScreen(3)
+            elseif sprite:IsPlaying("2Lights") then 
+                local health_perc = ent.HitPoints / ent.MaxHitPoints
+                local count, spread_across = 1 + math.ceil(3 * (1 - health_perc)), 35 + 25 * (1 - health_perc)
+                local targ_ang = (player.Position - (ent.Position + raw_eye_offset)):GetAngleDegrees()
+                local targ_ang2 = (player.Position - (ent.Position + raw_eye2_offset)):GetAngleDegrees()
+                for i = -count, count do 
+                    local ang = spread_across / (count) * i 
+                    local order = Isaac.Spawn(GODMODE.registry.entities.holy_order.type,GODMODE.registry.entities.holy_order.variant,
+                        math.floor(targ_ang + ang) % 360, ent.Position + raw_eye_offset, Vector.Zero, ent)
+                    local order2 = Isaac.Spawn(GODMODE.registry.entities.holy_order.type,GODMODE.registry.entities.holy_order.variant,
+                        math.floor(targ_ang2 + ang) % 360, ent.Position + raw_eye2_offset, Vector.Zero, ent)
+
+                    order.DepthOffset = 1000
+                    order.Parent = ent 
+                    order2.DepthOffset = 1000
+                    order2.Parent = ent
+                end
+
+                local dir = (ent:GetDropRNG():RandomInt(2) == 1 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT)
+                local dir2 = (ent:GetDropRNG():RandomInt(2) == 1 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT)
+                monster.ring(ent, Vector.Zero, 
+                    0, 
+                    1.5 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5, 
+                    24 - ((GODMODE.game.Difficulty + 1) % 2) * 8, dir | ProjectileFlags.ACCELERATE, function(proj) 
+                        proj.Scale = 2
+                        proj.CurvingStrength = 1 / 480
+                    end)
+                monster.ring(ent, Vector.Zero, 
+                    0, 
+                    1.75 - ((GODMODE.game.Difficulty + 1) % 2) * 0.45, 
+                    20 - ((GODMODE.game.Difficulty + 1) % 2) * 6, dir2 | ProjectileFlags.ACCELERATE, function(proj) 
+                        proj.Scale = 1.5
+                        proj.CurvingStrength = 1 / 600
+                    end)
             elseif sprite:IsPlaying("2CryLoop") then 
                 local flag1 = data.cry_dir == 0 and ProjectileFlags.CURVE_LEFT or ProjectileFlags.CURVE_RIGHT
                 local flag2 = flag1 == ProjectileFlags.CURVE_LEFT and ProjectileFlags.CURVE_RIGHT or ProjectileFlags.CURVE_LEFT
@@ -444,7 +479,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 monster.ring(ent, eye_offset, 
                     0, 
                     2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_speed * 0.3, 
-                    24 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag1 | ProjectileFlags.ACCELERATE, function(proj) 
+                    20 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag1 | ProjectileFlags.ACCELERATE, function(proj) 
                         proj.Scale = 2
                         proj.CurvingStrength = 1 / 360
                     end, true)
@@ -452,7 +487,7 @@ monster.npc_update = function(self, ent, data, sprite)
                 monster.ring(ent, eye2_offset, 
                     0, 
                     2 - ((GODMODE.game.Difficulty + 1) % 2) * 0.5 + data.cry_speed * 0.3, 
-                    24 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag2 | ProjectileFlags.ACCELERATE, function(proj) 
+                    20 - ((GODMODE.game.Difficulty + 1) % 2) * 4, flag2 | ProjectileFlags.ACCELERATE, function(proj) 
                         proj.Scale = 2
                         proj.CurvingStrength = 1 / 360
                     end, true)
@@ -507,7 +542,6 @@ monster.npc_update = function(self, ent, data, sprite)
                 ent.HitPoints = ent.MaxHitPoints
             end
 
-
             if atk > 0 and data.atk == 0 and not phase2_fight then 
                 monster.hand_attacks[atk].init(ent,data,sprite)
                 data.atk = atk
@@ -515,43 +549,48 @@ monster.npc_update = function(self, ent, data, sprite)
                 data.atk = 0
             end
 
-            if phase2_fight then
-                -- GODMODE.log(tostring(phase2_fight).." & "..tostring(data.atk).." & "..tostring(data.phase2_transition),true)
+            if data.init ~= true then 
+                sprite:Play("HandAppear",true)
+                data.init = true 
+            elseif sprite:IsFinished("HandAppear") or not sprite:IsPlaying("HandAppear") then
+                if phase2_fight then
+                    -- GODMODE.log(tostring(phase2_fight).." & "..tostring(data.atk).." & "..tostring(data.phase2_transition),true)
 
-                if not sprite:IsPlaying("HandTransition") and data.phase2_transition ~= true or data.phase2_transition == true and not (sprite:GetAnimation() == "HandTransition" or sprite:GetAnimation() == "Hand2") then 
-                    sprite:Play("HandTransition",true)
-                    data.phase2_transition = true 
-                    data.atk = 0
-                elseif sprite:IsFinished("HandTransition") and data.phase2_transition == true then 
-                    if not sprite:IsPlaying("Hand2") then 
-                        sprite:Play("Hand2",true)
+                    if not sprite:IsPlaying("HandTransition") and data.phase2_transition ~= true or data.phase2_transition == true and not (sprite:GetAnimation() == "HandTransition" or sprite:GetAnimation() == "Hand2") then 
+                        sprite:Play("HandTransition",true)
+                        data.phase2_transition = true 
+                        data.atk = 0
+                    elseif sprite:IsFinished("HandTransition") and data.phase2_transition == true then 
+                        if not sprite:IsPlaying("Hand2") then 
+                            sprite:Play("Hand2",true)
+                        end
+                    end 
+                elseif (data.atk or 0) == 0 then 
+                    data.raised = false 
+                    local anim = false 
+
+                    if not sprite:IsPlaying("HandIdle") then 
+                        sprite:Play("HandIdle",true)
+                        anim = true
+                    end 
+
+                    if anim then 
+                        data.add_to_y_off = nil
+
+                        if ent.I1 == 1 then 
+                            parent.I1 = 0
+                        else 
+                            parent.I2 = 0
+                        end
                     end
-                end 
-            elseif (data.atk or 0) == 0 then 
-                data.raised = false 
-                local anim = false 
-
-                if not sprite:IsPlaying("HandIdle") then 
-                    sprite:Play("HandIdle",true)
-                    anim = true
-                end 
-
-                if anim then 
-                    data.add_to_y_off = nil
-
-                    if ent.I1 == 1 then 
-                        parent.I1 = 0
-                    else 
-                        parent.I2 = 0
+                else 
+                    if monster.hand_attacks[data.atk].update then 
+                        monster.hand_attacks[data.atk].update(ent,data,sprite,atk)
                     end
-                end
-            else 
-                if monster.hand_attacks[data.atk].update then 
-                    monster.hand_attacks[data.atk].update(ent,data,sprite,atk)
-                end
 
-                if sprite:IsEventTriggered("Fire") and monster.hand_attacks[data.atk].fire then 
-                    monster.hand_attacks[data.atk].fire(ent,data,sprite,atk)
+                    if sprite:IsEventTriggered("Fire") and monster.hand_attacks[data.atk].fire then 
+                        monster.hand_attacks[data.atk].fire(ent,data,sprite,atk)
+                    end
                 end
             end
 
@@ -605,7 +644,7 @@ monster.npc_update = function(self, ent, data, sprite)
             monster.ring(ent, Vector.Zero, 
                 0, 
                 8.0 - ((GODMODE.game.Difficulty + 1) % 2) * 4, 
-                8, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
+                6, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
                 proj.Scale = 2
                 proj.CurvingStrength = 1 / 360
                 proj.ChangeTimeout = 80
@@ -615,7 +654,7 @@ monster.npc_update = function(self, ent, data, sprite)
             monster.ring(ent, Vector.Zero, 
                 22.5, 
                 6.0 - ((GODMODE.game.Difficulty + 1) % 2) * 3, 
-                12, ProjectileFlags.ACCELERATE | flag2 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
+                10, ProjectileFlags.ACCELERATE | flag2 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
                 proj.Scale = 2.5
                 proj.CurvingStrength = 1 / 240
                 proj.ChangeTimeout = 80
@@ -625,7 +664,7 @@ monster.npc_update = function(self, ent, data, sprite)
             monster.ring(ent, Vector.Zero, 
                 0, 
                 4.0 - ((GODMODE.game.Difficulty + 1) % 2) * 2, 
-                16, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
+                13, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
                 proj.Scale = 3
                 proj.CurvingStrength = 1 / 180
                 proj.ChangeTimeout = 80
@@ -635,7 +674,7 @@ monster.npc_update = function(self, ent, data, sprite)
             monster.ring(ent, Vector.Zero, 
                 22.5, 
                 2.0 - ((GODMODE.game.Difficulty + 1) % 2) * 0.25, 
-                12, ProjectileFlags.ACCELERATE | flag2 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
+                10, ProjectileFlags.ACCELERATE | flag2 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
                 proj.Scale = 1.75
                 proj.CurvingStrength = 1 / 360
                 proj.ChangeTimeout = 100
@@ -645,7 +684,7 @@ monster.npc_update = function(self, ent, data, sprite)
             monster.ring(ent, Vector.Zero, 
                 0, 
                 1.25 - ((GODMODE.game.Difficulty + 1) % 2) * 0.25, 
-                16, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
+                13, ProjectileFlags.ACCELERATE | flag1 | ProjectileFlags.CHANGE_FLAGS_AFTER_TIMEOUT, function(proj) 
                 proj.Scale = 1.5
                 proj.CurvingStrength = 1 / 300
                 proj.ChangeTimeout = 130
@@ -689,34 +728,40 @@ monster.player_collide = function(self, player, ent, player_first)
             return true 
         end
     end
+
+    if ent.Type == EntityType.ENTITY_PROJECTILE and GODMODE.get_ent_data(ent).cotv_bullet == true and not player:HasInvincibility() then 
+        GODMODE.util.add_faithless(player, 1)
+        return true 
+    end
 end
 
 monster.npc_init = function(self,ent,data)
-    -- if ent.Type == monster.type and ent.Variant == 0 then 
-    --     if StageAPI ~= nil and StageAPI.Loaded and StageAPI.GetCurrentStage() ~= nil and StageAPI.GetCurrentStage().Name == "TheNest" or ent:GetDropRNG():RandomFloat() < tonumber(GODMODE.save_manager.get_config("AltHorsemanChance","0.2")) then 
-    --         ent:Morph(ent.Type,monster.variant,0,-1)    
-    --     end
-    -- end
-
     if ent.SubType == 0 then 
         data.hands = {}
 
         for i=1,2 do 
             local hand = Isaac.Spawn(GODMODE.registry.entities.the_collapsed_hand.type,GODMODE.registry.entities.the_collapsed_hand.variant,GODMODE.registry.entities.the_collapsed_hand.subtype,
-            ent.Position, Vector.Zero, ent)
+            ent.Position+hand_anchors[i], Vector.Zero, ent)
             hand = hand:ToNPC()
             hand.Parent = ent
             hand.I1 = i
+            hand:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+            hand:GetSprite():Play("HandAppear", true)
             table.insert(data.hands, hand)
         end
+    elseif ent.SubType <= GODMODE.registry.entities.the_collapsed_hand.subtype then 
+        ent.Position = ent.Position + Vector(0,208)
     end
 end
 
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     local data = GODMODE.get_ent_data(enthit)
 	--Isaac.DebugString("Parent type: "..tostring(entsrc.Entity.Parent.Type)..", Spawner type: "..tostring(entsrc.Entity.SpawnerEntity.Type)..", Child type: "..tostring(entsrc.Entity.Child.Type)..", Child type: "..tostring(entsrc.Entity.Child.Type))
+
+
 	if enthit.Type == monster.type and enthit.Variant == monster.variant then
-        if enthit.Parent ~= nil and enthit.SubType == GODMODE.registry.entities.the_collapsed_hand.subtype then 
+        if entsrc.Type == GODMODE.registry.entities.holy_order.type and entsrc.Variant == GODMODE.registry.entities.holy_order.variant then return false 
+        elseif enthit.Parent ~= nil and enthit.SubType == GODMODE.registry.entities.the_collapsed_hand.subtype then 
             enthit.Parent:TakeDamage(amount,flags,entsrc,countdown)
             return true
         elseif enthit.SubType == 0 and data.hands then

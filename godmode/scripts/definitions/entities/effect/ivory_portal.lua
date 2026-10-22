@@ -58,8 +58,8 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
             
             if GODMODE.is_at_palace and GODMODE.is_at_palace() ~= true then --teleport to ivory palace
                 if GODMODE.transition_to_palace then
-                    GODMODE.transition_to_palace()
                     ent:Remove()
+                    GODMODE.transition_to_palace()
                 end
             elseif StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then  
                 if GODMODE.is_at_palace and GODMODE.is_at_palace() == true then
@@ -70,12 +70,44 @@ monster.npc_collide = function(self, ent, ent2, entfirst)
                         GODMODE.game:StartRoomTransition(GODMODE.level:GetPreviousRoomIndex(), Direction.NO_DIRECTION, RoomTransitionAnim.FADE)
                     else -- teleport to FL fight
                         GODMODE.log("enter palace boss!")
-                        Isaac.ExecuteCommand("croom 1000 IvoryPalace-General")
-                        StageAPI.PlayBossAnimation(StageAPI.GetBossData("IvoryPalace_Angelusossa"))
-                        local pos = (GODMODE.room_center or GODMODE.room:GetCenterPos())+Vector(0,96)
-                        GODMODE.util.macro_on_players(function(player)
-                            player.Position = pos
-                        end)
+                        local list = StageAPI.RoomsLists["IvoryPalace-General"]
+                        local selectedLayout
+                        for _, room in ipairs(list.All) do
+                            if room.Name == "Fallen Light Arena" then
+                                selectedLayout = room
+                                break
+                            end
+                        end
+        
+                        if selectedLayout then
+                            StageAPI.RegisterLayout("FL Arena", selectedLayout)
+                            local testRoom = StageAPI.LevelRoom{
+                                LayoutName = "FL Arena",
+                                Shape = selectedLayout.Shape,
+                                RoomType = selectedLayout.Type
+                            }
+            
+                            local levelMap = StageAPI.GetDefaultLevelMap()
+                            local addedRoomData = levelMap:AddRoom(testRoom, {RoomID = "FL Arena"}, true)
+            
+                            local doors = {}
+                            for _, door in ipairs(selectedLayout.Doors) do
+                                if door.Exists then
+                                    doors[#doors + 1] = door.Slot
+                                end
+                            end
+            
+                            StageAPI.ExtraRoomTransition(addedRoomData.MapID, nil, nil, StageAPI.DefaultLevelMapID, doors[StageAPI.Random(1, #doors)])
+
+                            
+                            StageAPI.PlayBossAnimation(StageAPI.GetBossData("IvoryPalace_Angelusossa"))
+                            local pos = (GODMODE.room_center or GODMODE.room:GetCenterPos())+Vector(0,96)
+                            GODMODE.util.macro_on_players(function(player)
+                                player.Position = pos
+                            end)
+                        else
+                            Isaac.ConsoleOutput("Room with ID or name " .. tostring(name) .. " does not exist.\n")
+                        end
                     end
                 end
             end    

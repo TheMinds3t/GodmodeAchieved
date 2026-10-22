@@ -59,7 +59,7 @@ end
 
 --called on entering each room
 ro.try_override_room = function(gridindex)
-    if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then return end 
+    if StageAPI and StageAPI.Loaded and StageAPI.GetCurrentStage ~= nil then return end -- stageapi is the more standardized version of all of this file
 
     local override = ro.overrides[gridindex]
     GODMODE.log("Trying to override room..", true)

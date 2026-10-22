@@ -9,7 +9,7 @@ item.encyc_entry = {
 	},
 }
 
-item.player_update = function(self, player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
         local diff = player:GetCollectibleNum(item.instance)
         local prayer_used = GODMODE.save_manager.get_player_data(player,"PrayerUsed","false")

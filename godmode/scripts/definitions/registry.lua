@@ -96,6 +96,7 @@ reg.items = {
     door_rift = Isaac.GetItemIdByName("Door Rift"),
     curse_of_the_snail = Isaac.GetItemIdByName("Curse of the Snail"),
     loded_sack = Isaac.GetItemIdByName("Loded Sack"),
+    flying_pan = Isaac.GetItemIdByName("Flying Pan"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -141,774 +142,607 @@ reg.trinkets = {
 
 reg.entities = {
     burnt_page = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Burnt Page"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Burnt Page"),
+        name = "[GODMODE] Burnt Page",
     },
     pair_of_cans = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Pair of Cans"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Pair of Cans"),
+        name = "[GODMODE] Pair of Cans",
     },
     hush_cannon = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hush Cannon"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hush Cannon"),
+        name = "[GODMODE] Hush Cannon",
     },
     chigger = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Chigger"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Chigger"),
+        name = "[GODMODE] Chigger",
     },
     holy_chalice = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Holy Chalice"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Holy Chalice"),
+        name = "[GODMODE] Holy Chalice",
     },
     diya = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Diya Candle"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Diya Candle"),
+        name = "[GODMODE] Diya Candle",
     },
     ritual_familiar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ritual Candle (Familiar)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ritual Candle (Familiar)"),
+        name = "[GODMODE] Ritual Candle (Familiar)",
     },
     fallen_guard_familiar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fallen Guard (Familiar)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fallen Guard (Familiar)"),
+        name = "[GODMODE] Fallen Guard (Familiar)",
     },
     late_delivery = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Late Delivery"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Late Delivery"),
+        name = "[GODMODE] Late Delivery",
     },
     fruit_fly = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fruit Fly"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fruit Fly"),
+        name = "[GODMODE] Fruit Fly",
     },
     sign_flame = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Sign's Flame"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Sign's Flame"),
+        name = "[GODMODE] The Sign's Flame",
     },
     deli_halo = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Delirious Halo"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Delirious Halo"),
+        name = "[GODMODE] Delirious Halo",
     },
     deli_eye = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Delirious Eye"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Delirious Eye"),
+        name = "[GODMODE] Delirious Eye",
     },
     vengeful_dagger = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Vengeful Dagger"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Vengeful Dagger"),
+        name = "[GODMODE] Vengeful Dagger",
     },
     hellfiah_familiar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hellfiah"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hellfiah"),
+        name = "[GODMODE] Hellfiah",
     },
     cursed_snail = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Cursed Snail"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Cursed Snail"),
+        name = "[GODMODE] Cursed Snail",
     },
     loded_sack = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Loded Sack"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Loded Sack"),
+        name = "[GODMODE] Loded Sack",
+    },
+    flying_pan = {
+        name = "[GODMODE] Flying Pan",
     },
 
     opia_soul = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Opia Soul"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Opia Soul"),
+        name = "[GODMODE] Opia Soul",
     },
     hot_potato_tear = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hot Potato Tear"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hot Potato Tear"),
+        name = "[GODMODE] Hot Potato Tear",
     },
     hot_potato_tear_chunk = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hot Potato Tear Chunk"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hot Potato Tear Chunk"),
+        name = "[GODMODE] Hot Potato Tear Chunk",
     },
 
 
     nerve_cluster = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Nerve Cluster"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Nerve Cluster"),
+        name = "[GODMODE] Nerve Cluster",
     },
     hostess_cluster = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hostess Cluster"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hostess Cluster"),
+        name = "[GODMODE] Hostess Cluster",
         subtype = 1
     },
     guard_of_the_father = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Guard of the Father"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Guard of the Father")
+        name = "[GODMODE] Guard of the Father",
     },
     blind_spider = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Blind Spider"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Blind Spider")
+        name = "[GODMODE] Blind Spider",
     },
     dream = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Dream"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Dream")
+        name = "[GODMODE] Dream",
     },
     trailer = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Trailer"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Trailer")
+        name = "[GODMODE] Trailer",
     },
     grubby = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Grubby"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Grubby")
+        name = "[GODMODE] Grubby",
     },
     cluster = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Cluster"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Cluster")
+        name = "[GODMODE] Cluster",
     },
     harf = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Harf"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Harf")
+        name = "[GODMODE] Harf",
     },
     purple_heart = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Purple Heart"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Purple Heart")
+        name = "[GODMODE] Purple Heart",
     },
     fetal_baby = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fetal Baby"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fetal Baby")
+        name = "[GODMODE] Fetal Baby",
     },
     planter = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Planter"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Planter")
+        name = "[GODMODE] Planter",
     },
     slammer = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Slammer"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Slammer")
+        name = "[GODMODE] Slammer",
     },
     big_dipper = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Big Dipper"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Big Dipper")
+        name = "[GODMODE] Big Dipper",
     },
     barfer = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Barfer"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Barfer")
+        name = "[GODMODE] Barfer",
     },
     dial = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Dial"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Dial")
+        name = "[GODMODE] Dial",
     },
     guarded = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Guarded"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Guarded")
+        name = "[GODMODE] Guarded",
     },
     silent = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Silent"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Silent")
+        name = "[GODMODE] Silent",
     },
     teether = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Teether"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Teether")
+        name = "[GODMODE] Teether",
     },
     hover = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hover"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hover")
+        name = "[GODMODE] Hover",
     },
     spiked_host = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Spiked Host"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Spiked Host")
+        name = "[GODMODE] Spiked Host",
     },
     spiked_flesh_host = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Spiked Flesh Host"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Spiked Flesh Host")
+        name = "[GODMODE] Spiked Flesh Host",
     },
     chanter = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Chanter"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Chanter")
+        name = "[GODMODE] Chanter",
     },
     shade = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Shade Hand"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Shade Hand")
+        name = "[GODMODE] Shade Hand",
     },
     paracolony = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Paracolony"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Paracolony")
+        name = "[GODMODE] Paracolony",
     },
     blood_baby = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Blood Baby"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Blood Baby")
+        name = "[GODMODE] Blood Baby",
     },
     fallen_angelic_baby = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fallen Angelic Baby"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fallen Angelic Baby")
+        name = "[GODMODE] Fallen Angelic Baby",
     },
     queen_fly = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Queen Fly"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Queen Fly")
+        name = "[GODMODE] Queen Fly",
     },
     godleg = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Godleg"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Godleg")
+        name = "[GODMODE] Godleg",
     },
     marshall_pawn = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Marshall Pawn"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Marshall Pawn")
+        name = "[GODMODE] Marshall Pawn",
     },
     arch_bishop = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Arch Bishop"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Arch Bishop")
+        name = "[GODMODE] Arch Bishop",
     },
     pooglobin = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Pooglobin"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Pooglobin")
+        name = "[GODMODE] Pooglobin",
     },
     hexstar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hexstar"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hexstar")
+        name = "[GODMODE] Hexstar",
     },
     mum = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Mum"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Mum")
+        name = "[GODMODE] Mum",
     },
     the_id = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Id"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Id")
+        name = "[GODMODE] The Id",
     },
     drifter = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Drifter"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Drifter")
+        name = "[GODMODE] Drifter",
     },
     parabit = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Para-Bit"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Para-Bit")
+        name = "[GODMODE] Para-Bit",
     },
     devil_lock = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Devil Lock"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Devil Lock")
+        name = "[GODMODE] Devil Lock",
     },
     stifled_gatekeeper = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Stifled Gatekeeper"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Stifled Gatekeeper")
+        name = "[GODMODE] Stifled Gatekeeper",
     },
     winged_spider = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Winged Spider"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Winged Spider")
+        name = "[GODMODE] Winged Spider",
     },
     delirious_pile = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Delirious Pile"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Delirious Pile")
+        name = "[GODMODE] Delirious Pile",
     },
     ludomini = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ludomini"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ludomini")
+        name = "[GODMODE] Ludomini",
     },
     ratty = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ratty"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ratty")
+        name = "[GODMODE] Ratty",
     },
     infested_membrain = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Infested MemBrain"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Infested MemBrain")
+        name = "[GODMODE] Infested MemBrain",
     },
     wrinkled_fatty = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Wrinkly Fatty"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Wrinkly Fatty")
+        name = "[GODMODE] Wrinkly Fatty",
     },
     vengeance = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Vengeance"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Vengeance")
+        name = "[GODMODE] Vengeance",
     },
     callen_skull = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Callen Skull"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Callen Skull")
+        name = "[GODMODE] Callen Skull",
+    },
+    biggest_star = {
+        name = "[GODMODE] Biggest Star",
     },
     electrite = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Electrite"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Electrite")
+        name = "[GODMODE] Electrite",
     },
     hushed_horf = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hushed Horf"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hushed Horf")
+        name = "[GODMODE] Hushed Horf",
     },
     hushed_fatty = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hushed Fatty"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hushed Fatty")
+        name = "[GODMODE] Hushed Fatty",
     },
     chest_mimic = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Chest Infestor"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Chest Infestor")
+        name = "[GODMODE] Chest Infestor",
     },
     hushed_clotty = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hushed Clotty"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hushed Clotty")
+        name = "[GODMODE] Hushed Clotty",
     },
     hushed_freddy = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hushed Freddy"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hushed Freddy")
+        name = "[GODMODE] Hushed Freddy",
     },
     farddy  = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Farddy"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Farddy")
+        name = "[GODMODE] Farddy",
     },
 
     swarm_one_tooth = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] One Tooth (Swarm)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] One Tooth (Swarm)")
+        name = "[GODMODE] One Tooth (Swarm)",
     },
     swarm_fat_bat = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fat Bat (Swarm)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fat Bat (Swarm)")
+        name = "[GODMODE] Fat Bat (Swarm)",
     },
 
     ludomaw = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ludomaw"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ludomaw")
+        name = "[GODMODE] Ludomaw",
     },
     hostess = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Hostess"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Hostess")
+        name = "[GODMODE] Hostess",
     },
     market_man = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Market Man"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Market Man")
+        name = "[GODMODE] Market Man",
     },
     mimic_worm = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Mimic Worm"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Mimic Worm")
+        name = "[GODMODE] Mimic Worm",
     },
     call_of_the_void = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Call of the Void"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Call of the Void")
+        name = "[GODMODE] Call of the Void",
     },
     cotv_broken_orb = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Void Soul (Call of the Void Projectile)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Void Soul (Call of the Void Projectile)"),
+        name = "[GODMODE] Void Soul (Call of the Void Projectile)",
         subtype = 1
     },
     cotv_damage_orb = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Skeletal Soul (The Fallen Light Projectile)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Skeletal Soul (The Fallen Light Projectile)"),
+        name = "[GODMODE] Skeletal Soul (The Fallen Light Projectile)",
         subtype = 2
     },
     bubbly_plum = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bubbly Plum"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bubbly Plum")
+        name = "[GODMODE] Bubbly Plum",
     },
     bubbly_plum_bubble_l = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bubbly Plum Bubble (Large)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bubbly Plum Bubble (Large)"),
+        name = "[GODMODE] Bubbly Plum Bubble (Large)",
         subtype = 1
     },
     bubbly_plum_bubble_s = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bubbly Plum Bubble (Small)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bubbly Plum Bubble (Small)"),
+        name = "[GODMODE] Bubbly Plum Bubble (Small)",
         subtype = 2
     },
     toxic_bubble_l = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Toxic Bubble (Large)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Toxic Bubble (Large)"),
+        name = "[GODMODE] Toxic Bubble (Large)",
         subtype = 3
     },
     toxic_bubble_s = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Toxic Bubble (Small)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Toxic Bubble (Small)"),
+        name = "[GODMODE] Toxic Bubble (Small)",
         subtype = 4
     },
     mega_worm = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Mega Worm"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Mega Worm")
+        name = "[GODMODE] Mega Worm",
     },
     blightfly = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Blightfly"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Blightfly")
+        name = "[GODMODE] Blightfly",
     },
     bowl_play = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bowl Play (Corny)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bowl Play (Corny)")
+        name = "[GODMODE] Bowl Play (Corny)",
     },
     outbreak = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Outbreak"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Outbreak")
+        name = "[GODMODE] Outbreak",
     },
     bulge_bat = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bulge Bat"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bulge Bat")
+        name = "[GODMODE] Bulge Bat",
     },
     brazier = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Brazier (Poky)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Brazier (Poky)")
+        name = "[GODMODE] Brazier (Poky)",
     },
     error_boss = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Error Keeper (Boss)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Error Keeper (Boss)")
+        name = "[GODMODE] Error Keeper (Boss)",
     },
     keepah_boss = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah (Boss)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah (Boss)"),
+        name = "[GODMODE] Keepah (Boss)",
     },
     keepah_boss_head_move = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah Head (Move)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah Head (Move)"),
+        name = "[GODMODE] Keepah Head (Move)",
         subtype=1,
     },
     keepah_boss_head_still = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah Head (Still)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah Head (Still)"),
+        name = "[GODMODE] Keepah Head (Still)",
         subtype=2,
     },
     keepah_boss_head_both = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah Head (Both)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah Head (Both)"),
+        name = "[GODMODE] Keepah Head (Both)",
         subtype=3,
     },
     keepah_boss_head_both_alt = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah Head (Both Alt)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah Head (Both Alt)"),
+        name = "[GODMODE] Keepah Head (Both Alt)",
         subtype=4,
     },
     keepah_boss_dead = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah (Dead)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah (Dead)"),
+        name = "[GODMODE] Keepah (Dead)",
         subtype=5,
     },
     godmode_famine = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Famine"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Famine")
+        name = "[GODMODE] Famine",
     },
     godmode_war = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] War"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] War")
+        name = "[GODMODE] War",
     },
     godmode_war_no_horse = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] War without horse"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] War without horse")
+        name = "[GODMODE] War without horse",
     },
     godmode_death_horse = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Death Horse"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Death Horse")
+        name = "[GODMODE] Death Horse",
     },
     godmode_death_no_horse = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Death without horse"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Death without horse")
+        name = "[GODMODE] Death without horse",
     },
     godmode_death = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Death"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Death")
+        name = "[GODMODE] Death",
     },
     the_ritual = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Ritual"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Ritual")
+        name = "[GODMODE] The Ritual",
     },
     ritual_candle = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Ritual's Candle"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Ritual's Candle"),
+        name = "[GODMODE] The Ritual's Candle",
         subtype = 1
     },
     sacred_mind = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Sacred Mind"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Sacred Mind")
+        name = "[GODMODE] The Sacred Mind",
     },
     sacred_body = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Sacred Body"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Sacred Body")
+        name = "[GODMODE] The Sacred Body",
     },
     sacred_soul = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Sacred Soul"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Sacred Soul")
+        name = "[GODMODE] The Sacred Soul",
     },
     souleater = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Souleater"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Souleater")
+        name = "[GODMODE] Souleater",
     },
     furnace_guard = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Furnace Guard"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Furnace Guard")
+        name = "[GODMODE] Furnace Guard",
     },
     furnace_knight = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Furnace Knight"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Furnace Knight"),
+        name = "[GODMODE] Furnace Knight",
         subtype = 1
     },
     furnace_knight_boss = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Furnace Knight (Boss)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Furnace Knight (Boss)"),
+        name = "[GODMODE] Furnace Knight (Boss)",
         subtype = 2
     },
     grand_marshall = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Grand Marshall"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Grand Marshall")
+        name = "[GODMODE] The Grand Marshall",
     },
     bloody_uriel = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bloody Uriel"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bloody Uriel")
+        name = "[GODMODE] Bloody Uriel",
     },
     bloody_gabriel = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bloody Gabriel"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bloody Gabriel")
+        name = "[GODMODE] Bloody Gabriel",
     },
     bathemo_swarm = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bathemo Swarm"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bathemo Swarm")
+        name = "[GODMODE] Bathemo Swarm",
     },
     bathemo = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bathemo"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bathemo")
+        name = "[GODMODE] Bathemo",
     },
     bathemo_devote = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bathemo Devote"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bathemo Devote"),
-        subtype = GODMODE.validate_rgon() and Isaac.GetEntitySubTypeByName("Bathemo Devote") or 1
+        name = "[GODMODE] Bathemo Devote",
+        subtype = 1
     },
     the_collapsed = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Collapsed"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Collapsed")
+        name = "[GODMODE] The Collapsed",
     },
     the_collapsed_hand = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Collapsed (Hand)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Collapsed (Hand)"),
+        name = "[GODMODE] The Collapsed (Hand)",
         subtype = 1
     },
     the_collapsed_matter = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Collapsed (Dark Matter)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Collapsed (Dark Matter)"),
+        name = "[GODMODE] The Collapsed (Dark Matter)",
         subtype = 2
     },
     the_fallen_light = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Fallen Light"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Fallen Light")
+        name = "[GODMODE] The Fallen Light",
     },
     the_sign = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] The Sign"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] The Sign")
+        name = "[GODMODE] The Sign",
     },
 
 
     holy_order = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Holy Order"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Holy Order")
+        name = "[GODMODE] Holy Order",
     },
     shatter_coin = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Shatter Coin"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Shatter Coin")
+        name = "[GODMODE] Shatter Coin",
     },
     secret_light = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Secret Light"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Secret Light")
+        name = "[GODMODE] Secret Light",
     },
     red_coin = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Red Coin"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Red Coin")
+        name = "[GODMODE] Red Coin",
     },
     unholy_order = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Unholy Order"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Unholy Order")
+        name = "[GODMODE] Unholy Order",
     },
     crossbones_shield = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Crossbones Shield"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Crossbones Shield")
+        name = "[GODMODE] Crossbones Shield",
     },
     aztec_shield = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Aztec Shield"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Aztec Shield"),
+        name = "[GODMODE] Aztec Shield",
         subtype = 1
     },
     snail_shield = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Snail Shield"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Snail Shield"),
+        name = "[GODMODE] Snail Shield",
         subtype = 2
     },
     heart_container = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Heart Container (Pickup)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Heart Container (Pickup)")
+        name = "[GODMODE] Heart Container (Pickup)",
     },
     unlock_pedestal = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Unlock Pedestal"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Unlock Pedestal")
+        name = "[GODMODE] Unlock Pedestal",
     },
     fruit = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fruit (Pickup)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fruit (Pickup)")
+        name = "[GODMODE] Fruit (Pickup)",
     },
     fatal_attraction_station = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fatal Attraction Helper"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fatal Attraction Helper")
+        name = "[GODMODE] Fatal Attraction Helper",
     },
     gehazi_shrine = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Gehazi Shrine"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Gehazi Shrine")
+        name = "[GODMODE] Gehazi Shrine",
     },
     soft_serve = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Soft Serve Spawner"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Soft Serve Spawner")
+        name = "[GODMODE] Soft Serve Spawner",
     },
     tear_gas_can = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Tear Gas Can"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Tear Gas Can"),
+        name = "[GODMODE] Tear Gas Can",
         subtype = 0
     },
     tear_gas_cloud = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Tear Gas Cloud"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Tear Gas Cloud"),
+        name = "[GODMODE] Tear Gas Cloud",
         subtype = 1
     },
     player_trail_fx = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Player Trail FX"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Player Trail FX")
+        name = "[GODMODE] Player Trail FX",
     },
     crack_the_sky = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Crack The Sky (With Tell)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Crack The Sky (With Tell)")
+        name = "[GODMODE] Crack The Sky (With Tell)",
     },
     celestial_swipe = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Celestial Swipe"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Celestial Swipe")
+        name = "[GODMODE] Celestial Swipe",
     },
     feather_dust = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Feather Dust"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Feather Dust"),
+        name = "[GODMODE] Feather Dust",
         subtype = 1,
     },
     temp_broken_fx = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Temp Broken Removal"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Temp Broken Removal"),
+        name = "[GODMODE] Temp Broken Removal",
         subtype = 3,
     },
     adramolechs_fuel = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Adramolech's Fuel"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Adramolech's Fuel")
+        name = "[GODMODE] Adramolech's Fuel",
     },
     adramolechs_fuel_charged = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Adramolech's Fuel (Charged)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Adramolech's Fuel (Charged)"),
+        name = "[GODMODE] Adramolech's Fuel (Charged)",
         subtype = 1,
     },
     delirious_energy = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Delirious Energy"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Delirious Energy"),
+        name = "[GODMODE] Delirious Energy",
         subtype = 2,
     },
     fallen_light_crack = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fallen Light Crack"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fallen Light Crack"),
+        name = "[GODMODE] Fallen Light Crack",
     },
     war_banner = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] War Banner"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] War Banner"),
+        name = "[GODMODE] War Banner",
     },
     bomb_barrel = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Bomb Barrel"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Bomb Barrel"),
+        name = "[GODMODE] Bomb Barrel",
     },
     papal_flame = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Papal Flame"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Papal Flame"),
+        name = "[GODMODE] Papal Flame",
     },
     golden_scale = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Golden Scale"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Golden Scale"),
+        name = "[GODMODE] Golden Scale",
     },
     silver_scale = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Silver Scale"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Silver Scale"),
+        name = "[GODMODE] Silver Scale",
         subtype = 1,
     },
     elohims_throne = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Elohim's Throne"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Elohim's Throne"),
+        name = "[GODMODE] Elohim's Throne",
         subtype = 0,
     },
     fake_god = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fake God"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fake God"),
+        name = "[GODMODE] Fake God",
         subtype = 1,
     },
     fallen_light_lock = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fallen Light Lock"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fallen Light Lock"),
+        name = "[GODMODE] Fallen Light Lock",
         subtype = 2,
     },
     ivory_torch = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ivory Torch"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ivory Torch"),
+        name = "[GODMODE] Ivory Torch",
         subtype = 3,
     },
     masked_angel_statue = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Masked Angel Statue"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Masked Angel Statue"),
+        name = "[GODMODE] Masked Angel Statue",
     },
     keepah = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Keepah (Shop Parrot)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Keepah (Shop Parrot)"),
+        name = "[GODMODE] Keepah (Shop Parrot)",
     },
     stone_beggar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Stone Beggar"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Stone Beggar"),
+        name = "[GODMODE] Stone Beggar",
     },
     palace_mural = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Lucifer's Palace Mural"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Lucifer's Palace Mural"),
+        name = "[GODMODE] Lucifer's Palace Mural",
     },
     ivory_portal = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ivory Portal"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ivory Portal"),
+        name = "[GODMODE] Ivory Portal",
     },
     correction_portal = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Correction Portal"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Correction Portal"),
+        name = "[GODMODE] Correction Portal",
     },
     ooze_turret = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Ooze Turret"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Ooze Turret"),
+        name = "[GODMODE] Ooze Turret",
     },
     door_hazard = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Door Hazard"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Door Hazard"),
+        name = "[GODMODE] Door Hazard",
     },
     dynamite_rock = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Dynamite Rock (Brazier)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Dynamite Rock (Brazier)"),
+        name = "[GODMODE] Dynamite Rock (Brazier)",
     },
     observatory_fx = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Observatory FX"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Observatory FX"),
+        name = "[GODMODE] Observatory FX",
     },
     correction_fx = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Correction FX"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Correction FX"),
+        name = "[GODMODE] Correction FX",
     },
     correction_shrine = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Correction Shrine"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Correction Shrine"),
+        name = "[GODMODE] Correction Shrine",
     },
     correction_hand = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Correction Hand"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Correction Hand"),
+        name = "[GODMODE] Correction Hand",
         subtype = 2,
     },
     cotv_correct = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] COTV (Correction Room)"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] COTV (Correction Room)"),
+        name = "[GODMODE] COTV (Correction Room)",
+    },
+    cotv_correct_cacklefade = {
+        name = "[GODMODE] COTV (Correction Room)",
+        subtype = 1,
     },
     pill_beggar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Pill Beggar"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Pill Beggar")
+        name = "[GODMODE] Pill Beggar",
     },
     fruit_beggar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fruit Beggar"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fruit Beggar")
+        name = "[GODMODE] Fruit Beggar",
     },
     closet_tchar = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Godmode Tainted Char"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Godmode Tainted Char")
+        name = "[GODMODE] Godmode Tainted Char",
     },
     fallen_light_bone = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Fallen Light Bone"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Fallen Light Bone")
+        name = "[GODMODE] Fallen Light Bone",
     },
     sugar_sparkle = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Sugar Sparkle"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Sugar Sparkle"),
+        name = "[GODMODE] Sugar Sparkle",
         subtype = 4,
     },
     blue_womb_red_lock = {
-        type = Isaac.GetEntityTypeByName("[GODMODE] Blue Womb Red Door Block"),
-        variant = Isaac.GetEntityVariantByName("[GODMODE] Blue Womb Red Door Block"),
+        name = "[GODMODE] Blue Womb Red Door Block",
     },
 }
 
--- make sure all entities have a subtype entry
+
+-- flush all entity entries based on their XML name 
 for id,ent in pairs(reg.entities) do 
-    reg.entities[id].subtype = reg.entities[id].subtype or 0
+    local type,var,sub = Isaac.GetEntityTypeByName(ent.name), Isaac.GetEntityVariantByName(ent.name), (GODMODE.validate_rgon() and Isaac.GetEntitySubTypeByName(ent.name) or (ent.subtype or 0))
+    reg.entities[id].type = type
+    reg.entities[id].variant = var
+    reg.entities[id].subtype = sub
 end
 
 reg.blessings = {
@@ -1018,6 +852,24 @@ reg.t_sign_familiar_tears = {
     [FamiliarVariant.TWISTED_BABY] = true,
 }
 
+reg.t_sign_tearflag_blacklist_pre = {
+    [TearFlags.TEAR_CHAIN] = true,
+    [TearFlags.TEAR_SAD_BOMB] = true,
+    [TearFlags.TEAR_BUTT_BOMB] = true,
+    [TearFlags.TEAR_GLITTER_BOMB] = true,
+    [TearFlags.TEAR_SCATTER_BOMB] = true,
+    [TearFlags.TEAR_CROSS_BOMB] = true,
+    [TearFlags.TEAR_GHOST_BOMB] = true,
+    [TearFlags.TEAR_GOLDEN_BOMB] = true,
+    [TearFlags.TEAR_FAST_BOMB] = true,
+    [TearFlags.TEAR_GIGA_BOMB] = true,
+    [TearFlags.TEAR_CHAIN] = true,
+}
+
+for flag,_ in pairs(reg.t_sign_tearflag_blacklist_pre) do 
+    reg.t_sign_tearflag_blacklist = (reg.t_sign_tearflag_blacklist or flag) & flag 
+end
+
 reg.music = {
     a_blackened_light = Isaac.GetMusicIdByName("GODMODE A Blackened Light"),
     experiencing_revelation = Isaac.GetMusicIdByName("GODMODE Experiencing Revelation"),
@@ -1028,7 +880,8 @@ reg.music = {
     a_song_from_a_broken_soul = Isaac.GetMusicIdByName("GODMODE Cathedral"),
     the_path_to_enlightenment = Isaac.GetMusicIdByName("GODMODE Boss (Cathedral - Isaac)"),
     misfortunate = Isaac.GetMusicIdByName("GODMODE Misfortunate"),
-    twinkles = Isaac.GetMusicIdByName("GODMODE Twinkles of a Last Thought"),
+    -- twinkles = Isaac.GetMusicIdByName("GODMODE Twinkles of a Last Thought"),
+    ending_voiceover2 = Isaac.GetMusicIdByName("GODMODE_EndingVoiceover2"),
     persuasions = Isaac.GetMusicIdByName("GODMODE Shop Room"),
 }
 
@@ -1041,12 +894,13 @@ reg.sounds = {
     red_coin_complete = Isaac.GetSoundIdByName("GODMODE.red_coin_complete"),
     keepah = Isaac.GetSoundIdByName("GODMODE.keepah_chirp"),
     keepah_panic = Isaac.GetSoundIdByName("GODMODE.keepah_panic"),
-    ending_voiceover2 = Isaac.GetSoundIdByName("GODMODE.godmode_ending2"),
+    -- ending_voiceover2 = Isaac.GetSoundIdByName("GODMODE.godmode_ending2"),
     regular_cough = Isaac.GetSoundIdByName("GODMODE.regular_cough"),
     correction_bell = Isaac.GetSoundIdByName("GODMODE.correction_bell"),
     child_blargh = Isaac.GetSoundIdByName("GODMODE.child_blargh"),
     tutorial_text = Isaac.GetSoundIdByName("GODMODE.tutorial_text"),
     meow = Isaac.GetSoundIdByName("GODMODE.meow"),
+    flying_pan = Isaac.GetSoundIdByName("GODMODE.flying_pan"),
 }
 
 reg.transformations = {
@@ -1129,6 +983,121 @@ reg.t_deli_delirious_heart_rates = {
     [HeartSubType.HEART_BLENDED] = 0.175,
     [HeartSubType.HEART_BONE] = 0.0,
     [HeartSubType.HEART_ROTTEN] = 0.025,
+}
+
+-- new door hazard system! each stage has a unique door hazard, a few have a couple hazards, the void has a unique one + ALL hazards! 
+
+reg.door_hazard_variants = {
+    ["DoorTears"] = {},
+    ["DoorWebBlueFly"] = {},
+    ["DoorFire"] = {},
+    ["DoorWaterPipe"] = {},
+    ["DoorVineGrapes"] = {},
+    ["DoorVineSpikes"] = {},
+    ["DoorVineRoots"] = {},
+    ["DoorDust"] = {},
+    ["DoorAlgae"] = {},
+    ["DoorHammerTrap"] = {},
+    ["DoorGhosts"] = {},
+    ["DoorLantern"] = {},
+    ["DoorTar"] = {},
+    ["DoorBlood"] = {},
+    ["DoorWeb"] = {},
+    ["DoorWebEgg"] = {},
+    ["DoorWombMouth"] = {},
+    ["DoorWombTube"] = {},
+    ["DoorWombSpikes"] = {},
+    ["DoorWombScabs"] = {},
+    ["DoorGasBag"] = {},
+    ["DoorLight"] = {},
+    ["DoorShadow"] = {},
+    ["DoorCallen"] = {},
+    ["DoorMagma"] = {},
+    ["DoorShadowCOTV"] = {},
+    ["DoorPortal"] = {},
+}
+
+reg.stage_door_hazard_lists = {
+    ["1"..StageType.STAGETYPE_ORIGINAL] = {{weight=1,entry="DoorTears"},},
+    ["1"..StageType.STAGETYPE_WOTL] = {{weight=1,entry="DoorWebBlueFly"},},
+    ["1"..StageType.STAGETYPE_AFTERBIRTH] = {{weight=1,entry="DoorFire"},},
+    ["1"..StageType.STAGETYPE_REPENTANCE] = {{weight=1,entry="DoorWaterPipe"},{weight=1,entry="DoorTears"},},
+    ["FruitCellar"] = {{weight=1,entry="DoorVineGrapes"},{weight=1,entry="DoorVineSpikes"}},
+
+    ["2"..StageType.STAGETYPE_ORIGINAL] = {{weight=1,entry="DoorVineRoots"},},
+    ["2"..StageType.STAGETYPE_WOTL] = {{weight=1,entry="DoorDust"},},
+    ["2"..StageType.STAGETYPE_AFTERBIRTH] = {{weight=1,entry="DoorAlgae"},},
+    ["2"..StageType.STAGETYPE_REPENTANCE] = {{weight=1,entry="DoorHammerTrap"},{weight=3,entry="DoorAlgae"},},
+
+    ["3"..StageType.STAGETYPE_ORIGINAL] = {{weight=1,entry="DoorGhosts"},},
+    ["3"..StageType.STAGETYPE_WOTL] = {{weight=1,entry="DoorLantern"},},
+    ["3"..StageType.STAGETYPE_AFTERBIRTH] = {{weight=1,entry="DoorTar"},},
+    ["3"..StageType.STAGETYPE_REPENTANCE] = {{weight=1,entry="DoorBlood"},},
+    ["TheNest"] = {
+        {weight=0.5,entry="DoorWebBlueFly"},
+        {weight=1,entry="DoorWeb"},
+        {weight=0.25,entry="DoorWebEgg"},
+    },
+
+    ["4"..StageType.STAGETYPE_ORIGINAL] = {
+        {weight=1,entry="DoorWombMouth"},
+        {weight=0.5,entry="DoorWombTube"},
+        {weight=0.25,entry="DoorWombSpikes"},
+        {weight=0.25,entry="DoorWombScabs"},
+    },
+    ["4"..StageType.STAGETYPE_WOTL] = {
+        {weight=1,entry="DoorWombSpikes"},
+        {weight=0.5,entry="DoorWombScabs"},
+        {weight=0.25,entry="DoorWombMouth"},
+        {weight=0.25,entry="DoorWombTube"},
+    },
+    ["4"..StageType.STAGETYPE_AFTERBIRTH] = {
+        {weight=1,entry="DoorWombScabs"},
+        {weight=0.5,entry="DoorWombMouth"},
+    },
+    ["4"..StageType.STAGETYPE_REPENTANCE] = {{weight=1,entry="DoorGasBag"},{weight=1,entry="DoorWombScabs"},{weight=1,entry="DoorWombSpikes"},},
+    ["Colon"] = {
+        {weight=1,entry="DoorWombTube"},
+        {weight=0.5,entry="DoorWombSpikes"},
+        {weight=0.25,entry="DoorWombMouth"},
+        {weight=0.25,entry="DoorWombScabs"},
+    },
+
+    ["5"..StageType.STAGETYPE_ORIGINAL] = {{weight=1,entry="DoorLight"},},
+    ["5"..StageType.STAGETYPE_WOTL] = {{weight=1,entry="DoorShadow"},},
+
+    ["6"..StageType.STAGETYPE_ORIGINAL] = {{weight=1,entry="DoorCallen"},},
+    ["6"..StageType.STAGETYPE_WOTL] = {{weight=1,entry="DoorMagma"},},
+    ["IvoryPalace"] = {{weight=1,entry="DoorShadowCOTV"},},
+
+    ["7"..StageType.STAGETYPE_ORIGINAL] = {
+        {weight=3,entry="DoorPortal"},
+        {weight=1,entry="DoorShadowCOTV"},
+        {weight=1,entry="DoorMagma"},
+        {weight=0.75,entry="DoorCallen"},
+        {weight=0.75,entry="DoorShadow"},
+        {weight=1,entry="DoorLight"},
+        {weight=0.75,entry="DoorWombTube"},
+        {weight=0.75,entry="DoorWombSpikes"},
+        {weight=0.75,entry="DoorWombMouth"},
+        {weight=0.75,entry="DoorWombScabs"},
+        {weight=1.25,entry="DoorWeb"},
+        {weight=1,entry="DoorWebEgg"},
+        {weight=0.75,entry="DoorBlood"},
+        {weight=0.75,entry="DoorTar"},
+        {weight=1,entry="DoorLantern"},
+        {weight=0.75,entry="DoorGhosts"},
+        {weight=0.75,entry="DoorHammerTrap"},
+        {weight=1,entry="DoorAlgae"},
+        {weight=0.75,entry="DoorDust"},
+        {weight=0.75,entry="DoorVineRoots"},
+        {weight=1,entry="DoorVineGrapes"},
+        {weight=0.75,entry="DoorVineSpikes"},
+        {weight=0.75,entry="DoorWaterPipe"},
+        {weight=1,entry="DoorFire"},
+        {weight=1,entry="DoorWebBlueFly"},
+        {weight=0.75,entry="DoorTears"},
+    },
 }
 
 if GODMODE.validate_rgon() then 

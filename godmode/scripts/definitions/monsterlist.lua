@@ -154,5 +154,6 @@ table.insert(ret, include("godmode.scripts.definitions.entities.familiar.vengefu
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.hellfiah"))
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.cursed_snail"))
 table.insert(ret, include("godmode.scripts.definitions.entities.familiar.loded_sack"))
+table.insert(ret, include("godmode.scripts.definitions.entities.familiar.flying_pan"))
 
 return ret

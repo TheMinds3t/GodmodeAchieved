@@ -36,7 +36,6 @@ item.split_gold_val = 3
 
 item.pickup_update = function(self, pickup, data, sprite)
     if pickup.FrameCount == 1 then 
-        local uses = tonumber(GODMODE.save_manager.get_data("FractalKeyUses","0"))
         local convert_sub = item.pickup_conversions[pickup.Variant]
     
         if convert_sub ~= nil and (pickup.Touched ~= true or pickup.SubType == convert_sub) then 
@@ -53,7 +52,7 @@ item.pickup_update = function(self, pickup, data, sprite)
                     end
                 end
             else
-                local chance = item.chance_scalar(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")))
+                local chance = item.get_chance(tonumber(GODMODE.save_manager.get_data("GildedChance","0.0")))
                 -- GODMODE.log("chance2="..chance,true)
 
                 if pickup:GetDropRNG():RandomFloat() <= chance and item.disable_convert ~= true then 
@@ -69,7 +68,6 @@ end
 
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	if coll == item.instance then
-        local uses = tonumber(GODMODE.save_manager.get_data("FractalKeyUses","0"))
         local chance = tonumber(GODMODE.save_manager.get_data("GildedChance","0.0"))
         -- GODMODE.save_manager.set_data("FractalKeyUses",uses+1)
         GODMODE.save_manager.set_data("FractalKeyUses", 0)

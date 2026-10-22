@@ -17,9 +17,9 @@
 	<sound name="GODMODE.red_coin_complete">
 		<sample weight="1" path="pickups/red_coin_complete.wav" />
 	</sound>
-	<sound name="GODMODE.godmode_ending2">
+	<!-- <sound name="GODMODE.godmode_ending2">
 		<sample weight="1" path="endings/ending2.wav" />
-	</sound>
+	</sound> -->
 	<sound name="GODMODE.keepah_chirp">
 		<sample weight="1" path="keepah/keepah0.wav" />
 		<sample weight="1" path="keepah/keepah1.wav" />
@@ -50,7 +50,10 @@
 	<sound name="GODMODE.tutorial_text">
 		<sample weight="1" path="tutorial_text.wav" />
 	</sound>
-	
+	<sound name="GODMODE.flying_pan">
+		<sample weight="1" path="flying_pan.wav" />
+	</sound>
+
 	<!-- DSS integration! -->
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav"/>

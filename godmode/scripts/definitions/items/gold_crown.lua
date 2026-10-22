@@ -22,7 +22,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self,player)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		if player:IsFrame(60,10) then 
 			player:AddCacheFlags(CacheFlag.CACHE_LUCK)

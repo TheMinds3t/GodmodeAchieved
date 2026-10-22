@@ -174,7 +174,7 @@ monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explo
     end
 end
 
-monster.player_update = function(self, player,data)
+monster.player_update = function(self, player,data,sprite)
     if (data.door_hazard_webbed or 0) > 0 then 
         player.Velocity = player.Velocity * 0.9
         data.door_hazard_webbed = data.door_hazard_webbed - 1

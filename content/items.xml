@@ -91,10 +91,11 @@
 	<passive id="106" cache="speed" description="All doors are connected..." gfx="door_rift.png" name="Door Rift" quality = "0" />
 	<familiar id="107" description="Diper friends" gfx="loaded_diaper.png" name="Loded Sack" quality = "0" />
 	<!-- <familiar id="108" description="Ceaseless void" gfx="celeste_hairball.png" name="Celestial Hairball" quality = "2" /> -->
+	<active id="109" maxcharges="3" description="Anti-gravity?" gfx="flying_pan.png" name="Flying Pan" quality = "2" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />
-	<passive achievement="GODMODE_FL_TXaphan" id="83" description="Go out in your own style" gfx="fatal_attraction.png" name="Fatal Attraction" tags="offensive summonable" devilprice="1" blackhearts="2" hearts="-6" quality = "3" />
+	<passive achievement="GODMODE_FL_TXaphan" id="83" description="Go out in your own style" gfx="fatal_attraction.png" name="Fatal Attraction" tags="offensive summonable" devilprice="2" blackhearts="2" hearts="-6" quality = "3" />
 	<passive achievement="GODMODE_FL_TElohim" id="84" cache="damage" description="May your power last a thousand lifetimes" gfx="divine_wrath.png" name="Divine Wrath" tags="offensive" quality = "4" />
 	<passive achievement="GODMODE_FL_TDeli" id="85" cache="firedelay" description="Easily overwhelmed" gfx="hysteria.png" name="Hysteria" tags="offensive tearsup summonable" quality = "3" />
 	<passive achievement="GODMODE_FL_TGehazi" id="86" description="All the eye can see is yours" gfx="greedy_glance.png" name="Greedy Glance" tags="" quality = "2" />

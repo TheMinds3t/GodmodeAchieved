@@ -144,7 +144,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
 		local data = GODMODE.get_ent_data(player)
 		if player:GetFireDirection() ~= Direction.NO_DIRECTION and data.laser_firing ~= true then

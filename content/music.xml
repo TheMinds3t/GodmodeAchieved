@@ -8,7 +8,7 @@
 	<track name="GODMODE The Stars Gaze Back" intro="godmode/music/observatory_intro.ogg" path="godmode/music/observatory.ogg" loop="true" />
 	<track name="GODMODE Misfortunate" intro="godmode/music/correction_intro.ogg" path="godmode/music/correction.ogg" loop="true" />
 	<track name="GODMODE Twinkles of a Last Thought" path="godmode/music/ending.ogg" loop="true" />
-	<track name="GODMODE_EndingVoiceover" path="godmode/music/ending voiceover.ogg" loop="false" />
+	<track name="GODMODE_EndingVoiceover2" path="godmode/music/ending_voiceover2.ogg" loop="false" />
 
 	<!-- Palace (Day) -->
 	<track name="GODMODE Cathedral" intro="godmode/music/palace (day)/asfabs intro.ogg" path="godmode/music/palace (day)/asfabs main.ogg" layerintro="godmode/music/palace (day)/asfabs intro layer.ogg" layer="godmode/music/palace (day)/asfabs layer.ogg" loop="true" />

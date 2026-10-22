@@ -6,16 +6,16 @@ monster.variant = GODMODE.registry.entities.papal_flame.variant
 
 local function set_kill_msgs() 
     monster.kill_msgs = {
-        {"You have too much time", "on your hands don't you?"},
-        {"Jesus dude, wow.", "Go touch some grass man"},
-        {"Clock go brrr"},
-        {"Is it past midnight", "for you yet? Damn"},
-        {"Get a life"},
+        {"you have too much time", "on your hands don't you?"},
+        {"jesus dude, wow.", "Go touch some grass man"},
+        {"clock go brrr"},
+        {"is it past midnight", "for you yet? damn"},
+        {"get a life"},
         {"u r virgin"},
-        {"Is this your preferred", "way to spend time?"},
-        {"Well, there goes "}, -- autopopulated on fire death
-        {"Have you even eaten today?"},
-        {"Have you even showered today?", "I smell you from *my*", "screen..."},
+        {"is this your preferred", "way to spend time?"},
+        {"well, there goes "}, -- autopopulated on fire death
+        {"have you even eaten today?"},
+        {"have you even showered today?", "i smell you from *my*", "screen..."},
         {"meehoy meenoy"},
         {"zoo wee mama!"},
         {"shabang!", "item, just like that!"},
@@ -36,6 +36,37 @@ local function set_kill_msgs()
         {"FATALITY!"},
         {"try again next time?"},
         {"gg go next?"},
+        {"gtfobibybau",">:()"},
+        {"only you can", "prevent forest fires"},
+        {"papal flame goes", "brrrrrrrrr"},
+        {"you must construct", "additional pylons"},
+        {"the cake is a lie"},
+        {"do a barrel roll!"},
+        {"it's dangerous", "to go alone!","take this."},
+        {"stay awhile", "and listen."},
+        {"live","laugh","love."},
+        {"what do you have", "going on tonight?"},
+        {"you win this time", "but i'll be back."},
+        {"i am inevitable."},
+        {"i am groot."},
+        {"wakka wakka"},
+        {"just keep", "swimming."},
+        {"to infinity", "and beyond!"},
+        {"may the force", "be with you."},
+        {"i solemnly swear", "that i am up to no good."},
+        {"expecto patronum!"},
+        {"it's leviOsa,", "not levioSA."},
+        {"you shall not pass!"},
+        {"mewgenics hates you more"},
+        {"meow meow meow meow", "meow meow meow meow meow"},
+        {"thank you for your time"},
+        {"good luck with COTV!"},
+        {"nice buddy, nice"},
+        {"spicy fireplace"},
+        {"garlic is my enemy"},
+        {"eat this, potato!"},
+        {"my pleasure"},
+        {"want a refill?"},
     }
 end
 
@@ -95,9 +126,9 @@ monster.npc_kill = function(self, ent)
             if GODMODE.level:GetStage() > LevelStage.STAGE4_3 then
                 monster.kill_msgs[8][1] = monster.kill_msgs[8][1].."even more time"
             elseif GODMODE.level:GetStage() > LevelStage.STAGE3_2 then
-                monster.kill_msgs[8][1] = monster.kill_msgs[8][1].."Hush"
+                monster.kill_msgs[8][1] = monster.kill_msgs[8][1].."hush"
             else
-                monster.kill_msgs[8][1] = monster.kill_msgs[8][1].."Boss Rush"
+                monster.kill_msgs[8][1] = monster.kill_msgs[8][1].."boss rush"
             end
             
             local msg = ent:GetDropRNG():RandomInt(#monster.kill_msgs)+1

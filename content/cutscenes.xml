@@ -1,6 +1,8 @@
 <cutscenes root="godmode/gfx/cutscenes/">
 	<cutscene name="GODMODE_Ending" fadeout="true" fadecolor="black">
-		<anm2part anm2="ending.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover" width="427" height="240" />
+		<anm2part anm2="godmode_ending2.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover2" width="427" height="240" />
+		<!-- <anm2part anm2="godmode_ending2.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover" width="854" height="480" /> -->
 		<!-- <anm2part anm2="ending.anm2" anim="SceneRepentogon" music="GODMODE_EndingVoiceover" /> -->
+		<anm2part anm2="Credits.anm2" anim="Credits" music="60" width="480" height="270" letterbox="true" />
 	</cutscene>
 </cutscenes>

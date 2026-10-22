@@ -49,7 +49,7 @@ item.explode_frame = function(self, ent, data, sprite, effect, explode_pos, expl
 			local player = bomb.SpawnerEntity:ToPlayer()
 			local dat = GODMODE.get_ent_data(player)
 
-			if player:HasCollectible(item.instance) and dat and (dat.banner_time or banner_place_cooldown) == 0 then
+			if player:HasCollectible(item.instance) and dat and (dat.banner_time or 0) == 0 then
 				local banner = Isaac.Spawn(GODMODE.registry.entities.war_banner.type, GODMODE.registry.entities.war_banner.variant, 0, bomb.Position, Vector.Zero, bomb.SpawnerEntity)
 				local aura = Isaac.Spawn(GODMODE.registry.entities.war_banner.type, GODMODE.registry.entities.war_banner.variant, player:GetCollectibleRNG(item.instance):RandomInt(3)+1, bomb.Position, Vector.Zero, bomb.SpawnerEntity)
 				banner.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY

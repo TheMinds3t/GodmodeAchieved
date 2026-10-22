@@ -17,7 +17,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then 
 		GODMODE.game.BlueWombParTime = 24 * 60 * 60 * 30 -- 1 day should do it 
 		GODMODE.game.BossRushParTime = 24 * 60 * 60 * 30 

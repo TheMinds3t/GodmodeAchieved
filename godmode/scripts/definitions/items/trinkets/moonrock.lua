@@ -24,7 +24,7 @@ item.choose_curse = function(self,curses)
     end
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
     if player:HasTrinket(item.instance, true) and GODMODE.is_in_observatory() then 
         player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)
     end

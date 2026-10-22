@@ -31,7 +31,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then 
 
 		data.soft_serve_cooldown = math.max(0,(data.soft_serve_cooldown or 0) - 1)

@@ -12,13 +12,10 @@ local fire_circle_off = function(ent,data)
 end
 
 monster.data_init = function(self, ent,data)
-	if ent.Type == monster.type and ent.Variant == monster.variant then 
-        if not data.hitpoint_buff then
-            local bonus = math.min((GODMODE.util.get_basic_dps(ent) / 10.0) * 100, 1000)
-            ent.MaxHitPoints = ent.MaxHitPoints + bonus
-            ent.HitPoints = ent.MaxHitPoints
-            data.hitpoint_buff = true
-        end
+	if ent.Type == monster.type and ent.Variant == monster.variant and GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" then 
+        local bonus = GODMODE.util.get_average_stat_score() * tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+        ent.MaxHitPoints = ent.MaxHitPoints + bonus
+        ent.HitPoints = ent.MaxHitPoints
     end
 end
 

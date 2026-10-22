@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="Unknown" CreatedOn="8/17/2024 2:05:47 PM" Version="25" Fps="30"/>
+	<Info CreatedBy="Unknown" CreatedOn="10/1/2026 1:39:42 PM" Version="26" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="godmode_minimap.png" Id="0"/>

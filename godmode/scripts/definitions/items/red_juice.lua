@@ -27,7 +27,7 @@ item.eval_cache = function(self, player,cache,data)
     end
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
 	local distort = tonumber(GODMODE.save_manager.get_data("RedJuiceDistort","0"))
 	GODMODE.save_manager.set_data("RedJuiceDistort", math.max(0,distort-1/decay_time/max_stacks))
 

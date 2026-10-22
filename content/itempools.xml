@@ -29,6 +29,7 @@
 		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Door Rift" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Loded Sack" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Flying Pan" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="shop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -123,6 +124,7 @@
 		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
 		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Flying Pan" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="library">
 		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -221,6 +223,7 @@
 		<Item Name="Cup O' Nog" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dad's Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="Flying Pan" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 
 	<Pool Name="greedCurse">
@@ -361,6 +364,6 @@
 	<Pool Name="GODMODE_observatoryItems">
 		<Item Name="Foreign Treatment" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Odd Dice" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
-		<Item Name="Fallen Skull" Weight="1" RemoveOn="0.1" DecreaseBy="0.1"/>
+		<Item Name="Fallen Skull" Weight="0.5" RemoveOn="0.1" DecreaseBy="0.5"/>
 	</Pool>
 </ItemPools>

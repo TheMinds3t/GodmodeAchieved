@@ -421,7 +421,7 @@ return {
 					{TYPE=1500, VARIANT=0, SUBTYPE=0, WEIGHT=1, METADATA=nil},
 				},
 			},
-		}
+		},
 		["DingDang"]={
 			{TYPE=1, VARIANT=0, SUBTYPE=0, NAME="DingDang", DIFFICULTY=1, WEIGHT=1, WIDTH=13, HEIGHT=7, SHAPE=1, METADATA=nil,
 				{ISDOOR=true, GRIDX=-1, GRIDY=3, SLOT=0, EXISTS=true},

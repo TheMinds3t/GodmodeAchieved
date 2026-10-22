@@ -13,7 +13,7 @@ item.encyc_entry = {
     },
 }
 
-item.player_update = function(self, player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
         local tecpatl_time = tonumber(GODMODE.save_manager.get_player_data(player,"TecpatlUseTime","0"))
         GODMODE.save_manager.set_player_data(player,"TecpatlUseTime",math.max(0,tecpatl_time - 1))

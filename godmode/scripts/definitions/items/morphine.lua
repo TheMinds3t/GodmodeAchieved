@@ -25,12 +25,12 @@ item.eval_cache = function(self, player,cache,data)
     end
     if cache == CacheFlag.CACHE_SPEED then
         local procs = math.min((data.morphine_procs or 0), 10)
-        GODMODE.log("morph proc = "..procs,true)
+        -- GODMODE.log("morph proc = "..procs,true)
         player.MoveSpeed = player.MoveSpeed * ((1-procs*0.666)/(player:GetCollectibleNum(item.instance)))
     end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
     if player:HasCollectible(item.instance) then
         data.morphine_cooldown = (data.morphine_cooldown or 0) - 1
     end
@@ -40,9 +40,10 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     if enthit:ToPlayer() and enthit:ToPlayer():HasCollectible(item.instance) and amount > 0 then
         local player = enthit:ToPlayer()
         local data = GODMODE.get_ent_data(player)
-        local chance = 0.15 + math.min(data.morphine_procs or 0, 10) * 0.516
+        local chance, rolled_chance = 0.15 + math.min(data.morphine_procs or 0, 10) * 0.0516, player:GetCollectibleRNG(item.instance):RandomFloat()
+        GODMODE.log("chance = "..chance..", real roll = "..rolled_chance,true)
 
-        if player:HasCollectible(item.instance) and (player:GetCollectibleRNG(item.instance):RandomFloat() < chance or (data.morphine_cooldown or 0) > 0) then
+        if player:HasCollectible(item.instance) and (rolled_chance < chance or (data.morphine_cooldown or 0) > 0) then
             if data.morphine_cooldown == nil or data.morphine_cooldown <= 0 then 
                 data.morphine_cooldown = 30
                 GODMODE.sfx:Play(SoundEffect.SOUND_ANIMAL_SQUISH, 1, 20)
@@ -50,7 +51,7 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
                 player:UseActiveItem(CollectibleType.COLLECTIBLE_DULL_RAZOR,false,true)
                 player:AnimateCollectible(Isaac.GetItemIdByName("Morphine Used"))
 
-                data.morphine_procs = (data.morphine_procs or 0) + 1
+                data.morphine_procs = math.min((data.morphine_procs or 0) + 1, 10)
                 player:AddCacheFlags(CacheFlag.CACHE_SPEED)
                 player:EvaluateItems()
             end
@@ -63,7 +64,7 @@ end
 item.room_rewards = function(self, pos, rng)
     GODMODE.util.macro_on_players_that_have(item.instance, function(player)
         local data = GODMODE.get_ent_data(player)
-        data.morphine_procs = math.max(0, (data.morphine_procs or 0) - 3)
+        data.morphine_procs = math.max(0, math.min(10, (data.morphine_procs or 0) - 10))
         player:AddCacheFlags(CacheFlag.CACHE_SPEED)
         player:EvaluateItems()
     end)

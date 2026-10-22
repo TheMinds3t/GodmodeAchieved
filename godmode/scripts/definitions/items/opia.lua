@@ -53,7 +53,7 @@ item.new_room = function(self)
     item:reset_opia()
 end
 
-item.player_update = function(self, player,data)
+item.player_update = function(self, player,data,sprite)
     if player:HasCollectible(item.instance) then
         local state = tonumber(GODMODE.save_manager.get_player_data(player, "OpiaState", "0"))
 

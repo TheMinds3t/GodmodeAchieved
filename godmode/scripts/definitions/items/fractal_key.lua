@@ -1,6 +1,6 @@
 local item = {}
 item.instance = GODMODE.registry.items.fractal_key
-item.eid_description = "On use:#- grants a decreasing, decaying chance to convert pickups to golden variants#- +1 Broken heart and Faithless heart#While held, golden pickups are replaced with 3 basic versions of that pickup#-0.5% chance per cleared room, resetting to full effect each use"
+item.eid_description = "On use:#- grants a decreasing, decaying chance to convert pickups to golden variants#- +1 Broken heart and Faithless heart#While held, golden pickups are replaced with 3 basic versions of that pickup#-1% chance per golden pickup collected and room cleared"
 item.encyc_entry = {
 	{ -- Effects
       {str = "Effects", fsize = 2, clr = 3, halign = 0},

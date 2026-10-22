@@ -27,7 +27,7 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) and player:IsFrame(20,1) and GODMODE.util.total_item_count(CollectibleType.COLLECTIBLE_BLACK_CANDLE) == 0 then
 		if #GODMODE.util.get_curse_list() < math.min(3,player:GetCollectibleNum(item.instance)) then
 			local depth = 6

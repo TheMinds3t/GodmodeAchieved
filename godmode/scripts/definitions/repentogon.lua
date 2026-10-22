@@ -53,6 +53,8 @@ if GODMODE.validate_rgon() then
         ["2,0"] = 2,
         ["2,1"] = 3,
         ["2,2"] = 4,
+        ["3,2"] = 5,
+        ["3,3"] = 6,
     }
 
     ret.sign_strength_opac_time = 45 
@@ -198,6 +200,20 @@ if GODMODE.validate_rgon() then
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_PICKUP_MORPH, GODMODE.mod_object.pre_pickup_morph)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_PICKUP_MORPH, GODMODE.mod_object.post_pickup_morph)
     -- GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_LEVEL_LAYOUT_GENERATED, GODMODE.mod_object.post_level_layout)
+
+    -- add RGON entity type patches to prevent mismatching 
+    for i = 1, XMLData.GetNumEntries(XMLNode.ENTITY) do
+        local entry = XMLData.GetEntryByOrder(XMLNode.ENTITY, i)
+        if entry.sourceid == "3790758584" then
+            local name = entry.name
+            local stats = {type = tonumber(entry.type), variant = tonumber(entry.variant), subtype = tonumber(entry.subtype)}
+            local raw_stats = {type = Isaac.GetEntityTypeByName(name), variant = Isaac.GetEntityVariantByName(name)}
+            if not (stats.type == raw_stats.type and stats.variant == raw_stats.variant) then 
+                GODMODE.convert_ent_to[raw_stats.type.."."..raw_stats.variant] = stats
+            end
+        end
+    end
+
     ret.loaded = true
 else 
     ret = nil

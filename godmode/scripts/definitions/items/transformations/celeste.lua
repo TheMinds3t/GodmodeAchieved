@@ -13,12 +13,7 @@ transform.has_transform = function(player)
 	return GODMODE.save_manager.get_player_data(player,transform.instance,"false") == "true" or Isaac.GetChallenge() == GODMODE.registry.challenges.the_galactic_approach
 end
 
-transform.items = {
-	[GODMODE.registry.items.celestial_paw] = true,
-	[GODMODE.registry.items.celestial_tail] = true,
-	[GODMODE.registry.items.celestial_collar] = true,
-	[GODMODE.registry.items.jack_of_all_trades] = true,
-}
+transform.items = "celestial_items"
 
 local star_color_unmodified = Color(0.8,0.8,0.2,1,0.25,0.25,0)
 local star_color_2 = Color(0.8,0.8,0.1,1,0.5,0.5,0)

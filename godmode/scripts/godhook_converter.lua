@@ -126,11 +126,13 @@ godhook.functions.pickup_collide = function(self, pickup,ent,entfirst)
 end
 godhook.functions.tear_collide = function(self, tear,ent,entfirst)
     local key = ent.Type..","..ent.Variant
+    GODMODE.log("tear collide with "..key,true)
+
     if godhook.hook.monsters["tear_collide"] and godhook.hook.monsters["tear_collide"][key] ~= nil then
         local ret = godhook.hook.monsters["tear_collide"][key](self,tear,ent,entfirst)
 
         if ret ~= nil then
-            GODMODE.log(key.." = "..tostring(ret),true)
+            GODMODE.log("monster entry "..key.." returned "..tostring(ret),true)
             return ret
         end
     end
@@ -142,7 +144,7 @@ godhook.functions.tear_collide = function(self, tear,ent,entfirst)
                 local ret = func(self,tear,ent,entfirst)
 
                 if ret ~= nil then
-                    GODMODE.log(tostring(ret),true)
+                    GODMODE.log("item entry "..key.." returned "..tostring(ret),true)
                     return ret 
                 end
             end
@@ -437,12 +439,13 @@ godhook.functions.player_init = function(self,player)
 end
 godhook.functions.player_update = function(self,player)
     local data = GODMODE.get_ent_data(player)
+    local sprite = player:GetSprite()
 
     if godhook.hook.monsters["player_update"] then
         for ind=1, #godhook.hook.monster_keys["player_update"] do
             local func = godhook.hook.monsters["player_update"][godhook.hook.monster_keys["player_update"][ind]]
             if func then
-                func(self,player,data)
+                func(self,player,data,sprite)
             end
         end
     end
@@ -451,7 +454,7 @@ godhook.functions.player_update = function(self,player)
         for ind=1, #godhook.hook.item_keys["player_update"] do
             local func = godhook.hook.items["player_update"][godhook.hook.item_keys["player_update"][ind]]
             if func then
-                func(self,player,data)
+                func(self,player,data,sprite)
             end
         end
 
@@ -459,7 +462,7 @@ godhook.functions.player_update = function(self,player)
             for ind=1, #godhook.hook.bypass_item_keys["player_update"] do
                 local func = godhook.hook.bypass_item_keys["player_update"][ind]
                 if func then
-                    func(self,player,data)
+                    func(self,player,data,sprite)
                 end
             end
         end    
@@ -648,6 +651,8 @@ godhook.functions.pickup_update = function(self, ent)
     local data = GODMODE.get_ent_data(ent)
     local sprite = ent:GetSprite()
     local key = ent.Type..","..ent.Variant
+
+
     if godhook.hook.monsters["pickup_update"] and godhook.hook.monsters["pickup_update"][key] ~= nil then
         godhook.hook.monsters["pickup_update"][key](self,ent,data,sprite)
     else 
@@ -658,7 +663,7 @@ godhook.functions.pickup_update = function(self, ent)
                     func(self,ent,data,sprite)
                 end
             end
-        end    
+        end
     end
 
     if godhook.hook.bypass_monster_keys["pickup_update"] then
@@ -739,6 +744,7 @@ godhook.functions.pickup_init = function(self, ent)
     local key = ent.Type..","..ent.Variant
     if godhook.hook.monsters["pickup_init"] then
         if godhook.hook.monsters["pickup_init"][key] ~= nil then 
+            -- GODMODE.util.reload_sprite_graphics(sprite)rrrrrrrrrr
             godhook.hook.monsters["pickup_init"][key](self,ent,data,sprite)
         end
 
@@ -920,7 +926,7 @@ godhook.functions.npc_post_render = function(self,ent,offset)
         godhook.hook.monsters["npc_post_render"][key](self,ent,offset,data,sprite)
     end
 
-    if data.oopsified then 
+    if data and data.oopsified then 
         local wts = Isaac.WorldToScreen(ent.Position)
         Isaac.RenderScaledText(key..","..ent.SubType, wts.X, wts.Y, 0.5, 0.5, 1, 1, 1, 1)
     end
@@ -1043,14 +1049,13 @@ godhook.functions.effect_update = function(self, ent)
     if ent.Variant == EffectVariant.BOMB_EXPLOSION and ent.FrameCount == 1 then 
         -- 48 = base explosion size
         local explode_pos, explode_size = ent.Position, ent.Scale * 48
-        -- GODMODE.log("EXPLODE!",true)
 
         -- check all entities in the room to see if they have a function mapped
         local ents = Isaac.GetRoomEntities()
         for ind=0, #ents do 
             local ent2 = ents[ind]
             
-            if ent2 then 
+            if ent2 and not ent2:IsDead() then 
                 local collided = (explode_pos - ent2.Position):Length() < explode_size*2
                 local data = GODMODE.get_ent_data(ent2)
                 local sprite = ent2:GetSprite()
@@ -1060,8 +1065,8 @@ godhook.functions.effect_update = function(self, ent)
                 end
 
                 if godhook.hook.items["explode_frame"] then
-                    for ind=1, #godhook.hook.item_keys["explode_frame"] do
-                        local func = godhook.hook.items["explode_frame"][godhook.hook.item_keys["explode_frame"][ind]]
+                    for _ind=1, #godhook.hook.item_keys["explode_frame"] do
+                        local func = godhook.hook.items["explode_frame"][godhook.hook.item_keys["explode_frame"][_ind]]
                         if func then
                             func(self,ent2,data,sprite,ent,explode_pos,explode_size,collided)
                         end
@@ -1263,7 +1268,7 @@ end
 local function add_fx_data(object)
     if is_monster(object) then 
         godhook.effect_data_list[object.variant] = true
-        GODMODE.log("adding fx data for \'"..object.variant.."\'!",true)
+        GODMODE.log("adding fx data for \'"..object.type.."."..object.variant.."\'!",true)
     end
 end
 
@@ -1426,7 +1431,7 @@ godhook.hook_list = {
         godhook.add_hook(funcname,object,ModCallbacks.MC_INPUT_ACTION)
     end,
 
-    -- internal hooks
+    -- internal hooks --------------------------------------------------------------------------------------------------------
     -- called on entities when inside of the delirium room, if it exists allows to apply a delirium skin
     ["set_delirium_visuals"] = function(funcname, object)
         godhook.add_hook(funcname,object,nil)
@@ -1444,7 +1449,7 @@ godhook.hook_list = {
     ["render_player_ui"] = true, --render godmode ui. Takes no return values. | render_player_ui(player)
     ["pre_godmode_restart"] = true, --godmode trinket, pre rewind. Takes no return values. | pre_godmode_restart()
     ["post_godmode_restart"] = true, --godmode trinket, post rewind. Takes no return values. | post_godmode_restart()
-    ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance)
+    ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance, base_chance)
 
     -- RGON callbacks
     ["pre_player_hit"] = function(funcname, object)
@@ -1459,10 +1464,10 @@ godhook.hook_list = {
     end,
 
     -- I'll take time to add a bunch of callbacks to make my mod easily manageable and expandable
-    -- ["pre_scale_enemy_hp"] = true, 
+    ["pre_scale_enemy_hp"] = true, 
     -- -- for hardmode/greedier hp scaling, before it is applied. Return float for new scale factor (1.0 = 100%)
     -- -- | pre_scale_enemy_hp(Entity ent, float scale_factor)
-    -- ["post_scale_enemy_hp"] = true, -- for hardmode/greedier hp scaling, after it is applied. Takes no return values.
+    ["post_scale_enemy_hp"] = true, -- for hardmode/greedier hp scaling, after it is applied. Takes no return values.
     -- -- | post_scale_enemy_hp(Entity ent,float scale_factor)
 
     -- ["alt_enemy_select"] = true, -- called when Godmode alt entries are attempting to replace an enemy. return new table for new entity, or return false to prevent replacement.
@@ -1588,5 +1593,26 @@ function godhook.register_object(object)
         end
     end
 end
+
+--[[
+in-line example:
+
+local godhook_entity_object = {
+    type = Isaac.GetEntityTypeByName(""),
+    variant = Isaac.GetEntityTypeByName(""),
+
+    npc_update = function(self, ent, data, sprite) end,
+    npc_kill = function(self, ent) end,
+}
+
+local godhook_item_object = {
+    instance = "EXGlobalObj",
+    post_render = function() end,
+    npc_update = function(self, ent, data, sprite) end,
+}
+
+GODMODE.godhooks.register_object(godhook_entity_object)
+GODMODE.godhooks.register_object(godhook_item_object)
+]]
 
 return godhook

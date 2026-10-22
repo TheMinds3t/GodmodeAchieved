@@ -41,6 +41,7 @@ else
     end
     
     GODMODE.mod_id = "AOIGodmodeAchieved"
+    GODMODE.steam_mod_id = "2548296941"
     GODMODE.mod_object = RegisterMod(GODMODE.mod_id, 1)
     GODMODE.repentance = true --unleashed had same modid
     GODMODE.godmode_ent_type = 700
@@ -59,7 +60,7 @@ else
 
     GODMODE.paused = false -- just a reference for if mod menus are open
 
-    GODMODE.convert_ent_to = { --temp fix for really odd bug
+    GODMODE.convert_ent_to = { --temp fix for really odd bug, NOW A PERMANENT FIX FOR THE GOATED RGON STRATS
         ["700.204"] = {type=GODMODE.registry.entities.secret_light.type,variant=GODMODE.registry.entities.secret_light.variant},
         ["700.205"] = {spawn=false,type=GODMODE.registry.entities.red_coin.type,variant=GODMODE.registry.entities.red_coin.variant},
         -- ["700.204"] = {type=GODMODE.registry.entities.heart_container.type,variant=GODMODE.registry.entities.heart_container.variant},
@@ -204,12 +205,13 @@ else
                 end)
                 
                 local ending = Sprite()
-                ending:Load("godmode/gfx/cutscenes/ending.anm2", true)
+                ending:Load("gfx/cutscenes/godmode_ending2.anm2", true)
                 ending.PlaybackSpeed = 0.666
                 GODMODE.cur_splash = ending 
+                GODMODE.cur_splash_pos = Vector.Zero
                 GODMODE.playing_ending = Isaac.GetPlayer().InitSeed
                 -- GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover2, 1.0)
-                MusicManager():Play(GODMODE.registry.music.twinkles, 1.0)
+                MusicManager():Play(GODMODE.registry.music.ending_voiceover2, 1.0)
                 MusicManager():UpdateVolume()
             end
     
@@ -231,9 +233,9 @@ else
         --     GODMODE.save_manager.wipe_persistent_entities()
         --     GODMODE.util.init_rand()
         -- end
-
+        GODMODE.save_manager.allow_persistent_load = true
         GODMODE.mod_object:init_save_state()
-
+        
         -- GODMODE.save_manager.save()
         GODMODE.playing_ending = nil 
         GODMODE.shader_params.ending_shader = nil
@@ -301,7 +303,7 @@ else
         GODMODE.save_manager.inited = nil
 
         MusicManager():Enable()
-        GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover2)
+        -- GODMODE.sfx:Stop(GODMODE.registry.sounds.ending_voiceover2)
         GODMODE.cur_splash = nil
     end 
 
@@ -350,13 +352,14 @@ else
             end
 
             if GODMODE.cur_splash:IsEventTriggered("LuciferTransition") then --palace!
-                Isaac.ExecuteCommand("cstage IvoryPalace")
+                -- Isaac.ExecuteCommand("cstage IvoryPalace")
+                StageAPI.GotoCustomStage(StageAPI.CustomStages["IvoryPalace"])
                 -- GODMODE.generate_ivory_map()
             end
 
             -- this is to mark the ending as attained! no need to start the voiceover here anymore
             if GODMODE.cur_splash:IsEventTriggered("Start") then 
-                GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover2,3)
+                -- GODMODE.sfx:Play(GODMODE.registry.sounds.ending_voiceover2,3)
                 GODMODE.save_manager.set_data("EndingAchieved","true",true)
             end
 
@@ -885,7 +888,7 @@ else
         if GODMODE.cur_splash ~= nil then
             GODMODE.cur_splash_pos = GODMODE.util.get_center_of_screen()
             if GODMODE.playing_ending == Isaac.GetPlayer().InitSeed then 
-                GODMODE.cur_splash_pos = GODMODE.util.get_center_of_screen()
+                GODMODE.cur_splash_pos = Vector(28,14)
             end
 
             GODMODE.cur_splash:Render(GODMODE.cur_splash_pos, Vector(0,0), Vector(0,0))
@@ -1015,12 +1018,8 @@ else
         local data = GODMODE.get_ent_data(ent)
 
         if ent.Type == GODMODE.godmode_ent_type and GODMODE.convert_ent_to["700."..ent.Variant] ~= nil then 
-            if ent.I1 ~= 1 then 
-                Isaac.Spawn(GODMODE.convert_ent_to["700."..ent.Variant].type,GODMODE.convert_ent_to["700."..ent.Variant].variant,0,ent.Position,Vector.Zero,nil)
-            end
-            
+            Isaac.Spawn(GODMODE.convert_ent_to["700."..ent.Variant].type,GODMODE.convert_ent_to["700."..ent.Variant].variant,0,ent.Position,Vector.Zero,nil)
             ent:Remove()
-            ent.I1 = 1
         end
 
         if data and GODMODE.save_manager_lock ~= true then
@@ -1033,6 +1032,7 @@ else
 
             --Persistence functionality
             if data.persistent_state and data.persistent_state > GODMODE.persistent_state.none then
+                GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
                 local targ_seed = (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed())
 
                 if StageAPI and StageAPI.GetCurrentLevelMap() and StageAPI.GetCurrentRoom() then 
@@ -1045,7 +1045,6 @@ else
 
                 if not data.persistent_data then
                     GODMODE.room = Game():GetRoom()
-                    GODMODE.room_decor_seed = GODMODE.room:GetDecorationSeed()
                     data.persistent_data = saved_data or {
                         room = targ_seed,
                         in_room = true,
@@ -1087,9 +1086,9 @@ else
                         local door_pos = GODMODE.level.EnterDoor
                         if GODMODE.room:GetDoor(door_pos) ~= nil then 
                             local dir = GODMODE.room:GetDoor(door_pos).Direction
-                            if door_pos_mods[dir] ~= nil then 
-                                if door_pos ~= -1 then
-                                    ent.Position = ent.Position - (GODMODE.room_bottom_right or GODMODE.room and GODMODE.room:GetBottomRightPos() ) * (door_pos_mods[dir or 1] or Vector(1,1))
+                            if door_pos_mods[dir] ~= nil and GODMODE.room then 
+                                if door_pos ~= -1 and door_pos_mods[dir] then
+                                    -- ent.Position = ent.Position - (GODMODE.room_bottom_right or (GODMODE.room and GODMODE.room:GetBottomRightPos()) ) * (door_pos_mods[dir] or Vector(1,1))
                                     data.persistent_data.room = targ_seed
                                 end
                             else
@@ -1120,9 +1119,11 @@ else
             ((GODMODE.game.Difficulty == Difficulty.DIFFICULTY_HARD and hard_enabled) or 
              (GODMODE.game.Difficulty == Difficulty.DIFFICULTY_GREEDIER and greed_enabled)) then
             local percent = GODMODE.util.get_health_scale(ent, tonumber(GODMODE.save_manager.get_config("HPScaleMode","2")))
-
-            ent.MaxHitPoints = math.floor(ent.MaxHitPoints * percent)
+            
+            local new_value = GODMODE.godhooks.call_hook_param("pre_scale_enemy_hp", ent.Type, ent, percent)
+            ent.MaxHitPoints = math.floor(ent.MaxHitPoints * (new_value or percent))
             ent.HitPoints = ent.MaxHitPoints
+            GODMODE.godhooks.call_hook_param("post_scale_enemy_hp", ent.Type, ent, percent)
         end
 
         if ((GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_MINIBOSS or (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_BOSS) and ent:IsBoss() then
@@ -1130,8 +1131,9 @@ else
         end
 
         if GODMODE.save_manager.get_config("VanillaStoryHPBuff","true") == "true" and GODMODE.armor_blacklist.story_bosses[ent.Type] ~= nil then 
-            ent.HitPoints = ent.HitPoints + math.min(tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0")),(GODMODE.util.get_basic_dps(nil) / 3.5) * 100)
-            ent.MaxHitPoints = ent.HitPoints
+            local bonus = GODMODE.util.get_average_stat_score() * tonumber(GODMODE.save_manager.get_config("VanillaStoryHPBuffCap","1000.0"))
+            ent.MaxHitPoints = ent.MaxHitPoints + bonus
+            ent.HitPoints = ent.MaxHitPoints
         end
     end
 
@@ -1351,13 +1353,9 @@ else
             if not GODMODE.util.is_start_of_run() then
                 GODMODE.save_manager_lock = true
                 -- for RGON loading/saving in menus, enable to allow persistent entities to be scanned disable to prevent it
-                GODMODE.save_manager.allow_persistent_load = true 
-
-                if GODMODE.save_manager.allow_persistent_load then 
-                    GODMODE.save_manager.load()
-                    GODMODE.save_manager.wipe_persistent_entities()    
-                    GODMODE.save_manager_lock = false
-                end
+                GODMODE.save_manager.load()
+                GODMODE.save_manager.wipe_persistent_entities()    
+                GODMODE.save_manager_lock = false
             else
                 GODMODE.save_manager.wipe()
                 GODMODE.save_manager.wipe_persistent_entities()
@@ -1553,10 +1551,11 @@ else
         local enter_door = level.EnterDoor
         local feather_duster_ct = GODMODE.util.total_item_count(GODMODE.registry.items.feather_duster)
         
+        -- spawning extra door hazards for COTV 
         if GODMODE.game.Challenge == Challenge.CHALLENGE_NULL and enter_door > -1 
             and not room:HasCurseMist() 
                 and (room:IsFirstVisit() or GODMODE.save_manager.get_data("VoidSpawned","false") == "true" and GODMODE.save_manager.get_config("COTVDoorHazardFX", "true") == "true") 
-                and not GODMODE.util.is_death_certificate() then 
+                and not GODMODE.util.is_death_certificate() and false then -- TODO: currently disabled door hazards
             local room_rng = RNG()
             room_rng:SetSeed(room:GetDecorationSeed()+(level:GetCurrentRoomDesc().VisitedCount-1)*10,1)
             local hazard_type = GODMODE.registry.entities.door_hazard.type
@@ -1572,29 +1571,31 @@ else
                 end)
             end        
 
-            for slot=0,DoorSlot.NUM_DOOR_SLOTS do 
-                local door = room:GetDoor(slot)
-                if slot ~= enter_door and door ~= nil and not door.TargetRoomType ~= RoomType.ROOM_SECRET and door.TargetRoomType ~= RoomType.ROOM_SUPERSECRET
-                        and not door:IsRoomType(RoomType.ROOM_SUPERSECRET) and not door:IsRoomType(RoomType.ROOM_SECRET)
-                        and room_rng:RandomFloat() < 0.1 * tonumber(GODMODE.save_manager.get_config("DoorHazardChanceMod","1.0")) * hazard_mod then
+            if false then -- TODO: rework door hazards
+                for slot=0,DoorSlot.NUM_DOOR_SLOTS do 
+                    local door = room:GetDoor(slot)
+                    if slot ~= enter_door and door ~= nil and not door.TargetRoomType ~= RoomType.ROOM_SECRET and door.TargetRoomType ~= RoomType.ROOM_SUPERSECRET
+                            and not door:IsRoomType(RoomType.ROOM_SUPERSECRET) and not door:IsRoomType(RoomType.ROOM_SECRET)
+                            and room_rng:RandomFloat() < 0.1 * tonumber(GODMODE.save_manager.get_config("DoorHazardChanceMod","1.0")) * hazard_mod then
 
-                    local door = Isaac.Spawn(hazard_type,hazard_var,0,room:GetDoorSlotPosition(slot),Vector.Zero,nil):ToNPC()
-                    local door_data = GODMODE.get_ent_data(door)
-                    -- door_data.door_slot = slot+1
-                    door.I1 = slot + 1
-                    if not void_spawned or room:IsFirstVisit() then 
-                        door_data.hazard_profile = door_hazards[room_rng:RandomInt(#door_hazards)+1]
-                    else 
-                        door_data.hazard_profile = "Void" 
-                    end
-                    door:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-                    door:Update()
+                        local door = Isaac.Spawn(hazard_type,hazard_var,0,room:GetDoorSlotPosition(slot),Vector.Zero,nil):ToNPC()
+                        local door_data = GODMODE.get_ent_data(door)
+                        -- door_data.door_slot = slot+1
+                        door.I1 = slot + 1
+                        if not void_spawned or room:IsFirstVisit() then 
+                            door_data.hazard_profile = door_hazards[room_rng:RandomInt(#door_hazards)+1]
+                        else 
+                            door_data.hazard_profile = "Void" 
+                        end
+                        door:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+                        door:Update()
 
-                    if door_hazards_good[door_data.hazard_profile] ~= true and feather_duster_ct > 0 and room:IsFirstVisit() then 
-                        door:Remove()
+                        if door_hazards_good[door_data.hazard_profile] ~= true and feather_duster_ct > 0 and room:IsFirstVisit() then 
+                            door:Remove()
+                        end
                     end
-                end
-            end                    
+                end                    
+            end
         end
 
         --observatory check
@@ -1972,7 +1973,11 @@ else
                                 end
                             end
         
-                            if type == alt.type and variant == alt.variant and (alt.subtype == nil or subtype == alt.subtype) and (alt.max_in_room == nil or GODMODE.alt_entries.alt_room_count and GODMODE.alt_entries.alt_room_count[alt.rep_type..","..alt.rep_variant..","..alt.rep_subtype] == nil or GODMODE.alt_entries.alt_room_count and GODMODE.alt_entries.alt_room_count[alt.rep_type..","..alt.rep_variant..","..alt.rep_subtype] < alt_cap) then
+                            if type == alt.type and variant == alt.variant and (alt.subtype == nil or subtype == alt.subtype) 
+                                and (alt.max_in_room == nil 
+                                        or GODMODE.alt_entries.alt_room_count and 
+                                        (GODMODE.alt_entries.alt_room_count[alt.rep_type..","..alt.rep_variant..","..alt.rep_subtype] == nil
+                                            or GODMODE.alt_entries.alt_room_count[alt.rep_type..","..alt.rep_variant..","..alt.rep_subtype] < alt_cap)) then
                                 local chance_function = alt.rep_chance_function or GODMODE.alt_entries.default_chance_function
                                 local chance_modifier = 1.0
                                 
@@ -2085,26 +2090,23 @@ else
         end
     end
 
-    function GODMODE.mod_object:ent_kill(ent)
-        if ent.Type == EntityType.ENTITY_TEAR then 
-            local tear = ent:ToTear()
-            
-            if tear.Parent and tear.Parent:ToPlayer() then
-                local player = tear.Parent:ToPlayer()
-    
-                if GODMODE.players[player:GetPlayerType()] and GODMODE.players[player:GetPlayerType()].tear_kill then
-                    GODMODE.players[player:GetPlayerType()]:tear_kill(tear, player)
-                end
-            end    
-        end
-    end
-
-    function GODMODE.mod_object:tear_collide(tear, ent2, first)
+    function GODMODE.mod_object:tear_kill(tear)
         if tear.Parent and tear.Parent:ToPlayer() then
             local player = tear.Parent:ToPlayer()
 
+            if GODMODE.players[player:GetPlayerType()] and GODMODE.players[player:GetPlayerType()].tear_kill then
+                GODMODE.players[player:GetPlayerType()]:tear_kill(tear, player)
+            end
+        end    
+    end
+
+    function GODMODE.mod_object:tear_collide(tear, ent2, first)
+        if tear.Parent and tear.Parent:ToPlayer() and ent2:ToPlayer() then
+            local player = ent2:ToPlayer()
+
             if GODMODE.players[player:GetPlayerType()] and GODMODE.players[player:GetPlayerType()].tear_collide then
-                GODMODE.players[player:GetPlayerType()]:tear_collide(tear, ent2, player)
+                local ret = GODMODE.players[player:GetPlayerType()]:tear_collide(tear, ent2, player)
+                if ret ~= nil then return ret end
             end
         end    
     end
@@ -2141,7 +2143,7 @@ else
                     data = GODMODE.get_ent_data(tear)
                     data.sign_tear = true 
                 end
-            elseif (player:GetPlayerType() == GODMODE.registry.players.deli or player:GetPlayerType() == GODMODE.registry.players.t_deli) and player:GetFireDirection() ~= Direction.NO_DIRECTION then
+            elseif (player:GetPlayerType() == GODMODE.registry.players.deli or player:GetPlayerType() == GODMODE.registry.players.t_deli) and (player:GetFireDirection() ~= Direction.NO_DIRECTION or player:HasCollectible(CollectibleType.COLLECTIBLE_CHOCOLATE_MILK)) then
                 local data = GODMODE.get_ent_data(player)
 
                 if (data.deli_last_fire_frame == nil or data.deli_last_fire_frame ~= (GODMODE.frame_count or GODMODE.game:GetFrameCount())) and not data.celeste_fire then
@@ -2371,9 +2373,6 @@ else
                         GODMODE.save_manager.set_data(key, "true", true)
                         GODMODE.save_manager.save()
                     end
-                    
-
-
                 end    
             end
 
@@ -2386,9 +2385,18 @@ else
                 -- player:SetActiveCharge(GODMODE.util.get_max_charge(player_data.pocket_item),ActiveSlot.SLOT_POCKET)
             end
 
+            local hits = GODMODE.util.get_player_hits(player,false,true)
+
             if player_data.red_health ~= nil and player_data.red_health == false then --remove red health for characters who cant have it
                 if player:GetMaxHearts() > 0 then 
                     local hearts = player:GetMaxHearts()
+                    local clamped_hearts = math.min(11,hearts)
+                    if clamped_hearts ~= hearts then -- if any item gives a full healthbar of empty hearts, this catches instakill if playing a soulheart character
+                        player:AddMaxHearts(-2)
+                        player:AddSoulHearts(2)
+                        hearts = hearts - 2
+                    end
+
                     player:AddMaxHearts(-hearts)
 
                     if player_data.soul_health ~= nil and player_data.soul_health == false then 
@@ -2398,28 +2406,29 @@ else
                     end
                 end
         
-                if player:GetHearts() > 0 then 
+                if player:GetHearts() > 0 then -- bone hearts
                     player:AddHearts(-player:GetHearts())
                 end
             end
 
             if player_data.max_hits ~= nil then 
-                local hits = GODMODE.util.get_player_hits(player,false,true)
                 local max_hits = player_data.max_hits
 
                 while hits > max_hits do 
-                    if player:GetSoulHearts() > 0 then 
-                        player:AddSoulHearts(-1)
+                    local soul = player:GetSoulHearts()
+                    if player:GetMaxHearts() > 0 then 
+                        player:AddSoulHearts(1)
+                        player:AddMaxHearts(-2)
+                        if hits - 2 > 0 then 
+                            player:AddSoulHearts(-1)
+                        end
                     elseif player:GetBoneHearts() > 0 then 
                         player:AddBoneHearts(-1) 
-                    elseif player:GetMaxHearts() > 0 then 
-                        player:AddMaxHearts(-2)
+                    elseif soul > 0 then 
+                        player:AddSoulHearts(-1)
                     end
 
                     hits = GODMODE.util.get_player_hits(player)
-                end
-                
-                if hits > max_hits then 
                 end
             end
         end
@@ -2451,7 +2460,8 @@ else
             end
         end
 
-        if cache == CacheFlag.CACHE_SPEED and (GODMODE.room or Game():GetRoom()):IsClear() then 
+        local room = (GODMODE.room or Game():GetRoom())
+        if room ~= nil and cache == CacheFlag.CACHE_SPEED and room:IsClear() then 
             local min_move_speed = math.max(0.1,tonumber(GODMODE.save_manager.get_config("MinRoamSpeed","0.1")))
             player.MoveSpeed = math.max(min_move_speed,player.MoveSpeed)
         end
@@ -2466,10 +2476,10 @@ else
         
         if ent:ToPlayer() then
             local player = ent:ToPlayer()
-            local pd = GODMODE.players[player:GetPlayerType()]
+            local pd = GODMODE.players[player:GetPlayerType()] or GODMODE.get_ent_data(player)
 
-            if pd and GODMODE.players[player:GetPlayerType()].pickup_collide then
-                local ret = GODMODE.players[player:GetPlayerType()]:pickup_collide(pickup, player)
+            if pd and pd.pickup_collide then
+                local ret = pd:pickup_collide(pickup, player)
                 if ret ~= nil then return ret end
             end    
      
@@ -2515,6 +2525,17 @@ else
                 end
 
                 GODMODE.save_manager.add_player_list_data(player,"ItemsCollected",pickup.SubType,true)
+
+                -- if you're grabbing an item inside a treasure room and you've already grabbed one, gain faithless heart! 
+                if GODMODE.save_manager.get_config("HeavyTreasure", true) == "true" and GODMODE.room:GetType() == RoomType.ROOM_TREASURE and (GODMODE.save_manager.list_contains("TreasureRoomSeeds", 
+                            function(item) return tostring(item) end, function(a) return a == ""..GODMODE.room:GetDecorationSeed() end)) then 
+                    local cotv = Isaac.Spawn(GODMODE.registry.entities.cotv_correct.type,GODMODE.registry.entities.cotv_correct.variant,GODMODE.registry.entities.cotv_correct.subtype, player.Position, Vector.Zero, nil)
+                    cotv:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+                    cotv:GetSprite():Play((GODMODE.util.is_cotv_spawned() and "HeartFade" or "CackleFade"),true)
+                    GODMODE.util.add_faithless(player, 1)
+                end
+
+                GODMODE.save_manager.add_list_data("TreasureRoomSeeds", GODMODE.room:GetDecorationSeed())
             end
 
             if pickup.Variant == PickupVariant.PICKUP_COLLECTIBLE and pickup.Price < 0 and (pd and pd.devil_choice == true) then 
@@ -2710,12 +2731,12 @@ else
         end
         local stage = GODMODE.level:GetStage()
 
-        if GODMODE.game.Difficulty < Difficulty.DIFFICULTY_GREED and stage ~= LevelStage.STAGE4_3 and stage < LevelStage.STAGE7 then 
+        if GODMODE.game.Difficulty < Difficulty.DIFFICULTY_GREED and stage ~= LevelStage.STAGE4_3 and stage < LevelStage.STAGE7 and #GODMODE.util.get_curse_list(false) == 0 then 
             local chance = 0.05 + math.min(0.95,GODMODE.util.total_item_count(GODMODE.registry.items.brass_cross) * 0.25)+0.15*GODMODE.util.total_item_count(GODMODE.registry.trinkets.white_candle,true)
-            local hook_chance = GODMODE.godhooks.additive_call_hook("modify_blessing_chance",chance)
+            local hook_chance = GODMODE.godhooks.additive_call_hook("modify_blessing_chance", chance, chance)
             GODMODE.log("Blessing chance for the stage is "..hook_chance.." (pre hook = "..chance.."), attempting roll...")
     
-            if #GODMODE.util.get_curse_list(false) == 0 and GODMODE.util.random() < chance then
+            if GODMODE.util.random() < chance then
                 local new_blessing = GODMODE.util.get_shifted_curse(GODMODE.registry.blessings[GODMODE.registry.blessing_keys[GODMODE.util.random(1,#GODMODE.registry.blessing_keys+1)]])
                 GODMODE.log("Blessing \'"..new_blessing.."\' selected for stage!")
                 return new_blessing
@@ -2859,7 +2880,7 @@ else
 		end
     end
 
-    GODMODE.observatory_door_file = "gfx/grid/observatory_door.anm2"
+    GODMODE.observatory_door_file = "godmode/gfx/grid/observatory_door.anm2"
     
     GODMODE.paint_observatory_door = function(door)
         if door:GetSprite():GetFilename() ~= GODMODE.observatory_door_file then 
@@ -2885,13 +2906,14 @@ else
         end
     end
 
-    GODMODE.correction_door_file = "gfx/grid/correction_door.anm2"
-    GODMODE.correction_door2_file = "gfx/grid/correction_door2.anm2"
+    GODMODE.correction_door_file = "godmode/gfx/grid/correction_door.anm2"
+    GODMODE.correction_door2_file = "godmode/gfx/grid/correction_door2.anm2"
     
     GODMODE.paint_correction_door = function(door, corrupt)
         local sprite = door:GetSprite()
         sprite:Load(GODMODE.correction_door2_file,true)
         sprite:Play("Opened",true)
+        sprite.SpriteOffset = Vector.Zero
     end
 
     local observatory_ents = {
@@ -2915,16 +2937,17 @@ else
 
         for i=0,DoorSlot.NUM_DOOR_SLOTS-1 do 
             local door_spot = room:GetDoor(i)
-            if door_spot and door_spot:IsOpen() then 
+            if door_spot then 
                 local door = Isaac.Spawn(GODMODE.registry.entities.observatory_fx.type,GODMODE.registry.entities.observatory_fx.variant,8,room:GetDoorSlotPosition(i),Vector.Zero,nil)
                 door:GetSprite().Rotation = i % 4 * 90-90
 
                 if door_spot.TargetRoomType ~= RoomType.ROOM_DEFAULT then 
                     door:GetSprite():Load(door_spot:GetSprite():GetFilename(),true)
                 else 
-                    local doorfx = Isaac.Spawn(GODMODE.registry.entities.observatory_fx.type,GODMODE.registry.entities.observatory_fx.variant,8,room:GetDoorSlotPosition(i),Vector.Zero,nil)
-                    doorfx:GetSprite():Load("godmode/gfx/grid/observatory_flames.anm2",true)
-                    doorfx:GetSprite().Rotation = i % 4 * 90-90
+                    GODMODE.paint_observatory_door(door_spot)
+                    -- local doorfx = Isaac.Spawn(GODMODE.registry.entities.observatory_fx.type,GODMODE.registry.entities.observatory_fx.variant,8,room:GetDoorSlotPosition(i),Vector.Zero,nil)
+                    -- doorfx:GetSprite():Load("godmode/gfx/grid/observatory_flames.anm2",true)
+                    -- doorfx:GetSprite().Rotation = i % 4 * 90-90
                 end
             end
         end
@@ -3128,7 +3151,7 @@ else
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_FIRE_TEAR, GODMODE.mod_object.tear_fire)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_TEAR_INIT, GODMODE.mod_object.tear_init)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_TEAR_UPDATE, GODMODE.mod_object.tear_update)
-    GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, GODMODE.mod_object.tear_collide, EntityType.EntityTear)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_TEAR_COLLISION, GODMODE.mod_object.tear_collide)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_LASER_UPDATE , GODMODE.mod_object.laser_update)  
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_EVALUATE_CACHE, GODMODE.mod_object.eval_cache)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_GET_CARD, GODMODE.mod_object.choose_card)
@@ -3143,7 +3166,7 @@ else
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_PRE_ENTITY_SPAWN, GODMODE.mod_object.pre_entity_spawn)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_ENTITY_TAKE_DMG, GODMODE.mod_object.npc_hit)
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, GODMODE.mod_object.entity_removed)
-    GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, GODMODE.mod_object.ent_kill, EntityType.ENTITY_TEAR)
+    GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_ENTITY_REMOVE, GODMODE.mod_object.tear_kill, EntityType.ENTITY_TEAR)
 
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_USE_ITEM, GODMODE.mod_object.d10_use, CollectibleType.COLLECTIBLE_D10)  
     GODMODE.mod_object:AddCallback(ModCallbacks.MC_POST_GET_COLLECTIBLE, GODMODE.mod_object.post_get_collectible)
@@ -3246,7 +3269,7 @@ else
             Isaac.ExecuteCommand("g c27")
 
             if params ~= nil and tonumber(params) ~= nil then 
-                Isaac.ExecuteCommand("stage "..tonumber(params)) 
+                Isaac.ExecuteCommand("stage "..params) 
             end
         elseif cmd == "dbdps" and params ~= nil and tonumber(params) then 
             local count = tonumber(params)

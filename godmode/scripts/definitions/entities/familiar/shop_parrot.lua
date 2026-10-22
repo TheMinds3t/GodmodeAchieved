@@ -253,7 +253,11 @@ monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explo
     if collided and ent.SubType == 0 then 
 		data.talk_sprite = "BubbleWarn"
 		sprite:Play("TalkSweat",true)
-		data.bubble:Play(data.talk_sprite,true)
+
+		if data.bubble then 
+			data.bubble:Play(data.talk_sprite,true)
+		end
+		
 		local fought_already = GODMODE.save_manager.get_data("KeepahBossKilled","false") == "true"
 		local targ_vel = (ent.Position - explode_pos)
 		ent.Velocity = targ_vel:Resized(explode_size - targ_vel:Length())

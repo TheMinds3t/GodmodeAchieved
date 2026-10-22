@@ -112,7 +112,7 @@ end
 
 monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     local data = GODMODE.get_ent_data(enthit)
-	if enthit.Type == monster.type and enthit.Variant == monster.variant then
+	if enthit.Type == monster.type and enthit.Variant == monster.variant and not (enthit:GetSprite():IsPlaying(monster.animations[data.phase + 1]) or enthit:GetSprite():IsPlaying(monster.animations[data.phase])) then
 		if flags & DamageFlag.DAMAGE_EXPLOSION == DamageFlag.DAMAGE_EXPLOSION then
 			data.phase = data.phase + 1
 			return false

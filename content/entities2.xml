@@ -119,6 +119,8 @@
     <entity anm2path="famil_loded_sack.anm2" baseHP="0" tags="noreroll" collisionDamage="0" collisionMass="32" collisionRadius="16" friction="1" id="3" name="[GODMODE] Loded Sack" numGridCollisionPoints="12" shadowSize="13">
         <gibs amount="4" poop="1" />
     </entity>
+    <entity anm2path="famil_flying_pan.anm2" baseHP="0" tags="noreroll" collisionDamage="0" collisionMass="32" collisionRadius="16" friction="1" id="3" name="[GODMODE] Flying Pan" numGridCollisionPoints="12" shadowSize="13">
+    </entity>
     <!-- FAMILIARS END -->
 
 
@@ -415,6 +417,11 @@
     <entity anm2path="45_callen_skull.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="20" collisionRadius="13" friction="1" id="700" name="[GODMODE] Callen Skull" numGridCollisionPoints="12" portrait="87" shadowSize="18" tags="noreroll" variant="45" subtype="0" gridCollision="walls" shutdoors="false">
         <gibs amount="6" blood="1" />
     </entity>
+    <entity anm2path="46_biggest_star.anm2" baseHP="10" stageHP="3" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="24" friction="1" id="700" name="[GODMODE] Biggest Star" numGridCollisionPoints="12" portrait="96" reroll="true" shadowSize="16" tags="" variant="55" subtype="0">
+        <devolve id="234.0.0" weight="1" />
+        <bestiary anim="Fly" transform="0,0,1"/>
+        <gibs amount="12" blood="1" bone="1" eye="0" gut="0" large="1" />
+    </entity>
     <entity anm2path="47_electrite.anm2" reroll="true" baseHP="25" boss="0" champion="1" collisionDamage="1" collisionMass="10" collisionRadius="13" friction="1" id="700" name="[GODMODE] Electrite" numGridCollisionPoints="12" shadowSize="28" stageHP="0" variant="47" portrait="89" tags="spider">
 		<bestiary transform="0,0,1" anim="Drill" />
         <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="0" />
@@ -470,7 +477,7 @@
         <gibs amount="64" blood="1" bone="1" eye="1" gut="1" large="1" />
     </entity>
     <entity anm2path="102_hostess.anm2" baseHP="650" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="41" friction="1" id="700" name="[GODMODE] Hostess" numGridCollisionPoints="16" shadowSize="32" stageHP="0" variant="102" portrait="51" gridCollision="walls">
-        <bestiary transform="0,0,0.8" anim="Idle" />
+        <bestiary transform="0,0,0.75" anim="Idle" />
         <gibs amount="16" blood="1" bone="0" eye="0" gut="0" large="1" />
     </entity>
     <entity anm2path="102.1_hostess_tendril.anm2" baseHP="20" boss="0" tags="noreroll" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="16" friction="1" id="700" name="[GODMODE] Hostess Tendril" numGridCollisionPoints="16" shadowSize="0" stageHP="0" variant="102" subtype="1" portrait="51" gridCollision="walls">
@@ -518,11 +525,11 @@
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="112_bowl_play.anm2" baseHP="450" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="[GODMODE] Bowl Play (Corny)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="0" portrait="84" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Corny" />
+        <bestiary transform="0,0,0.9" anim="Corny" />
         <gibs amount="32" poop="1"/>
     </entity>
     <entity anm2path="112_bowl_play.anm2" baseHP="450" shieldStrength="2" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="100" collisionRadius="28" friction="1" id="700" name="[GODMODE] Bowl Play (Smiley)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="1" portrait="84" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Smiley" />
+        <bestiary transform="0,0,0.9" anim="Smiley" />
         <gibs amount="32" poop="1"/>
     </entity>
     <entity anm2path="112_bowl_play.anm2" baseHP="150" shieldStrength="15" tags="noreroll" boss="0" champion="0" collisionDamage="2" collisionMass="48" collisionRadius="18" friction="1" id="700" name="[GODMODE] Bowl Play Body (Corny)" numGridCollisionPoints="16" shadowSize="24" stageHP="0" variant="112" subtype="2" portrait="84" gridCollision="walls">
@@ -543,14 +550,14 @@
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="115_brazier.anm2" baseHP="400" boss="1" champion="0" tags="nodelirium" collisionDamage="1" collisionMass="160" collisionRadius="54" friction="1" id="700" name="[GODMODE] Brazier (Poky)" numGridCollisionPoints="24" shadowSize="48" stageHP="0" variant="115" portrait="88">
-        <bestiary transform="0,0,1" anim="Bestiary" />
+        <bestiary transform="0,-40,0.8" anim="Bestiary" />
         <gibs amount="32" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="115_brazier.anm2" baseHP="1" boss="0" champion="0" tags="nodelirium" collisionDamage="0" collisionMass="160" collisionRadius="54" friction="1" id="700" name="[GODMODE] Brazier Dead (Poky)" numGridCollisionPoints="24" shadowSize="48" stageHP="0" variant="115" subtype="1" portrait="88" shutdoors="false">
         <gibs amount="32" rock="1"/>
     </entity>
     <entity anm2path="116_error.anm2" baseHP="100" boss="1" champion="0" tags="nodelirium" collisionDamage="0" collisionMass="160" collisionRadius="24" friction="1" id="700" name="[GODMODE] Error Keeper (Boss)" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="116" subtype="0" portrait="89" shutdoors="true">
-        <bestiary transform="0,0,1" anim="Idle" />
+        <bestiary transform="0,-27,1" anim="Bestiary" />
     </entity>
     <entity anm2path="116_error.anm2" baseHP="1" boss="0" champion="0" tags="nodelirium" collisionDamage="0" collisionMass="160" collisionRadius="24" friction="1" id="700" name="[GODMODE] Error Keeper Clone (Boss)" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="116" subtype="1" portrait="89" shutdoors="true">
     </entity>
@@ -608,23 +615,23 @@
     </entity>
 
     <entity anm2path="121_the_ritual.anm2" baseHP="1000" shieldStrength="40" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="[GODMODE] The Ritual" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="121" portrait="57" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle3" />
+        <bestiary transform="0,1,0.9" anim="Idle3" />
     </entity>
     <entity anm2path="121_candle.anm2" baseHP="0" tags="nodelirium noreroll" boss="0" champion="0" collisionDamage="1" collisionMass="16" collisionRadius="8" friction="1" id="700" name="[GODMODE] The Ritual's Candle" numGridCollisionPoints="12" shadowSize="12" stageHP="0" variant="121" subtype="1" portrait="58" gridCollision="walls">
     </entity>
     
     <entity anm2path="122_the_sacred_soul.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="[GODMODE] The Sacred Soul" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="122" portrait="59" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle" />
+        <bestiary transform="0,0,0.7" anim="Idle" />
     </entity>
     <entity anm2path="123_the_sacred_mind.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="[GODMODE] The Sacred Mind" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="123" portrait="60" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle" />
+        <bestiary transform="0,0,0.7" anim="Idle" />
     </entity>
     <entity anm2path="124_the_sacred_body.anm2" baseHP="2000" shieldStrength="20" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="28" friction="1" id="700" name="[GODMODE] The Sacred Body" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="124" portrait="61" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle" />
+        <bestiary transform="0,0,0.7" anim="Idle" />
     </entity>
 
     <entity anm2path="125_souleater.anm2" baseHP="2500" shieldStrength="40" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="[GODMODE] Souleater" numGridCollisionPoints="12" shadowSize="24" stageHP="0" variant="125" portrait="62" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Idle" />
+        <bestiary transform="0,0,0.85" anim="Idle" />
         <gibs amount="20" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="126_furnace_guard.anm2" baseHP="100" tags="nodelirium" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="[GODMODE] Furnace Guard" numGridCollisionPoints="12" shadowSize="24" stageHP="30" variant="126" portrait="63" gridCollision="walls">
@@ -638,7 +645,7 @@
         <gibs amount="16" blood="1" bone="0" eye="1" gut="1" large="0"/>
     </entity>
     <entity anm2path="127_grand_marshall_new.anm2" baseHP="2500" shieldStrength="100" boss="1" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="26" friction="1" id="700" name="[GODMODE] The Grand Marshall" numGridCollisionPoints="12" shadowSize="32" stageHP="0" variant="127" portrait="64" gridCollision="walls">
-        <bestiary transform="0,0,1" anim="Attack1" />
+        <bestiary transform="0,8,0.68" anim="Attack1" />
         <gibs amount="50" blood="1" bone="0" eye="1" gut="1" large="1"/>
     </entity>
     <entity anm2path="127_grand_marshall_new.anm2" baseHP="0" shieldStrength="0" boss="0" champion="0" collisionDamage="2" collisionMass="999" collisionRadius="32" friction="1" id="700" name="[GODMODE] Marshall Blade" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="127" subtype="1" portrait="64" gridCollision="walls">
@@ -668,7 +675,7 @@
     </entity>
 
     <entity anm2path="151_cotv.anm2" baseHP="3333" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="80" friction="1" id="700" name="[GODMODE] The Collapsed" numGridCollisionPoints="12" shadowSize="0" stageHP="0" variant="151" portrait="76" gridCollision="none">
-        <bestiary transform="0,2,0.5" anim="1Idle" />
+        <bestiary transform="0,-32,0.5" anim="1Idle" />
     </entity>
 
     <entity anm2path="151_cotv.anm2" baseHP="3333" boss="0" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="40" friction="1" id="700" name="[GODMODE] The Collapsed (Hand)" numGridCollisionPoints="12" shadowSize="48" stageHP="0" variant="151" subtype="1" portrait="69" gridCollision="none">
@@ -677,11 +684,11 @@
     </entity>
 
     <entity anm2path="153_skeletal_angel_new.anm2" baseHP="2000" boss="1" tags="nodelirium noreroll" shieldStrength="100" champion="0" collisionDamage="2" collisionMass="99999" collisionRadius="22" friction="1" id="700" name="[GODMODE] The Fallen Light" numGridCollisionPoints="12" shadowSize="28" stageHP="0" variant="153" portrait="69" gridCollision="walls">
-        <bestiary transform="0,2,1" anim="Idle" />
+        <bestiary transform="0,2,0.9" anim="Idle" />
         <gibs amount="18" blood="0" bone="1" eye="0" gut="1" large="1"/>
     </entity>
     <entity anm2path="154_skeletal_soul.anm2" baseHP="1" shieldStrength="500" boss="1" tags="nodelirium noreroll" champion="0" collisionDamage="0" collisionMass="99999" collisionRadius="13" friction="1" id="700" name="[GODMODE] The Sign" numGridCollisionPoints="12" shadowSize="16" stageHP="0" variant="154" portrait="70" gridCollision="walls">
-        <bestiary transform="0,-10,1" anim="Idle4" />
+        <bestiary transform="0,-16,1" anim="Idle4" />
         <gibs amount="18" blood="0" bone="1" eye="0" gut="1" large="1"/>
     </entity>
 

@@ -4,7 +4,7 @@ monster.type = GODMODE.registry.entities.tear_gas_can.type
 monster.variant = GODMODE.registry.entities.tear_gas_can.variant
 
 monster.can_timeout = 100
-monster.gas_timeout = 375
+monster.gas_timeout = 750
 monster.center_gas_timeout_add = 25
 monster.mist_count = 6
 monster.mist_dist = 36
@@ -15,7 +15,7 @@ monster.min_anim_scale = 0.1
 monster.can_natural_roll_strength = 1 / 40.0
 
 monster.max_gas_scale = 1.1 
-monster.min_gas_scale = 0.7
+monster.min_gas_scale = 0.8
 
 monster.bounce_friction = 0.9
 
@@ -122,7 +122,7 @@ monster.effect_update = function(self, ent, data, sprite)
             ent.Velocity = ent.Velocity + dir:Resized(perc * monster.mist_collect_motion_scalar)
 
             if center:IsDead() then ent:Remove() end 
-        else -- this IS the center mist  
+        elseif ent:IsFrame(10,1) then -- this IS the center mist  
             local active_radius = math.max(ent.Size + monster.mist_dist, (ent.Size + monster.mist_dist * 2) * perc)
             -- local ents = Isaac.FindInRadius(ent.Position, active_radius,EntityPartition.PLAYER)
 

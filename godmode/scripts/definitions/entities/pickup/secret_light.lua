@@ -39,6 +39,7 @@ end
 
 monster.pickup_init = function(self,ent)
     if GODMODE.util.is_in_quest() and ent.Type == monster.type and ent.Variant == monster.variant then ent:Remove() end
+    if GODMODE.save_manager.get_config("SecretLights","true") == "false" then ent:Morph(5,0,1, true, true, false) end
     ent:GetSprite():Play("Appear",true)
 end
 

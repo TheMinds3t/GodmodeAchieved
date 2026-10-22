@@ -5,24 +5,7 @@ transform.eid_transform = GODMODE.util.eid_transforms.CYBORG
 transform.cache_flags = CacheFlag.CACHE_SPEED | CacheFlag.CACHE_DAMAGE
 transform.custom_itemtag = "cyborg"
 transform.costume = GODMODE.registry.costumes.cyborg
-transform.items = {
-	[GODMODE.registry.items.gold_plated_battery] = true,
-	[CollectibleType.COLLECTIBLE_9_VOLT] = true,
-	[CollectibleType.COLLECTIBLE_BATTERY] = true,
-	[CollectibleType.COLLECTIBLE_CAR_BATTERY] = true,
-	[CollectibleType.COLLECTIBLE_JACOBS_LADDER] = true,
-	[CollectibleType.COLLECTIBLE_JUMPER_CABLES] = true,
-	[CollectibleType.COLLECTIBLE_DOCTORS_REMOTE] = true,
-	[CollectibleType.COLLECTIBLE_TECHNOLOGY] = true,
-	[CollectibleType.COLLECTIBLE_TECHNOLOGY_2] = true,
-	[CollectibleType.COLLECTIBLE_TECH_5] = true,
-	[CollectibleType.COLLECTIBLE_TECH_X] = true,
-	[CollectibleType.COLLECTIBLE_TECHNOLOGY_ZERO] = true,
-	[CollectibleType.COLLECTIBLE_METAL_PLATE] = true,
-	[CollectibleType.COLLECTIBLE_ANALOG_STICK] = true,
-	[CollectibleType.COLLECTIBLE_BROKEN_MODEM] = true,
-	[GODMODE.registry.items.jack_of_all_trades] = true,
-}
+transform.items = "cyborg_items"
 
 local has_cyborg = function(player)
 	return GODMODE.save_manager.get_player_data(player,"Cyborg","false") == "true"

@@ -27,7 +27,7 @@ item.pickup_collide = function(self, pickup,ent,entfirst)
     end
 end
 
-item.player_update = function(self, player)
+item.player_update = function(self, player,data,sprite)
     if player:IsFrame(30,1) and player:HasCollectible(item.instance) then 
         player:AddCacheFlags(CacheFlag.CACHE_DAMAGE)
         player:EvaluateItems()

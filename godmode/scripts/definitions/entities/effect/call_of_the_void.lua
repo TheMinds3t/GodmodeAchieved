@@ -128,7 +128,7 @@ monster.npc_update = function(self, ent, data, sprite)
         local correct_flag = GODMODE.util.is_correction()
 
         -- A Second Thought kill switch
-        if ent:IsFrame(8,1) and GODMODE.util.total_item_count(GODMODE.registry.items.a_second_thought) > 0 and not sprite:IsPlaying("Disappear") then 
+        if ent:IsFrame(8,1) and GODMODE.util.total_item_count(GODMODE.registry.items.a_second_thought) > 0 and not sprite:GetAnimation() == "Disappear" then 
             sprite:Play("Disappear",true)
             ent.Velocity = ent.Velocity * 0.5
         end

@@ -33,7 +33,7 @@ item.npc_remove = function(self,ent)
     end
 end
 
-item.player_update = function(self,player, data)
+item.player_update = function(self, player,data,sprite)
     if player:HasCollectible(item.instance) then 
 
         if (data.hysteria_timeout or 0) > 0 then 

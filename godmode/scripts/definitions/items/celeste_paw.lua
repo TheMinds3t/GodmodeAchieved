@@ -14,7 +14,7 @@ item.encyc_entry = {
 item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     if coll == item.instance then
         for _,ent in ipairs(Isaac.GetRoomEntities()) do
-            if ent:IsVulnerableEnemy() and ent.Type ~= EntityType.ENTITY_FIREPLACE then
+            if GODMODE.util.is_valid_enemy(ent, true) then
                 local flag = not ent:IsBoss()
 
                 if not flag then 

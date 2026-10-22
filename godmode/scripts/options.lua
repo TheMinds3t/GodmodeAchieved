@@ -206,6 +206,8 @@ options.layout = {
             options.gap,
             {str = "tutorials", dest="tutorials"},
             options.gap,
+            {str = "repentogon", dest="repentogon"},
+            options.gap,
             {str = "wipe data", dest="reset"},
             {str = "godmode", dest="godmode"},
             {str = "credits", dest="credits"},
@@ -996,7 +998,7 @@ options.layout = {
             },
             {
                 str = 'correction %',
-                min = 0, max = 200, increment = 5, suf='%', setting = 10,
+                min = 0, max = 200, increment = 5, suf='%', setting = 80,
                 variable = 'GodmodeStatHelpMod',
                 
                 -- "displayif" allows you to dynamically hide or show a button. If you return true, it will display, and if you return false, it won't!
@@ -1015,10 +1017,10 @@ options.layout = {
                 end,
 
                 load = function()
-                    return math.floor(tonumber(GODMODE.save_manager.get_config("StatHelpMod","0.8"))*100.0)
+                    return math.floor(tonumber(GODMODE.save_manager.get_config("StatHelpScale","0.8"))*100.0)
                 end,
                 store = function(var)
-                    GODMODE.save_manager.set_config("StatHelpMod",var/100.0,true)
+                    GODMODE.save_manager.set_config("StatHelpScale",var/100.0,true)
                 end,
 
 
@@ -1127,6 +1129,21 @@ options.layout = {
                 tooltip = {strset = {'only 1 item','per item room', 'or get','all items?','','(just makes','godmode','multi rooms','a choice)'}}
             },
             {
+                str = 'faithless treasure',
+                choices = options.bool_choices, setting = 1,
+                variable = 'GodmodeHeavyTreasure',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("HeavyTreasure","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("HeavyTreasure",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'only 1 item','per item room,', 'further items', 'grant 1', 'faithless heart'}}
+            },
+            options.gap,
+            {
                 str = 'min roam speed',
                 min = 10, max = 200, increment = 5, suf='%', setting = 10,
                 variable = 'GodmodeMinRoamSpeed',
@@ -1156,7 +1173,22 @@ options.layout = {
 
             --     tooltip = {strset = {'with charged','weapons, auto','use when full',' charge and ','enemies in','room > 0?', "(repentogon","needed)"}}
             -- },            
-            -- options.gap,
+            -- secret light toggle
+            {
+                str = 'secret lights',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeSecretLights',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("SecretLights","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("SecretLights",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'secret lights,', 'a random pickup,', 'disable to','nerf them to', 'a random coin,', 'key, heart,','pill, card,', 'or trinket'}}
+            },
+            options.gap,
             options.back_option,
         }
     },
@@ -1687,6 +1719,62 @@ options.layout = {
             options.back_option,
         }
     },
+    repentogon = {
+        buttons = {
+            {
+                str = "!rgon notice!",
+                fsize = 3,
+                nosel = false,
+                tooltip = {strset = {'these settings','do  nothing','without', 'repentogon', 'installed.'}}
+            },
+            options.gap,
+            {
+                str = 'birthday events',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeRGONBday',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("RGONEventBday","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("RGONEventBday",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'on specific','days each year','do a', 'birthday theme?','(toggle with','\'birthday_mode\')'}}
+            },
+            {
+                str = 'christmas events',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeRGONXMas',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("RGONEventXMas","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("RGONEventXMas",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'on specific','days each year','do a', 'christmas theme?','(toggle with','\'christmas_mode\')'}}
+            },
+            {
+                str = 'keepah day',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeRGONKeepah',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("RGONEventKeepah","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("RGONEventKeepah",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'on april 1st','do a', 'keepah event?','(toggle with','\'keepah_mode\')'}}
+            },
+
+            options.gap,
+            options.back_option,
+        }
+    },
     credits = include("godmode.scripts.definitions.credits").factory(options.back_button),
 }
 
@@ -1787,7 +1875,7 @@ options.populate_options = function()
     })
 
     table.insert(options.layout.unlocks.buttons, options.back_option)
-    
+
     table.insert(options.layout.tutorials.buttons, options.back_option)
     table.insert(options.layout.tutorials.buttons, options.gap)
 

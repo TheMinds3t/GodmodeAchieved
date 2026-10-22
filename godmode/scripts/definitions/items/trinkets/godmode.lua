@@ -54,7 +54,7 @@ end
 
 -- local used = false
 
-item.player_update = function(self,player,data)
+item.player_update = function(self, player,data,sprite)
     if (player:HasTrinket(item.instance) or player:GetEffects():HasTrinketEffect(item.instance)) then 
         if player:HasTrinket(item.instance, true) then 
             player:UseActiveItem(CollectibleType.COLLECTIBLE_SMELTER, false, true, true, false)

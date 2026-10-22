@@ -12,7 +12,7 @@ item.encyc_entry = {
     },
 }
 
-item.player_update = function(self, player,data)
+item.player_update = function(self, player,data,sprite)
 	if player:HasCollectible(item.instance) then
         data.crossbones = math.max(0, (data.crossbones or 0) - 1)
 

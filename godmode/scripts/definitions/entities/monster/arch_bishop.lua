@@ -2,12 +2,16 @@ local monster = {}
 monster.name = "[GODMODE] Arch Bishop" -- and demon priest (subtype 1)
 monster.type = GODMODE.registry.entities.arch_bishop.type
 monster.variant = GODMODE.registry.entities.arch_bishop.variant
+local is_miniboss = function(ent)
+	return (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE and ent.SubType == 1
+end
 
 monster.npc_init = function(self, ent, data)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local killed = GODMODE.save_manager.get_data("DemonPriestKill","false")
+	local miniboss_flag = is_miniboss(ent)
 
-	if killed == "true" and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE and (ent.SubType == 1 or GODMODE.util.is_delirium()) then
+	if killed == "true" and miniboss_flag or GODMODE.util.is_delirium() then
 		data.unmasked = true
 		monster.npc_kill(self,ent)
 		Isaac.Spawn(monster.type,monster.variant,2,ent.Position,Vector.Zero,ent)
@@ -25,6 +29,7 @@ end
 monster.npc_update = function(self, ent, data, sprite)
 	if not (ent.Type == monster.type and ent.Variant == monster.variant) then return end
 	local player = ent:GetPlayerTarget()
+	local miniboss_flag = is_miniboss(ent)
 
 	if data.real_time > 1 then
 		if data.dirx == nil then
@@ -39,8 +44,12 @@ monster.npc_update = function(self, ent, data, sprite)
 			sprite:Play("Break", false)
 		end
 
-		if data.real_time == 2 and (ent.SubType == 1 and not GODMODE.util.is_delirium()) and data.unmask ~= true then
-			GODMODE.game:GetHUD():ShowItemText(Isaac.GetPlayer():GetName().." vs. Demon Priest", "")
+		if miniboss_flag and not ent:IsDead() then
+			if data.real_time == 2 then 
+				GODMODE.game:GetHUD():ShowItemText(Isaac.GetPlayer():GetName().." vs. Demon Priest"..(data.unmask == true and " (Again!!)" or ""), "")
+			end
+	
+			MusicManager():Crossfade(Music.MUSIC_CHALLENGE_FIGHT, 0.1)
 		end
 
 		ent.Velocity = ent.Velocity*0.85 + Vector(data.dirx * 0.195,data.diry * 0.165)*data.move_speed
@@ -153,7 +162,8 @@ monster.npc_kill = function(self, ent)
 	local base_offset = Vector.Zero
 	local count = 4
 	local data = GODMODE.get_ent_data(ent)
-	local flag = true
+	local rez_flag = true
+	local miniboss_flag = is_miniboss(ent)
 
 	if (ent.SubType == 1 or GODMODE.util.is_delirium())then --Demon Priest
 		if data.unmasked ~= true then
@@ -161,15 +171,17 @@ monster.npc_kill = function(self, ent)
 			new:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
 			GODMODE.get_ent_data(new).unmask = true
 			new.HitPoints = 1
-			flag = false
+			rez_flag = false
 			ent:Remove()
 		else
-			count = 8 
+			count = 8 --this is the death 
 		end
 	end
 
-	if flag then
-		if GODMODE.save_manager.get_data("DemonPriestKill","false") ~= "true" and ent.SubType == 1 and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE or ent.SubType ~= 1 or (GODMODE.room_type or GODMODE.room:GetType()) ~= RoomType.ROOM_CURSE then
+
+	if rez_flag then -- if this is the second phase health bar or not a demon priest, death rattle! 
+		if GODMODE.save_manager.get_data("DemonPriestKill","false") ~= "true" and miniboss_flag
+			 or not miniboss_flag then
 			if not ent:HasEntityFlags(EntityFlag.FLAG_ICE) then 
 
 				for i=0,count do
@@ -192,7 +204,7 @@ monster.npc_kill = function(self, ent)
 		end
 
 		-- demon priest rewards
-		if data.unmasked == true and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_CURSE then
+		if data.unmasked == true and miniboss_flag then
 			local rand_vel = function()
 				return Vector(-4+ent:GetDropRNG():RandomFloat()*8,-4+ent:GetDropRNG():RandomFloat()*8)
 			end
@@ -215,6 +227,7 @@ monster.npc_kill = function(self, ent)
 				
 			rewards[ent:GetDropRNG():RandomInt(#rewards)+1]()
 			GODMODE.save_manager.set_data("DemonPriestKill","true")
+			MusicManager():Crossfade(Music.MUSIC_BOSS_OVER, 0.05)
 		end
 	end
 end
