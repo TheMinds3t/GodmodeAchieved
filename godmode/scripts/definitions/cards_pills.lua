@@ -77,7 +77,7 @@ local set_wipe_red_key_dupes = function(data)
                 local time_spawned = GODMODE.game:GetFrameCount() - card_ent.FrameCount+1
                 for killframe,_ in pairs(red_key_prevent_dupe) do GODMODE.log("prevent dupe frame "..killframe.." = "..time_spawned.."?",true) end 
                 if red_key_prevent_dupe[time_spawned] == true then
-                    GODMODE.log("   yes!",true)
+                    -- GODMODE.log("   yes!",true)
                     card_ent:Remove()
                 end
             end
@@ -174,16 +174,16 @@ cards_pills.card_actions = {
         choice_params = {chance=0.0,playing=false,runes=false,only_runes=false},
         use_effect = function(card,player,flags) 
             local killed = false 
-            GODMODE.log("soc used!",true)
+            -- GODMODE.log("soc used!",true)
 
             GODMODE.util.macro_on_enemies(nil,GODMODE.registry.entities.call_of_the_void.type,GODMODE.registry.entities.call_of_the_void.variant,-1,function(cotv)
-                GODMODE.log("checking? sub="..cotv.SubType,true)
+                -- GODMODE.log("checking? sub="..cotv.SubType,true)
                 if cotv.SubType > 0 then 
                     cotv.Velocity = cotv.Velocity * 0.25
                     GODMODE.get_ent_data(cotv).spent = true
                     cotv:GetSprite():Play("OrbKill",true)
                     killed = true
-                    GODMODE.log("found one! sub="..cotv.SubType,true)
+                    -- GODMODE.log("found one! sub="..cotv.SubType,true)
                 end
             end, nil, true)
 

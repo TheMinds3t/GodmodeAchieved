@@ -126,13 +126,13 @@ godhook.functions.pickup_collide = function(self, pickup,ent,entfirst)
 end
 godhook.functions.tear_collide = function(self, tear,ent,entfirst)
     local key = ent.Type..","..ent.Variant
-    GODMODE.log("tear collide with "..key,true)
+    -- GODMODE.log("tear collide with "..key,true)
 
     if godhook.hook.monsters["tear_collide"] and godhook.hook.monsters["tear_collide"][key] ~= nil then
         local ret = godhook.hook.monsters["tear_collide"][key](self,tear,ent,entfirst)
 
         if ret ~= nil then
-            GODMODE.log("monster entry "..key.." returned "..tostring(ret),true)
+            -- GODMODE.log("monster entry "..key.." returned "..tostring(ret),true)
             return ret
         end
     end
@@ -144,7 +144,7 @@ godhook.functions.tear_collide = function(self, tear,ent,entfirst)
                 local ret = func(self,tear,ent,entfirst)
 
                 if ret ~= nil then
-                    GODMODE.log("item entry "..key.." returned "..tostring(ret),true)
+                    -- GODMODE.log("item entry "..key.." returned "..tostring(ret),true)
                     return ret 
                 end
             end

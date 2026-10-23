@@ -1418,7 +1418,7 @@ util.hazard_grid_types = {
 			grident:SetVariant(0)
 			grident:SetType(GridEntityType.GRID_POOP)
 			grident:Update()
-			GODMODE.log("new variant is "..grident:GetVariant(),true)	
+			-- GODMODE.log("new poop variant is "..grident:GetVariant(),true)	
 		end
 	end,
 }

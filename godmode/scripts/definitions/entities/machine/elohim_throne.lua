@@ -95,7 +95,7 @@ monster.npc_update = function(self, ent, data, sprite)
 					if not sprite:IsPlaying(anim) then 
 						sprite:Play(anim,true)
 						data.set_lighting = nil 
-						GODMODE.log("started playing \'"..anim.."\'",true)
+						-- GODMODE.log("started playing \'"..anim.."\'",true)
 					end
 				end
 
@@ -120,7 +120,7 @@ monster.npc_update = function(self, ent, data, sprite)
 						if torch then 
 							torch.Parent = ent 
 							torch:GetSprite():Play("Torch"..(i > count and "On" or "Off"),true)
-							GODMODE.log("set torch \'"..i.."\' to "..tostring(i > count),true)
+							-- GODMODE.log("set torch \'"..i.."\' to "..tostring(i > count),true)
 						end
 					end
 

@@ -369,7 +369,7 @@ monster.npc_update = function(self, ent, data, sprite)
             else 
                 data.bubble = Sprite()
                 data.bubble:Load("godmode/gfx/117_keeper.anm2", true)
-                GODMODE.log("created!",true)
+                -- GODMODE.log("created!",true)
             end
 
             data.goal_pos = data.goal_pos or Vector(GODMODE.room_bottom_right.X, GODMODE.room_center.Y)

@@ -165,7 +165,7 @@ monster.spider_logic = function(self,data,ent, sprite)
         local roll = ent:GetDropRNG():RandomFloat()
         local thres = ((data.last_slam_proc or -1) * 0.25)
         if roll < thres then 
-            GODMODE.log("last_slam = "..tostring(thres)..", roll="..roll,true)
+            --GODMODE.log("last_slam = "..tostring(thres)..", roll="..roll,true)
             data.last_slam_proc = -1
             ent.Velocity = ent.Velocity * 0.25 
             data.exploded = false 
