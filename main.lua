@@ -2214,28 +2214,6 @@ else
             player:ChangePlayerType(GODMODE.registry.players.t_sign)
         end
 
-        --little code experiment i had going on
-        if GODMODE.validate_rgon() and GODMODE.save_manager.get_config("AutoChargeAttack","false") == "true" and false then  
-            local weapon = player:GetWeapon(1)
-            if weapon then 
-                -- GODMODE.log("charge="..weapon:GetCharge()..", prev_charge="..tostring(data.prev_weapon_charge),true)
-
-                if weapon:GetCharge() > 0 and weapon:GetCharge() == (data.prev_weapon_charge or (weapon:GetCharge() - 1)) then 
-                    data.weapon_inc = (data.weapon_inc or 0) + 1
-                    -- GODMODE.log("HELLO!",true)
-
-                    if data.weapon_inc >= 10 and player:IsExtraAnimationFinished () then 
-                        -- player:TakeDamage(0,DamageFlag.DAMAGE_FAKE,EntityRef(player),0)
-                        -- player:TryForgottenThrow(player:GetShootingInput())
-                    end
-                else 
-                    data.weapon_inc = nil
-                end
-
-                data.prev_weapon_charge = weapon:GetCharge()
-            end
-        end
-
         GODMODE.save_manager.set_player_data(player,"LastPillCol",player:GetPill(0))
         
         if GODMODE.birthday_mode and player:GetCollectibleNum(GODMODE.registry.items.party_hat) == 0 then 

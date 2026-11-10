@@ -1188,6 +1188,20 @@ options.layout = {
 
                 tooltip = {strset = {'secret lights,', 'a random pickup,', 'disable to','nerf them to', 'a random coin,', 'key, heart,','pill, card,', 'or trinket'}}
             },
+            {
+                str = 'keepah boss',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeShopParrotBoss',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ShopParrotBoss","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("ShopParrotBoss",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'does bombing', 'keepah','the shop','parrot','enrage him', 'once per', 'run?'}}
+            },
             options.gap,
             options.back_option,
         }
@@ -1362,6 +1376,20 @@ options.layout = {
                 end,
 
                 tooltip = {strset = {'mute keepah?','','(he is sad but','understands)'}}
+            },
+            {
+                str = 'fog in shops',
+                choices = options.bool_choices, setting = 2,
+                variable = 'GodmodeShopFog',
+
+                load = function()
+                    return options.str_bool_map[GODMODE.save_manager.get_config("ShopFog","true")] or 2
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("ShopFog",options.bool_map[var],true)
+                end,
+
+                tooltip = {strset = {'should shops', 'spawn with','fog?','','(purely','cosmetic)'}}
             },
             options.gap,
             {
@@ -1575,6 +1603,23 @@ options.layout = {
                 end,
 
                 tooltip = {strset = {'change shader','settings','for the','red juice?'}}
+            },
+            {
+                str = 'gatekeeper eid',
+                choices = options.fractal_display_choices, setting = 3,
+                variable = 'GodmodeGatekeeperEID',
+
+                load = function()
+                    return tonumber(GODMODE.save_manager.get_config("GatekeeperEID","3")) or 3
+                end,
+                store = function(var)
+                    GODMODE.save_manager.set_config("GatekeeperEID",var,true)
+                end,
+                changefunc = function(button, item, menuObj)
+                    GODMODE.save_manager.set_config("GatekeeperEID",""..button.setting,false)
+                end,
+
+                tooltip = {strset = {'show eid text','explaining','how the','stifled', 'gatekeeper', 'works?', '', '(reload', 'required)'}}
             },
 
             options.gap,

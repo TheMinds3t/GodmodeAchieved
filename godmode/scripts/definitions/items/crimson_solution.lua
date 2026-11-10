@@ -37,8 +37,8 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
     end
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
         local rng = RNG()
         rng:SetSeed((GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()),35)
         local item = GODMODE.special_items:get_syringe_item(rng)
@@ -50,7 +50,7 @@ item.new_room = function(self)
 
         player:GetEffects():AddCollectibleEffect(item)
         GODMODE.save_manager.set_player_data(player,"CrimsonSol",item,true)
-    end)
+    end
 end
 
 return item

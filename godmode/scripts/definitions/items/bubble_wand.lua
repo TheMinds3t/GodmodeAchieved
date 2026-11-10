@@ -9,42 +9,40 @@ item.encyc_entry = {
     },
 }
 
-item.new_room = function(self)
-	if not GODMODE.room:IsClear() then 
-		GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-			local count = 3 + player:GetCollectibleRNG(item.instance):RandomInt(3) + (player:GetMaxHearts() - player:GetHearts())/4 + player:GetSoulHearts()/4
-			count = math.ceil(count + count * (player:GetCollectibleNum(item.instance) - 1) * 0.3)
-			local vel = GODMODE.level.EnterDoor
-	
-			for i=0,count do 
-				local bubble = nil 
-	
-				if player:GetCollectibleRNG(item.instance):RandomFloat() < (math.min(10,math.max(0,player.Luck))*0.2+0.05) then 
-					bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_l.type,GODMODE.registry.entities.bubbly_plum_bubble_l.variant,GODMODE.registry.entities.bubbly_plum_bubble_l.subtype,player.Position,player.Velocity,player)
-				else
-					bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_s.type,GODMODE.registry.entities.bubbly_plum_bubble_s.variant,GODMODE.registry.entities.bubbly_plum_bubble_s.subtype,player.Position,player.Velocity,player)
-				end
-	
-				bubble:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
-				bubble:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags() & ~EntityFlag.FLAG_NO_STATUS_EFFECTS & ~EntityFlag.FLAG_NO_FLASH_ON_DAMAGE)
-				bubble:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) and not GODMODE.room:IsClear() then 
+		local count = 3 + player:GetCollectibleRNG(item.instance):RandomInt(3) + (player:GetMaxHearts() - player:GetHearts())/4 + player:GetSoulHearts()/4
+		count = math.ceil(count + count * (player:GetCollectibleNum(item.instance) - 1) * 0.3)
+		local vel = GODMODE.level.EnterDoor
 
-				if bubble.SubType == 2 then 
-					bubble:ToNPC().I2 = 1
-					bubble.CollisionDamage = player.Damage * 0.75
-				else 
-					bubble:ToNPC().I2 = 2
-					bubble.CollisionDamage = player.Damage * 1.5
-				end
-				GODMODE.get_ent_data(bubble).timeout = (GODMODE.get_ent_data(bubble).timeout or (100+(player:GetCollectibleRNG(item.instance):RandomInt(30)-15))) + 50
-	
-				if vel > -1 then 
-					bubble.Velocity = Vector(1,0):Rotated((vel%4)*90-90+player:GetCollectibleRNG(item.instance):RandomFloat()*180):Resized(3.0+player:GetCollectibleRNG(item.instance):RandomFloat()*6.0)
-				end
-	
-				bubble:Update()
+		for i=0,count do 
+			local bubble = nil 
+
+			if player:GetCollectibleRNG(item.instance):RandomFloat() < (math.min(10,math.max(0,player.Luck))*0.2+0.05) then 
+				bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_l.type,GODMODE.registry.entities.bubbly_plum_bubble_l.variant,GODMODE.registry.entities.bubbly_plum_bubble_l.subtype,player.Position,player.Velocity,player)
+			else
+				bubble = Isaac.Spawn(GODMODE.registry.entities.bubbly_plum_bubble_s.type,GODMODE.registry.entities.bubbly_plum_bubble_s.variant,GODMODE.registry.entities.bubbly_plum_bubble_s.subtype,player.Position,player.Velocity,player)
 			end
-		end)	
+
+			bubble:ClearEntityFlags(EntityFlag.FLAG_APPEAR)
+			bubble:AddEntityFlags(GODMODE.util.get_pseudo_fx_flags() & ~EntityFlag.FLAG_NO_STATUS_EFFECTS & ~EntityFlag.FLAG_NO_FLASH_ON_DAMAGE)
+			bubble:AddEntityFlags(EntityFlag.FLAG_FRIENDLY | EntityFlag.FLAG_CHARM)
+
+			if bubble.SubType == 2 then 
+				bubble:ToNPC().I2 = 1
+				bubble.CollisionDamage = player.Damage * 0.75
+			else 
+				bubble:ToNPC().I2 = 2
+				bubble.CollisionDamage = player.Damage * 1.5
+			end
+			GODMODE.get_ent_data(bubble).timeout = (GODMODE.get_ent_data(bubble).timeout or (100+(player:GetCollectibleRNG(item.instance):RandomInt(30)-15))) + 50
+
+			if vel > -1 then 
+				bubble.Velocity = Vector(1,0):Rotated((vel%4)*90-90+player:GetCollectibleRNG(item.instance):RandomFloat()*180):Resized(3.0+player:GetCollectibleRNG(item.instance):RandomFloat()*6.0)
+			end
+
+			bubble:Update()
+		end
 	end
 end
 

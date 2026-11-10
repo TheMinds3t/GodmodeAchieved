@@ -9,6 +9,7 @@ item.encyc_entry = {
 	},
 }
 
+
 item.new_room = function(self)
 	local ents = Isaac.GetRoomEntities()
 
@@ -17,10 +18,10 @@ item.new_room = function(self)
 			ent:Remove()
 		end
 	end
+end
 
-	local players = GODMODE.util.does_player_have(item.instance)
-
-	for i,player in ipairs(players) do
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
 		for i=0,3 do 
 			local can = Isaac.Spawn(GODMODE.registry.entities.pair_of_cans.type, GODMODE.registry.entities.pair_of_cans.variant, i, player.Position, Vector(0, 0), player)
 			can:ClearEntityFlags(EntityFlag.FLAG_APPEAR)

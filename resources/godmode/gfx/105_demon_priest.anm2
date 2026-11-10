@@ -1,5 +1,5 @@
 <AnimatedActor>
-	<Info CreatedBy="MINDS3T" CreatedOn="8/7/2024 2:08:44 PM" Version="28" Fps="30"/>
+	<Info CreatedBy="MINDS3T" CreatedOn="11/7/2026 1:00:58 AM" Version="29" Fps="30"/>
 	<Content>
 		<Spritesheets>
 			<Spritesheet Path="bosses\demon_priest.png" Id="0"/>

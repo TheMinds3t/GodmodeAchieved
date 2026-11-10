@@ -85,29 +85,30 @@ monster.eval_cache = function(self, player,cache,data)
 end
 
 monster.player_update = function(self, player, data)
-    local flags = 0
+    if player:IsFrame(20,1) then 
+        local flags = 0
 
-    for _,sub in pairs(subtypes) do 
-        if sub > 0 then 
-            local amt = tonumber(GODMODE.save_manager.get_player_data(player,"Fruit"..sub,"0"))
-            local max_amt = tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..sub,"0"))
-            local perc = ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) - tonumber(GODMODE.save_manager.get_player_data(player,"TimeStamp"..sub,"0"))) / duration
-            
-            if perc < 1.0 and max_amt > 0 then 
-                flags = flags | stat_ups[sub].flag
-                GODMODE.save_manager.set_player_data(player,"Fruit"..sub, max_amt * (1.0 - perc))
-                -- GODMODE.log("perc="..perc..", amt="..amt,true)
-            else 
-                GODMODE.save_manager.set_player_data(player,"Fruit"..sub,0)
-                GODMODE.save_manager.set_player_data(player,"MaxFruit"..sub,0)
-                GODMODE.save_manager.set_player_data(player,"TimeStamp"..sub,0)
+        for _,sub in pairs(subtypes) do 
+            if sub > 0 then 
+                local amt = tonumber(GODMODE.save_manager.get_player_data(player,"Fruit"..sub,"0"))
+                local max_amt = tonumber(GODMODE.save_manager.get_player_data(player,"MaxFruit"..sub,"0"))
+                local perc = ((GODMODE.frame_count or GODMODE.game:GetFrameCount()) - tonumber(GODMODE.save_manager.get_player_data(player,"TimeStamp"..sub,"0"))) / duration
+                
+                if perc < 1.0 and max_amt > 0 then 
+                    flags = flags | stat_ups[sub].flag
+                    GODMODE.save_manager.set_player_data(player,"Fruit"..sub, max_amt * (1.0 - perc))
+                    -- GODMODE.log("perc="..perc..", amt="..amt,true)
+                else 
+                    GODMODE.save_manager.set_player_data(player,"Fruit"..sub,0)
+                    GODMODE.save_manager.set_player_data(player,"MaxFruit"..sub,0)
+                    GODMODE.save_manager.set_player_data(player,"TimeStamp"..sub,0)
+                end
             end
         end
-    end
-
-    if flags > 0 and player:IsFrame(20,1) then 
-        player:AddCacheFlags(flags)
-        player:EvaluateItems()    
+        if flags ~= 0 then
+            player:AddCacheFlags(flags)
+            player:EvaluateItems()    
+        end
     end
 end
 

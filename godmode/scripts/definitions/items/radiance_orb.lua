@@ -79,12 +79,11 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	end
 end
 
-item.new_room = function(self)
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player)
-		local data = GODMODE.get_ent_data(player)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
 		data.radiance_charge = 0
 		data.radiance_tears = {}
-	end)
+	end
 end
 
 return item

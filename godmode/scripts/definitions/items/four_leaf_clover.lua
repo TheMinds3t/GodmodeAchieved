@@ -34,11 +34,11 @@ item.pickup_collide = function(self, pickup,ent,entfirst)
     end
 end
 
-item.new_room = function(self)
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
 		player:AddCacheFlags(CacheFlag.CACHE_LUCK | CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY)
 		player:EvaluateItems()
-	end)
+	end
 end
 
 return item

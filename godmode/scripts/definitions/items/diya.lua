@@ -24,8 +24,10 @@ item.eval_cache = function(self, player,cache,data)
 	end
 end
 
-item.new_room = function(self)
-	GODMODE.util.macro_on_players_that_have(item.instance,function(player) GODMODE.save_manager.set_player_data(player, "DiyaLit", "false",true) end)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
+		GODMODE.save_manager.set_player_data(player, "DiyaLit", "false",true)
+	end
 end
 
 return item

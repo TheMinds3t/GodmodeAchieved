@@ -47,10 +47,10 @@ item.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	end
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player)
-        GODMODE.get_ent_data(player).t_o_b_triggered = false
-    end)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
+        data.t_o_b_triggered = false
+    end
 end
 
 return item

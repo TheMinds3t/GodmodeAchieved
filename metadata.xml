@@ -7,30 +7,31 @@
 [img]https://i.imgur.com/1Rulvgf.png[/img]
 [h2][b]Join the [url=https://discord.gg/Bktc3dEBbR]official community/development discord![/url][/b][/h2]
 [h2][b]Check out the [url=https://tboigodmode.wiki.gg/wiki/Main_Page]official wiki![/url][/b][/h2]
+[h2][b]Also, check out the [url=https://isaacguru.com/mod/godmode_achieved]IsaacGuru page![/url][/b][/h2]
 
 [h2][b]So far:[/b][/h2]
 
 [img]https://i.imgur.com/3C6sSTY.png[/img]
-[list][*] [b]A new final boss and stage!![/b] Test your luck against this beast of a battle.. (also, unlock Godmode items!)
+[list]
+[*] [b]A new final boss and stage!![/b] Test your luck against this beast of a battle with 2 possible endings.. (also, unlock Godmode items!)
 [*] [b]500+[/b] brand new, unique treasure room layouts. This is clustered into types of treasure rooms, each having at least 10 variations! Enjoy the meat and bones of the rebalance!
 [*] [b]3[/b] new floor alts! One for Chapter 1, 3 and 4, one stage each! Get ready to explore new environments with foes old and new!
 [*] [b]400+[/b] new boss room layouts to exemplify your lust for masochism :meaty:
 [*] [b]120+[/b] new shop layouts to activate your lust for possession!
 [*] [b]65+[/b] new secret room layouts to enable your lust for utility
 [*] [b]58+[/b] new curse room layouts to validate your lust for power
-[*] [b]90+[/b] new items, good and bad, to indulge in!
+[*] [b]100+[/b] new items, good and bad, to indulge in!
 [*] [b]3[/b] new transformations!! [i](Planetariums are now much, much better to try for on account of my cat Celeste.)[/i]
 [*] [b]7[/b] new floor blessings! They have a 5% chance to show with no item modifiers and are the opposite of curses, providing certain unique benefits to a floor.
 [*] [b]2[/b] new room types!
 [*] [b]12+[/b] new trinkets!
-[*] [b]47+[/b] new enemies
-[*] [b]16+[/b] new bosses and [b]3[/b] new champions!
-[*] [b]7 new pickups
+[*] [b]50+[/b] new enemies
+[*] [b]16+[/b] new bosses and [b]3[/b] new boss champions!
+[*] [b]7+[/b] new pickups
 [*] [b]1367+[/b] regular rooms to integrate the new foes you'll face with ones you're familiar with! (increasing as the rest of the goals are met!) Including the new stages brings this total up to [b]over 3000 new rooms[/b] to cry about!
 [*] [b]11[/b] new characters! [spoiler](Tainted Sign WIP, for a total of 12 once that character is done!)[/spoiler]
 [*] [b]3[/b] new challenges (and increasing, goal is 5)
-[*] A new hazardous mechanic to make you [b]consider doors more[/b]!
-[*] [b]Hardmode HP scaling[/b], which balances out the increased quantity and quality of items you receive by gradually scaling enemy HP per floor.
+[*] [b]Hardmode HP scaling[/b], which balances out the increased quantity and quality of items you receive by gradually scaling enemy HP per floor OR based on your run's strength!
 [*] [b]Blue Womb overhaul![/b] Slightly more interesting than before...
 [*] A new being to make you consider how much time you spend on each stage a little more... [spoiler][url=https://tboigodmode.wiki.gg/wiki/Vanilla_Changes_and_New_Mechanics#Call_of_The_Void]Call of the Void[/url][/spoiler]
 [*] [b]Dead Sea Scrolls support![/b] There is built in config options for just about every major change Godmode adds or modifies, you can make the mod less itself or more itself!
@@ -51,7 +52,7 @@ For a full list of credits, refer to the [url=https://tboigodmode.wiki.gg/wiki/D
 [h1][b]Thank you for stopping by, and best of luck in your efforts to achieve Godmode![/b][/h1]
 [img]https://i.imgur.com/eLl9vc2.png[/img]
 
-The custom ending voiceover was trained with the RVC Project, a model located [url=https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI]here![/url]</description>
+The custom ending voiceover was done by none other than Matthias Bossi of Ridiculon himself, he did a fantastic job on the voiceovers :) I have grown into a stance against AI as the consequences of its capabilities keep on growing. Stay safe yall</description>
     <version>1.320</version>
     <visibility>Public</visibility>
     <tag id="Lua"/>

@@ -75,14 +75,12 @@ item.player_update = function(self, player,data,sprite)
 	end
 end
 
-item.new_room = function(self)
-	GODMODE.util.macro_on_players(function(player) 
-		local use_room = tonumber(GODMODE.save_manager.get_player_data(player,"MushroomUse","-1"))
+item.new_room_per_player = function(self, player, data, sprite)
+	local use_room = tonumber(GODMODE.save_manager.get_player_data(player,"MushroomUse","-1"))
 
-		if use_room ~= (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) and use_room ~= -1 then 
-			GODMODE.save_manager.set_player_data(player,"MushroomUse","-1",true)
-			GODMODE.save_manager.set_player_data(player,"MushroomTime","100",true)
-		end
-	end)
+	if use_room ~= (GODMODE.room_decor_seed or GODMODE.room:GetDecorationSeed()) and use_room ~= -1 then 
+		GODMODE.save_manager.set_player_data(player,"MushroomUse","-1",true)
+		GODMODE.save_manager.set_player_data(player,"MushroomTime","100",true)
+	end
 end
 return item

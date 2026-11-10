@@ -146,6 +146,7 @@ local pok_use_effect = function(card,player,flags)
                     player:AddCard(card)
                 else
                     if pok_transition[card] then 
+                        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.cards_pile_of_keys, 1, player:GetDropRNG())
                         player:AddCard(pok_transition[card])
                     end
                 end
@@ -166,6 +167,7 @@ cards_pills.card_actions = {
             local book = GODMODE.special_items:get_book_item(player:GetDropRNG())
 
             if book ~= nil then 
+                GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.cards_torn_page, 1, player:GetDropRNG())
                 player:UseActiveItem(book, true, true, true, true)
             end
         end
@@ -215,7 +217,8 @@ cards_pills.card_actions = {
                         end
                     end    
                 end    
-                
+
+                GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.cards_soc, 1, player:GetDropRNG())
                 return {Discharge=true,Remove=true,ShowAnim=true}
             else 
                 return {Discharge=false,Remove=false,ShowAnim=true}
@@ -283,6 +286,7 @@ cards_pills.pill_actions = {
         if horsepill then 
             player:UseActiveItem(CollectibleType.COLLECTIBLE_WAVY_CAP, false, true, true, false)
         end
+        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.pills_opipill, 1, player:GetDropRNG())
 
         return true
     end,
@@ -290,10 +294,17 @@ cards_pills.pill_actions = {
         player:AnimateHappy()
         local amt = (0.1 + (horsepill and 0.3 or 0.0))
         GODMODE.api.add_gilded_chance(amt)
+        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.pills_gild_pilled, 1, player:GetDropRNG())
         return true
     end,
     [GODMODE.registry.pills.multivitamin] = function(pill, player, flags, horsepill)
         player:AnimateHappy()
+
+        if horsepill == true then 
+            player:AddHearts(24)
+        end
+
+        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.pills_multivitamin, 1, player:GetDropRNG())
         return true
     end,
     [GODMODE.registry.pills.somethings_changed] = function(pill, player, flags, horsepill)
@@ -320,8 +331,15 @@ cards_pills.pill_actions = {
             pool = pool - 1
         end
 
+        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.pills_somethings_changed, 1, player:GetDropRNG())
         return true
-    end
+    end,
+    [GODMODE.registry.pills.void_calling] = function(pill, player, flags, horsepill)
+        player:AnimateSad()
+        GODMODE.util.add_faithless(player, 2 + (horsepill == true and 4 or 0))
+        GODMODE.util.voiceover_sfx(GODMODE.registry.sounds.pills_the_void_is_calling, 1, player:GetDropRNG())
+        return true
+    end,
 }
 
 cards_pills.choose_card = function(rng, card, playing, runes, only_runes)

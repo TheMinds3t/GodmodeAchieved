@@ -341,6 +341,11 @@ end
 godhook.functions.new_room = function(self)
     GODMODE.room = Game():GetRoom()
 
+    GODMODE.util.macro_on_players(function(player) 
+        local data = GODMODE.get_ent_data(player)
+        godhook.call_hook("new_room_per_player", player, data, player:GetSprite())
+    end)
+
     if godhook.hook.monsters["new_room"] then
         for ind=1, #godhook.hook.monster_keys["new_room"] do
             local func = godhook.hook.monsters["new_room"][godhook.hook.monster_keys["new_room"][ind]]
@@ -543,6 +548,7 @@ godhook.functions.npc_update = function(self, ent)
             ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYEROBJECTS
             ent.MaxHitPoints = 10
             ent.HitPoints = 10
+            ent.CollisionDamage = 0
         end
 
         ent.Velocity = ent.Velocity * 0.2
@@ -1255,6 +1261,7 @@ godhook.add_hook = function(funcname,object,hook)
         end
     end
 
+    -- register base godhook functions
     if godhook.hook.hooks_added[funcname] == nil then
         if hook ~= nil then 
             GODMODE.mod_object:AddCallback(hook,godhook.functions[funcname])
@@ -1450,6 +1457,7 @@ godhook.hook_list = {
     ["pre_godmode_restart"] = true, --godmode trinket, pre rewind. Takes no return values. | pre_godmode_restart()
     ["post_godmode_restart"] = true, --godmode trinket, post rewind. Takes no return values. | post_godmode_restart()
     ["modify_blessing_chance"] = true, --called when choosing curses, starts with the default value. | set_blessing_chance(cur_chance, base_chance)
+    ["new_room_per_player"] = true, --called when godhook runs new_room, used to reduce iterating through players. | new_room_per_player(self, player, data, sprite)
 
     -- RGON callbacks
     ["pre_player_hit"] = function(funcname, object)

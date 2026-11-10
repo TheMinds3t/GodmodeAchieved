@@ -97,6 +97,7 @@ reg.items = {
     curse_of_the_snail = Isaac.GetItemIdByName("Curse of the Snail"),
     loded_sack = Isaac.GetItemIdByName("Loded Sack"),
     flying_pan = Isaac.GetItemIdByName("Flying Pan"),
+    placeholder = Isaac.GetItemIdByName("[PLACEHOLDER]"),
 
     reclusive_tendencies = Isaac.GetItemIdByName("Reclusive Tendencies"),
     golden_stopwatch = Isaac.GetItemIdByName("Golden Stopwatch"),
@@ -194,6 +195,9 @@ reg.entities = {
     },
     flying_pan = {
         name = "[GODMODE] Flying Pan",
+    },
+    placeholder = {
+        name = "[GODMODE] [PLACEHOLDER]",
     },
 
     opia_soul = {
@@ -372,6 +376,12 @@ reg.entities = {
     },
     farddy  = {
         name = "[GODMODE] Farddy",
+    },
+    harfaw  = {
+        name = "[GODMODE] Harfaw",
+    },
+    mr_bones  = {
+        name = "[GODMODE] Mr. Bones",
     },
 
     swarm_one_tooth = {
@@ -901,6 +911,14 @@ reg.sounds = {
     tutorial_text = Isaac.GetSoundIdByName("GODMODE.tutorial_text"),
     meow = Isaac.GetSoundIdByName("GODMODE.meow"),
     flying_pan = Isaac.GetSoundIdByName("GODMODE.flying_pan"),
+    pills_gild_pilled = Isaac.GetSoundIdByName("GODMODE.pill.gild_pilled"),
+    pills_multivitamin = Isaac.GetSoundIdByName("GODMODE.pill.multivitamin"),
+    pills_opipill = Isaac.GetSoundIdByName("GODMODE.pill.opipill"),
+    pills_somethings_changed = Isaac.GetSoundIdByName("GODMODE.pill.somethings_changed"),
+    pills_the_void_is_calling = Isaac.GetSoundIdByName("GODMODE.pill.the_void_is_calling"),
+    cards_pile_of_keys = Isaac.GetSoundIdByName("GODMODE.card.pile_of_keys"),
+    cards_torn_page = Isaac.GetSoundIdByName("GODMODE.card.torn_page"),
+    cards_soc = Isaac.GetSoundIdByName("GODMODE.card.soc"),
 }
 
 reg.transformations = {

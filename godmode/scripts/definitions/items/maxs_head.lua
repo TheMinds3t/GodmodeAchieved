@@ -46,9 +46,8 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 	end
 end
 
-item.new_room = function(self)
-
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
 		local data = GODMODE.get_ent_data(player)
 		if data.max_head_charge and data.max_head_charge > 0 then
 			player:TryRemoveNullCostume(GODMODE.registry.costumes.maxs_head[data.max_head_charge])
@@ -56,7 +55,7 @@ item.new_room = function(self)
 		data.max_head_charge = 0
 		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_SPEED | CacheFlag.CACHE_FIREDELAY)
 		player:EvaluateItems()
-	end)
+	end
 	
 end
 

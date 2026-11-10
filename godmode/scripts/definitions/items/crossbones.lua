@@ -62,11 +62,10 @@ else
 end
 
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        local data = GODMODE.get_ent_data(player)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
         data.crossbones = 0
-    end)
+    end
 end
 
 return item

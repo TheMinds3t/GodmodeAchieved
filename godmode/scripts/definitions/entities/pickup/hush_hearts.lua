@@ -16,7 +16,7 @@ monster.pickup_update = function(self, ent, data, sprite)
         end
     end
     
-    ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
+    -- ent.EntityCollisionClass = EntityCollisionClass.ENTCOLL_PLAYERONLY
 
     -- GODMODE.log("hi!",true)
 

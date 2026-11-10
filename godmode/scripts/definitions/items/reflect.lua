@@ -199,7 +199,7 @@ end
 item.tear_update = function(self, tear, data, sprite)
     local player = tear.Parent and tear.Parent:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer() or tear.SpawnerEntity and tear.SpawnerEntity:ToFamiliar() and item.familiar_control_flag(self, tear.SpawnerEntity:ToFamiliar())
 
-    if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO ~= 0 then 
+    if player and player:HasCollectible(item.instance) and tear.TearFlags & TearFlags.TEAR_LUDOVICO > 0 then 
         local charge = tonumber(GODMODE.save_manager.get_ent_data(tear,"Charge",item.default_charge))
         local stats = item.fire_stats[charge]
         local pyromaniac_flag = player:HasCollectible(CollectibleType.COLLECTIBLE_PYROMANIAC)
@@ -336,11 +336,11 @@ item.player_collide = function(self, player, ent, p_first)
     end
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
         GODMODE.save_manager.set_player_data(player,"ReflectActiveTime",40)
         GODMODE.save_manager.set_player_data(player,"ReflectShotSpeedTick","0",true)
-    end)
+    end
 end
 
 

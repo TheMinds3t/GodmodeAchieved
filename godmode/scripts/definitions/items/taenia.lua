@@ -63,12 +63,10 @@ item.player_update = function(self, player,data,sprite)
 	end
 end
 
-item.tear_update = function(self, tear)
+item.tear_update = function(self, tear, data, sprite)
     local player = GODMODE.util.get_player_from_attack(EntityRef(tear))
 
     if player and player:HasCollectible(item.instance) then 
-        local data = GODMODE.get_ent_data(player)
-
         if data and data.brain_tears and #data.brain_tears.dirs >= tear.FrameCount and GODMODE.room:IsPositionInRoom(tear.Position,0.0) then 
             local index = math.max(1,tear.FrameCount-1)
             GODMODE.get_ent_data(tear).old_dir = new_packet or -1
@@ -78,7 +76,6 @@ item.tear_update = function(self, tear)
                 local dir = Vector(-1,0):Rotated(data.brain_tears.dirs[index]*90)
                 tear.Velocity = dir * player.ShotSpeed * 10
                 tear.ContinueVelocity = dir * player.ShotSpeed * 10
-            else 
             end
 
             tear.FallingSpeed = 0.1
@@ -86,10 +83,10 @@ item.tear_update = function(self, tear)
     end
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance,function(player)
-        GODMODE.get_ent_data(player).brain_tears = {dirs={}}
-    end)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
+        data.brain_tears = {dirs={}}
+    end
 end
 
 return item

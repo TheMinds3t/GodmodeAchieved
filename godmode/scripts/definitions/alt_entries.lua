@@ -401,6 +401,16 @@ return {
             end
         },
 
+        {
+            type=EntityType.ENTITY_MAW, 
+            variant=0, 
+            rep_type=GODMODE.registry.entities.harfaw.type, 
+            rep_variant=GODMODE.registry.entities.harfaw.variant, 
+            rep_subtype=0,
+            rep_chance={0.1,0.2,0.1,0.15},
+            max_in_room = 2
+        },
+
 
         --RED COIN!
         {

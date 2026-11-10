@@ -6,6 +6,7 @@ save_manager.version = "0.2" --used to refresh outdated save files for Godmode
 save_manager.save_override = false 
 
 save_manager.save = function()
+    GODMODE.save_manager_lock = true
     if GODMODE.config_presets then 
         save_manager.set_config_presets(GODMODE.config_presets.get_presets(), false)
     end
@@ -182,6 +183,8 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["BothRepPathItems"] = "true"
         save_manager.god_data.config["TaintedLostWish"] = "true"
         save_manager.god_data.config["ShopParrot"] = "true"
+        save_manager.god_data.config["ShopParrotBoss"] = "true"
+        save_manager.god_data.config["ShopFog"] = "true"
         save_manager.god_data.config["HushTimeMins"] = "35"
         save_manager.god_data.config["BRTimeMins"] = "20"
         save_manager.god_data.config["DoorHazardChanceMod"] = "1.0"
@@ -231,6 +234,7 @@ save_manager.set_default_persistant_data = function(persistant, config)
         save_manager.god_data.config["RGONEventBday"] = "true"
         save_manager.god_data.config["RGONEventXMas"] = "true"
         save_manager.god_data.config["RGONEventKeepah"] = "true"
+        save_manager.god_data.config["GatekeeperEID"] = "true"
         -- save_manager.god_data.config["AutoChargeAttack"] = "false"
     end
 

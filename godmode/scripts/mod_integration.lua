@@ -272,6 +272,33 @@ if EID then
     else 
         GODMODE.log("[Error] EID is missing 'addBirthright', so not adding Godmode birthright info. Non-fatal but concerning")
     end
+
+    if EID.addPill then 
+        EID:addPill(GODMODE.registry.pills.opiate, "Grants one stack of Sugar! for the room", "Opi-Pill")
+        EID:addPill(GODMODE.registry.pills.gild_pilled, "Grants 10% gilded chance", "Gild Pilled!")
+        EID:addPill(GODMODE.registry.pills.multivitamin, "Grants a healthy sense of accomplishment", "Multivitamin!")
+        EID:addPill(GODMODE.registry.pills.somethings_changed, "Takes 66% of all keys, coins and bombs and redistributes them", "Something's Changed")
+        EID:addPill(GODMODE.registry.pills.void_calling, "Grants 2 Faithless Hearts", "The Void is Calling")
+    end
+
+    if EID.addCard then 
+        EID:addCard(GODMODE.registry.cards.torn_page, "Uses one of any book item", "Torn Page")
+        EID:addCard(GODMODE.registry.cards.pok_8, "An 8 use cracked key!", "Pile of Keys (8)")
+        EID:addCard(GODMODE.registry.cards.pok_7, "A 7 use cracked key!", "Pile of Keys (7)")
+        EID:addCard(GODMODE.registry.cards.pok_6, "A 6 use cracked key!", "Pile of Keys (6)")
+        EID:addCard(GODMODE.registry.cards.pok_5, "A 5 use cracked key!", "Pile of Keys (5)")
+        EID:addCard(GODMODE.registry.cards.pok_4, "A 4 use cracked key!", "Pile of Keys (4)")
+        EID:addCard(GODMODE.registry.cards.pok_3, "A 3 use cracked key!", "Pile of Keys (3)")
+        EID:addCard(GODMODE.registry.cards.pok_2, "A 2 use cracked key!", "Pile of Keys (2)")
+        EID:addCard(GODMODE.registry.cards.soc, "Removes all active COTV projectiles#Reduces all stats by 10% #Respawns in a random basic room when used", "Stream of Consciousness")
+    end
+
+    if EID.addEntity and GODMODE.save_manager.get_config("GatekeeperEID", "true") == "true" then 
+        EID:addEntity(GODMODE.registry.entities.stifled_gatekeeper.type,GODMODE.registry.entities.stifled_gatekeeper.variant, 0,
+            "Stifled Gatekeeper", "Takes the Godmode trinket#Otherwise, 1 random Seraphim item, or any item picked up within an Angel room in exchange for a Blood Key")
+        EID:addEntity(GODMODE.registry.entities.stifled_gatekeeper.type,GODMODE.registry.entities.stifled_gatekeeper.variant, 1,
+            "Stifled Gatekeeper", "Takes the Godmode trinket#Otherwise, Takes 1 random Leviathan item, or any item picked up within a Devil room in exchange for a Blood Key")
+    end
 end
 
 -- ENCYCLOPEDIA SUPPORT
@@ -372,6 +399,23 @@ if PreAppearance then
         PreAppearance.AddToBlacklist(Isaac.GetEntityTypeByName(ent),Isaac.GetEntityVariantByName(ent),nil)
     end    
 end
+
+-- Character qualities
+CharacterQualities = CharacterQualities or {}
+CharacterQualities.QUALITIES = CharacterQualities.QUALITIES or {}
+CharacterQualities.QUALITIES2 = CharacterQualities.QUALITIES2 or {}
+CharacterQualities.QUALITIES["Xaphan"] = 2
+CharacterQualities.QUALITIES["Gehazi"] = 4
+CharacterQualities.QUALITIES["Recluse"] = 3
+CharacterQualities.QUALITIES["Deli"] = 4
+CharacterQualities.QUALITIES["Elohim"] = 3
+CharacterQualities.QUALITIES["The Sign"] = 4
+CharacterQualities.QUALITIES2["Tainted Recluse"] = 5
+CharacterQualities.QUALITIES2["Tainted Deli"] = 3
+CharacterQualities.QUALITIES2["Tainted Xaphan"] = 3
+CharacterQualities.QUALITIES2["Tainted Elohim"] = 2
+CharacterQualities.QUALITIES2["The Tainted Sign"] = 1
+CharacterQualities.QUALITIES2["Tainted Gehazi"] = 2
 
 -- ENHANCED BOSS BARS
 
@@ -611,7 +655,7 @@ function load_stageapi_integration()
     })
     
     function create_stage(stage_file)
-        local stage_file = include("godmode.scripts.definitions.stages."..stage_file)
+        stage_file = include("godmode.scripts.definitions.stages."..stage_file)
 
         if not StageAPI.CustomStages[stage_file.api_id] then
             if stage_file.second ~= nil then
@@ -827,7 +871,7 @@ function load_stageapi_integration()
     StageAPI.AddCallback(GODMODE.mod_id, "PRE_SELECT_NEXT_STAGE", 99, function(currentStage, secretExit)
         if currentStage ~= nil then
             for _,stage in pairs(GODMODE.stages) do
-                GODMODE.log("Testing "..(stage.api_id or "NIL"),true)
+                GODMODE.log("Testing "..(stage.api_id or "NIL").." for stage selection",true)
 
                 GODMODE.save_manager.set_data("StageReseed"..GODMODE.level:GetStage(),"true")
 

@@ -1574,4 +1574,13 @@ util.reload_sprite_graphics = function(sprite)
 	sprite:Load(sprite:GetFilename(), true)
 end
 
+util.voiceover_sfx = function(sfx_id, vol, rng)
+	if Options.AnnouncerVoiceMode ~= 1 then
+		if Options.AnnouncerVoiceMode == 0 and (rng == nil or rng:RandomInt(2) == 1)
+		or Options.AnnouncerVoiceMode == 2 then
+			GODMODE.sfx:Play(sfx_id, vol)
+		end
+	end
+end
+
 return util

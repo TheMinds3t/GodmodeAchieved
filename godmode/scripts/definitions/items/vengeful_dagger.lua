@@ -60,7 +60,10 @@ end
 
 item.new_room = function(self)
     temp_hits = {}
-    GODMODE.util.macro_on_players_that_have(item.instance,function(player) 
+end
+
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
         local hits = GODMODE.save_manager.get_list_data("VDHits"..player.InitSeed,false,function(val) 
             local vec = GODMODE.util.string_split(val,"#")    
             return {pos=Vector(tonumber(vec[1]),tonumber(vec[2])),player=player} 
@@ -69,7 +72,7 @@ item.new_room = function(self)
         for _,hit in ipairs(hits) do 
             table.insert(temp_hits,hit)
         end
-    end)
+    end
 end
 
 item.room_rewards = function(self, rng, pos)
@@ -164,6 +167,6 @@ item.render_player_ui = function(self,player)
 end
 
 
-item.bypass_hooks = {"npc_init"}
+-- item.bypass_hooks = {["npc_init"] = true}
 
 return item

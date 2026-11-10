@@ -30,13 +30,11 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
-item.new_room = function(self) 
-    if (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ANGEL then 
-        GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-            player:SetActiveCharge(6, GODMODE.util.get_active_slot(player, item.instance))
-            Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BATTERY,0,player.Position-Vector(0,32),Vector.Zero,player)
-            GODMODE.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
-        end)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) and (GODMODE.room_type or GODMODE.room:GetType()) == RoomType.ROOM_ANGEL then 
+        player:SetActiveCharge(6, GODMODE.util.get_active_slot(player, item.instance))
+        Isaac.Spawn(EntityType.ENTITY_EFFECT,EffectVariant.BATTERY,0,player.Position-Vector(0,32),Vector.Zero,player)
+        GODMODE.sfx:Play(SoundEffect.SOUND_BATTERYCHARGE)
     end
 end
 

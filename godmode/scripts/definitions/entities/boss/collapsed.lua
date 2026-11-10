@@ -774,6 +774,10 @@ monster.npc_hit = function(self,enthit,amount,flags,entsrc,countdown)
 	end
 end
 
+monster.npc_kill = function(self, ent)
+
+end
+
 -- monster.bypass_hooks = {["npc_init"] = true}
 
 return monster

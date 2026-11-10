@@ -19,7 +19,7 @@ local chests = {
 item.tear_update = function(self, tear, data)
 	local player = tear.SpawnerEntity and tear.SpawnerEntity:ToPlayer() or nil 
 
-	if player and tear:IsFrame(3,1) and player:HasCollectible(item.instance) and data.celeste_tear ~= true then
+	if player and tear:IsFrame(4,1) and player:HasCollectible(item.instance) and data.celeste_tear ~= true then
 		local pickups = Isaac.FindInRadius(tear.Position, tear.Size * 2, EntityPartition.PICKUP)
 
 		if #pickups > 0 then 

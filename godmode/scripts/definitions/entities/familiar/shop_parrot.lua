@@ -250,7 +250,7 @@ monster.new_room = function(self)
 end
 
 monster.explode_frame = function(self, ent, data, sprite, fx, explode_pos, explode_size, collided)
-    if collided and ent.SubType == 0 then 
+    if collided and ent.SubType == 0 and GODMODE.save_manager.get_config("ShopParrotBoss", "true") == "true" then 
 		data.talk_sprite = "BubbleWarn"
 		sprite:Play("TalkSweat",true)
 

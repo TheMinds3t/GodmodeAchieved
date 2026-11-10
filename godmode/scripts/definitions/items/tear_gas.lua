@@ -42,13 +42,11 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
     end
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players(function(player) 
-        GODMODE.save_manager.set_player_data(player,"TearGasBuff","0")
-        GODMODE.save_manager.set_player_data(player,"TearGasState","0")
-        player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_SPEED)
-        player:EvaluateItems()
-    end)
+item.new_room_per_player = function(self, player, data, sprite)
+    GODMODE.save_manager.set_player_data(player,"TearGasBuff","0")
+    GODMODE.save_manager.set_player_data(player,"TearGasState","0")
+    player:AddCacheFlags(CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_SPEED)
+    player:EvaluateItems()
 end
 
 item.player_update = function(self, player,data,sprite)

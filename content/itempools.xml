@@ -30,6 +30,7 @@
 		<Item Name="Door Rift" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Loded Sack" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Flying Pan" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="[PLACEHOLDER]" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="shop">
 		<Item Name="Morphine" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -51,6 +52,7 @@
 		<Item Name="Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Tear Gas" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Dad's Key Ring" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="[PLACEHOLDER]" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="boss">
 		<Item Name="The Ladle" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
@@ -125,6 +127,7 @@
 		<Item Name="Three Leaf Clover" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Curse of the Snail" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 		<Item Name="Flying Pan" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
+		<Item Name="[PLACEHOLDER]" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>
 	</Pool>
 	<Pool Name="library">
 		<Item Name="Burnt Diary" Weight="1" RemoveOn="0.1" DecreaseBy="1"/>

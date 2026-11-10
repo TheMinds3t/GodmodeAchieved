@@ -73,15 +73,16 @@ item.player_update = function(self,player,data,sprite)
 	else data.banner_time = nil end 
 end
 
-item.new_room = function()
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
+
 		local data = GODMODE.get_ent_data(player)
 		data.attack_banners = 0 
 		data.speed_banners = 0 
 		data.shotspeed_banners = 0
 		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY | CacheFlag.CACHE_SHOTSPEED)
 		player:EvaluateItems()
-	end)
+	end
 end
 
 return item

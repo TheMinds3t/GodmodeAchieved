@@ -53,7 +53,30 @@
 	<sound name="GODMODE.flying_pan">
 		<sample weight="1" path="flying_pan.wav" />
 	</sound>
-
+	<sound name="GODMODE.pill.gilled_pilled">
+		<sample weight="1" path="pickups/pills/gp3.wav" />
+	</sound>
+	<sound name="GODMODE.pill.multivitamin">
+		<sample weight="1" path="pickups/pills/m2.wav" />
+	</sound>
+	<sound name="GODMODE.pill.opipill">
+		<sample weight="1" path="pickups/pills/o2.wav" />
+	</sound>
+	<sound name="GODMODE.pill.somethings_changed">
+		<sample weight="1" path="pickups/pills/sc2.wav" />
+	</sound>
+	<sound name="GODMODE.pill.the_void_is_calling">
+		<sample weight="1" path="pickups/pills/tvic3.wav" />
+	</sound>
+	<sound name="GODMODE.card.pile_of_keys">
+		<sample weight="1" path="pickups/cards/pok1.wav" />
+	</sound>
+	<sound name="GODMODE.card.soc">
+		<sample weight="1" path="pickups/cards/soc2.wav" />
+	</sound>
+	<sound name="GODMODE.card.torn_page">
+		<sample weight="1" path="pickups/cards/tp1.wav" />
+	</sound>
 	<!-- DSS integration! -->
     <sound name="deadseascrolls_pop">
         <sample weight="1" path="deadseascrolls/pop.wav"/>

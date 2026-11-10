@@ -39,12 +39,12 @@ item.use_item = function(self, coll,rng,player,flags,slot,var_data)
 		end
 	end
 end
-item.new_room = function(self)
-	GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
 		GODMODE.save_manager.set_player_data(player, "TrophyRoomSeed", "-1",true)
 		player:AddCacheFlags(CacheFlag.CACHE_DAMAGE | CacheFlag.CACHE_FIREDELAY)
 		player:EvaluateItems()
-	end)
+	end
 end
 
 item.new_level = function(self)

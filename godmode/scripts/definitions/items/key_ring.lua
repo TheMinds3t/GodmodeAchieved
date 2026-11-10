@@ -26,6 +26,7 @@ local fail_items = {
     TrinketType.TRINKET_GILDED_KEY,
     TrinketType.TRINKET_CRYSTAL_KEY,
     TrinketType.TRINKET_STRANGE_KEY,
+    GODMODE.registry.trinkets.trickle_key
 }
 
 item.try_key = function(self, player)
@@ -67,10 +68,10 @@ else
     item.npc_hit = hit_func
 end
 
-item.new_room = function()
-    GODMODE.util.macro_on_players_that_have(item.instance, function(player) 
-        GODMODE.get_ent_data(player).dads_key_ring = nil
-    end)
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
+        data.dads_key_ring = nil
+    end
 end
 
 item.room_rewards = function(self)

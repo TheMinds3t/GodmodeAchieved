@@ -57,6 +57,9 @@
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/HushedFatty.png" ID="700" Name="Hushed Fatty" Variant="49" Subtype="0" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Hushed Clotty.png" ID="700" Name="Hushed Clotty" Variant="52" Subtype="0" Boss="0" />
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Hushed Freddy.png" ID="700" Name="Hushed Freddy" Variant="53" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Farddy.png" ID="700" Name="Farddy" Variant="54" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Harfaw.png" ID="700" Name="Harfaw" Variant="56" Subtype="0" Boss="0" />
+	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Mr. Bones.png" ID="700" Name="Mr. Bones" Variant="57" Subtype="0" Boss="0" />
 
 	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock L.png" Kind="Godmode" Name="Devil's Lock (Left)" Subtype="0" Variant="700" MirrorX="202.0.2" />
 	<entity BaseHP="1" Group="Grid Entities" ID="202" Image="resources/Entities/Godmode/Devil's Lock U.png" Kind="Godmode" Name="Devil's Lock (Up)" Subtype="1" Variant="700" MirrorY="202.0.3" />
@@ -91,6 +94,8 @@
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Market Man.png" ID="700" Name="Market Man" Variant="106" Subtype="0" Boss="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Ivory Portal.png" ID="700" Name="Ivory Portal" Variant="223" Subtype="0" Boss="0" />
 	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Catchup.png" ID="5" Name="Catchup Altar" Variant="708" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Pill Beggar.png" ID="700" Name="Pill Beggar" Variant="46" Subtype="0" Boss="0" />
+	<entity Group="Grid Entities" Kind="Godmode" Image="resources/Entities/Godmode/Fruit Beggar.png" ID="700" Name="Fruit Beggar" Variant="51" Subtype="0" Boss="0" />
 
 
 	<entity Group="Enemies" Kind="Godmode" Image="resources/Entities/Godmode/Mum.png" ID="700" Name="Mum" Variant="50" Subtype="0" />

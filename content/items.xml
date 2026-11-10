@@ -92,6 +92,7 @@
 	<familiar id="107" description="Diper friends" gfx="loaded_diaper.png" name="Loded Sack" quality = "0" />
 	<!-- <familiar id="108" description="Ceaseless void" gfx="celeste_hairball.png" name="Celestial Hairball" quality = "2" /> -->
 	<active id="109" maxcharges="3" description="Anti-gravity?" gfx="flying_pan.png" name="Flying Pan" quality = "2" />
+	<familiar id="110" description="Game breaking bug, right aw-hey, wait" gfx="placeholder.png" name="[PLACEHOLDER]" quality = "2" />
 
 	<!-- TAINTED UNLOCKS -->
 	<familiar achievement="GODMODE_FL_TRecluse" id="82" description="They've got the good stuff" gfx="fruit_fly.png" name="Fruit Flies" tags="familiar fly summonable" quality = "2" />
@@ -101,8 +102,8 @@
 	<passive achievement="GODMODE_FL_TGehazi" id="86" description="All the eye can see is yours" gfx="greedy_glance.png" name="Greedy Glance" tags="" quality = "2" />
 
 	<!-- TAINTED VANILLA FL UNLOCKS -->
-	<active achievement="GODMODE_FL_TCain" id="97" chargetype="timed" maxcharges="25" description="Life unlocked" gfx="fractal_key.png" name="Fractal Key" tags="" quality = "4" />
-	<active achievement="GODMODE_FL_TCain" id="97" maxcharges="0" description="Life restored" gfx="fractal_key_alt.png" name="Inverse Key" tags="" quality = "4" />
+	<active achievement="GODMODE_FL_TCain" id="99" chargetype="timed" maxcharges="25" description="Life unlocked" gfx="fractal_key.png" name="Fractal Key" tags="" quality = "4" />
+	<active achievement="GODMODE_FL_TCain" id="99" maxcharges="0" description="Life restored" gfx="fractal_key_alt.png" name="Inverse Key" tags="" quality = "4" />
 
 	<!-- TAINTED ITEMS -->
 	<active id="63" chargetype="timed" maxcharges="240" description="They are your friends" gfx="reclusive_tendencies.png" name="Reclusive Tendencies" tags="spider fly" hidden="true" quality = "1" />

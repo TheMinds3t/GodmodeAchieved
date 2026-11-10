@@ -121,6 +121,8 @@
     </entity>
     <entity anm2path="famil_flying_pan.anm2" baseHP="0" tags="noreroll" collisionDamage="0" collisionMass="32" collisionRadius="16" friction="1" id="3" name="[GODMODE] Flying Pan" numGridCollisionPoints="12" shadowSize="13">
     </entity>
+    <entity anm2path="famil_placeholder.anm2" baseHP="0" tags="noreroll" collisionDamage="8" collisionMass="32" collisionRadius="16" friction="1" id="3" name="[GODMODE] [PLACEHOLDER]" numGridCollisionPoints="12" shadowSize="13">
+    </entity>
     <!-- FAMILIARS END -->
 
 
@@ -417,11 +419,11 @@
     <entity anm2path="45_callen_skull.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="20" collisionRadius="13" friction="1" id="700" name="[GODMODE] Callen Skull" numGridCollisionPoints="12" portrait="87" shadowSize="18" tags="noreroll" variant="45" subtype="0" gridCollision="walls" shutdoors="false">
         <gibs amount="6" blood="1" />
     </entity>
-    <entity anm2path="46_biggest_star.anm2" baseHP="10" stageHP="3" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="24" friction="1" id="700" name="[GODMODE] Biggest Star" numGridCollisionPoints="12" portrait="96" reroll="true" shadowSize="16" tags="" variant="55" subtype="0">
+    <!-- <entity anm2path="46_biggest_star.anm2" baseHP="10" stageHP="3" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="24" friction="1" id="700" name="[GODMODE] Biggest Star" numGridCollisionPoints="12" portrait="96" reroll="true" shadowSize="16" tags="" variant="55" subtype="0"  gridCollision="walls">
         <devolve id="234.0.0" weight="1" />
         <bestiary anim="Fly" transform="0,0,1"/>
         <gibs amount="12" blood="1" bone="1" eye="0" gut="0" large="1" />
-    </entity>
+    </entity> -->
     <entity anm2path="47_electrite.anm2" reroll="true" baseHP="25" boss="0" champion="1" collisionDamage="1" collisionMass="10" collisionRadius="13" friction="1" id="700" name="[GODMODE] Electrite" numGridCollisionPoints="12" shadowSize="28" stageHP="0" variant="47" portrait="89" tags="spider">
 		<bestiary transform="0,0,1" anim="Drill" />
         <gibs amount="8" blood="1" bone="1" eye="1" gut="1" large="0" />
@@ -451,10 +453,20 @@
         <bestiary anim="Attack" transform="0,0,1"/>
         <gibs amount="12" blood="1" bone="0" eye="0" gut="0" large="1" />
     </entity>
-    <entity anm2path="53_poofreddy.anm2" baseHP="5" stageHP="5" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="14" friction="1" id="700" name="[GODMODE] Farddy" numGridCollisionPoints="12" portrait="95" reroll="true" shadowSize="14" tags="" variant="54" subtype="0">
+    <entity anm2path="53_poofreddy.anm2" baseHP="5" stageHP="5" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="14" friction="1" id="700" name="[GODMODE] Farddy" numGridCollisionPoints="12" portrait="95" reroll="true" shadowSize="14" tags="" variant="54" subtype="0" gridCollision="walls">
         <devolve id="24.700.0" weight="1" />
         <bestiary anim="JumpLoop" transform="0,0,1"/>
         <gibs amount="12" blood="0" bone="0" eye="0" gut="0" poop="1" />
+    </entity>
+    <entity anm2path="54_harfaw.anm2" baseHP="10" stageHP="3" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="14" friction="1" id="700" name="[GODMODE] Harfaw" numGridCollisionPoints="12" portrait="97" reroll="true" shadowSize="14" tags="" variant="56" subtype="0" gridCollision="walls">
+        <devolve id="12.0.0" weight="1" />
+        <bestiary anim="Idle" transform="0,0,1"/>
+        <gibs amount="12" blood="1" bone="0" eye="0" gut="0" poop="0" />
+    </entity>
+    <entity anm2path="55_mrbones.anm2" baseHP="15" stageHP="3" boss="0" champion="1" collisionDamage="1" collisionMass="30" collisionRadius="14" friction="1" id="700" name="[GODMODE] Mr. Bones" numGridCollisionPoints="12" portrait="98" reroll="true" shadowSize="14" tags="" variant="57" subtype="0" gridCollision="walls">
+        <devolve id="227.0.0" weight="1" />
+        <bestiary anim="Idle" transform="0,0,1"/>
+        <gibs amount="12" blood="0" bone="1" eye="0" gut="0" poop="0" />
     </entity>
 
 
@@ -731,7 +743,7 @@
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
     </entity>
-    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="[GODMODE] Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="51" subtype="1" shutdoors="false">
+    <entity anm2path="mach_fruit_beggar.anm2" baseHP="0" boss="0" champion="0" collisionDamage="0" collisionMass="3" collisionRadius="12" friction="1" id="700" name="[GODMODE] Fruit Beggar" numGridCollisionPoints="24" shadowSize="16" stageHP="0" variant="51" subtype="0" shutdoors="false">
         <gibs amount="0" blood="0" bone="0" eye="0" gut="0" large="0" />
 	    <preload-snd id="8" /> <!-- BOOK_PAGE_TURN_12 -->
     </entity>

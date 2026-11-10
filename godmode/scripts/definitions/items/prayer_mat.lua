@@ -49,11 +49,11 @@ item.room_rewards = function(self,rng,pos)
     end)
 end
 
-item.new_room = function(self)
-    GODMODE.util.macro_on_players_that_have(item.instance,function(player) 
+item.new_room_per_player = function(self, player, data, sprite)
+    if player:HasCollectible(item.instance) then 
         GODMODE.save_manager.set_player_data(player,"PrayerUsed","false",true)
-        GODMODE.get_ent_data(player).prayer_mat = 0
-    end)
+        data.prayer_mat = 0
+    end
 end
 
 item.player_render = function(self,player,offset)
